@@ -1,0 +1,63 @@
+<?php
+
+namespace PSR2R\Sniffs\Classes;
+
+class BraceOnSameLineSniff implements \PHP_CodeSniffer_Sniff {
+
+	/**
+	 * Returns an array of tokens this test wants to listen for.
+	 *
+	 * @return array
+	 */
+	public function register() {
+		return array(
+			T_CLASS,
+			T_INTERFACE,
+			T_TRAIT,
+		);
+
+	}
+
+	/**
+	 * Processes this test, when one of its tokens is encountered.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
+	 * @param integer $stackPtr The position of the current token in the
+	 *                                        stack passed in $tokens.
+	 * @return void
+	 */
+	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+		$tokens = $phpcsFile->getTokens();
+		$errorData = array(strtolower($tokens[$stackPtr]['content']));
+
+		if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+			$error = 'Possible parse error: %s missing opening or closing brace';
+			$phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $errorData);
+			return;
+		}
+
+		$curlyBrace = $tokens[$stackPtr]['scope_opener'];
+		$lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($curlyBrace - 1), $stackPtr, true);
+		$classLine = $tokens[$lastContent]['line'];
+		$braceLine = $tokens[$curlyBrace]['line'];
+		if ($braceLine !== $classLine) {
+			$phpcsFile->recordMetric($stackPtr, 'Class opening brace placement', 'same line');
+			$error = 'Opening brace of a %s must be on the same line as the definition';
+
+			$fix = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceNewLine', $errorData);
+			if ($fix === true) {
+				//$phpcsFile->fixer->beginChangeset();
+				$phpcsFile->fixer->replaceToken($lastContent, $tokens[$lastContent]['content'] . ' ');
+
+				for ($i = $lastContent + 1; $i < $curlyBrace; $i++) {
+					$phpcsFile->fixer->replaceToken($i, '');
+				}
+				//$phpcsFile->fixer->endChangeset();
+				ob_flush();
+			}
+
+			return;
+		}
+	}
+
+}
