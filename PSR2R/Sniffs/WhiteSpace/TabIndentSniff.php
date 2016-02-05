@@ -42,7 +42,8 @@ class TabIndentSniff implements \PHP_CodeSniffer_Sniff {
 			for ($i = $stackPtr + 1; $i < $tokens[$stackPtr]['comment_closer']; $i++) {
 
 				if ($tokens[$i]['code'] === 'PHPCS_T_DOC_COMMENT_WHITESPACE') {
-					$this->fixTab($phpcsFile, $i, $tokens);
+					//FIXME
+					//$this->fixTab($phpcsFile, $i, $tokens);
 				}
 			}
 			return;

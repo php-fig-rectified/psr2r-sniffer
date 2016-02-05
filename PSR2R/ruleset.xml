@@ -21,7 +21,9 @@
     <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
     <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
 
+	<!--
     <rule ref="Squiz.Commenting.DocCommentAlignment"/>
+	-->
 
     <rule ref="PEAR.ControlStructures.ControlSignature"/>
 
@@ -50,6 +52,7 @@
     <rule ref="Squiz.PHP.NonExecutableCode"/>
     <rule ref="Generic.PHP.NoSilencedErrors"/>
     <rule ref="Generic.PHP.LowerCaseConstant"/>
+	<rule ref="Squiz.PHP.LowercasePHPFunctions"/>
 
     <rule ref="Squiz.Scope.MemberVarScope"/>
     <rule ref="Squiz.Scope.MethodScope"/>

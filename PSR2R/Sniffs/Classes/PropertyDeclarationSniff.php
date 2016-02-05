@@ -44,12 +44,6 @@ class PSR2R_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Stan
     {
         $tokens = $phpcsFile->getTokens();
 
-        if ($tokens[$stackPtr]['content'][1] === '_') {
-            $error = 'Property name "%s" should not be prefixed with an underscore to indicate visibility';
-            $data = [$tokens[$stackPtr]['content']];
-            $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
-        }
-
         // Detect multiple properties defined at the same time. Throw an error
         // for this, but also only process the first property in the list so we don't
         // repeat errors.

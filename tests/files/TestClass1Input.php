@@ -6,13 +6,21 @@ use \Bar\Foo;
 
 class TestClass1Input {
 
-	public $x = 'y';
 	/**
 	 * @param \Bar\Foo
 	 *
 	 * @return void
 	 */
+	public $x = 'y';
+
+/**
+ * @param \Bar\Foo
+ *
+ * @return void
+ */
 	public function replace() {
 		// A comment
+		$x = 5 + 5;
+		$y = array(1, 2);
 	}
 }
