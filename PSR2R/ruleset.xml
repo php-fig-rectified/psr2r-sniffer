@@ -52,7 +52,6 @@
     <rule ref="Squiz.PHP.NonExecutableCode"/>
     <rule ref="Generic.PHP.NoSilencedErrors"/>
     <rule ref="Generic.PHP.LowerCaseConstant"/>
-	<rule ref="Squiz.PHP.LowercasePHPFunctions"/>
 
     <rule ref="Squiz.Scope.MemberVarScope"/>
     <rule ref="Squiz.Scope.MethodScope"/>
