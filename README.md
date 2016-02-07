@@ -24,13 +24,13 @@ vendor/bin/phpcs --standard=/path/to/ruleset.xml /path/to/your/files
 // Sniffs and fixes
 vendor/bin/phpcbf --standard=/path/to/ruleset.xml /path/to/your/files
 ```
-To use PSR-2-R by default replace `/path/to/ruleset.xml` above with `vendor/fig-r/psr-2-r/sniffs/PSR2R/ruleset.xml`.
+To use PSR-2-R by default replace `/path/to/ruleset.xml` above with `vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml`.
 If you don't want to append this all the time, make a small wrapper script that internally calls phpcs/phpcbf this way.
 
 ### Example
 So, if you want to run the sniffer over your root `src` folder, run:
 ```
-vendor/bin/phpcs --standard=vendor/fig-r/psr-2-r/sniffs/PSR2R/ruleset.xml src
+vendor/bin/phpcs --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml src
 ```
 
 ### Useful commands
