@@ -12,6 +12,10 @@
  *
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+namespace PSR2R\Sniffs\ControlStructures;
+
+use PHP_CodeSniffer_File;
+use PHP_CodeSniffer_Sniff;
 
 /**
  * PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff.
@@ -28,57 +32,54 @@
  *
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PSR2R_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSniffer_Sniff
-{
-    /**
+class ElseIfDeclarationSniff implements PHP_CodeSniffer_Sniff {
+
+	/**
      * Returns an array of tokens this test wants to listen for.
      *
      * @return array
      */
-    public function register()
-    {
-        return [
-                T_ELSE,
-                T_ELSEIF,
-               ];
-    }//end register()
+	public function register() {
+		return [
+				T_ELSE,
+				T_ELSEIF,
+			   ];
+	}//end register()
 
 
-    /**
+	/**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the current token in the
      *   stack passed in $tokens.
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-    {
-        $tokens = $phpcsFile->getTokens();
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+		$tokens = $phpcsFile->getTokens();
 
-        if ($tokens[$stackPtr]['code'] === T_ELSEIF) {
-            $phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'elseif');
+		if ($tokens[$stackPtr]['code'] === T_ELSEIF) {
+			$phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'elseif');
 
-            return;
-        }
+			return;
+		}
 
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if ($tokens[$next]['code'] === T_IF) {
-            $phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'else if');
-            $error = 'Usage of ELSE IF is discouraged; use ELSEIF instead';
-            $fix = $phpcsFile->addFixableWarning($error, $stackPtr, 'NotAllowed');
+		$next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		if ($tokens[$next]['code'] === T_IF) {
+			$phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'else if');
+			$error = 'Usage of ELSE IF is discouraged; use ELSEIF instead';
+			$fix = $phpcsFile->addFixableWarning($error, $stackPtr, 'NotAllowed');
 
-            if ($fix === true) {
-                $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->replaceToken($stackPtr, 'elseif');
-                for ($i = ($stackPtr + 1); $i <= $next; $i++) {
-                    $phpcsFile->fixer->replaceToken($i, '');
-                }
+			if ($fix === true) {
+				$phpcsFile->fixer->beginChangeset();
+				$phpcsFile->fixer->replaceToken($stackPtr, 'elseif');
+				for ($i = ($stackPtr + 1); $i <= $next; $i++) {
+					$phpcsFile->fixer->replaceToken($i, '');
+				}
 
-                $phpcsFile->fixer->endChangeset();
-            }
-        }
-    }//end process()
+				$phpcsFile->fixer->endChangeset();
+			}
+		}
+	}//end process()
 }//end class
-
