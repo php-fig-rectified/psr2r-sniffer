@@ -9,22 +9,31 @@ This uses [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniff
 It can detect all issues and fix some of them automatically and is ideal for CI integration
 (travis, jenkins, circlci etc).
 
-### Configuration
-You can use PSR-2-R by default.
-For that replace `/path/to/ruleset.xml` in the usage section with `vendor/fig-r/psr-2-r/sniffs/PSR2R/ruleset.xml`
 
-If you don't want to append this all the time, make a small wrapper script that internally calls phpcs/phpcbf this way.
+### How to use for your project
+Most likely you are using composer. As such, put it into the require-dev dependencies:
+```
+composer require --dev fig-r/psr2r-sniffer
+```
 
-### Usage
+You can then use it like this:
 ```
 // Sniffs only
 vendor/bin/phpcs --standard=/path/to/ruleset.xml /path/to/your/files
- 
-// Sniffs and fixes 
+
+// Sniffs and fixes
 vendor/bin/phpcbf --standard=/path/to/ruleset.xml /path/to/your/files
 ```
+To use PSR-2-R by default replace `/path/to/ruleset.xml` above with `vendor/fig-r/psr-2-r/sniffs/PSR2R/ruleset.xml`.
+If you don't want to append this all the time, make a small wrapper script that internally calls phpcs/phpcbf this way.
 
-#### Useful commands
+### Example
+So, if you want to run the sniffer over your root `src` folder, run:
+```
+vendor/bin/phpcs --standard=vendor/fig-r/psr-2-r/sniffs/PSR2R/ruleset.xml src
+```
+
+### Useful commands
 Verbose output with `-v` is always useful.
 
 If you want a list of all sniffs in this standard, use `-e`:
@@ -36,6 +45,11 @@ It will them all grouped by their standard name.
 To just run a single sniff, use `--sniffs=...` and a comma separated list of sniffs, .e.g.:
 ```
 vendor/bin/phpcs --standard=/path/to/ruleset.xml --sniffs=PSR2R.Files.EndFileNewline
+```
+
+Usually, if you run it over your complete repository, you would want to exclude dirs like `vendor`:
+```
+vendor/bin/phpcs --standard=/path/to/ruleset.xml --ignore=vendor/ ./
 ```
 
 ### Writing new sniffs
