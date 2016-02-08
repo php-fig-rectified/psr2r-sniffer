@@ -110,20 +110,20 @@ Using the verbose option:
 ```php
 ...
     protected static function _optionsToString($options) {
-// T_WHITESPACE (858) line=100, column=1, length=4, level=1, conditions={"9":358}
-// T_PROTECTED (859) line=100, column=5, length=9, level=1, conditions={"9":358}
-// T_WHITESPACE (860) line=100, column=14, length=1, level=1, conditions={"9":358}
-// T_STATIC (861) line=100, column=15, length=6, level=1, conditions={"9":358}
-// T_WHITESPACE (862) line=100, column=21, length=1, level=1, conditions={"9":358}
-// T_FUNCTION (863) line=100, column=22, length=8, parenthesis_opener=866, parenthesis_closer=868, parenthesis_owner=863, scope_condition=863, scope_opener=870, scope_closer=1002, level=1, conditions={"9":358}
-// T_WHITESPACE (864) line=100, column=30, length=1, level=1, conditions={"9":358}
-// T_STRING (865) line=100, column=31, length=16, level=1, conditions={"9":358}
-// T_OPEN_PARENTHESIS (866) line=100, column=47, length=1, parenthesis_opener=866, parenthesis_owner=863, parenthesis_closer=868, level=1, conditions={"9":358}
-// T_VARIABLE (867) line=100, column=48, length=8, nested_parenthesis={"866":868}, level=1, conditions={"9":358}
-// T_CLOSE_PARENTHESIS (868) line=100, column=56, length=1, parenthesis_owner=863, parenthesis_opener=866, parenthesis_closer=868, level=1, conditions={"9":358}
-// T_WHITESPACE (869) line=100, column=57, length=1, level=1, conditions={"9":358}
-// T_OPEN_CURLY_BRACKET (870) line=100, column=58, length=1, bracket_opener=870, bracket_closer=1002, scope_condition=863, scope_opener=870, scope_closer=1002, level=1, conditions={"9":358}
-// T_WHITESPACE (871) line=100, column=59, length=0, level=2, conditions={"9":358,"863":337}
+// T_WHITESPACE (935) code=379, line=105, column=1, length=1, level=1, conditions={"9":358}, content=`\t`
+// T_PROTECTED (936) code=348, line=105, column=2, length=9, level=1, conditions={"9":358}, content=`protected`
+// T_WHITESPACE (937) code=379, line=105, column=11, length=1, level=1, conditions={"9":358}, content=` `
+// T_STATIC (938) code=352, line=105, column=12, length=6, level=1, conditions={"9":358}, content=`static`
+// T_WHITESPACE (939) code=379, line=105, column=18, length=1, level=1, conditions={"9":358}, content=` `
+// T_FUNCTION (940) code=337, line=105, column=19, length=8, parenthesis_opener=943, parenthesis_closer=945, parenthesis_owner=940, scope_condition=940, scope_opener=947, scope_closer=1079, level=1, conditions={"9":358}, content=`function`
+// T_WHITESPACE (941) code=379, line=105, column=27, length=1, level=1, conditions={"9":358}, content=` `
+// T_STRING (942) code=310, line=105, column=28, length=16, level=1, conditions={"9":358}, content=`_optionsToString`
+// T_OPEN_PARENTHESIS (943) code=PHPCS_T_OPEN_PARENTHESIS, line=105, column=44, length=1, parenthesis_opener=943, parenthesis_owner=940, parenthesis_closer=945, level=1, conditions={"9":358}, content=`(`
+// T_VARIABLE (944) code=312, line=105, column=45, length=8, nested_parenthesis={"943":945}, level=1, conditions={"9":358}, content=`$options`
+// T_CLOSE_PARENTHESIS (945) code=PHPCS_T_CLOSE_PARENTHESIS, line=105, column=53, length=1, parenthesis_owner=940, parenthesis_opener=943, parenthesis_closer=945, level=1, conditions={"9":358}, content=`)`
+// T_WHITESPACE (946) code=379, line=105, column=54, length=1, level=1, conditions={"9":358}, content=` `
+// T_OPEN_CURLY_BRACKET (947) code=PHPCS_T_OPEN_CURLY_BRACKET, line=105, column=55, length=1, bracket_opener=947, bracket_closer=1079, scope_condition=940, scope_opener=947, scope_closer=1079, level=1, conditions={"9":358}, content=`{`
+// T_WHITESPACE (948) code=379, line=105, column=56, length=0, level=2, conditions={"9":358,"940":337}, content=`\n`
 ...
 ```
 
