@@ -1,4 +1,10 @@
 # PSR-2-R Sniffer
+[![Build Status](https://api.travis-ci.org/php-fig-rectified/psr2r-sniffer.svg)](https://travis-ci.org/php-fig-rectified/psr2r-sniffer)
+[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%205.4-8892BF.svg)](https://php.net/)
+[![License](https://poser.pugx.org/fig-r/psr2r-sniffer/license.svg)](https://packagist.org/packages/fig-r/psr2r-sniffer)
+[![Total Downloads](https://poser.pugx.org/fig-r/psr2r-sniffer/d/total.svg)](https://packagist.org/packages/fig-r/psr2r-sniffer)
+[![Coding Standards](https://img.shields.io/badge/cs-PSR--2--R-yellow.svg)](https://github.com/php-fig-rectified/fig-rectified-standards)
+
 For details on PSR-2-R see [fig-rectified-standards](https://github.com/php-fig-rectified/fig-rectified-standards).
 
 Documentation @ [/docs/](docs).
