@@ -69,7 +69,7 @@ class Tokenizer {
 			if ($verbose) {
 				$type = $token['type'];
 				$content = $token['content'];
-				$content = str_replace(["\r\n", "\n", "\r", "\t"], ['\r\n', '\n', '\r', '\t'], $content);
+				$content = '`' . str_replace(["\r\n", "\n", "\r", "\t"], ['\r\n', '\n', '\r', '\t'], $content) . '`';
 
 				unset($token['type']);
 				unset($token['content']);
