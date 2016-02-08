@@ -62,6 +62,9 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
+		// TODO: Auto-detect spaces vs tabs, maybe using a trait method indent($index, $this->indent)
+		$this->indent = 1;
+
 		// We can't process SWITCH statements unless we know where they start and end.
 		if (isset($tokens[$stackPtr]['scope_opener']) === false
 			|| isset($tokens[$stackPtr]['scope_closer']) === false

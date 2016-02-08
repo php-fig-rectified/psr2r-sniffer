@@ -32,8 +32,8 @@ class ValidClassBracketsSniff implements PHP_CodeSniffer_Sniff {
 		$found = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, $stackPtr);
 		if ($tokens[$found - 1]['code'] !== T_WHITESPACE) {
 			$error = 'Expected 1 space after class declaration, found 0';
-			$fix = $phpcsFile->addError($error, $found - 1, 'InvalidSpacing', []);
-			if (false && $fix === true && $phpcsFile->fixer->enabled === true) {
+			$fix = $phpcsFile->addFixableError($error, $found - 1, 'InvalidSpacing', []);
+			if ($fix === true && $phpcsFile->fixer->enabled === true) {
 				$phpcsFile->fixer->beginChangeset();
 				$phpcsFile->fixer->addContent($found - 1, ' ');
 				$phpcsFile->fixer->endChangeset();
@@ -49,8 +49,8 @@ class ValidClassBracketsSniff implements PHP_CodeSniffer_Sniff {
 
 		if (strlen($tokens[$found - 1]['content']) > 1 || $tokens[$found - 2]['code'] === T_WHITESPACE) {
 			$error = 'Expected 1 space after class declaration, found ' . strlen($tokens[$found - 1]['content']);
-			$fix = $phpcsFile->addError($error, $found - 1, 'InvalidSpacing', []);
-			if (false && $fix === true && $phpcsFile->fixer->enabled === true) {
+			$fix = $phpcsFile->addFixableError($error, $found - 1, 'InvalidSpacing', []);
+			if ($fix === true && $phpcsFile->fixer->enabled === true) {
 				$phpcsFile->fixer->beginChangeset();
 				$phpcsFile->fixer->replaceToken($found - 1, ' ');
 				$phpcsFile->fixer->endChangeset();
