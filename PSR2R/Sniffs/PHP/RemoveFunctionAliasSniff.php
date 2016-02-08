@@ -2,12 +2,29 @@
 
 namespace PSR2R\Sniffs\PHP;
 
-/**
- * Sniff rule PhpSapiConstant
- */
-class PhpSapiConstantSniff implements \PHP_CodeSniffer_Sniff {
+class RemoveFunctionAliasSniff implements \PHP_CodeSniffer_Sniff {
 
-	const PHP_SAPI = 'PHP_SAPI';
+	/**
+	 * @see http://php.net/manual/en/aliases.php
+	 *
+	 * @var array
+	 */
+	public static $matching = [
+		'is_integer' => 'is_int',
+		'is_long' => 'is_int',
+		'is_real' => 'is_float',
+		'is_double' => 'is_float',
+		'is_writeable' => 'is_writable',
+		'join' => 'explode',
+		'key_exists' => 'array_key_exists', // Deprecated function
+		'sizeof' => 'count',
+		'strchr' => 'strstr',
+		'ini_alter' => 'ini_set',
+		'fputs' => 'fwrite',
+		'die' => 'exit',
+		'chop' => 'rtrim',
+		'print' => 'echo'
+	];
 
 	/**
 	 * Returns an array of tokens this test wants to listen for.
@@ -32,7 +49,8 @@ class PhpSapiConstantSniff implements \PHP_CodeSniffer_Sniff {
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];
 
 		$tokenContent = $tokens[$stackPtr]['content'];
-		if (strtolower($tokenContent) !== 'php_sapi_name') {
+		$key = strtolower($tokenContent);
+		if (!isset(self::$matching[$key])) {
 			return;
 		}
 
@@ -46,18 +64,10 @@ class PhpSapiConstantSniff implements \PHP_CodeSniffer_Sniff {
 			return;
 		}
 
-		$closingBrace = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
-		if (!$closingBrace || $tokens[$closingBrace]['type'] !== 'T_CLOSE_PARENTHESIS') {
-			return;
-		}
-
-		$error = $tokenContent .'() found, should be const ' . self::PHP_SAPI . '.';
+		$error = 'Function name ' . $tokenContent .'() found, should be ' . self::$matching[$key] . '().';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr);
 		if ($fix) {
-			$phpcsFile->fixer->replaceToken($stackPtr, self::PHP_SAPI);
-			for ($i = $openingBrace; $i <= $closingBrace; ++$i) {
-				$phpcsFile->fixer->replaceToken($i, '');
-			}
+			$phpcsFile->fixer->replaceToken($stackPtr, self::$matching[$key]);
 		}
 	}
 
