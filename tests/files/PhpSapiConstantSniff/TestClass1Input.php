@@ -5,18 +5,18 @@ namespace Fixtures\PhpSapiConstantSniff\Input;
 class TestClass1Input {
 
 	/**
-     * @return void
-     */
+	 * @return void
+	 */
 	public function replaceFunction() {
-		$foo = PHP_SAPI;
-		$foo = substr(PHP_SAPI, 0, 3);
+		$foo = php_sapi_name();
+		$foo = substr(php_sapi_name(), 0, 3);
 	}
 
 	/**
-     * Do not replace
-     *
-     * @return void
-     */
+	 * Do not replace
+	 *
+	 * @return void
+	 */
 	public function php_sapi_name() {
 		$foo = $this->php_sapi_name();
 		$foo = php_sapi_name($foo);

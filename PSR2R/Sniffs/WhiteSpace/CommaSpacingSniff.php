@@ -42,10 +42,13 @@ class CommaSpacingSniff implements \PHP_CodeSniffer_Sniff {
 		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
 
 		if ($tokens[$previous]['code'] !== T_WHITESPACE && ($previous !== $stackPtr - 1)) {
+			if ($tokens[$previous]['code'] === T_COMMA) {
+				return;
+			}
+
 			$error = 'Space before comma, expected none, though';
-			$fix = $phpcsFile->addFixableError($error, $next);
+			$fix = $phpcsFile->addFixableError($error, $previous);
 			if ($fix) {
-				$content = $tokens[$previous]['content'];
 				$phpcsFile->fixer->replaceToken($previous + 1, '');
 			}
 		}
