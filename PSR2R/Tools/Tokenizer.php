@@ -6,35 +6,65 @@ class Tokenizer {
 	const STANDARD = 'PSR2R/ruleset.xml';
 
 	/**
+	 * @var string
+	 */
+	protected $root;
+
+	/**
+	 * @var string
+	 */
+	protected $path;
+
+	/**
+	 * @var bool
+	 */
+	protected $verbose;
+
+	/**
+	 * @param array $argv
+	 * @throws \Exception
+	 */
+	public function __construct($argv) {
+
+		$file = !empty($argv[1]) ? $argv[1] : null;
+		if (!$file || !file_exists($file)) {
+			throw new \Exception('Please provide a valid file.');
+		}
+		$file = realpath($file);
+
+		$this->root = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR;
+		$this->path = $file;
+		$this->verbose = !empty($argv[2]) && in_array($argv[2], ['--verbose', '-v']);
+	}
+
+	/**
 	 * @param string $path Path to file to tokenize.
 	 * @param bool $verbose Verbose flag.
 	 * @return void
 	 */
-	public function tokenize($path, $verbose) {
-		$path = realpath($path);
-
+	public function tokenize() {
 		$_SERVER['argv'] = [];
 		$_SERVER['argv'][] = '--encoding=utf8';
 
-		$standard = self::STANDARD;
+		$standard = $this->root . self::STANDARD;
 		$_SERVER['argv'][] = '--standard=' . $standard;
 
-		$_SERVER['argv'][] = $path;
+		$_SERVER['argv'][] = $this->path;
 		$_SERVER['argc'] = count($_SERVER['argv']);
 		$res = [];
-		$tokens = $this->_getTokens($path);
-		$array = file($path);
+		$tokens = $this->_getTokens($this->path);
+		$array = file($this->path);
 		foreach ($array as $key => $row) {
 			$res[] = rtrim($row);
-			if ($tokenStrings = $this->_tokenize($key + 1, $tokens, $verbose)) {
+			if ($tokenStrings = $this->_tokenize($key + 1, $tokens)) {
 				foreach ($tokenStrings as $string) {
 					$res[] = '// ' . $string;
 				}
 			}
 		}
 		$content = implode(PHP_EOL, $res);
-		echo 'Tokenizing: ' . $path . PHP_EOL;
-		$newPath = dirname($path) . DIRECTORY_SEPARATOR . pathinfo($path, PATHINFO_FILENAME) . '.tokens.' . pathinfo($path, PATHINFO_EXTENSION);
+		echo 'Tokenizing: ' . $this->path . PHP_EOL;
+		$newPath = dirname($this->path) . DIRECTORY_SEPARATOR . pathinfo($this->path, PATHINFO_FILENAME) . '.tokens.' . pathinfo($this->path, PATHINFO_EXTENSION);
 		file_put_contents($newPath, $content);
 		echo 'Token file: ' . $newPath . PHP_EOL;
 	}
@@ -45,7 +75,7 @@ class Tokenizer {
 	 */
 	protected function _getTokens($path) {
 		$phpcs = new \PHP_CodeSniffer();
-		$phpcs->process([], self::STANDARD, []);
+		$phpcs->process([], $this->root . self::STANDARD, []);
 		$file = $phpcs->processFile($path);
 		$file->start();
 		return $file->getTokens();
@@ -57,7 +87,7 @@ class Tokenizer {
 	 * @param bool $verbose Verbose flag
 	 * @return array
 	 */
-	protected function _tokenize($row, $tokens, $verbose) {
+	protected function _tokenize($row, $tokens) {
 		$pieces = [];
 		foreach ($tokens as $key => $token) {
 			if ($token['line'] > $row) {
@@ -66,7 +96,7 @@ class Tokenizer {
 			if ($token['line'] < $row) {
 				continue;
 			}
-			if ($verbose) {
+			if ($this->verbose) {
 				$type = $token['type'];
 				$content = $token['content'];
 				$content = '`' . str_replace(["\r\n", "\n", "\r", "\t"], ['\r\n', '\n', '\r', '\t'], $content) . '`';
@@ -90,7 +120,7 @@ class Tokenizer {
 				$pieces[] = $token['type'];
 			}
 		}
-		if ($verbose) {
+		if ($this->verbose) {
 			return $pieces;
 		}
 		return [implode(' ', $pieces)];

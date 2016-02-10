@@ -89,12 +89,12 @@ It really helps to see what the code looks like for the sniffer.
 So we can parse a PHP file into its tokens using the following tool:
 
 ```
-bash tokenize.sh /path/to/file
+bin/tokenize /path/to/file
 ```
 
 With more verbose output:
 ```
-bash tokenize.sh /path/to/file -v
+bin/tokenize /path/to/file -v
 ```
 
 For a file `MyClass.php` it will create a token file `MyClass.tokens.php` in the same folder.
