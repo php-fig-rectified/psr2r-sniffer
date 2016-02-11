@@ -12,11 +12,11 @@ $options = [
 ];
 foreach ($options as $file) {
 	if (file_exists($file)) {
-		define('CODESNIFFER_COMPOSER_INSTALL', $file);
+		define('SNIFFER_COMPOSER_INSTALL', $file);
 		break;
 	}
 }
-require CODESNIFFER_COMPOSER_INSTALL;
+require SNIFFER_COMPOSER_INSTALL;
 
 $tokenizer = new \PSR2R\Tools\Tokenizer($argv);
 

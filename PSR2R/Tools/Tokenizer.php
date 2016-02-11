@@ -56,7 +56,8 @@ class Tokenizer {
 		$array = file($this->path);
 		foreach ($array as $key => $row) {
 			$res[] = rtrim($row);
-			if ($tokenStrings = $this->_tokenize($key + 1, $tokens)) {
+			$tokenStrings = $this->_tokenize($key + 1, $tokens);
+			if ($tokenStrings) {
 				foreach ($tokenStrings as $string) {
 					$res[] = '// ' . $string;
 				}
