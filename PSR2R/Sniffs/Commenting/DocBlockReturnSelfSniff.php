@@ -112,11 +112,11 @@ class DocBlockReturnSelfSniff implements \PHP_CodeSniffer_Sniff {
 
 		$line = $tokens[$stackPointer]['line'];
 		$beginningOfLine = $stackPointer;
-		while ($tokens[$beginningOfLine - 1]['line'] === $line) {
+		while (!empty($tokens[$beginningOfLine - 1]) && $tokens[$beginningOfLine - 1]['line'] === $line) {
 			$beginningOfLine--;
 		}
 
-		if ($tokens[$beginningOfLine - 2]['type'] === 'T_DOC_COMMENT_CLOSE_TAG') {
+		if (!empty($tokens[$beginningOfLine - 2]) && $tokens[$beginningOfLine - 2]['type'] === 'T_DOC_COMMENT_CLOSE_TAG') {
 			return $beginningOfLine - 2;
 		}
 
