@@ -38,8 +38,6 @@ class Tokenizer {
 	}
 
 	/**
-	 * @param string $path Path to file to tokenize.
-	 * @param bool $verbose Verbose flag.
 	 * @return void
 	 */
 	public function tokenize() {
@@ -85,7 +83,6 @@ class Tokenizer {
 	/**
 	 * @param int $row Current row
 	 * @param array $tokens Tokens array
-	 * @param bool $verbose Verbose flag
 	 * @return array
 	 */
 	protected function _tokenize($row, $tokens) {
