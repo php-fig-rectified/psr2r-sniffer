@@ -62,8 +62,7 @@ class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariabl
 			$data = [$tokens[$stackPtr]['content']];
 			$phpcsFile->addError($error, $stackPtr, 'ScopeMissing', $data);
 		}
-	}//end processMemberVar()
-
+	}
 
 	/**
      * Processes normal variables.

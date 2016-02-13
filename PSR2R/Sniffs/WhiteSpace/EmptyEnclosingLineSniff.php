@@ -1,8 +1,8 @@
 <?php
 
-namespace PSR2R\Sniffs\Classes;
+namespace PSR2R\Sniffs\WhiteSpace;
 
-class BraceOnSameLineSniff implements \PHP_CodeSniffer_Sniff {
+class EmptyEnclosingLineSniff implements \PHP_CodeSniffer_Sniff {
 
 	/**
 	 * Returns an array of tokens this test wants to listen for.
@@ -15,7 +15,6 @@ class BraceOnSameLineSniff implements \PHP_CodeSniffer_Sniff {
 			T_INTERFACE,
 			T_TRAIT,
 		];
-
 	}
 
 	/**
@@ -36,24 +35,24 @@ class BraceOnSameLineSniff implements \PHP_CodeSniffer_Sniff {
 			return;
 		}
 
-		$curlyBrace = $tokens[$stackPtr]['scope_opener'];
-		$lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($curlyBrace - 1), $stackPtr, true);
-		$classLine = $tokens[$lastContent]['line'];
-		$braceLine = $tokens[$curlyBrace]['line'];
-		if ($braceLine !== $classLine) {
-			$phpcsFile->recordMetric($stackPtr, 'Class opening brace placement', 'same line');
-			$error = 'Opening brace of a %s must be on the same line as the definition';
+		$curlyBraceEndIndex = $tokens[$stackPtr]['scope_closer'];
 
-			$fix = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceNewLine', $errorData);
+		$lastContentIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($curlyBraceEndIndex - 1), $stackPtr, true);
+		$contentLine = $tokens[$lastContentIndex]['line'];
+		$braceLine = $tokens[$curlyBraceEndIndex]['line'];
+
+		if ($braceLine !== $contentLine + 2) {
+			$phpcsFile->recordMetric($stackPtr, 'Class closing brace placement', 'lines');
+			$error = 'Closing brace of a %s must have a new line between itself and the last content.';
+
+			$fix = $phpcsFile->addFixableError($error, $curlyBraceEndIndex, 'CloseBraceNewLine', $errorData);
 			if ($fix === true) {
-				$phpcsFile->fixer->replaceToken($lastContent, $tokens[$lastContent]['content'] . ' ');
-
-				for ($i = $lastContent + 1; $i < $curlyBrace; $i++) {
-					$phpcsFile->fixer->replaceToken($i, '');
+				if ($braceLine < $contentLine + 2) {
+					$phpcsFile->fixer->addNewlineBefore($curlyBraceEndIndex);
+				} else {
+					$phpcsFile->fixer->replaceToken($curlyBraceEndIndex - 1, '');
 				}
 			}
-
-			return;
 		}
 	}
 
