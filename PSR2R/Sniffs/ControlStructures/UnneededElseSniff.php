@@ -119,7 +119,7 @@ class UnneededElseSniff extends AbstractSniff {
 
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param $stackPtr
+	 * @param int $stackPtr
 	 * @return bool
 	 */
 	protected function isNotLastCondition(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
@@ -138,7 +138,7 @@ class UnneededElseSniff extends AbstractSniff {
 
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param $stackPtr
+	 * @param int $stackPtr
 	 * @return void
 	 */
 	protected function fixElseIfToIf(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {

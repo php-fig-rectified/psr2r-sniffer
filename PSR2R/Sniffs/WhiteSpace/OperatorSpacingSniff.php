@@ -6,21 +6,21 @@ namespace PSR2R\Sniffs\WhiteSpace;
  */
 class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 
-/**
- * A list of tokenizers this sniff supports.
- *
- * @var array
- */
+	/**
+	 * A list of tokenizers this sniff supports.
+	 *
+	 * @var array
+	 */
 	public $supportedTokenizers = [
 		'PHP',
 		'JS',
 	];
 
-/**
- * Returns an array of tokens this test wants to listen for.
- *
- * @return array
- */
+	/**
+	 * Returns an array of tokens this test wants to listen for.
+	 *
+	 * @return array
+	 */
 	public function register() {
 		$comparison = \PHP_CodeSniffer_Tokens::$comparisonTokens;
 		$operators = \PHP_CodeSniffer_Tokens::$operators;
@@ -29,14 +29,14 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 		return array_unique(array_merge($comparison, $operators, $assignment));
 	}
 
-/**
- * Processes this sniff, when one of its tokens is encountered.
- *
- * @param \PHP_CodeSniffer_File $phpcsFile The current file being checked.
- * @param int $stackPtr  The position of the current token in the
- *    stack passed in $tokens.
- * @return void
- */
+	/**
+	 * Processes this sniff, when one of its tokens is encountered.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The current file being checked.
+	 * @param int $stackPtr  The position of the current token in the
+	 *    stack passed in $tokens.
+	 * @return void
+	 */
 	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 

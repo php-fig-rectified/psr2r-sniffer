@@ -141,8 +141,7 @@ class Tokenizer {
 			}
 			if (empty($value)) {
 				$results .= "--$option";
-			}
-			else {
+			} else {
 				$results .= "--$option=$value";
 			}
 		}

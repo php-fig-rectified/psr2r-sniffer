@@ -48,8 +48,8 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	 * Checks if the given token scope requires brackets when used standalone.
 	 *
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param $openingBraceIndex
-	 * @param $closingBraceIndex
+	 * @param int $openingBraceIndex
+	 * @param int $closingBraceIndex
 	 * @return bool
 	 */
 	protected function needsBrackets(\PHP_CodeSniffer_File $phpcsFile, $openingBraceIndex, $closingBraceIndex) {
