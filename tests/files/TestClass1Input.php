@@ -22,7 +22,7 @@ class TestClass1Input {
 		 *
 		 * @return void
 		 */
-	public $x = 'y';
+	public $y = 'y';
 
 /**
  * @param \Bar\Foo
@@ -31,6 +31,13 @@ class TestClass1Input {
  */
 	public function replace() {
 		// A comment
+		$a = 'b'.$c;
+		$a = 'b'  .  $c;
+		$a = 'b'
+			. $c;
+		$a = 'b' .
+			$c;
+
 		$x = 5 + 5;
 		$y = [1, 2];
 
