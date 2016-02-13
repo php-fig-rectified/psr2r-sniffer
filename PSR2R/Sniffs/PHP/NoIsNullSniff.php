@@ -47,7 +47,7 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 
 		$closingBraceIndex = $tokens[$openingBraceIndex]['parenthesis_closer'];
 
-		$error = $tokenContent .'() found, should be strict === null check.';
+		$error = $tokenContent . '() found, should be strict === null check.';
 
 		$possibleCastIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
 		$negated = false;

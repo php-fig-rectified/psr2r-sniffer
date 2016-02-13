@@ -64,7 +64,7 @@ class RemoveFunctionAliasSniff implements \PHP_CodeSniffer_Sniff {
 			return;
 		}
 
-		$error = 'Function name ' . $tokenContent .'() found, should be ' . self::$matching[$key] . '().';
+		$error = 'Function name ' . $tokenContent . '() found, should be ' . self::$matching[$key] . '().';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr);
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr, self::$matching[$key]);

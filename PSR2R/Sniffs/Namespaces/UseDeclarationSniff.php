@@ -73,7 +73,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 			$error = 'There must be one USE keyword per declaration';
 			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
 			if ($fix === true) {
-				$phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.'use ');
+				$phpcsFile->fixer->replaceToken($next, ';' . $phpcsFile->eolChar . 'use ');
 			}
 		}
 

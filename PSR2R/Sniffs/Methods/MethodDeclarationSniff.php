@@ -101,9 +101,9 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 				$fixes[$final] = '';
 				$fixes[($final + 1)] = '';
 				if (isset($fixes[$visibility]) === true) {
-					$fixes[$visibility] = 'final '.$fixes[$visibility];
+					$fixes[$visibility] = 'final ' . $fixes[$visibility];
 				} else {
-					$fixes[$visibility] = 'final '.$tokens[$visibility]['content'];
+					$fixes[$visibility] = 'final ' . $tokens[$visibility]['content'];
 				}
 			}
 		}
@@ -115,9 +115,9 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 				$fixes[$abstract] = '';
 				$fixes[($abstract + 1)] = '';
 				if (isset($fixes[$visibility]) === true) {
-					$fixes[$visibility] = 'abstract '.$fixes[$visibility];
+					$fixes[$visibility] = 'abstract ' . $fixes[$visibility];
 				} else {
-					$fixes[$visibility] = 'abstract '.$tokens[$visibility]['content'];
+					$fixes[$visibility] = 'abstract ' . $tokens[$visibility]['content'];
 				}
 			}
 		}
@@ -129,9 +129,9 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 				$fixes[$static] = '';
 				$fixes[($static + 1)] = '';
 				if (isset($fixes[$visibility]) === true) {
-					$fixes[$visibility] = $fixes[$visibility].' static';
+					$fixes[$visibility] = $fixes[$visibility] . ' static';
 				} else {
-					$fixes[$visibility] = $tokens[$visibility]['content'].' static';
+					$fixes[$visibility] = $tokens[$visibility]['content'] . ' static';
 				}
 			}
 		}
