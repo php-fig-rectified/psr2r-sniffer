@@ -15,7 +15,7 @@ class PhpSapiConstantSniff implements \PHP_CodeSniffer_Sniff {
 	 * @return array
 	 */
 	public function register() {
-		return array(T_STRING);
+		return [T_STRING];
 	}
 
 	/**

@@ -11,10 +11,10 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
  *
  * @var array
  */
-	public $supportedTokenizers = array(
+	public $supportedTokenizers = [
 		'PHP',
 		'JS',
-	);
+	];
 
 /**
  * Returns an array of tokens this test wants to listen for.
@@ -107,7 +107,7 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 
 				// A list of tokens that indicate that the token is not
 				// part of an arithmetic operation.
-				$invalidTokens = array(
+				$invalidTokens = [
 					T_COMMA,
 					T_OPEN_PARENTHESIS,
 					T_OPEN_SQUARE_BRACKET,
@@ -116,7 +116,7 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 					T_INLINE_THEN,
 					T_INLINE_ELSE,
 					T_CASE,
-				);
+				];
 
 				if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
 					// Just trying to use a negative value; eg. myFunction($var, -2).

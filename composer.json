@@ -1,6 +1,7 @@
 {
 	"name": "fig-r/psr2r-sniffer",
 	"license": "MIT",
+	"description": "Code-Sniffer, Auto-Fixer and Tokenizer for PSR2-R",
 	"authors": [
 		{
 			"name": "Mark Scherer",

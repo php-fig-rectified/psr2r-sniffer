@@ -38,7 +38,7 @@ class NamespaceDeclarationSniff implements PHP_CodeSniffer_Sniff {
      * @return array
      */
 	public function register() {
-		return array(T_NAMESPACE);
+		return [T_NAMESPACE];
 
 	}//end register()
 

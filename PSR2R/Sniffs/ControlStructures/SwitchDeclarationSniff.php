@@ -45,7 +45,7 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
      * @return array
      */
 	public function register() {
-		return array(T_SWITCH);
+		return [T_SWITCH];
 
 	}//end register()
 
@@ -90,10 +90,10 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 			if ($tokens[$nextCase]['content'] !== strtolower($tokens[$nextCase]['content'])) {
 				$expected = strtolower($tokens[$nextCase]['content']);
 				$error = strtoupper($type).' keyword must be lowercase; expected "%s" but found "%s"';
-				$data = array(
+				$data = [
 							 $expected,
 							 $tokens[$nextCase]['content'],
-							);
+							];
 
 				$fix = $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
 				if ($fix === true) {
@@ -231,7 +231,7 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
      */
 	protected function _findNextCase(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $end) {
 		$tokens = $phpcsFile->getTokens();
-		while (($stackPtr = $phpcsFile->findNext(array(T_CASE, T_DEFAULT, T_SWITCH), $stackPtr, $end)) !== false) {
+		while (($stackPtr = $phpcsFile->findNext([T_CASE, T_DEFAULT, T_SWITCH], $stackPtr, $end)) !== false) {
 			// Skip nested SWITCH statements; they are handled on their own.
 			if ($tokens[$stackPtr]['code'] === T_SWITCH) {
 				$stackPtr = $tokens[$stackPtr]['scope_closer'];

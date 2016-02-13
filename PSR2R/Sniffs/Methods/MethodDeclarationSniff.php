@@ -42,7 +42,7 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
      * Constructs a Squiz_Sniffs_Scope_MethodScopeSniff.
      */
 	public function __construct() {
-		parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION));
+		parent::__construct([T_CLASS, T_INTERFACE], [T_FUNCTION]);
 
 	}//end __construct()
 
@@ -92,7 +92,7 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 			}
 		}
 
-		$fixes = array();
+		$fixes = [];
 
 		if ($visibility !== 0 && $final > $visibility) {
 			$error = 'The final declaration must precede the visibility declaration';

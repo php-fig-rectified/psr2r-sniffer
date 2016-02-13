@@ -28,11 +28,11 @@ class TabAndSpaceSniff implements \PHP_CodeSniffer_Sniff {
 	 *
 	 * @var array
 	 */
-	public $supportedTokenizers = array(
+	public $supportedTokenizers = [
 		'PHP',
 		'JS',
 		'CSS'
-	);
+	];
 
 	/**
 	 * Returns an array of tokens this test wants to listen for.
@@ -40,7 +40,7 @@ class TabAndSpaceSniff implements \PHP_CodeSniffer_Sniff {
 	 * @return array
 	 */
 	public function register() {
-		return array(T_WHITESPACE);
+		return [T_WHITESPACE];
 	}
 
 	/**

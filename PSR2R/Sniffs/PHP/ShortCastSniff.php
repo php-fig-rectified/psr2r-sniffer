@@ -20,7 +20,7 @@ class ShortCastSniff implements \PHP_CodeSniffer_Sniff {
 	 * @return array
 	 */
 	public function register() {
-		return array(T_BOOL_CAST, T_INT_CAST, T_BOOLEAN_NOT);
+		return [T_BOOL_CAST, T_INT_CAST, T_BOOLEAN_NOT];
 	}
 
 	/**

@@ -3,8 +3,9 @@
 namespace PSR2R\Sniffs\PHP;
 
 /**
+ * Always use simple casts instead of method invocation.
  */
-class PreferCastOverFunctionSniff implements \PHP_CodeSniffer_Sniff {
+class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 
 	/**
 	 * @var array
@@ -22,7 +23,7 @@ class PreferCastOverFunctionSniff implements \PHP_CodeSniffer_Sniff {
 	 * @return array
 	 */
 	public function register() {
-		return array(T_STRING);
+		return [T_STRING];
 	}
 
 	/**
@@ -49,107 +50,45 @@ class PreferCastOverFunctionSniff implements \PHP_CodeSniffer_Sniff {
 			return;
 		}
 
-		$openingBrace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-		if (!$openingBrace || $tokens[$openingBrace]['type'] !== 'T_OPEN_PARENTHESIS') {
+		$openingBraceIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		if (!$openingBraceIndex || $tokens[$openingBraceIndex]['type'] !== 'T_OPEN_PARENTHESIS') {
 			return;
 		}
 
-		$closingBrace = $tokens[$openingBrace]['parenthesis_closer'];
+		$closingBraceIndex = $tokens[$openingBraceIndex]['parenthesis_closer'];
+
+		// We must ignore when commas are encountered
+		if ($this->contains($phpcsFile, 'T_COMMA', $openingBraceIndex + 1, $closingBraceIndex - 1)) {
+			return;
+		}
 
 		$error = $tokenContent .'() found, should be ' . self::$matching[$key] . ' cast.';
 
-		//FIXME: make fixable
-		if (true) {
-			$phpcsFile->addError($error, $stackPtr);
-			return;
-		}
-
 		$fix = $phpcsFile->addFixableError($error, $stackPtr);
 		if ($fix) {
-			//
+			$this->fixContent($phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex);
 		}
 	}
 
-    /**
-     * @param \SplFileInfo $file
-     * @param string $content
-     *
-     * @return string
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $stackPtr
+	 * @param int $openingBraceIndex
+	 * @param int $closingBraceIndex
+	 * @return void
      */
-    public function fix(\SplFileInfo $file, $content)
-    {
-        $tokens = Tokens::fromCode($content);
+	protected function fixContent(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex) {
+		$needsBrackets = $this->needsBrackets($phpcsFile, $openingBraceIndex, $closingBraceIndex);
 
-        $this->fixContent($tokens);
+		$tokens = $phpcsFile->getTokens();
 
-        return $tokens->generateCode();
-    }
+		$cast = '(' . self::$matching[$key] . ')';
 
-    /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
-     *
-     * @return void
-     */
-    protected function fixContent(Tokens $tokens)
-    {
-        $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];
-
-        foreach ($tokens as $index => $token) {
-            $tokenContent = strtolower($token->getContent());
-            if (empty($tokenContent) || !isset(self::$matching[$tokenContent])) {
-                continue;
-            }
-
-            $prevIndex = $tokens->getPrevNonWhitespace($index);
-            if (in_array($tokens[$prevIndex]->getId(), $wrongTokens, true)) {
-                continue;
-            }
-
-            $openingBrace = $tokens->getNextMeaningfulToken($index);
-            if ($tokens[$openingBrace]->getContent() !== '(') {
-                continue;
-            }
-
-            $closingBrace = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openingBrace);
-
-            // Skip for non-trivial cases
-            for ($i = $openingBrace + 1; $i < $closingBrace; ++$i) {
-                if ($tokens[$i]->equals(',')) {
-                    continue 2;
-                }
-            }
-
-            $cast = '(' . self::$matching[$tokenContent] . ')';
-            $tokens[$index]->setContent($cast);
-            $tokens[$openingBrace]->setContent('');
-            $tokens[$closingBrace]->setContent('');
-        }
-    }
-
-    /**
-     * Must run before any cast modifications
-     *
-     * @return int
-     */
-    public function getPriority()
-    {
-        return 10;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLevel()
-    {
-        return FixerInterface::NONE_LEVEL;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return 'Always use simple casts instead of method invocation.';
-    }
+		$phpcsFile->fixer->replaceToken($stackPtr, $cast);
+		if (!$needsBrackets) {
+			$phpcsFile->fixer->replaceToken($openingBraceIndex, '');
+			$phpcsFile->fixer->replaceToken($closingBraceIndex, '');
+		}
+	}
 
 }

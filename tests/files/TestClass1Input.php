@@ -21,6 +21,6 @@ class TestClass1Input {
 	public function replace() {
 		// A comment
 		$x = 5 + 5;
-		$y = array(1, 2);
+		$y = [1, 2];
 	}
 }

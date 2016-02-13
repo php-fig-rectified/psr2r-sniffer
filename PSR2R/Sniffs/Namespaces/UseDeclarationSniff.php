@@ -37,7 +37,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
      * @return array
      */
 	public function register() {
-		return array(T_USE);
+		return [T_USE];
 
 	}//end register()
 
@@ -68,7 +68,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		// Only one USE declaration allowed per statement.
-		$next = $phpcsFile->findNext(array(T_COMMA, T_SEMICOLON), ($stackPtr + 1));
+		$next = $phpcsFile->findNext([T_COMMA, T_SEMICOLON], ($stackPtr + 1));
 		if ($tokens[$next]['code'] === T_COMMA) {
 			$error = 'There must be one USE keyword per declaration';
 			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
@@ -109,7 +109,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 			}
 
 			$error = 'There must be one blank line after the last USE statement; %s found;';
-			$data = array($diff);
+			$data = [$diff];
 			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterLastUse', $data);
 			if ($fix === true) {
 				if ($diff === 0) {
@@ -152,7 +152,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		// Ignore USE keywords for traits.
-		if ($phpcsFile->hasCondition($stackPtr, array(T_CLASS, T_TRAIT)) === true) {
+		if ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT]) === true) {
 			return true;
 		}
 
