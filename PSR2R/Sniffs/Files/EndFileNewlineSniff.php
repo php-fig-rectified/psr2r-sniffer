@@ -35,27 +35,27 @@ use PHP_CodeSniffer_Sniff;
 class EndFileNewlineSniff implements PHP_CodeSniffer_Sniff {
 
 	/**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
+	 * Returns an array of tokens this test wants to listen for.
+	 *
+	 * @return array
+	 */
 	public function register() {
 		return [T_OPEN_TAG];
 	}//end register()
 
 
 	/**
-     * Processes this sniff, when one of its tokens is encountered.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int $stackPtr The position of the current token in
-     *   the stack passed in $tokens.
-     *
-     * @return void
-     */
+	 * Processes this sniff, when one of its tokens is encountered.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
+	 * @param int $stackPtr The position of the current token in
+	 *   the stack passed in $tokens.
+	 *
+	 * @return void
+	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		if ($phpcsFile->findNext(T_INLINE_HTML, ($stackPtr + 1)) !== false) {
-			return ($phpcsFile->numTokens + 1);
+			return $phpcsFile->numTokens + 1;
 		}
 
 		// Skip to the end of the file.
@@ -73,7 +73,7 @@ class EndFileNewlineSniff implements PHP_CodeSniffer_Sniff {
 
 			$phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', '0');
 
-			return ($phpcsFile->numTokens + 1);
+			return $phpcsFile->numTokens + 1;
 		}
 
 		// Go looking for the last non-empty line.
@@ -106,6 +106,7 @@ class EndFileNewlineSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		// Skip the rest of the file.
-		return ($phpcsFile->numTokens + 1);
+		return $phpcsFile->numTokens + 1;
 	}//end process()
+
 }//end class

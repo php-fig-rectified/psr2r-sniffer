@@ -76,7 +76,7 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 	 * @param int $openingBraceIndex
 	 * @param int $closingBraceIndex
 	 * @return void
-     */
+	 */
 	protected function fixContent(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex) {
 		$needsBrackets = $this->needsBrackets($phpcsFile, $openingBraceIndex, $closingBraceIndex);
 

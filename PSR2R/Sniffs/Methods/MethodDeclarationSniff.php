@@ -39,8 +39,8 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
 class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff {
 
 	/**
-     * Constructs a Squiz_Sniffs_Scope_MethodScopeSniff.
-     */
+	 * Constructs a Squiz_Sniffs_Scope_MethodScopeSniff.
+	 */
 	public function __construct() {
 		parent::__construct([T_CLASS, T_INTERFACE], [T_FUNCTION]);
 
@@ -48,14 +48,14 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 
 
 	/**
-     * Processes the function tokens within the class.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the token was found.
-     * @param int                  $currScope The current scope opener token.
-     *
-     * @return void
-     */
+	 * Processes the function tokens within the class.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+	 * @param int                  $stackPtr  The position where the token was found.
+	 * @param int                  $currScope The current scope opener token.
+	 *
+	 * @return void
+	 */
 	protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -77,18 +77,18 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 		$prefix = $stackPtr;
 		while (($prefix = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$methodPrefixes, ($prefix - 1), $prev)) !== false) {
 			switch ($tokens[$prefix]['code']) {
-			case T_STATIC:
-				$static = $prefix;
-				       break;
-			case T_ABSTRACT:
-				$abstract = $prefix;
-				       break;
-			case T_FINAL:
-				$final = $prefix;
-				       break;
-			default:
-				$visibility = $prefix;
-				       break;
+				case T_STATIC:
+					$static = $prefix;
+					break;
+				case T_ABSTRACT:
+					$abstract = $prefix;
+					break;
+				case T_FINAL:
+					$final = $prefix;
+					break;
+				default:
+					$visibility = $prefix;
+					break;
 			}
 		}
 
@@ -147,6 +147,5 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 		}
 
 	}//end processTokenWithinScope()
-
 
 }//end class

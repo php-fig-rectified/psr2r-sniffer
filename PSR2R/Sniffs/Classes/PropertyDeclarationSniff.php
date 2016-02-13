@@ -25,13 +25,13 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  */
 class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff {
 	/**
-     * Processes the function tokens within the class.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int $stackPtr The position where the token was found.
-     *
-     * @return void
-     */
+	 * Processes the function tokens within the class.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+	 * @param int $stackPtr The position where the token was found.
+	 *
+	 * @return void
+	 */
 	protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -65,13 +65,13 @@ class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariabl
 	}
 
 	/**
-     * Processes normal variables.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int $stackPtr The position where the token was found.
-     *
-     * @return void
-     */
+	 * Processes normal variables.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+	 * @param int $stackPtr The position where the token was found.
+	 *
+	 * @return void
+	 */
 	protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		/*
             We don't care about normal variables.
@@ -80,16 +80,17 @@ class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariabl
 
 
 	/**
-     * Processes variables in double quoted strings.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int $stackPtr The position where the token was found.
-     *
-     * @return void
-     */
+	 * Processes variables in double quoted strings.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+	 * @param int $stackPtr The position where the token was found.
+	 *
+	 * @return void
+	 */
 	protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		/*
             We don't care about normal variables.
         */
 	}//end processVariableInString()
+
 }

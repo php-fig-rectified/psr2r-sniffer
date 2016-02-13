@@ -32,18 +32,18 @@ use PHP_CodeSniffer_Sniff;
 class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
 	/**
-     * The number of spaces code should be indented.
-     *
-     * @var int
-     */
+	 * The number of spaces code should be indented.
+	 *
+	 * @var int
+	 */
 	public $indent = 4;
 
 
 	/**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
+	 * Returns an array of tokens this test wants to listen for.
+	 *
+	 * @return array
+	 */
 	public function register() {
 		return [T_SWITCH];
 
@@ -51,14 +51,14 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
 
 	/**
-     * Processes this test, when one of its tokens is encountered.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
-     *
-     * @return void
-     */
+	 * Processes this test, when one of its tokens is encountered.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
+	 * @param int                  $stackPtr  The position of the current token in the
+	 *                                        stack passed in $tokens.
+	 *
+	 * @return void
+	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -219,16 +219,16 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
 
 	/**
-     * Find the next CASE or DEFAULT statement from a point in the file.
-     *
-     * Note that nested switches are ignored.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position to start looking at.
-     * @param int                  $end       The position to stop looking at.
-     *
-     * @return int | bool
-     */
+	 * Find the next CASE or DEFAULT statement from a point in the file.
+	 *
+	 * Note that nested switches are ignored.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
+	 * @param int                  $stackPtr  The position to start looking at.
+	 * @param int                  $end       The position to stop looking at.
+	 *
+	 * @return int | bool
+	 */
 	protected function _findNextCase(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $end) {
 		$tokens = $phpcsFile->getTokens();
 		while (($stackPtr = $phpcsFile->findNext([T_CASE, T_DEFAULT, T_SWITCH], $stackPtr, $end)) !== false) {
@@ -243,7 +243,6 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
 		return $stackPtr;
 
-	}//end _findNextCase()
+	}
 
-
-}//end class
+}

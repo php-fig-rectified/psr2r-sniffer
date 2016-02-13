@@ -32,10 +32,10 @@ use PHP_CodeSniffer_Sniff;
 class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
 	/**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
+	 * Returns an array of tokens this test wants to listen for.
+	 *
+	 * @return array
+	 */
 	public function register() {
 		return [T_USE];
 
@@ -43,14 +43,14 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
 
 	/**
-     * Processes this test, when one of its tokens is encountered.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
-     *
-     * @return void
-     */
+	 * Processes this test, when one of its tokens is encountered.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
+	 * @param int                  $stackPtr  The position of the current token in
+	 *                                        the stack passed in $tokens.
+	 *
+	 * @return void
+	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		if ($this->_shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
 			return;
@@ -134,14 +134,14 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
 
 	/**
-     * Check if this use statement is part of the namespace block.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
-     *
-     * @return bool
-     */
+	 * Check if this use statement is part of the namespace block.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
+	 * @param int                  $stackPtr  The position of the current token in
+	 *                                        the stack passed in $tokens.
+	 *
+	 * @return bool
+	 */
 	private function _shouldIgnoreUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 

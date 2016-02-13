@@ -118,7 +118,7 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	 * @param string $replace
 	 * @param string $subject
 	 * @return string
-     */
+	 */
 	protected function strReplaceOnce($search, $replace, $subject) {
 		$pos = strpos($subject, $search);
 		if ($pos === false) {
@@ -132,7 +132,7 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	 * @param string $content
 	 * @param bool $correctLength
 	 * @return string
-     */
+	 */
 	protected function getIndentationCharacter($content, $correctLength = false) {
 		if (strpos($content, "\n")) {
 			$parts = explode("\n", $content);

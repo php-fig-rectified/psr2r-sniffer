@@ -35,24 +35,24 @@ use PHP_CodeSniffer_Sniff;
 class ControlStructureSpacingSniff implements PHP_CodeSniffer_Sniff {
 
 	/**
-     * How many spaces should follow the opening bracket.
-     *
-     * @var int
-     */
+	 * How many spaces should follow the opening bracket.
+	 *
+	 * @var int
+	 */
 	public $requiredSpacesAfterOpen = 0;
 
 	/**
-     * How many spaces should precede the closing bracket.
-     *
-     * @var int
-     */
+	 * How many spaces should precede the closing bracket.
+	 *
+	 * @var int
+	 */
 	public $requiredSpacesBeforeClose = 0;
 
 	/**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
+	 * Returns an array of tokens this test wants to listen for.
+	 *
+	 * @return array
+	 */
 	public function register() {
 		return [
 				T_IF,
@@ -70,14 +70,14 @@ class ControlStructureSpacingSniff implements PHP_CodeSniffer_Sniff {
 
 
 	/**
-     * Processes this test, when one of its tokens is encountered.
-     *
-     * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int $stackPtr The position of the current token
-     *   in the stack passed in $tokens.
-     *
-     * @return void
-     */
+	 * Processes this test, when one of its tokens is encountered.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
+	 * @param int $stackPtr The position of the current token
+	 *   in the stack passed in $tokens.
+	 *
+	 * @return void
+	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
 		$this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
@@ -149,4 +149,5 @@ class ControlStructureSpacingSniff implements PHP_CodeSniffer_Sniff {
 			}
 		}//end if
 	}//end process()
+
 }//end class

@@ -1,6 +1,7 @@
 <?php
 
 namespace PSR2R\Sniffs\PHP;
+
 use PHP_CodeSniffer_Tokens;
 
 /**
@@ -154,7 +155,7 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @param $index
 	 * @return bool
-     */
+	 */
 	protected function isCast(\PHP_CodeSniffer_File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -165,7 +166,7 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @param int $index
 	 * @return int|null
-     */
+	 */
 	protected function findUnnecessaryLeadingComparisonStart(\PHP_CodeSniffer_File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -214,7 +215,7 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @param int $index
 	 * @return bool
-     */
+	 */
 	protected function isComparison(\PHP_CodeSniffer_File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
