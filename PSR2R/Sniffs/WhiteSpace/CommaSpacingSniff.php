@@ -1,10 +1,12 @@
 <?php
 namespace PSR2R\Sniffs\WhiteSpace;
 
+use PHP_CodeSniffer_Sniff;
+
 /**
  * Ensures no whitespaces and one whitespace is placed around each comma.
  */
-class CommaSpacingSniff implements \PHP_CodeSniffer_Sniff {
+class CommaSpacingSniff implements PHP_CodeSniffer_Sniff {
 
 	/**
 	 * Returns an array of tokens this test wants to listen for.

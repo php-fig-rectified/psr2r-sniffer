@@ -46,7 +46,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@return', '@param', '@throws', '@var', '@method'])) {
+			if (!in_array($tokens[$i]['content'], ['@return', '@yield', '@param', '@throws', '@var', '@method'])) {
 				continue;
 			}
 

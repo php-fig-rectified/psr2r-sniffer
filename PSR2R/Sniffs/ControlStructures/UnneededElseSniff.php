@@ -4,10 +4,11 @@ namespace PSR2R\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Sniff;
+use PSR2R\Tools\AbstractSniff;
 
 /**
  */
-class UnneededElseSniff implements PHP_CodeSniffer_Sniff {
+class UnneededElseSniff extends AbstractSniff {
 
 	/**
 	 * Returns an array of tokens this test wants to listen for.
@@ -63,8 +64,6 @@ class UnneededElseSniff implements PHP_CodeSniffer_Sniff {
 			}
 		}
 
-		//var_dump($tokens[$returnEarlyIndex]); die();
-
 		$fix = $phpcsFile->addFixableError('Unneeded ' . $tokens[$stackPtr]['type'] . ' detected.', $stackPtr);
 		if (!$fix) {
 			return;
@@ -78,7 +77,7 @@ class UnneededElseSniff implements PHP_CodeSniffer_Sniff {
 		$phpcsFile->fixer->beginChangeset();
 
 		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-		$indentationLevel = $tokens[$prevIndex]['column'] - 1;
+		//$indentationLevel = $tokens[$prevIndex]['column'] - 1;
 		$line = $tokens[$prevIndex]['line'];
 
 		for ($i = $prevIndex + 1; $i < $stackPtr; $i++) {
@@ -106,46 +105,16 @@ class UnneededElseSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		// Fix indentation
-		$currentLine = $line;
+		//$currentLine = $line;
 		for ($i = $nextScopeStartIndex + 1; $i < $prevEndIndex; $i++) {
 			if ($tokens[$i]['line'] === $line || $tokens[$i]['type'] !== 'T_WHITESPACE') {
 				continue;
 			}
-			$currentLine = $tokens[$i]['line'];
+			//$currentLine = $tokens[$i]['line'];
 			$this->outdent($phpcsFile, $i);
 		}
 
 		$phpcsFile->fixer->endChangeset();
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param $index
-	 */
-	protected function outdent(PHP_CodeSniffer_File $phpcsFile, $index) {
-		$tokens = $phpcsFile->getTokens();
-		$char = $this->getIndentationCharacter($tokens[$index]['content'], true);
-
-		$phpcsFile->fixer->replaceToken($index, $this->strReplaceOnce($char, '', $tokens[$index]['content']));
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param $index
-     */
-	protected function indent(PHP_CodeSniffer_File $phpcsFile, $index) {
-		$tokens = $phpcsFile->getTokens();
-
-		$phpcsFile->fixer->replaceToken($index, $this->strReplaceOnce("\t", "\t\t", $tokens[$index]['content']));
-	}
-
-	protected function strReplaceOnce($search, $replace, $subject) {
-		$pos = strpos($subject, $search);
-		if ($pos === false) {
-			return $subject;
-		}
-
-		return substr($subject, 0, $pos) . $replace . substr($subject, $pos + strlen($search));
 	}
 
 	/**
@@ -192,49 +161,6 @@ class UnneededElseSniff implements PHP_CodeSniffer_Sniff {
 		$phpcsFile->fixer->replaceToken($stackPtr, $indentation . 'if');
 
 		$phpcsFile->fixer->endChangeset();
-	}
-
-	protected function getIndentationCharacter($content, $correctLength = false) {
-		if (strpos($content, "\n")) {
-			$parts = explode("\n", $content);
-			array_shift($parts);
-		} else {
-			$parts = (array)$content;
-		}
-
-		$char = "\t";
-		$countTabs = $countSpaces = 0;
-		foreach ($parts as $part) {
-			$countTabs += substr_count($content, $char);
-			$countSpaces += (int)(substr_count($content, ' ') / 4);
-		}
-		var_dump($content);
-
-		if ($countSpaces > $countTabs) {
-			$char = $correctLength ? '    ' : ' ';
-		}
-
-		return $char;
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param $prevIndex
-     */
-	private function getIndentationWhitespace(PHP_CodeSniffer_File $phpcsFile, $prevIndex) {
-		$tokens = $phpcsFile->getTokens();
-
-		$line = $tokens[$prevIndex]['line'];
-		$currentIndex = $prevIndex;
-		$whitespace = '';
-		while ($tokens[$currentIndex - 1]['line'] === $line) {
-			$currentIndex--;
-		}
-		if ($tokens[$currentIndex]['type'] === 'T_WHITESPACE') {
-			$whitespace = $tokens[$currentIndex]['content'];
-		}
-
-		return $whitespace;
 	}
 
 }

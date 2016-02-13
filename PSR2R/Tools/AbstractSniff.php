@@ -2,6 +2,8 @@
 
 namespace PSR2R\Tools;
 
+use PHP_CodeSniffer_File;
+
 abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 
 
@@ -80,6 +82,99 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param
+	 */
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $index
+	 * @param int $count
+	 * @return void
+	 */
+	protected function outdent(PHP_CodeSniffer_File $phpcsFile, $index, $count = 1) {
+		$tokens = $phpcsFile->getTokens();
+		$char = $this->getIndentationCharacter($tokens[$index]['content'], true);
+
+		$phpcsFile->fixer->replaceToken($index, $this->strReplaceOnce($char, '', $tokens[$index]['content']));
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $index
+	 * @param int $count
+	 * @return void
+	 */
+	protected function indent(PHP_CodeSniffer_File $phpcsFile, $index, $count = 1) {
+		$tokens = $phpcsFile->getTokens();
+
+		$phpcsFile->fixer->replaceToken($index, $this->strReplaceOnce("\t", "\t\t", $tokens[$index]['content']));
+	}
+
+	/**
+	 * @param string $search
+	 * @param string $replace
+	 * @param string $subject
+	 * @return string
+     */
+	protected function strReplaceOnce($search, $replace, $subject) {
+		$pos = strpos($subject, $search);
+		if ($pos === false) {
+			return $subject;
+		}
+
+		return substr($subject, 0, $pos) . $replace . substr($subject, $pos + strlen($search));
+	}
+
+	/**
+	 * @param string $content
+	 * @param bool $correctLength
+	 * @return string
+     */
+	protected function getIndentationCharacter($content, $correctLength = false) {
+		if (strpos($content, "\n")) {
+			$parts = explode("\n", $content);
+			array_shift($parts);
+		} else {
+			$parts = (array)$content;
+		}
+
+		$char = "\t";
+		$countTabs = $countSpaces = 0;
+		foreach ($parts as $part) {
+			$countTabs += substr_count($content, $char);
+			$countSpaces += (int)(substr_count($content, ' ') / 4);
+		}
+		var_dump($content);
+
+		if ($countSpaces > $countTabs) {
+			$char = $correctLength ? '    ' : ' ';
+		}
+
+		return $char;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $prevIndex
+	 * @return string
+	 */
+	protected function getIndentationWhitespace(PHP_CodeSniffer_File $phpcsFile, $prevIndex) {
+		$tokens = $phpcsFile->getTokens();
+
+		$line = $tokens[$prevIndex]['line'];
+		$currentIndex = $prevIndex;
+		$whitespace = '';
+		while ($tokens[$currentIndex - 1]['line'] === $line) {
+			$currentIndex--;
+		}
+		if ($tokens[$currentIndex]['type'] === 'T_WHITESPACE') {
+			$whitespace = $tokens[$currentIndex]['content'];
+		}
+
+		return $whitespace;
 	}
 
 }
