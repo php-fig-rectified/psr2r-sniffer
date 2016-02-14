@@ -69,4 +69,5 @@ class MethodSpacingSniff extends AbstractSniff {
 			}
 		}
 	}
+
 }

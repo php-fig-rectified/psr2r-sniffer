@@ -194,7 +194,7 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	 * @param array $tokens
 	 * @param int $index
 	 * @return int
-     */
+	 */
 	protected function getFirstTokenOfLine(array $tokens, $index) {
 		$line = $tokens[$index]['line'];
 

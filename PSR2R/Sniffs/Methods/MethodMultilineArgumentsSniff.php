@@ -83,4 +83,5 @@ class MethodMultilineArgumentsSniff extends AbstractSniff {
 			}
 		}
 	}
+
 }
