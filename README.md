@@ -61,8 +61,12 @@ vendor/bin/phpcs --standard=/path/to/ruleset.xml --ignore=vendor/ ./
 #### Windows usage
 For Win OS you should be using `\` as separator:
 ```
-vendor\bin\phpcs --standard=vendor\fig-r\psr2r-sniffer\PSR2R\ruleset.xml -v src/
+vendor\bin\phpcs --standard=vendor\fig-r\psr2r-sniffer\PSR2R\ruleset.xml ./
 ```
+
+#### Hook it into your IDE for live-correction
+You can easily make a "watcher" for your IDE, so any file you work on, will be auto-corrected when (auto-)saving.
+For PHPStorm, for example, make sure you switch `Show Console` to `never` to not be disturbed by it all the time.
 
 ### Writing new sniffs
 You can contribute by adding new sniffs as per PSR-2-R standard.
