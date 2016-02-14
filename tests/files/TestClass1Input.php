@@ -12,6 +12,9 @@ class TestClass1Input {
 
     /**
      * @param \Bar\Foo
+     * @param boolean $int
+     * @param integer|array $bool
+     * @param integer|array
      *
      * @return void
      */
@@ -56,7 +59,7 @@ class TestClass1Input {
 		$x = -- $x;
 		$x = @ $x;
 
-		$this -> foo();
+		$this -> foo() ;
 		self :: foo();
 
 		$this

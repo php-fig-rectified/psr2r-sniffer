@@ -6,7 +6,6 @@ use PHP_CodeSniffer_File;
 
 abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 
-
 	/**
 	 * Checks if the given token scope contains a single or multiple token codes/types.
 	 *
@@ -42,7 +41,6 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 
 		return false;
 	}
-
 
 	/**
 	 * Checks if the given token scope requires brackets when used standalone.
@@ -85,8 +83,26 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	}
 
 	/**
-	 * @param
+	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param int $stackPointer
+	 *
+	 * @return int|null Stackpointer value of docblock end tag, or null if cannot be found
 	 */
+	protected function findRelatedDocBlock(\PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+		$tokens = $phpCsFile->getTokens();
+
+		$line = $tokens[$stackPointer]['line'];
+		$beginningOfLine = $stackPointer;
+		while (!empty($tokens[$beginningOfLine - 1]) && $tokens[$beginningOfLine - 1]['line'] === $line) {
+			$beginningOfLine--;
+		}
+
+		if (!empty($tokens[$beginningOfLine - 2]) && $tokens[$beginningOfLine - 2]['type'] === 'T_DOC_COMMENT_CLOSE_TAG') {
+			return $beginningOfLine - 2;
+		}
+
+		return null;
+	}
 
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile

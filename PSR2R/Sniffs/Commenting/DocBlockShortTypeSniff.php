@@ -4,7 +4,7 @@ namespace PSR2R\Sniffs\Commenting;
 
 use PSR2R\Tools\AbstractSniff;
 
-class DocBlockReturnSelfSniff extends AbstractSniff {
+class DocBlockShortTypeSniff extends AbstractSniff {
 
 	/**
 	 * @return array
@@ -40,7 +40,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@return'])) {
+			if (!in_array($tokens[$i]['content'], ['@return', '@param'])) {
 				continue;
 			}
 
@@ -77,14 +77,19 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	 * @return void
 	 */
 	protected function fixParts(\PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $parts, $appendix) {
+		$mapping = [
+			'boolean' => 'bool',
+			'integer' => 'int',
+		];
+
 		$result = [];
 		foreach ($parts as $key => $part) {
-			if ($part !== 'self') {
+			if (!isset($mapping[$part])) {
 				continue;
 			}
 
-			$parts[$key] = '$this';
-			$result[$part] = '$this';
+			$parts[$key] = $mapping[$part];
+			$result[$part] = $mapping[$part];
 		}
 
 		if (!$result) {
