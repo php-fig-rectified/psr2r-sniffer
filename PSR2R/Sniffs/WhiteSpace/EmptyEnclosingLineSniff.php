@@ -35,9 +35,31 @@ class EmptyEnclosingLineSniff implements \PHP_CodeSniffer_Sniff {
 			return;
 		}
 
+		$curlyBraceStartIndex = $tokens[$stackPtr]['scope_opener'];
 		$curlyBraceEndIndex = $tokens[$stackPtr]['scope_closer'];
 
 		$lastContentIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($curlyBraceEndIndex - 1), $stackPtr, true);
+
+		if ($lastContentIndex === $curlyBraceStartIndex) {
+			// Single new line for empty classes
+			if ($tokens[$curlyBraceEndIndex]['line'] === $tokens[$curlyBraceStartIndex]['line'] + 1) {
+				return;
+			}
+
+			$error = 'Closing brace of an empty %s must have a single new line between curly brackets';
+
+			$fix = $phpcsFile->addFixableError($error, $curlyBraceEndIndex, 'CloseBraceNewLine', $errorData);
+			if ($fix === true) {
+				if ($curlyBraceEndIndex - $curlyBraceStartIndex === 1) {
+					$phpcsFile->fixer->addNewline($curlyBraceStartIndex);
+				} else {
+					$phpcsFile->fixer->replaceToken($curlyBraceStartIndex + 1, '');
+					$phpcsFile->fixer->addNewline($curlyBraceStartIndex + 1);
+				}
+			}
+			return;
+		}
+
 		$contentLine = $tokens[$lastContentIndex]['line'];
 		$braceLine = $tokens[$curlyBraceEndIndex]['line'];
 
