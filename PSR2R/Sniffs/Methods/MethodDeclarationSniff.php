@@ -44,8 +44,7 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 	public function __construct() {
 		parent::__construct([T_CLASS, T_INTERFACE], [T_FUNCTION]);
 
-	}//end __construct()
-
+	}
 
 	/**
 	 * Processes the function tokens within the class.
@@ -146,6 +145,6 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 			$phpcsFile->fixer->endChangeset();
 		}
 
-	}//end processTokenWithinScope()
+	}
 
-}//end class
+}

@@ -44,7 +44,7 @@ class ElseIfDeclarationSniff implements PHP_CodeSniffer_Sniff {
 				T_ELSE,
 				T_ELSEIF,
 			   ];
-	}//end register()
+	}
 
 
 	/**
@@ -81,6 +81,6 @@ class ElseIfDeclarationSniff implements PHP_CodeSniffer_Sniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
-	}//end process()
+	}
 
-}//end class
+}

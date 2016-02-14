@@ -41,8 +41,7 @@ class ClosingTagSniff implements PHP_CodeSniffer_Sniff {
 	 */
 	public function register() {
 		return [T_OPEN_TAG];
-	}//end register()
-
+	}
 
 	/**
 	 * Processes this sniff, when one of its tokens is encountered.
@@ -51,7 +50,7 @@ class ClosingTagSniff implements PHP_CodeSniffer_Sniff {
 	 * @param int $stackPtr The position of the current token in
 	 *   the stack passed in $tokens.
 	 *
-	 * @return void
+	 * @return int|null
 	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -86,6 +85,6 @@ class ClosingTagSniff implements PHP_CodeSniffer_Sniff {
 
 		// Ignore the rest of the file.
 		return $phpcsFile->numTokens;
-	}//end process()
+	}
 
-}//end class
+}

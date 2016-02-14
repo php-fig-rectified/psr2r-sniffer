@@ -31,7 +31,6 @@ use PHP_CodeSniffer_Sniff;
  */
 class NamespaceDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
-
 	/**
 	 * Returns an array of tokens this test wants to listen for.
 	 *
@@ -39,9 +38,7 @@ class NamespaceDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	 */
 	public function register() {
 		return [T_NAMESPACE];
-
-	}//end register()
-
+	}
 
 	/**
 	 * Processes this test, when one of its tokens is encountered.
@@ -99,7 +96,6 @@ class NamespaceDeclarationSniff implements PHP_CodeSniffer_Sniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
+	}
 
-	}//end process()
-
-}//end class
+}

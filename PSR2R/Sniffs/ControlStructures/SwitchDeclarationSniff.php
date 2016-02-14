@@ -47,7 +47,7 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	public function register() {
 		return [T_SWITCH];
 
-	}//end register()
+	}
 
 
 	/**
@@ -155,11 +155,11 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 							$phpcsFile->fixer->endChangeset();
 						}
 					}
-				}//end if
+				}
 			} else {
 				$error = strtoupper($type) . ' statements must be defined using a colon';
 				$phpcsFile->addError($error, $nextCase, 'WrongOpener' . $type);
-			}//end if
+			}
 
 			$nextCloser = $tokens[$nextCase]['scope_closer'];
 			if ($tokens[$nextCloser]['scope_condition'] === $nextCase) {
@@ -187,8 +187,8 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 							}
 						}
 					}
-				}//end if
-			}//end if
+				}
+			}
 
 			// We only want cases from here on in.
 			if ($type !== 'case') {
@@ -213,9 +213,9 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 					}
 				}
 			}
-		}//end while
+		}
 
-	}//end process()
+	}
 
 
 	/**

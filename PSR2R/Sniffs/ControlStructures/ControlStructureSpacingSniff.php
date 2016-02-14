@@ -66,8 +66,7 @@ class ControlStructureSpacingSniff implements PHP_CodeSniffer_Sniff {
 				T_TRY,
 				T_CATCH,
 			   ];
-	}//end register()
-
+	}
 
 	/**
 	 * Processes this test, when one of its tokens is encountered.
@@ -147,7 +146,7 @@ class ControlStructureSpacingSniff implements PHP_CodeSniffer_Sniff {
 					}
 				}
 			}
-		}//end if
-	}//end process()
+		}
+	}
 
-}//end class
+}

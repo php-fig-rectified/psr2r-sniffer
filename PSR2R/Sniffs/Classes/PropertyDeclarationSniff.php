@@ -76,8 +76,7 @@ class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariabl
 		/*
             We don't care about normal variables.
         */
-	}//end processVariable()
-
+	}
 
 	/**
 	 * Processes variables in double quoted strings.
@@ -91,6 +90,6 @@ class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariabl
 		/*
             We don't care about normal variables.
         */
-	}//end processVariableInString()
+	}
 
 }

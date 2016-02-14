@@ -39,8 +39,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	public function register() {
 		return [T_USE];
 
-	}//end register()
-
+	}
 
 	/**
 	 * Processes this test, when one of its tokens is encountered.
@@ -128,10 +127,8 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 					$phpcsFile->fixer->endChangeset();
 				}
 			}
-		}//end if
-
-	}//end process()
-
+		}
+	}
 
 	/**
 	 * Check if this use statement is part of the namespace block.
