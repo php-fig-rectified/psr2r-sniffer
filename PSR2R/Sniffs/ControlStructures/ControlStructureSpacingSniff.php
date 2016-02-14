@@ -78,8 +78,8 @@ class ControlStructureSpacingSniff implements PHP_CodeSniffer_Sniff {
 	 * @return void
 	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
-		$this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
+		$this->requiredSpacesAfterOpen = (int)$this->requiredSpacesAfterOpen;
+		$this->requiredSpacesBeforeClose = (int)$this->requiredSpacesBeforeClose;
 		$tokens = $phpcsFile->getTokens();
 
 		if (isset($tokens[$stackPtr]['parenthesis_opener']) === false

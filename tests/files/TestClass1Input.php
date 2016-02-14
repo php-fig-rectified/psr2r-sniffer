@@ -44,9 +44,17 @@ class TestClass1Input {
 		include('foo.bar');
 		require_once ( $foo ) ;
 
-		if ( $x + $y ) {
-
+		if ( $x + (int ) $y ) {
 		}
+
+		$x = ! $x;
+		$x = $y - $x;
+		$x = - $x;
+		$x = ~ $x;
+		$x = + $x;
+		$x = ++ $x;
+		$x = -- $x;
+		$x = @ $x;
 
 		$this -> foo();
 		self :: foo();
