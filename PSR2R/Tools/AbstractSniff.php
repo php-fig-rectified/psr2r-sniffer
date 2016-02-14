@@ -164,17 +164,46 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	protected function getIndentationWhitespace(PHP_CodeSniffer_File $phpcsFile, $prevIndex) {
 		$tokens = $phpcsFile->getTokens();
 
-		$line = $tokens[$prevIndex]['line'];
-		$currentIndex = $prevIndex;
+		$firstIndex = $this->getFirstTokenOfLine($tokens, $prevIndex);
 		$whitespace = '';
-		while ($tokens[$currentIndex - 1]['line'] === $line) {
-			$currentIndex--;
-		}
-		if ($tokens[$currentIndex]['type'] === 'T_WHITESPACE') {
-			$whitespace = $tokens[$currentIndex]['content'];
+		if ($tokens[$firstIndex]['type'] === 'T_WHITESPACE') {
+			$whitespace = $tokens[$firstIndex]['content'];
 		}
 
 		return $whitespace;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $prevIndex
+	 * @return int
+	 */
+	protected function getIndentationColumn(PHP_CodeSniffer_File $phpcsFile, $prevIndex) {
+		$tokens = $phpcsFile->getTokens();
+
+		$firstIndex = $this->getFirstTokenOfLine($tokens, $prevIndex);
+
+		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, ($firstIndex + 1), null, true);
+		if ($tokens[$nextIndex]['line'] !== $tokens[$prevIndex]['line']) {
+			return 0;
+		}
+		return $tokens[$nextIndex]['column'] - 1;
+	}
+
+	/**
+	 * @param array $tokens
+	 * @param int $index
+	 * @return int
+     */
+	protected function getFirstTokenOfLine(array $tokens, $index) {
+		$line = $tokens[$index]['line'];
+
+		$currentIndex = $index;
+		while ($tokens[$currentIndex - 1]['line'] === $line) {
+			$currentIndex--;
+		}
+
+		return $currentIndex;
 	}
 
 }
