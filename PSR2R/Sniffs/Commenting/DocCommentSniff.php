@@ -63,6 +63,11 @@ class DocCommentSniff implements \PHP_CodeSniffer_Sniff {
 		$commentStart = $stackPtr;
 		$commentEnd = $tokens[$stackPtr]['comment_closer'];
 
+		// Skip for inline comments
+		if ($tokens[$stackPtr]['column'] === 3 || $tokens[$stackPtr]['column'] === 9) {
+			return;
+		}
+
 		$empty = [
 			T_DOC_COMMENT_WHITESPACE,
 			T_DOC_COMMENT_STAR,
