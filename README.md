@@ -38,6 +38,12 @@ If you want to run the sniffer over your root `src` folder, run:
 bin/sniff src
 ```
 
+Use `-h` to list all available options.
+But with this bin tool the path needs to always come first (it does not work otherwise):
+```
+bin/sniff /path/to/files [optional params]
+```
+
 #### Useful commands
 Verbose output with `-v` is always useful. With `-vv` or even `-vvv` you get even more debug output.
 
@@ -55,12 +61,6 @@ bin/sniff --sniffs=PSR2R.Files.EndFileNewline
 Usually, if you run it over your complete repository, you would want to exclude dirs like `tests/test_files/`:
 ```
 bin/sniff --ignore=tests/test_files/
-```
-
-Use `-h` to list all available options.
-But with this bin tool the path needs to always come first (it does not work otherwise):
-```
-bin/sniff /path/to/files [optional arguments]
 ```
 
 #### Windows usage
