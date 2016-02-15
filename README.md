@@ -25,23 +25,23 @@ composer require --dev fig-r/psr2r-sniffer
 You can then use it like this:
 ```
 // Sniffs only
-bin/sniff /path/to/your/files
+vendor/bin/sniff /path/to/your/files
 
 // Sniffs and fixes
-bin/sniff /path/to/your/files -f
+vendor/bin/sniff /path/to/your/files -f
 ```
 The path is optional if you want to run it on your complete project root dir. It will in this case automatically skip the `vendor/` dir.
 
 #### Examples
-If you want to run the sniffer over your root `src` folder, run:
+If you want to run the sniffer over your root `src/` folder, run:
 ```
-bin/sniff src
+vendor/bin/sniff src/
 ```
 
 Use `-h` to list all available options.
 But with this bin tool the path needs to always come first (it does not work otherwise):
 ```
-bin/sniff /path/to/files [optional params]
+vendor/bin/sniff /path/to/files [optional params]
 ```
 
 #### Useful commands
@@ -49,24 +49,24 @@ Verbose output with `-v` is always useful. With `-vv` or even `-vvv` you get eve
 
 If you want a list of all sniffs in this standard, use `-e`:
 ```
-bin/sniff -e
+vendor/bin/sniff -e
 ```
 It will list them all grouped by their standard name and sniff type.
 
 To just run a single sniff, use `--sniffs=...` and a comma separated list of sniffs, .e.g.:
 ```
-bin/sniff --sniffs=PSR2R.Files.EndFileNewline
+vendor/bin/sniff --sniffs=PSR2R.Files.EndFileNewline
 ```
 
 Usually, if you run it over your complete repository, you would want to exclude dirs like `tests/test_files/`:
 ```
-bin/sniff --ignore=tests/test_files/
+vendor/bin/sniff --ignore=tests/test_files/
 ```
 
 #### Windows usage
 For Win OS you should be using `\` as separator:
 ```
-bin\sniff -v
+vendor\bin\sniff -v
 ```
 
 #### Hook it into your IDE for live-correction
@@ -75,23 +75,6 @@ For PHPStorm, for example, make sure you switch `Show Console` to `never` to not
 
 ### Writing new sniffs
 You can contribute by adding new sniffs as per PSR-2-R standard.
-Please also add tests.
-
-To run the tests, use
-```
-// Download phpunit.phar
-sh setup.sh
-
-// Run all tests
-php phpunit.phar
-```
-
-If you want to test a specific sniff, use
-```
-php phpunit.phar tests/Sniffs/FolderName/SnifferNameSniffTest.php
-```
-
-You can also test specific methods per Test file using `--filter=testNameOfMethodTest` etc.
 
 #### Tokenizing Tool
 It really helps to see what the code looks like for the sniffer.
@@ -100,6 +83,7 @@ So we can parse a PHP file into its tokens using the following tool:
 ```
 bin/tokenize /path/to/file
 ```
+(If you run this from your application, it will have to be run as `vendor/bin/tokenize`)
 
 With more verbose output:
 ```
