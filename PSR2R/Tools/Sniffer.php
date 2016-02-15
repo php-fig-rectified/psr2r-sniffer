@@ -20,7 +20,7 @@ class Sniffer {
 		if (!$path) {
 			$path = array_shift($argv);
 			$path = dirname(dirname($path));
-			if (substr($path, -13) === 'psr2r-sniffer') {
+			if (substr($path, -13) === 'psr2r-sniffer' && substr($path, -19, -14) === 'fig-r') {
 				$path = dirname(dirname(dirname($path)));
 			}
 			$path .= DIRECTORY_SEPARATOR;
