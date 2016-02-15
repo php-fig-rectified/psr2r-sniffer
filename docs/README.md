@@ -4,6 +4,8 @@ For details on PSR-2-R see [fig-rectified-standards](https://github.com/php-fig-
 ## Documentation on the sniffer itself
 This uses and extends [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/).
 
+Runs on all OS, tested on Unix and Windows.
+
 ## Sniffers available
 The following sniffers are bundles together with `PSR-2-R` already, but you can
 also use them standalone/separately in any way you like.
