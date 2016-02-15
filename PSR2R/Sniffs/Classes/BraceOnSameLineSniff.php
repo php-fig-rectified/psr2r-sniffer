@@ -2,6 +2,9 @@
 
 namespace PSR2R\Sniffs\Classes;
 
+/**
+ * Makes sure opening braces are on the same line for class, interface and trait.
+ */
 class BraceOnSameLineSniff implements \PHP_CodeSniffer_Sniff {
 
 	/**
@@ -45,11 +48,13 @@ class BraceOnSameLineSniff implements \PHP_CodeSniffer_Sniff {
 
 			$fix = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceNewLine', $errorData);
 			if ($fix === true) {
+				$phpcsFile->fixer->beginChangeset();
 				$phpcsFile->fixer->replaceToken($lastContent, $tokens[$lastContent]['content'] . ' ');
 
 				for ($i = $lastContent + 1; $i < $curlyBrace; $i++) {
 					$phpcsFile->fixer->replaceToken($i, '');
 				}
+				$phpcsFile->fixer->endChangeset();
 			}
 
 			return;
