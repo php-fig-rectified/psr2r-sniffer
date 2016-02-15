@@ -58,6 +58,10 @@ bin/sniff --ignore=tests/test_files/
 ```
 
 Use `-h` to list all available options.
+But with this bin tool the path needs to always come first (it does not work otherwise):
+```
+bin/sniff /path/to/files [optional arguments]
+```
 
 #### Windows usage
 For Win OS you should be using `\` as separator:
