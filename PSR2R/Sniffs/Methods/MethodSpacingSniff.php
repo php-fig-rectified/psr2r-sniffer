@@ -62,7 +62,7 @@ class MethodSpacingSniff extends AbstractSniff {
 		if ($braceStartIndex - $parenthesisEndIndex === 2 && $tokens[$braceStartIndex - 1]['content'] === ' ') {
 			return;
 		}
-		
+
 		$error = 'There should be a single space between closing parenthesis and opening curly brace';
 		$fix = $phpcsFile->addFixableError($error, $parenthesisEndIndex, 'ContentAfterOpen');
 		if ($fix === true) {
