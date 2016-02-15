@@ -20,10 +20,11 @@ class Sniffer {
 		if (!$path) {
 			$path = array_shift($argv);
 			$path = dirname(dirname($path));
-			if (substr($path, -6) === 'vendor') {
-				$path = dirname($path);
+			if (substr($path, -13) === 'psr2r-sniffer') {
+				$path = dirname(dirname(dirname($path)));
 			}
-			$ignore = $path . DIRECTORY_SEPARATOR . 'vendor';
+			$path .= DIRECTORY_SEPARATOR;
+			$ignore = $path . 'vendor' . DIRECTORY_SEPARATOR;
 		} else {
 			unset($argv[1]);
 		}
