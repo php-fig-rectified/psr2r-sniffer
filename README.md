@@ -45,7 +45,7 @@ If you want a list of all sniffs in this standard, use `-e`:
 ```
 bin/sniff -e
 ```
-It will them all grouped by their standard name.
+It will list them all grouped by their standard name and sniff type.
 
 To just run a single sniff, use `--sniffs=...` and a comma separated list of sniffs, .e.g.:
 ```
