@@ -43,3 +43,35 @@ Most of the sniffers also provide auto-fixing using `-f` option where it is poss
 * It would be nice if some of these sniffers find their way into the contrib section of the original sniffer repo.
 If anyone wants to contribute and add those there, that would be awesome.
 * More tests
+
+## Using the original phpcs and phpcbf command tools
+Of course you can also use the original cli commands:
+```
+// Sniffs only
+vendor/bin/phpcs --standard=/path/to/ruleset.xml /path/to/your/files
+
+// Sniffs and fixes
+vendor/bin/phpcbf --standard=/path/to/ruleset.xml /path/to/your/files
+```
+To use PSR-2-R by default replace `/path/to/ruleset.xml` above with `vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml`.
+If you don't want to append this all the time, make a small wrapper script that internally calls phpcs/phpcbf this way.
+
+### Example
+So, if you want to run the sniffer over your root `src` folder, run:
+```
+vendor/bin/phpcs --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml src/
+```
+
+## Writing sniffs
+It helps to use `-s` to see the names of the sniffers that reported issues.
+
+
+### Running own sniffs on this project
+There is a convenience script to run all sniffs for this repository:
+```
+sh phpcs.sh
+```
+If you want to fix the fixable errors, use
+```
+sh phpcs.sh -f
+```

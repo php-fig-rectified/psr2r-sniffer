@@ -25,43 +25,44 @@ composer require --dev fig-r/psr2r-sniffer
 You can then use it like this:
 ```
 // Sniffs only
-vendor/bin/phpcs --standard=/path/to/ruleset.xml /path/to/your/files
+bin/sniff /path/to/your/files
 
 // Sniffs and fixes
-vendor/bin/phpcbf --standard=/path/to/ruleset.xml /path/to/your/files
+bin/sniff /path/to/your/files -f
 ```
-To use PSR-2-R by default replace `/path/to/ruleset.xml` above with `vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml`.
-If you don't want to append this all the time, make a small wrapper script that internally calls phpcs/phpcbf this way.
+The path is optional if you want to run it on your complete project root dir. It will in this case automatically skip the `vendor/` dir.
 
-#### Example
-So, if you want to run the sniffer over your root `src` folder, run:
+#### Examples
+If you want to run the sniffer over your root `src` folder, run:
 ```
-vendor/bin/phpcs --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml src/
+bin/sniff src
 ```
 
 #### Useful commands
-Verbose output with `-v` is always useful.
+Verbose output with `-v` is always useful. With `-vv` or even `-vvv` you get even more debug output.
 
 If you want a list of all sniffs in this standard, use `-e`:
 ```
-vendor/bin/phpcs --standard=/path/to/ruleset.xml -e
+bin/sniff -e
 ```
 It will them all grouped by their standard name.
 
 To just run a single sniff, use `--sniffs=...` and a comma separated list of sniffs, .e.g.:
 ```
-vendor/bin/phpcs --standard=/path/to/ruleset.xml --sniffs=PSR2R.Files.EndFileNewline
+bin/sniff --sniffs=PSR2R.Files.EndFileNewline
 ```
 
-Usually, if you run it over your complete repository, you would want to exclude dirs like `vendor`:
+Usually, if you run it over your complete repository, you would want to exclude dirs like `tests/test_files/`:
 ```
-vendor/bin/phpcs --standard=/path/to/ruleset.xml --ignore=vendor/ ./
+bin/sniff --ignore=tests/test_files/
 ```
+
+Use `-h` to list all available options.
 
 #### Windows usage
 For Win OS you should be using `\` as separator:
 ```
-vendor\bin\phpcs --standard=vendor\fig-r\psr2r-sniffer\PSR2R\ruleset.xml ./
+bin\sniff -v
 ```
 
 #### Hook it into your IDE for live-correction
@@ -129,14 +130,4 @@ Using the verbose option:
 // T_OPEN_CURLY_BRACKET (947) code=PHPCS_T_OPEN_CURLY_BRACKET, line=105, column=55, length=1, bracket_opener=947, bracket_closer=1079, scope_condition=940, scope_opener=947, scope_closer=1079, level=1, conditions={"9":358}, content=`{`
 // T_WHITESPACE (948) code=379, line=105, column=56, length=0, level=2, conditions={"9":358,"940":337}, content=`\n`
 ...
-```
-
-#### Running own sniffs on this project
-There is a convenience script to run all sniffs for this repository:
-```
-sh phpcs.sh
-```
-If you want to fix the fixable errors, use
-```
-sh phpcs.sh -f
 ```
