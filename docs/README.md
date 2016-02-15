@@ -32,11 +32,16 @@ also use them standalone/separately in any way you like.
 - PSR2R.Methods.MethodArgumentDefaultValue
 - PSR2R.PHP.RemoveFunctionAlias
 - PSR2R.PHP.ShortCast
-- PSR2R.PHP.NoSpacesCast
 - PSR2R.PHP.NoIsNull
 - PSR2R.PHP.PreferCastOverFunction
 - PSR2R.PHP.PhpSapiConstant
+- PSR2R.Whitespace.CastSpacing
 - PSR2R.Whitespace.WhitespaceAfterReturn
+- PSR2R.Whitespace.ConcatenationSpacing
+- PSR2R.Whitespace.CommaSpacing
+- PSR2R.Whitespace.OperatorSpacing
+- PSR2R.Whitespace.ObjectAttributeSpacing
+- PSR2R.Whitespace.LanguageConstructSpacing
 - And some more inherited ruleset sniffers (> 20).
 
 Most of the sniffers also provide auto-fixing using `-f` option where it is possible.
@@ -67,6 +72,9 @@ vendor/bin/phpcs --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml src/
 ## Writing sniffs
 You can easily write new sniffers and run them isolated over test files.
 It helps to use `-s` to see the names of the sniffers that reported issues.
+
+For testing fixing, it can sometimes help to use `--suffix=fixed.php` etc to write to a different file.
+This way you can check the output of this second file without the actual one being changed.
 
 ### Tokenizing Tool
 It really helps to see what the code looks like for the sniffer.
