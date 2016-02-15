@@ -1,6 +1,6 @@
 <?php
 
-namespace PSR2R\Sniffs\Methods;
+namespace PSR2R\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer_File;
 use PSR2R\Tools\AbstractSniff;

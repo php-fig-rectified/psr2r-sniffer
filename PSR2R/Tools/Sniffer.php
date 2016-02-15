@@ -1,0 +1,69 @@
+<?php
+namespace PSR2R\Tools;
+
+class Sniffer {
+
+	const STANDARD = 'PSR2R/ruleset.xml';
+
+	/**
+	 * @var bool
+	 */
+	protected $fix;
+
+	/**
+	 * @param array $argv
+	 * @throws \Exception
+	 */
+	public function __construct($argv) {
+		$path = (!empty($argv[1]) && strpos($argv[1], '-') !== 0) ? $argv[1] : null;
+		$ignore = null;
+		if (!$path) {
+			$path = array_shift($argv);
+			$path = dirname(dirname($path));
+			if (substr($path, -6) === 'vendor') {
+				$path = dirname($path);
+			}
+			$ignore = $path . DIRECTORY_SEPARATOR . 'vendor';
+		} else {
+			unset($argv[1]);
+		}
+
+		$fix = false;
+		foreach ($argv as $k => $v) {
+			if ($v === '-f') {
+				$fix = true;
+				unset($argv[$k]);
+				break;
+			}
+		}
+
+		$root = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR;
+		$standard = $root . self::STANDARD;
+		$argv[] = '--standard=' . $standard;
+		if ($ignore) {
+			$argv[] = '--ignore=' . str_replace(DIRECTORY_SEPARATOR, '/', $ignore);
+		}
+
+		$argv[] = $path;
+
+		array_unshift($argv, 'dummy');
+
+		$_SERVER['argv'] = $argv;
+		$_SERVER['argc'] = count($_SERVER['argv']);
+
+		$this->fix = $fix;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function sniff() {
+		$cli = new \PHP_CodeSniffer_CLI();
+		if ($this->fix) {
+			$cli->runphpcbf();
+		} else {
+			$cli->runphpcs();
+		}
+	}
+
+}

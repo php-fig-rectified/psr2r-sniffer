@@ -124,28 +124,4 @@ class Tokenizer {
 		return [implode(' ', $pieces)];
 	}
 
-	/**
-	 * Convert options to string
-	 *
-	 * @param array $options Options array
-	 * @return string Results
-	 */
-	protected static function _optionsToString($options) {
-		if (empty($options) || !is_array($options)) {
-			return '';
-		}
-		$results = '';
-		foreach ($options as $option => $value) {
-			if (strlen($results) > 0) {
-				$results .= ' ';
-			}
-			if (empty($value)) {
-				$results .= "--$option";
-			} else {
-				$results .= "--$option=$value";
-			}
-		}
-		return $results;
-	}
-
 }

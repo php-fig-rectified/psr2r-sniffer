@@ -23,5 +23,8 @@
 			"PSR2T\\Test\\": "tests"
 		}
 	},
-	"bin": ["bin/tokenize"]
+	"bin": [
+		"bin/tokenize",
+		"bin/sniff"
+	]
 }
