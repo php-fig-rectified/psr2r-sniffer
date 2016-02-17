@@ -48,7 +48,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@return', '@yield', '@param', '@throws', '@var', '@method'])) {
+			if (!in_array($tokens[$i]['content'], ['@return', '@yield', '@param', '@throws', '@var', '@method', '@see'])) {
 				continue;
 			}
 
@@ -72,7 +72,29 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			}
 
 			$classNames = explode('|', $content);
-			$this->fixClassNames($phpCsFile, $classNameIndex, $classNames, $appendix);
+			if (count($classNames) > 1) {
+				$this->assertUniqueParts($phpCsFile, $classNames, $i);
+			}
+
+			$this->fixClassNames($phpCsFile, $classNameIndex, $classNames, $tokens[$i]['content'], $appendix);
+		}
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param array $classNames
+	 * @param int $index
+	 *
+	 * @return void
+	 */
+	protected function assertUniqueParts(\PHP_CodeSniffer_File $phpCsFile, array $classNames, $index) {
+		$exists = [];
+		foreach ($classNames as $className) {
+			if (in_array($className, $exists, true)) {
+				$phpCsFile->addError('Type `' . $className . '` used twice', $index);
+				continue;
+			}
+			$exists[] = $className;
 		}
 	}
 
@@ -80,21 +102,26 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer_File $phpCsFile
 	 * @param int $classNameIndex
 	 * @param array $classNames
+	 * @param string $docBlockType
 	 * @param string $appendix
 	 *
 	 * @return void
 	 */
-	protected function fixClassNames(\PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $classNames, $appendix) {
+	protected function fixClassNames(\PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $classNames, $docBlockType, $appendix) {
 		$result = [];
 		foreach ($classNames as $key => $className) {
 			if (strpos($className, '\\') !== false) {
 				continue;
 			}
 
-			$arrayOfObject = false;
+			$suffix = '';
 			if (substr($className, -2) === '[]') {
-				$arrayOfObject = true;
+				$suffix = '[]';
 				$className = substr($className, 0, -2);
+			} elseif ($docBlockType === '@see' && preg_match('/^[a-z]+\:\:/i', $className, $matches)) {
+				$pos = strpos($className, '::');
+				$suffix = substr($className, $pos);
+				$className = substr($className, 0, $pos);
 			}
 
 			if (in_array($className, self::$whitelistedTypes)) {
@@ -103,12 +130,16 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 
 			$useStatement = $this->findUseStatementForClassName($phpCsFile, $className);
 			if (!$useStatement) {
+				if ($docBlockType === '@see' && strpos($suffix, '::') !== 0) {
+					continue;
+				}
+
 				$phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex);
 				continue;
 			}
 
-			$classNames[$key] = $useStatement . ($arrayOfObject ? '[]' : '');
-			$result[$className . ($arrayOfObject ? '[]' : '')] = $classNames[$key];
+			$classNames[$key] = $useStatement . ($suffix ?: '');
+			$result[$className . ($suffix ?: '')] = $classNames[$key];
 		}
 
 		if (!$result) {
