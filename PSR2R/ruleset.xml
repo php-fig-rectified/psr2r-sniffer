@@ -56,6 +56,8 @@
 			<property name="equalsSpacing" value="1"/>
 		</properties>
 	</rule>
+
+	<!-- needs https://github.com/squizlabs/PHP_CodeSniffer/issues/900 to be fixed first -->
 	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
 		<severity>0</severity>
 	</rule>
