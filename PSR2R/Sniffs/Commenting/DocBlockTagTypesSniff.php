@@ -13,6 +13,17 @@ use PSR2R\Tools\AbstractSniff;
  */
 class DocBlockTagTypesSniff extends AbstractSniff {
 
+	/**
+	 * Comma separated whitelist of further tags you can include in your ruleset.xml as
+	 *
+	 * <properties>
+	 *     <property name="whitelist" value="@foo,@bar"/>
+	 * </properties>
+	 *
+	 * @var string
+	 */
+	public $whitelist = '';
+
 	protected static $whitelistedTags = [
 		'@api',
 		'@author',
@@ -101,6 +112,8 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 
 		$docBlockStartIndex = $tokens[$docBlockEndIndex]['comment_opener'];
 
+		$this->prepareWhitelist();
+
 		for ($i = $docBlockStartIndex + 1; $i < $docBlockEndIndex; $i++) {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
@@ -141,6 +154,21 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function prepareWhitelist() {
+		if (!empty($this->whitelist)) {
+			$whitelist = explode(',', $this->whitelist);
+			foreach ($whitelist as $tag) {
+				if (!in_array($tag, self::$whitelistedTags)) {
+					self::$whitelistedTags[] = $tag;
+				}
+			}
+		}
+		$this->whitelist = '';
 	}
 
 }
