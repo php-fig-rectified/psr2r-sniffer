@@ -82,6 +82,17 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 			if ($fix === true) {
 				$phpcsFile->fixer->replaceToken($next, ';' . $phpcsFile->eolChar . 'use ');
 			}
+		} else {
+			$nextUse = $phpcsFile->findNext(T_USE, $next + 1);
+			if ($nextUse && !$this->_shouldIgnoreUse($phpcsFile, $nextUse)) {
+				if ($tokens[$nextUse]['line'] > $tokens[$next]['line'] + 1) {
+					$error = 'There should not be newlines between use statements';
+					$fix = $phpcsFile->addFixableError($error, $nextUse, 'NewlineBetweenUse');
+					if ($fix) {
+						$phpcsFile->fixer->replaceToken($nextUse - 1, '');
+					}
+				}
+			}
 		}
 
 		// Make sure this USE comes after the first namespace declaration.
@@ -96,7 +107,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
 		// Only interested in the last USE statement from here onwards.
 		$nextUse = $phpcsFile->findNext(T_USE, ($stackPtr + 1));
-		while ($this->_shouldIgnoreUse($phpcsFile, $nextUse) === true) {
+		while ($this->_shouldIgnoreUse($phpcsFile, $nextUse)) {
 			$nextUse = $phpcsFile->findNext(T_USE, ($nextUse + 1));
 			if ($nextUse === false) {
 				break;

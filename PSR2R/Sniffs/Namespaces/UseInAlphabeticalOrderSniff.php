@@ -13,7 +13,7 @@
  * @since         CakePHP CodeSniffer 0.1.10
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace PSR2R\Sniffs\Formatting;
+namespace PSR2R\Sniffs\Namespaces;
 
 use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Sniff;
@@ -60,8 +60,6 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 		if (isset($this->_processed[$phpcsFile->getFilename()])) {
 			return;
 		}
-
-		$tokens = $phpcsFile->getTokens();
 
 		$this->_uses = [];
 		$next = $stackPtr;
@@ -131,13 +129,6 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		$tokens = $phpcsFile->getTokens();
-
-		// Only one USE declaration allowed per statement.
-		$next = $phpcsFile->findNext([T_COMMA, T_SEMICOLON], ($stackPtr + 1));
-		if ($tokens[$next]['code'] === T_COMMA) {
-			$error = 'There must be one USE keyword per declaration';
-			$phpcsFile->addError($error, $stackPtr, 'MultipleDeclarations');
-		}
 
 		$content = '';
 		$startIndex = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true);
