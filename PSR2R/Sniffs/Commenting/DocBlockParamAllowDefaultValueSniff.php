@@ -85,6 +85,11 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			}
 
 			$pieces = explode('|', $content);
+			// We skip for mixed
+			if (in_array('mixed', $pieces, true)) {
+				continue;
+			}
+
 			if ($methodSignatureValue['typehint']) {
 				$typeIndex = $methodSignatureValue['typehint'];
 				$type = $tokens[$typeIndex]['content'];
