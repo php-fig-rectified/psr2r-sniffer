@@ -56,6 +56,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@TODO',
 		// PHPUnit
 		'@covers',
+		'@coversDefaultClass',
 		'@expectedException',
 		'@expectedExceptionCode',
 		'@expectedExceptionMessage',
