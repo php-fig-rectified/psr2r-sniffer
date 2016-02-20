@@ -77,22 +77,24 @@ class NamespaceDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		$error = 'There must be one blank line after the namespace declaration';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'BlankLineAfter');
 
-		if ($fix === true) {
-			if ($diff === 0) {
-				$phpcsFile->fixer->addNewlineBefore($i);
-			} else {
-				$phpcsFile->fixer->beginChangeset();
-				for ($x = $i; $x < $next; $x++) {
-					if ($tokens[$x]['line'] === $tokens[$next]['line']) {
-						break;
-					}
+		if (!$fix) {
+			return;
+		}
 
-					$phpcsFile->fixer->replaceToken($x, '');
+		if ($diff === 0) {
+			$phpcsFile->fixer->addNewlineBefore($i);
+		} else {
+			$phpcsFile->fixer->beginChangeset();
+			for ($x = $i; $x < $next; $x++) {
+				if ($tokens[$x]['line'] === $tokens[$next]['line']) {
+					break;
 				}
 
-				$phpcsFile->fixer->addNewline($i);
-				$phpcsFile->fixer->endChangeset();
+				$phpcsFile->fixer->replaceToken($x, '');
 			}
+
+			$phpcsFile->fixer->addNewline($i);
+			$phpcsFile->fixer->endChangeset();
 		}
 	}
 
