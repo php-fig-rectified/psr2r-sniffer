@@ -7,6 +7,24 @@ use PHP_CodeSniffer_File;
 abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 
 	/**
+	 * Checks if the given token is of this token code/type.
+	 *
+	 * @param int|string $search
+	 * @param array $token
+	 * @return bool
+	 */
+	protected function isGivenKind($search, array $token) {
+		$search = (array)$search;
+		if (in_array($token['code'], $search, true)) {
+			return true;
+		}
+		if (in_array($token['type'], $search, true)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Checks if the given token scope contains a single or multiple token codes/types.
 	 *
 	 * @param \PHP_CodeSniffer_File $phpcsFile
@@ -105,7 +123,11 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 		$tokens = $phpcsFile->getTokens();
 		$char = $this->getIndentationCharacter($tokens[$index]['content'], true);
 
-		$phpcsFile->fixer->replaceToken($index, $this->strReplaceOnce($char, '', $tokens[$index]['content']));
+		$content = $tokens[$index]['content'];
+		for ($i = 0; $i < $count; $i++) {
+			$content = $this->strReplaceOnce($char, '', $content);
+		}
+		$phpcsFile->fixer->replaceToken($index, $content);
 	}
 
 	/**
@@ -116,8 +138,10 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	 */
 	protected function indent(PHP_CodeSniffer_File $phpcsFile, $index, $count = 1) {
 		$tokens = $phpcsFile->getTokens();
+		$char = $this->getIndentationCharacter($tokens[$index]['content'], true);
 
-		$phpcsFile->fixer->replaceToken($index, $this->strReplaceOnce("\t", "\t\t", $tokens[$index]['content']));
+		$content = str_repeat($char, $count) . $tokens[$index]['content'];
+		$phpcsFile->fixer->replaceToken($index, $content);
 	}
 
 	/**
@@ -154,9 +178,8 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 			$countTabs += substr_count($content, $char);
 			$countSpaces += (int)(substr_count($content, ' ') / 4);
 		}
-		var_dump($content);
 
-		if ($countSpaces > $countTabs) {
+		if ($countSpaces > 3 && $countSpaces > $countTabs) {
 			$char = $correctLength ? '    ' : ' ';
 		}
 
