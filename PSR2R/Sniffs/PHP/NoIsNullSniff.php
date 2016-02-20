@@ -5,6 +5,10 @@ namespace PSR2R\Sniffs\PHP;
 use PHP_CodeSniffer_Tokens;
 
 /**
+ * is_null() should be replaced by === null check.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 

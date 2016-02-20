@@ -3,6 +3,9 @@ namespace PSR2R\Sniffs\WhiteSpace;
 
 /**
  * Check for any line starting with 4 spaces - which would indicate space indenting.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class TabIndentSniff implements \PHP_CodeSniffer_Sniff {
 

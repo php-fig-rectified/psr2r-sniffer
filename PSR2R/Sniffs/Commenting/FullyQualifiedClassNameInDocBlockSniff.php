@@ -4,6 +4,12 @@ namespace PSR2R\Sniffs\Commenting;
 
 use PSR2R\Tools\AbstractSniff;
 
+/**
+ * Make sure all class names in doc bocks are FQCN.
+ *
+ * @author Mark Scherer
+ * @license MIT
+ */
 class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 
 	/**

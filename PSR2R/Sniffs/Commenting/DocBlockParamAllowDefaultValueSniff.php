@@ -8,8 +8,8 @@ use PSR2R\Tools\AbstractSniff;
  * Makes sure doc block param types allow `|null`, `|array` etc, when those are used
  * as default values in the method signature.
  *
- * @author    Mark Scherer
- * @license   MIT
+ * @author Mark Scherer
+ * @license MIT
  */
 class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 

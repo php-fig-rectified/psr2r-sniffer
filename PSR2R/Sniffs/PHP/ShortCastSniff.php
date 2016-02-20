@@ -3,6 +3,10 @@
 namespace PSR2R\Sniffs\PHP;
 
 /**
+ * Use short form of boolean and integer casts.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class ShortCastSniff implements \PHP_CodeSniffer_Sniff {
 

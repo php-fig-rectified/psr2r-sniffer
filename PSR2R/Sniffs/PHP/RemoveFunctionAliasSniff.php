@@ -2,6 +2,12 @@
 
 namespace PSR2R\Sniffs\PHP;
 
+/**
+ * Eliminate alias usage of basic PHP functions.
+ *
+ * @author Mark Scherer
+ * @license MIT
+ */
 class RemoveFunctionAliasSniff implements \PHP_CodeSniffer_Sniff {
 
 	/**

@@ -7,6 +7,9 @@ use PSR2R\Tools\AbstractSniff;
 
 /**
  * Checks that the method declaration has correct spacing.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class MethodSpacingSniff extends AbstractSniff {
 

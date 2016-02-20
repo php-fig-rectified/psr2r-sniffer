@@ -4,6 +4,9 @@ namespace PSR2R\Sniffs\Classes;
 
 /**
  * Makes sure opening braces are on the same line for class, interface and trait.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class BraceOnSameLineSniff implements \PHP_CodeSniffer_Sniff {
 

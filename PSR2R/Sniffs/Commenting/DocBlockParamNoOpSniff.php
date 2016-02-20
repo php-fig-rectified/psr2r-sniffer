@@ -7,8 +7,8 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Warn about `@param null $var` etc as a null/true/false would be a NO-OP.
  *
- * @author    Mark Scherer
- * @license   MIT
+ * @author Mark Scherer
+ * @license MIT
  */
 class DocBlockParamNoOpSniff extends AbstractSniff {
 

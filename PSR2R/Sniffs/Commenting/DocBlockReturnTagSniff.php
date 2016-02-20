@@ -8,8 +8,8 @@ use PHP_CodeSniffer_Standards_AbstractScopeSniff;
  * Verifies that a `@return` tag exists for all functions and methods and that it does not exist
  * for all constructors and destructors.
  *
- * @author    Mark Scherer
- * @license   MIT
+ * @author Mark Scherer
+ * @license MIT
  */
 class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff {
 

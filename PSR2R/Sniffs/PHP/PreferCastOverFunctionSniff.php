@@ -4,6 +4,9 @@ namespace PSR2R\Sniffs\PHP;
 
 /**
  * Always use simple casts instead of method invocation.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 

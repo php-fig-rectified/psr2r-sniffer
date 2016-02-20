@@ -7,6 +7,10 @@ use PHP_CodeSniffer_Sniff;
 use PSR2R\Tools\AbstractSniff;
 
 /**
+ * Too much else is considered a code-smell and can often be resolved by returning early.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class UnneededElseSniff extends AbstractSniff {
 

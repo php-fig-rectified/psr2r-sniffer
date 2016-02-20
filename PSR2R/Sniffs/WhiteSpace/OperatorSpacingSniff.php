@@ -3,6 +3,9 @@ namespace PSR2R\Sniffs\WhiteSpace;
 
 /**
  * Verifies that operators have valid spacing surrounding them.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 

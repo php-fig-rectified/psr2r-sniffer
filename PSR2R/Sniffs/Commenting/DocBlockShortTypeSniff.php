@@ -4,6 +4,12 @@ namespace PSR2R\Sniffs\Commenting;
 
 use PSR2R\Tools\AbstractSniff;
 
+/**
+ * Use short types for boolean and integer in doc blocks.
+ *
+ * @author Mark Scherer
+ * @license MIT
+ */
 class DocBlockShortTypeSniff extends AbstractSniff {
 
 	/**

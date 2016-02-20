@@ -3,7 +3,10 @@
 namespace PSR2R\Sniffs\PHP;
 
 /**
- * Sniff rule PhpSapiConstant
+ * Use PHP_SAPI constant instead of php_sapi_name() function.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class PhpSapiConstantSniff implements \PHP_CodeSniffer_Sniff {
 

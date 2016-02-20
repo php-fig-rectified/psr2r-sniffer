@@ -20,6 +20,9 @@ use PSR2R\Tools\AbstractSniff;
 
 /**
  * Ensures doc block alignment with its code.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class DocBlockAlignmentSniff extends AbstractSniff {
 

@@ -4,6 +4,12 @@ namespace PSR2R\Sniffs\Commenting;
 
 use PSR2R\Tools\AbstractSniff;
 
+/**
+ * Doc Blocks that
+ *
+ * @author Mark Scherer
+ * @license MIT
+ */
 class DocBlockReturnSelfSniff extends AbstractSniff {
 
 	/**

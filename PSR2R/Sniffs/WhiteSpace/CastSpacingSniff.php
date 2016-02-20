@@ -6,6 +6,9 @@ use PHP_CodeSniffer_Tokens;
 
 /**
  * No whitespace should be between cast and variable. Also account for implicit casts.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class CastSpacingSniff implements \PHP_CodeSniffer_Sniff {
 

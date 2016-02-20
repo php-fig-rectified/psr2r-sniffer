@@ -7,29 +7,21 @@ use PSR2R\Tools\AbstractSniff;
 
 /**
  * Checks that the method declaration of arguments has a single one per line for multiline.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class MethodMultilineArgumentsSniff extends AbstractSniff {
 
 	/**
-	 * Registers the tokens that this sniff wants to listen for.
-	 *
-	 * @return int[]
+	 * @inheritDoc
 	 */
 	public function register() {
 		return [T_FUNCTION];
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
-	 *                                        token was found.
-	 * @param int $stackPtr The position in the PHP_CodeSniffer
-	 *                                        file's token stack where the token
-	 *                                        was found.
-	 *
-	 * @return void|int Optionally returns a stack pointer. The sniff will not be
-	 *                  called again on the current file until the returned stack
-	 *                  pointer is reached. Return (count($tokens) + 1) to skip
-	 *                  the rest of the file.
+	 * @inheritDoc
 	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();

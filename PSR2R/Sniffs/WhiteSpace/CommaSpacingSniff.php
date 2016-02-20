@@ -5,6 +5,9 @@ use PHP_CodeSniffer_Sniff;
 
 /**
  * Ensures no whitespaces and one whitespace is placed around each comma.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class CommaSpacingSniff implements PHP_CodeSniffer_Sniff {
 

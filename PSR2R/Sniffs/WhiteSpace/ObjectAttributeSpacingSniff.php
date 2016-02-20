@@ -7,6 +7,9 @@ use PHP_CodeSniffer_Sniff;
 
 /**
  * Verifies that that object operator and class double colon have no additional whitespace around.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class ObjectAttributeSpacingSniff implements PHP_CodeSniffer_Sniff {
 

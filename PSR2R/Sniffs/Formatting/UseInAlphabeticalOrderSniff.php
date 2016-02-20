@@ -20,6 +20,9 @@ use PHP_CodeSniffer_Sniff;
 
 /**
  * Ensures all the use are in alphabetical order.
+ *
+ * @author Mark Scherer
+ * @license MIT
  */
 class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 
