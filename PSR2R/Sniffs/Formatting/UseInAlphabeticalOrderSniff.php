@@ -71,7 +71,6 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 		// Prevent multiple uses in the same file from entering
 		$this->_processed[$phpcsFile->getFilename()] = true;
 
-
 		foreach ($this->_uses as $scope => $used) {
 			$defined = $sorted = array_keys($used);
 
@@ -103,7 +102,7 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 
 				foreach ($map as $index => $name) {
 					$phpcsFile->fixer->replaceToken($index, $name);
-					$endIndex= $phpcsFile->findNext([T_SEMICOLON, T_OPEN_CURLY_BRACKET], $index + 1);
+					$endIndex = $phpcsFile->findNext([T_SEMICOLON, T_OPEN_CURLY_BRACKET], $index + 1);
 					for ($i = $index + 1; $i < $endIndex; $i++) {
 						$phpcsFile->fixer->replaceToken($i, '');
 					}
