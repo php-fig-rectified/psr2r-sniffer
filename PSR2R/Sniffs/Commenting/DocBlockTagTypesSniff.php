@@ -85,6 +85,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	];
 
 	protected static $mapping = [
+		'@type' => '@var',
 		'@overwrite' => '@override',
 		'@inheritdoc' => '@inheritDoc'
 	];

@@ -15,6 +15,7 @@
 namespace PSR2R\Sniffs\Commenting;
 
 use PHP_CodeSniffer_File;
+use PSR2R\Tools\AbstractSniff;
 
 /**
  * Ensures doc blocks follow basic formatting.
@@ -25,7 +26,7 @@ use PHP_CodeSniffer_File;
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class DocCommentSniff implements \PHP_CodeSniffer_Sniff {
+class DocCommentSniff extends AbstractSniff {
 
 	/**
 	 * A list of tokenizers this sniff supports.
@@ -61,8 +62,10 @@ class DocCommentSniff implements \PHP_CodeSniffer_Sniff {
 		$commentStart = $stackPtr;
 		$commentEnd = $tokens[$stackPtr]['comment_closer'];
 
+		$indentationLevel = $this->getIndentationLevel($phpcsFile, $stackPtr);
+
 		// Skip for inline comments
-		if ($tokens[$stackPtr]['column'] === 3 || $tokens[$stackPtr]['column'] === 9) {
+		if ($indentationLevel > 1) {
 			return;
 		}
 
@@ -81,9 +84,12 @@ class DocCommentSniff implements \PHP_CodeSniffer_Sniff {
 			$error = 'The open comment tag must be the only content on the line';
 			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpen');
 			if ($fix === true) {
+				$indentation = $tokens[$commentStart]['column'] - 1;
+				$indentation = str_repeat("\t", $indentation);
+
 				$phpcsFile->fixer->beginChangeset();
-				$phpcsFile->fixer->addNewline($stackPtr);
-				$phpcsFile->fixer->addContentBefore($short, '* ');
+				$phpcsFile->fixer->addContentBefore($short, $indentation . ' * ');
+				$phpcsFile->fixer->addNewlineBefore($short);
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
@@ -94,7 +100,15 @@ class DocCommentSniff implements \PHP_CodeSniffer_Sniff {
 			$error = 'The close comment tag must be the only content on the line';
 			$fix = $phpcsFile->addFixableError($error, $commentEnd, 'ContentBeforeClose');
 			if ($fix === true) {
+				$indentation = $tokens[$commentStart]['column'] - 1;
+				$indentation = str_repeat("\t", $indentation);
+
+				$phpcsFile->fixer->beginChangeset();
+
+				$phpcsFile->fixer->replaceToken($commentEnd, $indentation . ' ' . $tokens[$commentEnd]['content']);
 				$phpcsFile->fixer->addNewlineBefore($commentEnd);
+
+				$phpcsFile->fixer->endChangeset();
 			}
 		}
 

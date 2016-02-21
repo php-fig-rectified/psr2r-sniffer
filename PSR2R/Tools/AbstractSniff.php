@@ -160,6 +160,28 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	}
 
 	/**
+	 * Get level of indentation, 0 based.
+	 *
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $index
+	 * @return int
+	 */
+	protected function getIndentationLevel(PHP_CodeSniffer_File $phpcsFile, $index) {
+		$tokens = $phpcsFile->getTokens();
+
+		$whitespace = $this->getIndentationWhitespace($phpcsFile, $index);
+		$char = $this->getIndentationCharacter($whitespace);
+
+		$level = $tokens[$index]['column'] - 1;
+
+		if ($char === "\t") {
+			return $level;
+		}
+
+		return (int)($level / 4);
+	}
+
+	/**
 	 * @param string $content
 	 * @param bool $correctLength
 	 * @return string
@@ -188,13 +210,13 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param int $prevIndex
+	 * @param int $index
 	 * @return string
 	 */
-	protected function getIndentationWhitespace(PHP_CodeSniffer_File $phpcsFile, $prevIndex) {
+	protected function getIndentationWhitespace(PHP_CodeSniffer_File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
-		$firstIndex = $this->getFirstTokenOfLine($tokens, $prevIndex);
+		$firstIndex = $this->getFirstTokenOfLine($tokens, $index);
 		$whitespace = '';
 		if ($tokens[$firstIndex]['type'] === 'T_WHITESPACE') {
 			$whitespace = $tokens[$firstIndex]['content'];
@@ -205,16 +227,16 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param int $prevIndex
+	 * @param int $index
 	 * @return int
 	 */
-	protected function getIndentationColumn(PHP_CodeSniffer_File $phpcsFile, $prevIndex) {
+	protected function getIndentationColumn(PHP_CodeSniffer_File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
-		$firstIndex = $this->getFirstTokenOfLine($tokens, $prevIndex);
+		$firstIndex = $this->getFirstTokenOfLine($tokens, $index);
 
 		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, ($firstIndex + 1), null, true);
-		if ($tokens[$nextIndex]['line'] !== $tokens[$prevIndex]['line']) {
+		if ($tokens[$nextIndex]['line'] !== $tokens[$index]['line']) {
 			return 0;
 		}
 		return $tokens[$nextIndex]['column'] - 1;
