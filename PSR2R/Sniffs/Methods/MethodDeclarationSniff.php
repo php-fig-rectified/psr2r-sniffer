@@ -11,6 +11,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 namespace PSR2R\Sniffs\Methods;
 
 use PHP_CodeSniffer_Exception;

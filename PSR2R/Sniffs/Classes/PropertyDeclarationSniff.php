@@ -1,4 +1,5 @@
 <?php
+
 namespace PSR2R\Sniffs\Classes;
 
 use PHP_CodeSniffer_Exception;

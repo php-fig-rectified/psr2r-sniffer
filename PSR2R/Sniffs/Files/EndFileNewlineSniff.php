@@ -12,6 +12,7 @@
  *
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 namespace PSR2R\Sniffs\Files;
 
 use PHP_CodeSniffer_File;

@@ -13,6 +13,7 @@
  * @since         CakePHP CodeSniffer 0.1.10
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace PSR2R\Sniffs\Namespaces;
 
 use PHP_CodeSniffer_File;

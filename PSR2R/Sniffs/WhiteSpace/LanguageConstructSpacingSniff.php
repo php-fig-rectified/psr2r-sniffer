@@ -1,4 +1,5 @@
 <?php
+
 namespace PSR2R\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer_File;

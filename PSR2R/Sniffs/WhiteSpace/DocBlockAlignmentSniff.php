@@ -12,6 +12,7 @@
  * @since         CakePHP CodeSniffer 1.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace PSR2R\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer_File;
