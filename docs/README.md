@@ -147,3 +147,5 @@ If you want to fix the fixable errors, use
 ```
 sh phpcs.sh -f
 ```
+Make sure the root folder name is the same as the GitHub repository name (psr2r-sniffer) to exclude vendor as expected.
+Once everything is green you can make a PR with your changes.

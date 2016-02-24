@@ -10,8 +10,8 @@ fi
 
 if [ "$FIX" = 1 ]; then
 	# Sniff only
-	vendor/bin/phpcbf --standard=PSR2R/ruleset.xml -v --ignore=vendor/,tests/files/ ./
+	vendor/bin/phpcbf --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/files/ ./
 else
 	# Sniff and fix
-	vendor/bin/phpcs --standard=PSR2R/ruleset.xml -v --ignore=vendor/,tests/files/ ./
+	vendor/bin/phpcs --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/files/ ./
 fi
