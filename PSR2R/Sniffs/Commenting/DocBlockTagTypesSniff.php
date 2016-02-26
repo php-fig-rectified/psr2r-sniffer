@@ -55,7 +55,6 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@var',
 		'@version',
 		'@todo',
-		'@TODO',
 		// PHPUnit
 		'@covers',
 		'@coversDefaultClass',
@@ -72,7 +71,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@codeCoverageIgnoreStart',
 		'@codeCoverageIgnoreEnd',
 		// PHPMD
-		'@SuppressWarnings(PHPMD)'
+		'@SuppressWarnings(PHPMD)',
 	];
 
 	protected static $blacklistedTags = [
@@ -82,13 +81,14 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@category',
 		'@static',
 		'@void',
-		'@overwrite'
+		'@overwrite',
 	];
 
 	protected static $mapping = [
 		'@type' => '@var',
 		'@overwrite' => '@override',
-		'@inheritdoc' => '@inheritDoc'
+		'@inheritdoc' => '@inheritDoc',
+		'@TODO' => '@todo',
 	];
 
 	/**
