@@ -38,6 +38,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@license',
 		'@link',
 		'@method',
+		'@mixin',
 		'@override',
 		'@param',
 		'@property',
