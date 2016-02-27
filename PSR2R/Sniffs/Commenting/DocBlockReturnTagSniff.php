@@ -15,14 +15,14 @@ use PHP_CodeSniffer_Standards_AbstractScopeSniff;
 class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff {
 
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct([T_CLASS], [T_FUNCTION]);
 	}
 
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope) {
 		$tokens = $phpcsFile->getTokens();

@@ -38,21 +38,14 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
 class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff {
 
 	/**
-	 * Constructs a Squiz_Sniffs_Scope_MethodScopeSniff.
+	 * @inheritDoc
 	 */
 	public function __construct() {
 		parent::__construct([T_CLASS, T_INTERFACE], [T_FUNCTION]);
-
 	}
 
 	/**
-	 * Processes the function tokens within the class.
-	 *
-	 * @param \PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-	 * @param int                  $stackPtr  The position where the token was found.
-	 * @param int                  $currScope The current scope opener token.
-	 *
-	 * @return void
+	 * @inheritDoc
 	 */
 	protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope) {
 		$tokens = $phpcsFile->getTokens();

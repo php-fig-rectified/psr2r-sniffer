@@ -13,21 +13,14 @@ use PHP_CodeSniffer_Tokens;
 class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 
 	/**
-	 * Returns an array of tokens this test wants to listen for.
-	 *
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function register() {
 		return [T_STRING];
 	}
 
 	/**
-	 * Processes this test, when one of its tokens is encountered.
-	 *
-	 * @param \PHP_CodeSniffer_File $phpcsFile All the tokens found in the document.
-	 * @param int $stackPtr The position of the current token
-	 *    in the stack passed in $tokens.
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];

@@ -5,7 +5,7 @@ namespace PSR2R\Sniffs\Commenting;
 use PSR2R\Tools\AbstractSniff;
 
 /**
- * Doc Blocks that
+ * Doc Blocks that return $this should be declared as such.
  *
  * @author Mark Scherer
  * @license MIT
@@ -13,7 +13,7 @@ use PSR2R\Tools\AbstractSniff;
 class DocBlockReturnSelfSniff extends AbstractSniff {
 
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function register() {
 		return [
@@ -26,7 +26,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function process(\PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();

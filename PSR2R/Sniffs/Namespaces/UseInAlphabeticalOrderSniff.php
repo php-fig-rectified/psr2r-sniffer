@@ -42,20 +42,14 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 	protected $_uses = [];
 
 	/**
-	 * Returns an array of tokens this test wants to listen for.
-	 *
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function register() {
 		return [T_USE];
 	}
 
 	/**
-	 * Processes this test, when one of its tokens is encountered.
-	 *
-	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
-	 * @param int $stackPtr The position of the current token in the stack passed in $tokens.
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		if (isset($this->_processed[$phpcsFile->getFilename()])) {

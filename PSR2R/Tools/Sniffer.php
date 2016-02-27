@@ -28,6 +28,7 @@ class Sniffer {
 			$ignore = $path . 'vendor' . DIRECTORY_SEPARATOR;
 		} else {
 			unset($argv[1]);
+			array_shift($argv);
 		}
 
 		$fix = false;
@@ -52,7 +53,6 @@ class Sniffer {
 
 		$_SERVER['argv'] = $argv;
 		$_SERVER['argc'] = count($_SERVER['argv']);
-
 		$this->fix = $fix;
 	}
 

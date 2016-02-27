@@ -92,20 +92,14 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	];
 
 	/**
-	 * Returns an array of tokens this test wants to listen for.
-	 *
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function register() {
 		return [T_CLASS, T_FUNCTION];
 	}
 
 	/**
-	 * Processes this test, when one of its tokens is encountered.
-	 *
-	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
-	 * @param int $stackPtr The position of the current token in the stack passed in $tokens.
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -128,7 +122,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 			}
 
 			$error = 'Unexpected tag type `' . $tokens[$i]['content'] . '` in doc block';
-			if (!in_array($tokens[$i]['content'], self::$blacklistedTags)) {
+			if (!in_array($tokens[$i]['content'], self::$blacklistedTags, true) && !isset(self::$mapping[$tokens[$i]['content']])) {
 				$phpcsFile->addWarning($error, $i, 'Unknown');
 				continue;
 			}

@@ -13,7 +13,7 @@ use PSR2R\Tools\AbstractSniff;
 class DocBlockShortTypeSniff extends AbstractSniff {
 
 	/**
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function register() {
 		return [
@@ -26,10 +26,7 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
-	 * @param int $stackPointer
-	 *
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function process(\PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
