@@ -122,6 +122,7 @@ class SelfAccessorSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @param int $index
 	 * @param string $name
+	 * @return void
 	 */
 	protected function fixNameToSelf(PHP_CodeSniffer_File $phpcsFile, $index, $name) {
 		$tokens = $phpcsFile->getTokens();

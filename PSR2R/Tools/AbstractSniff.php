@@ -258,4 +258,63 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 		return $currentIndex;
 	}
 
+	/**
+	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @return bool
+     */
+	protected function hasNamespace(PHP_CodeSniffer_File $phpCsFile) {
+		return $this->findNamespaceIndex($phpCsFile) !== null;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @return int|null
+	 */
+	protected function findNamespaceIndex(PHP_CodeSniffer_File $phpCsFile) {
+		$namespacePosition = $phpCsFile->findNext(T_NAMESPACE, 0);
+		if (!$namespacePosition) {
+			return null;
+		}
+		return $namespacePosition;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @return array
+	 */
+	protected function getNamespaceInfo(PHP_CodeSniffer_File $phpcsFile) {
+		$startIndex = $this->findNamespaceIndex($phpcsFile);
+
+		$endIndex = 0;
+		if ($startIndex) {
+			$endIndex = $phpcsFile->findNext(T_SEMICOLON, $startIndex + 1);
+		}
+
+		if (empty($startIndex) || empty($endIndex)) {
+			return [];
+		}
+
+		return [
+			'start' => $startIndex,
+			'namespace' => $this->getNamespaceAsString($phpcsFile, $startIndex + 1, $endIndex - 1),
+			'end' => $endIndex
+		];
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 *
+	 * @return string
+	 */
+	protected function getNamespaceAsString(\PHP_CodeSniffer_File $phpCsFile, $startIndex, $endIndex) {
+		$tokens = $phpCsFile->getTokens();
+
+		$namespace = '';
+		for ($i = $startIndex; $i <= $endIndex; $i++) {
+			$namespace .= $tokens[$i]['content'];
+		}
+
+		return trim($namespace);
+	}
+
 }

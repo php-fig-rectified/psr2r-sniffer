@@ -32,12 +32,12 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 			return;
 		}
 
-		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		$previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 		if (!$previous || in_array($tokens[$previous]['code'], $wrongTokens)) {
 			return;
 		}
 
-		$openingBraceIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$openingBraceIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 		if (!$openingBraceIndex || $tokens[$openingBraceIndex]['type'] !== 'T_OPEN_PARENTHESIS') {
 			return;
 		}
@@ -46,14 +46,14 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 
 		$error = $tokenContent . '() found, should be strict === null check.';
 
-		$possibleCastIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		$possibleCastIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 		$negated = false;
 		if ($possibleCastIndex && $tokens[$possibleCastIndex]['code'] === T_BOOLEAN_NOT) {
 			$negated = true;
 		}
 		// We dont want to fix double !!
 		if ($negated) {
-			$anotherPossibleCastIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($possibleCastIndex - 1), null, true);
+			$anotherPossibleCastIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($possibleCastIndex - 1), null, true);
 			if ($tokens[$anotherPossibleCastIndex]['code'] === T_BOOLEAN_NOT) {
 				$phpcsFile->addError($error, $stackPtr);
 				return;
@@ -134,10 +134,15 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 		}
 	}
 
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $index
+	 * @return bool
+	 */
 	protected function leadRequiresBrackets(\PHP_CodeSniffer_File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
-		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($index - 1), null, true);
+		$previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($index - 1), null, true);
 		if ($this->isCast($phpcsFile, $previous)) {
 			return true;
 		}
@@ -167,12 +172,12 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 	protected function findUnnecessaryLeadingComparisonStart(\PHP_CodeSniffer_File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
-		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($index - 1), null, true);
+		$previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($index - 1), null, true);
 		if (!in_array($tokens[$previous]['code'], [T_IS_IDENTICAL, T_IS_NOT_IDENTICAL])) {
 			return null;
 		}
 
-		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($previous - 1), null, true);
+		$previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($previous - 1), null, true);
 		if (!in_array($tokens[$previous]['code'], [T_TRUE, T_FALSE])) {
 			return null;
 		}
@@ -180,31 +185,46 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 		return $previous;
 	}
 
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $index
+	 * @return int|null
+	 */
 	protected function findUnnecessaryTrailingComparisonEnd(\PHP_CodeSniffer_File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
-		$next = $phpcsFile->findNext(T_WHITESPACE, ($index + 1), null, true);
-		if (!in_array($tokens[$next]['code'], [T_IS_IDENTICAL, T_IS_NOT_IDENTICAL])) {
+		$next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($index + 1), null, true);
+		if (!$next || !in_array($tokens[$next]['code'], [T_IS_IDENTICAL, T_IS_NOT_IDENTICAL])) {
 			return null;
 		}
 
-		$next = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
-		if (!in_array($tokens[$next]['code'], [T_TRUE, T_FALSE])) {
+		$prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($next - 1), null, true);
+		if (!$prev || !in_array($tokens[$prev]['code'], [T_TRUE, T_FALSE])) {
 			return null;
 		}
 
 		return $next;
 	}
 
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $stackPtr
+	 * @return bool
+	 */
 	protected function hasLeadingComparison(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		$previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 		return $this->isComparison($phpcsFile, $previous);
 	}
 
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $stackPtr
+	 * @return bool
+	 */
 	protected function hasTrailingComparison(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 		return $this->isComparison($phpcsFile, $next);
 	}
 

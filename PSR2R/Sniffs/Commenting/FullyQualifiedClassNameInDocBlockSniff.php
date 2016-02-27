@@ -189,10 +189,10 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	 * @return string|null
 	 */
 	protected function findInSameNameSpace(\PHP_CodeSniffer_File $phpCsFile, $className) {
-		$currentNameSpace = $this->getNamespace($phpCsFile);
-		if (!$currentNameSpace) {
+		if (!$this->hasNamespace($phpCsFile)) {
 			return null;
 		}
+		$currentNameSpace = $this->getNamespaceInfo($phpCsFile);
 
 		$file = $phpCsFile->getFilename();
 		$dir = dirname($file) . DIRECTORY_SEPARATOR;
@@ -201,41 +201,6 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 		}
 
 		return '\\' . $currentNameSpace . '\\' . $className;
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
-	 *
-	 * @return string
-	 */
-	protected function getNamespace(\PHP_CodeSniffer_File $phpCsFile) {
-		$tokens = $phpCsFile->getTokens();
-
-		$namespaceStart = null;
-		foreach ($tokens as $id => $token) {
-			if ($token['code'] !== T_NAMESPACE) {
-				continue;
-			}
-
-			$namespaceStart = $id + 1;
-			break;
-		}
-		if (!$namespaceStart) {
-			return '';
-		}
-
-		$namespaceEnd = $phpCsFile->findNext([
-				T_NS_SEPARATOR,
-				T_STRING,
-				T_WHITESPACE,
-			],
-			$namespaceStart,
-			null,
-			true);
-
-		$namespace = trim($phpCsFile->getTokensAsString(($namespaceStart), ($namespaceEnd - $namespaceStart)));
-
-		return $namespace;
 	}
 
 	/**

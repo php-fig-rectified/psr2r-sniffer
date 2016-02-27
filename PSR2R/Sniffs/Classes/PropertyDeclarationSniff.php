@@ -15,13 +15,13 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  * Verifies that properties are declared correctly.
  *
  *
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  *
- * @version   Release: @package_version@
+ * @version Release: @package_version@
  *
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @link http://pear.php.net/package/PHP_CodeSniffer
  */
 class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff {
 	/**

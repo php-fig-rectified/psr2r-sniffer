@@ -39,7 +39,6 @@ class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 			T_OPEN_TAG,
 		];
 
-		//$commentEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
 		$commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
 
 		if ($commentEnd === false) {

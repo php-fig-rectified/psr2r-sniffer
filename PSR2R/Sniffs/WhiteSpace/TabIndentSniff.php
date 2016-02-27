@@ -57,8 +57,9 @@ class TabIndentSniff implements \PHP_CodeSniffer_Sniff {
 
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param int $stackPtr Stackpointer
-	 * @param array $tokens Tokens
+	 * @param int $stackPtr
+	 * @param array $tokens
+	 * @return void
 	 */
 	protected function fixTab(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens) {
 		$content = $tokens[$stackPtr]['content'];
@@ -79,8 +80,9 @@ class TabIndentSniff implements \PHP_CodeSniffer_Sniff {
 
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param int $stackPtr Stackpointer
-	 * @param array $tokens Tokens
+	 * @param int $stackPtr
+	 * @param array $tokens
+	 * @return void
 	 */
 	protected function fixSpace(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens) {
 		$content = $tokens[$stackPtr]['content'];
