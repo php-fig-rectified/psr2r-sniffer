@@ -33,7 +33,9 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	 * @param int $end
 	 * @return bool
 	 */
-	protected function contains(\PHP_CodeSniffer_File $phpcsFile, $search, $start, $end) {
+	protected function contains(PHP_CodeSniffer_File $phpcsFile, $search, $start, $end) {
+		$search = (array)$search;
+
 		$tokens = $phpcsFile->getTokens();
 		for ($i = $start; $i <= $end; $i++) {
 			if ($tokens[$i]['type'] === 'T_OPEN_PARENTHESIS') {
@@ -59,7 +61,7 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	 * @param int $closingBraceIndex
 	 * @return bool
 	 */
-	protected function needsBrackets(\PHP_CodeSniffer_File $phpcsFile, $openingBraceIndex, $closingBraceIndex) {
+	protected function needsBrackets(PHP_CodeSniffer_File $phpcsFile, $openingBraceIndex, $closingBraceIndex) {
 		$tokens = $phpcsFile->getTokens();
 
 		$whitelistedCodes = [
@@ -97,7 +99,7 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	 *
 	 * @return int|null Stackpointer value of docblock end tag, or null if cannot be found
 	 */
-	protected function findRelatedDocBlock(\PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	protected function findRelatedDocBlock(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		$line = $tokens[$stackPointer]['line'];
@@ -261,7 +263,7 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @param \PHP_CodeSniffer_File $phpCsFile
 	 * @return bool
-     */
+	 */
 	protected function hasNamespace(PHP_CodeSniffer_File $phpCsFile) {
 		return $this->findNamespaceIndex($phpCsFile) !== null;
 	}
@@ -306,7 +308,7 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 	 *
 	 * @return string
 	 */
-	protected function getNamespaceAsString(\PHP_CodeSniffer_File $phpCsFile, $startIndex, $endIndex) {
+	protected function getNamespaceAsString(PHP_CodeSniffer_File $phpCsFile, $startIndex, $endIndex) {
 		$tokens = $phpCsFile->getTokens();
 
 		$namespace = '';

@@ -2,6 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
+use PHP_CodeSniffer_File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -25,7 +26,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(\PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
@@ -121,7 +122,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 	 * @param int $stackPtr
 	 * @return array
 	 */
-	private function getMethodSignature(\PHP_CodeSniffer_File $phpCsFile, $stackPtr) {
+	private function getMethodSignature(PHP_CodeSniffer_File $phpCsFile, $stackPtr) {
 		$tokens = $phpCsFile->getTokens();
 
 		$startIndex = $phpCsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);

@@ -2,6 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
+use PHP_CodeSniffer_File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -28,7 +29,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(\PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
@@ -79,7 +80,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function fixParts(\PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $parts, $appendix) {
+	protected function fixParts(PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $parts, $appendix) {
 		$result = [];
 		foreach ($parts as $key => $part) {
 			if ($part !== 'self') {

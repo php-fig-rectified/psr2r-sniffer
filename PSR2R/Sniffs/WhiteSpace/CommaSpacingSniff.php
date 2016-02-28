@@ -2,6 +2,7 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
+use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Sniff;
 
 /**
@@ -22,7 +23,7 @@ class CommaSpacingSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);

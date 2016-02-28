@@ -2,6 +2,7 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
+use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Tokens;
 
 /**
@@ -22,7 +23,7 @@ class CastSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['code'] === T_INC || $tokens[$stackPtr]['code'] === T_DEC) {
@@ -45,7 +46,7 @@ class CastSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @return void
 	 */
-	protected function processIncDec(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function processIncDec(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);

@@ -2,6 +2,8 @@
 
 namespace PSR2R\Sniffs\PHP;
 
+use PHP_CodeSniffer_File;
+
 /**
  * Eliminate alias usage of basic PHP functions.
  *
@@ -42,7 +44,7 @@ class RemoveFunctionAliasSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];

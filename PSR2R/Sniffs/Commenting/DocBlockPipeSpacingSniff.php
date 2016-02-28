@@ -2,6 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
+use PHP_CodeSniffer_File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -24,7 +25,7 @@ class DocBlockPipeSpacingSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$description = '';

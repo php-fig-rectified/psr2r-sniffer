@@ -2,6 +2,8 @@
 
 namespace PSR2R\Sniffs\PHP;
 
+use PHP_CodeSniffer_File;
+
 /**
  * Use PHP_SAPI constant instead of php_sapi_name() function.
  *
@@ -22,7 +24,7 @@ class PhpSapiConstantSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];

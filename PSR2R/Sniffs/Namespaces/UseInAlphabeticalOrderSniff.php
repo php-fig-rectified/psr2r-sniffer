@@ -18,6 +18,7 @@ namespace PSR2R\Sniffs\Namespaces;
 
 use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer_Tokens;
 
 /**
  * Ensures all the use are in alphabetical order.
@@ -90,7 +91,7 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 				$map = [];
 				foreach ($sorted as $name) {
 					$tokenIndex = array_shift($used);
-					$tokenIndex = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, $tokenIndex + 1, null, true);
+					$tokenIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $tokenIndex + 1, null, true);
 					$map[$tokenIndex] = $name;
 				}
 
@@ -126,7 +127,7 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$content = '';
-		$startIndex = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true);
+		$startIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		$endIndex = $phpcsFile->findNext([T_SEMICOLON, T_OPEN_CURLY_BRACKET], $startIndex + 1);
 
 		for ($i = $startIndex; $i < $endIndex; $i++) {

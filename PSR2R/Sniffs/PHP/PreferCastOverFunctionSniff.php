@@ -2,6 +2,8 @@
 
 namespace PSR2R\Sniffs\PHP;
 
+use PHP_CodeSniffer_File;
+
 /**
  * Always use simple casts instead of method invocation.
  *
@@ -30,7 +32,7 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];
 
 		$tokens = $phpcsFile->getTokens();
@@ -73,7 +75,7 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 	 * @param int $closingBraceIndex
 	 * @return void
 	 */
-	protected function fixContent(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex) {
+	protected function fixContent(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex) {
 		$needsBrackets = $this->needsBrackets($phpcsFile, $openingBraceIndex, $closingBraceIndex);
 
 		$tokens = $phpcsFile->getTokens();

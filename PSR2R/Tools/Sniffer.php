@@ -2,6 +2,8 @@
 
 namespace PSR2R\Tools;
 
+use PHP_CodeSniffer_CLI;
+
 class Sniffer {
 
 	const STANDARD = 'PSR2R/ruleset.xml';
@@ -60,7 +62,7 @@ class Sniffer {
 	 * @return void
 	 */
 	public function sniff() {
-		$cli = new \PHP_CodeSniffer_CLI();
+		$cli = new PHP_CodeSniffer_CLI();
 		if ($this->fix) {
 			$cli->runphpcbf();
 		} else {

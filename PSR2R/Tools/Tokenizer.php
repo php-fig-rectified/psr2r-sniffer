@@ -2,6 +2,9 @@
 
 namespace PSR2R\Tools;
 
+use Exception;
+use PHP_CodeSniffer;
+
 class Tokenizer {
 
 	const STANDARD = 'PSR2R/ruleset.xml';
@@ -29,7 +32,7 @@ class Tokenizer {
 
 		$file = !empty($argv[1]) ? $argv[1] : null;
 		if (!$file || !file_exists($file)) {
-			throw new \Exception('Please provide a valid file.');
+			throw new Exception('Please provide a valid file.');
 		}
 		$file = realpath($file);
 
@@ -74,7 +77,7 @@ class Tokenizer {
 	 * @return array Tokens
 	 */
 	protected function _getTokens($path) {
-		$phpcs = new \PHP_CodeSniffer();
+		$phpcs = new PHP_CodeSniffer();
 		$phpcs->process([], $this->root . self::STANDARD, []);
 		$file = $phpcs->processFile($path);
 		$file->start();

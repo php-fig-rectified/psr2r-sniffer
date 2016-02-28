@@ -16,6 +16,7 @@ namespace PSR2R\Sniffs\Namespaces;
 
 use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer_Tokens;
 
 /**
  * PSR2_Sniffs_Namespaces_UseDeclarationSniff.
@@ -57,7 +58,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		// Namespaces in use statements must not have a leading separator
-		$next = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+		$next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 		if ($tokens[$next]['code'] === T_NS_SEPARATOR) {
 			$error = 'Namespaces in use statements should not start with a namespace separator';
 			$fix = $phpcsFile->addFixableError($error, $next, 'NamespaceStart');
