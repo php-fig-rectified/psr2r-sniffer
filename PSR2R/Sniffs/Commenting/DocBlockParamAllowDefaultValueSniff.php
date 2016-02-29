@@ -122,7 +122,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 	 * @param int $stackPtr
 	 * @return array
 	 */
-	private function getMethodSignature(PHP_CodeSniffer_File $phpCsFile, $stackPtr) {
+	protected function getMethodSignature(PHP_CodeSniffer_File $phpCsFile, $stackPtr) {
 		$tokens = $phpCsFile->getTokens();
 
 		$startIndex = $phpCsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);

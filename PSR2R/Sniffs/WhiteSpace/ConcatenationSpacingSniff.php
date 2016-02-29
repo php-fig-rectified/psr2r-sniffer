@@ -44,7 +44,7 @@ class ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff {
 		if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
 			$message = 'Expected 1 space before ., but 0 found';
 			$phpcsFile->addFixableError($message, $stackPtr, 'MissingBefore');
-			$this->_addSpace($phpcsFile, $stackPtr - 1);
+			$this->addSpace($phpcsFile, $stackPtr - 1);
 		} else {
 			$content = $tokens[$stackPtr - 1]['content'];
 			if ($tokens[$prevIndex]['line'] === $tokens[$stackPtr]['line'] && $content !== ' ') {
@@ -62,7 +62,7 @@ class ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff {
 		if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
 			$message = 'Expected 1 space after ., but 0 found';
 			$phpcsFile->addFixableError($message, $stackPtr, 'MissingAfter');
-			$this->_addSpace($phpcsFile, $stackPtr);
+			$this->addSpace($phpcsFile, $stackPtr);
 		} else {
 			$content = $tokens[($stackPtr + 1)]['content'];
 			if ($tokens[$nextIndex]['line'] === $tokens[$stackPtr]['line'] && $content !== ' ') {
@@ -80,10 +80,10 @@ class ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff {
 	 * Add a single space on the right sight.
 	 *
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param int $location
+	 * @param int $index
 	 * @return void
 	 */
-	protected function _addSpace(PHP_CodeSniffer_File $phpcsFile, $index) {
+	protected function addSpace(PHP_CodeSniffer_File $phpcsFile, $index) {
 		if ($phpcsFile->fixer->enabled !== true) {
 			return;
 		}

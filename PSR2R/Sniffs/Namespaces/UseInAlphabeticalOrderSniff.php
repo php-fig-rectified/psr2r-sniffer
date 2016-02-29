@@ -61,7 +61,7 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 		$next = $stackPtr;
 
 		while ($next !== false) {
-			$this->_checkUseToken($phpcsFile, $next);
+			$this->checkUseToken($phpcsFile, $next);
 			$next = $phpcsFile->findNext(T_USE, $next + 1);
 		}
 
@@ -117,9 +117,9 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 	 * @param int $stackPtr The index of the first use token.
 	 * @return void
 	 */
-	protected function _checkUseToken(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function checkUseToken(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		// If the use token is for a closure we want to ignore it.
-		$isClosure = $this->_isClosure($phpcsFile, $stackPtr);
+		$isClosure = $this->isClosure($phpcsFile, $stackPtr);
 		if ($isClosure) {
 			return;
 		}
@@ -150,7 +150,7 @@ class UseInAlphabeticalOrderSniff implements PHP_CodeSniffer_Sniff {
 	 * @param int $stackPtr
 	 * @return bool
 	 */
-	protected function _isClosure(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function isClosure(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		return $phpcsFile->findPrevious(
 			[T_CLOSURE],
 			($stackPtr - 1),

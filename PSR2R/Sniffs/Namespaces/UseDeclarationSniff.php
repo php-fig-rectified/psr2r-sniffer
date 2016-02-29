@@ -42,7 +42,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	 * @inheritDoc
 	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		if ($this->_shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
+		if ($this->shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
 			return;
 		}
 
@@ -77,7 +77,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 			}
 		} else {
 			$nextUse = $phpcsFile->findNext(T_USE, $next + 1);
-			if ($nextUse && !$this->_shouldIgnoreUse($phpcsFile, $nextUse)) {
+			if ($nextUse && !$this->shouldIgnoreUse($phpcsFile, $nextUse)) {
 				if ($tokens[$nextUse]['line'] > $tokens[$next]['line'] + 1) {
 					$error = 'There should not be newlines between use statements';
 					$fix = $phpcsFile->addFixableError($error, $nextUse, 'NewlineBetweenUse');
@@ -100,7 +100,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 
 		// Only interested in the last USE statement from here onwards.
 		$nextUse = $phpcsFile->findNext(T_USE, ($stackPtr + 1));
-		while ($this->_shouldIgnoreUse($phpcsFile, $nextUse)) {
+		while ($this->shouldIgnoreUse($phpcsFile, $nextUse)) {
 			$nextUse = $phpcsFile->findNext(T_USE, ($nextUse + 1));
 			if ($nextUse === false) {
 				break;
@@ -151,7 +151,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	 *
 	 * @return bool
 	 */
-	private function _shouldIgnoreUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function shouldIgnoreUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Ignore USE keywords inside closures.
@@ -166,7 +166,6 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		return false;
-
 	}
 
 }
