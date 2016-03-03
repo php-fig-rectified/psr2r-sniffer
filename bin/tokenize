@@ -18,5 +18,11 @@ canonicalize() {
 CONSOLE=$(dirname -- "$(canonicalize "$0")")
 APP=$(dirname "$CONSOLE")
 
-exec php "$CONSOLE"/tokenize.php "$@"
+if [ $(basename $0) != 'tokenize' ]
+then
+    exec php "$CONSOLE"/tokenize.php $(basename $0) "$@"
+else
+    exec php "$CONSOLE"/tokenize.php "$@"
+fi
+
 exit 0

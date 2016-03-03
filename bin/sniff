@@ -18,5 +18,11 @@ canonicalize() {
 CONSOLE=$(dirname -- "$(canonicalize "$0")")
 APP=$(dirname "$CONSOLE")
 
-exec php "$CONSOLE"/sniff.php "$@"
+if [ $(basename $0) != 'sniff' ]
+then
+    exec php "$CONSOLE"/sniff.php $(basename $0) "$@"
+else
+    exec php "$CONSOLE"/sniff.php "$@"
+fi
+
 exit 0
