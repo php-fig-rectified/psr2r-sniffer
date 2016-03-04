@@ -81,6 +81,7 @@ class ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff {
 	 *
 	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @param int $index
+	 *
 	 * @return void
 	 */
 	protected function addSpace(PHP_CodeSniffer_File $phpcsFile, $index) {

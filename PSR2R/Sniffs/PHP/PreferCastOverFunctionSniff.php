@@ -71,6 +71,7 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @param int $stackPtr
+	 * @param string $key
 	 * @param int $openingBraceIndex
 	 * @param int $closingBraceIndex
 	 * @return void

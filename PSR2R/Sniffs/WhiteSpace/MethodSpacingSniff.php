@@ -47,7 +47,7 @@ class MethodSpacingSniff extends AbstractSniff {
 		$parenthesisEndIndex = $tokens[$parenthesisIndex]['parenthesis_closer'];
 
 		$braceStartIndex = $phpcsFile->findNext(T_WHITESPACE, ($parenthesisEndIndex + 1), null, true);
-		if ($tokens[$braceStartIndex]['type'] !== 'T_OPEN_CURLY_BRACKET') {
+		if ($tokens[$braceStartIndex]['code'] !== T_OPEN_CURLY_BRACKET) {
 			return;
 		}
 
@@ -55,15 +55,7 @@ class MethodSpacingSniff extends AbstractSniff {
 			return;
 		}
 
-		$error = 'There should be a single space between closing parenthesis and opening curly brace';
-		$fix = $phpcsFile->addFixableError($error, $parenthesisEndIndex, 'ContentAfterOpen');
-		if ($fix === true) {
-			if ($braceStartIndex - $parenthesisEndIndex === 1) {
-				$phpcsFile->fixer->addContent($parenthesisEndIndex, ' ');
-			} else {
-				$phpcsFile->fixer->replaceToken($braceStartIndex - 1, ' ');
-			}
-		}
+		//TODO: beginning and end of method: no newlines
 	}
 
 }
