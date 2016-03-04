@@ -167,9 +167,8 @@ class DocBlockParamSniff extends AbstractSniff {
 	 * @param int $docBlockEndIndex
 	 *
 	 * @return bool
-     */
-	protected function hasInheritDoc(PHP_CodeSniffer_File $phpCsFile, $docBlockStartIndex, $docBlockEndIndex)
-	{
+	 */
+	protected function hasInheritDoc(PHP_CodeSniffer_File $phpCsFile, $docBlockStartIndex, $docBlockEndIndex) {
 		$tokens = $phpCsFile->getTokens();
 
 		for ($i = $docBlockStartIndex + 1; $i < $docBlockEndIndex; ++$i) {

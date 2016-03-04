@@ -111,10 +111,11 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer_File $phpCsFile
 	 * @param int $index
+	 * @param int $limit
 	 *
 	 * @return int|null
 	 */
-	protected function detectRightEnd(PHP_CodeSniffer_File $phpCsFile, $index, $limit = null) {
+	protected function detectRightEnd(PHP_CodeSniffer_File $phpCsFile, $index, $limit = 0) {
 		$tokens = $phpCsFile->getTokens();
 
 		$rightEndIndex = $index;

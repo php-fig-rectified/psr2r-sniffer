@@ -43,6 +43,9 @@ class CastSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	}
 
 	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $stackPtr
+	 *
 	 * @return void
 	 */
 	protected function processIncDec(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {

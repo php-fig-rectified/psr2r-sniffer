@@ -80,7 +80,8 @@ class ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff {
 	 * Add a single space on the right sight.
 	 *
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param int $location
+	 * @param int $index
+	 *
 	 * @return void
 	 */
 	protected function _addSpace(PHP_CodeSniffer_File $phpcsFile, $index) {
