@@ -38,7 +38,6 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 		if (!$methodSignature) {
 			return;
 		}
-		//TODO: check count of signature vs doc block param count
 
 		$docBlockStartIndex = $tokens[$docBlockEndIndex]['comment_opener'];
 
@@ -52,7 +51,6 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			}
 
 			if (empty($methodSignature[$paramCount])) {
-				$phpCsFile->addError('Param type does not have a matching signature in method', $i);
 				continue;
 			}
 			$methodSignatureValue = $methodSignature[$paramCount];
