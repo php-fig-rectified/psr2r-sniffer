@@ -305,6 +305,8 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 
 	/**
 	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param int $startIndex
+	 * @param int $endIndex
 	 *
 	 * @return string
 	 */

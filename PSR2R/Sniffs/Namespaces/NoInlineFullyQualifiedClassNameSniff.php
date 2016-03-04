@@ -3,7 +3,9 @@
 namespace PSR2R\Sniffs\Namespaces;
 
 use PHP_CodeSniffer_File;
+use PHP_CodeSniffer_Tokens;
 use PSR2R\Tools\AbstractSniff;
+use RuntimeException;
 
 /**
  * All inline FQCN must be moved to use statements.
@@ -35,7 +37,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Skip non-namespaces files for now
@@ -43,7 +45,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 			return;
 		}
 
-		$namespaceStatement = $this->getNamespaceInfo($phpcsFile);
+		//$namespaceStatement = $this->getNamespaceInfo($phpcsFile);
 
 		$this->loadStatements($phpcsFile);
 
@@ -65,10 +67,18 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @param int $stackPtr
 	 * @return void
 	 */
-	protected function checkUseForClass(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function checkUseForClass(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		//TODO
+		$nextIndex = $phpcsFile->findNext(T_EXTENDS, $stackPtr + 1);
+		if ($nextIndex) {
+			$this->checkUseForExtends($phpcsFile, $nextIndex);
+		}
+
+		$nextIndex = $phpcsFile->findNext(T_IMPLEMENTS, $stackPtr + 1);
+		if ($nextIndex) {
+			$this->checkUseForImplements($phpcsFile, $nextIndex);
+		}
 	}
 
 	/**
@@ -76,10 +86,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @param int $stackPtr
 	 * @return void
 	 */
-	protected function checkUseForNew(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function checkUseForNew(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$nextIndex = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true);
+		$nextIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		$lastIndex = null;
 		$i = $nextIndex;
 		$extractedUseStatement = '';
@@ -141,10 +151,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @param int $stackPtr
 	 * @return void
 	 */
-	protected function checkUseForStatic(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function checkUseForStatic(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$prevIndex = $phpcsFile->findPrevious(\PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+		$prevIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
 
 		$lastIndex = null;
 		$i = $prevIndex;
@@ -181,7 +191,6 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		}
 
 		$phpcsFile->fixer->beginChangeset();
-
 		$addedUseStatement = $this->addUseStatement($phpcsFile, $className, $extractedUseStatement);
 
 		for ($i = $lastIndex; $i <= $firstSeparatorIndex; ++$i) {
@@ -203,7 +212,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @param int $stackPtr
 	 * @return void
 	 */
-	protected function checkUseForSignature(\PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function checkUseForSignature(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$openParenthesisIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);
@@ -233,7 +242,6 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 			}
 
 			$extractedUseStatement = ltrim($extractedUseStatement, '\\');
-
 			$className = '';
 			for ($k = $lastSeparatorIndex + 1; $k <= $lastIndex; ++$k) {
 				$className .= $tokens[$k]['content'];
@@ -245,7 +253,21 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 				return;
 			}
 
-			//TODO
+			$phpcsFile->fixer->beginChangeset();
+			$addedUseStatement = $this->addUseStatement($phpcsFile, $className, $extractedUseStatement);
+
+			for ($k = $lastSeparatorIndex; $k < $lastIndex; ++$k) {
+				$phpcsFile->fixer->replaceToken($k, '');
+			}
+
+			if ($addedUseStatement['alias'] !== null) {
+				$phpcsFile->fixer->replaceToken($lastIndex + 1, $addedUseStatement['alias']);
+				for ($k = $lastSeparatorIndex + 2; $k <= $lastIndex; ++$k) {
+					$phpcsFile->fixer->replaceToken($k, '');
+				}
+			}
+
+			$phpcsFile->fixer->endChangeset();
 		}
 	}
 
@@ -254,7 +276,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function loadStatements(\PHP_CodeSniffer_File $phpcsFile) {
+	protected function loadStatements(PHP_CodeSniffer_File $phpcsFile) {
 		if ($this->existingStatements !== null) {
 			return;
 		}
@@ -270,7 +292,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return bool
 	 */
-	protected function isBlacklistedFile(\PHP_CodeSniffer_File $phpcsFile) {
+	protected function isBlacklistedFile(PHP_CodeSniffer_File $phpcsFile) {
 		$file = $phpcsFile->getFilename();
 		if (strpos($file, DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR) !== false) {
 			return true;
@@ -310,6 +332,9 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		while (isset($this->allStatements[$alias])) {
 			$alias = $shortName;
 
+			if (count($pieces) - 1 < $count && !in_array($pieces, 'Php')) {
+				$pieces[] = 'Php';
+			}
 			if (count($pieces) - 1 < $count) {
 				return null;
 			}
@@ -328,9 +353,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	}
 
 	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @return array
 	 */
-	protected function getUseStatements(\PHP_CodeSniffer_File $phpcsFile) {
+	protected function getUseStatements(PHP_CodeSniffer_File $phpcsFile) {
 		$tokens = $phpcsFile->getTokens();
 
 		$statements = [];
@@ -339,7 +365,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 				continue;
 			}
 
-			$useStatementStartIndex = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, $index + 1, null, true);
+			$useStatementStartIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $index + 1, null, true);
 
 			// Ignore function () use ($foo) {}
 			if ($tokens[$useStatementStartIndex]['content'] === '(') {
@@ -347,7 +373,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 			}
 
 			$semicolonIndex = $phpcsFile->findNext(T_SEMICOLON, $useStatementStartIndex + 1);
-			$useStatementEndIndex = $phpcsFile->findPrevious(\PHP_CodeSniffer_Tokens::$emptyTokens, $semicolonIndex - 1, null, true);
+			$useStatementEndIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $semicolonIndex - 1, null, true);
 
 			$statement = '';
 			for ($i = $useStatementStartIndex; $i <= $useStatementEndIndex; $i++) {
@@ -395,7 +421,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return array
 	 */
-	protected function addUseStatement(\PHP_CodeSniffer_File $phpcsFile, $shortName, $fullName) {
+	protected function addUseStatement(PHP_CodeSniffer_File $phpcsFile, $shortName, $fullName) {
 		foreach ($this->allStatements as $useStatement) {
 			if ($useStatement['fullName'] === $fullName) {
 				return $useStatement;
@@ -404,7 +430,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 		$alias = $this->generateUniqueAlias($shortName, $fullName);
 		if (!$alias) {
-			throw new \RuntimeException('Could not generate unique alias.');
+			throw new RuntimeException('Could not generate unique alias for `' . $shortName . ' (' . $fullName . ')`.');
 		}
 
 		$result = [
@@ -457,6 +483,164 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		$content = 'use ' . $useStatement['fullName'] . $alias . ';';
 
 		return $content;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $nextIndex
+	 * @return void
+	 */
+	protected function checkUseForExtends(PHP_CodeSniffer_File $phpcsFile, $nextIndex) {
+		$tokens = $phpcsFile->getTokens();
+
+		$endIndex = $phpcsFile->findNext([T_IMPLEMENTS, T_CURLY_OPEN], $nextIndex + 1);
+
+		$startIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $nextIndex + 1, null, true);
+		$endIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $endIndex - 1, null, true);
+
+		if (!$this->contains($phpcsFile, T_NS_SEPARATOR, $startIndex, $endIndex)) {
+			return;
+		}
+
+		$extractedUseStatements = $this->extractUseStatements($phpcsFile, $startIndex, $endIndex);
+		foreach ($extractedUseStatements as $extractedUseStatement) {
+			if (strpos($extractedUseStatement['statement'], '\\') === false) {
+				continue;
+			}
+
+			$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement['statement']);
+			$error = 'Use statement ' . $extractedUseStatement['statement'] . ' for ' . $className . ' should be in use block.';
+			$fix = $phpcsFile->addFixableError($error, $extractedUseStatement['start'], 'Extends');
+			if (!$fix) {
+				return;
+			}
+
+			$phpcsFile->fixer->beginChangeset();
+			$addedUseStatement = $this->addUseStatement($phpcsFile, $className, $extractedUseStatement['statement']);
+			//$lastSeparatorIndex = $phpcsFile->findPrevious(T_NS_SEPARATOR, $extractedUseStatement['end'] - 1, $extractedUseStatement['start']);
+
+			for ($k = $extractedUseStatement['start']; $k < $extractedUseStatement['end']; ++$k) {
+				$phpcsFile->fixer->replaceToken($k, '');
+			}
+
+			if ($addedUseStatement['alias'] !== null) {
+				$phpcsFile->fixer->replaceToken($extractedUseStatement['end'], $addedUseStatement['alias']);
+			}
+
+			$phpcsFile->fixer->endChangeset();
+		}
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $nextIndex
+	 * @return void
+	 */
+	protected function checkUseForImplements(PHP_CodeSniffer_File $phpcsFile, $nextIndex) {
+		$tokens = $phpcsFile->getTokens();
+
+		$endIndex = $phpcsFile->findNext([T_OPEN_CURLY_BRACKET], $nextIndex + 1);
+
+		$startIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $nextIndex + 1, null, true);
+		$endIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $endIndex - 1, null, true);
+
+		$extractedUseStatements = $this->extractUseStatements($phpcsFile, $startIndex, $endIndex);
+		foreach ($extractedUseStatements as $extractedUseStatement) {
+			if (strpos($extractedUseStatement['statement'], '\\') === false) {
+				continue;
+			}
+
+			$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement['statement']);
+			$error = 'Use statement ' . $extractedUseStatement['statement'] . ' for ' . $className . ' should be in use block.';
+			$fix = $phpcsFile->addFixableError($error, $extractedUseStatement['start'], 'Implements');
+			if (!$fix) {
+				continue;
+			}
+
+			$phpcsFile->fixer->beginChangeset();
+			$addedUseStatement = $this->addUseStatement($phpcsFile, $className, $extractedUseStatement['statement']);
+			//$lastSeparatorIndex = $phpcsFile->findPrevious(T_NS_SEPARATOR, $extractedUseStatement['end'] - 1, $extractedUseStatement['start']);
+
+			for ($k = $extractedUseStatement['start']; $k < $extractedUseStatement['end']; ++$k) {
+				$phpcsFile->fixer->replaceToken($k, '');
+			}
+
+			if ($addedUseStatement['alias'] !== null) {
+				$phpcsFile->fixer->replaceToken($extractedUseStatement['end'], $addedUseStatement['alias']);
+			}
+
+			$phpcsFile->fixer->endChangeset();
+		}
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $startIndex
+	 * @param int $endIndex
+	 * @return array
+	 */
+	protected function extractUseStatements(PHP_CodeSniffer_File $phpcsFile, $startIndex, $endIndex) {
+		$tokens = $phpcsFile->getTokens();
+
+		$result = [];
+		$start = null;
+		for ($i = $startIndex; $i <= $endIndex; ++$i) {
+			if ($start === null && $this->isGivenKind(T_WHITESPACE, $tokens[$i])) {
+				continue;
+			}
+
+			if ($this->isGivenKind(T_COMMA, $tokens[$i])) {
+				$result[] = [
+					'start' => $start,
+					'end' => $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $i - 1, null, true),
+					'statement' => $this->extractUseStatementsAsString($tokens, $start, $i - 1)
+				];
+				$start = null;
+				continue;
+			}
+
+			if ($start === null) {
+				$start = $i;
+			}
+		}
+
+		$result[] = [
+			'start' => $start,
+			'end' => $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $i, null, true),
+			'statement' => $this->extractUseStatementsAsString($tokens, $start, $i),
+		];
+
+		return $result;
+	}
+
+	/**
+	 * @param array $tokens
+	 * @param int $start
+	 * @param int $end
+	 * @return string
+	 */
+	protected function extractUseStatementsAsString(array $tokens, $start, $end) {
+		$string = '';
+		for ($i = $start; $i <= $end; ++$i) {
+			$string .= $tokens[$i]['content'];
+		}
+
+		$string = trim($string);
+
+		return ltrim($string, '\\');
+	}
+
+	/**
+	 * @param string $useStatement
+	 * @return string
+	 */
+	protected function extractClassNameFromUseStatementAsString($useStatement) {
+		$lastSeparator = strrpos($useStatement, '\\');
+		if ($lastSeparator === false) {
+			return $useStatement;
+		}
+
+		return substr($useStatement, $lastSeparator + 1);
 	}
 
 }
