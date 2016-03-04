@@ -5,12 +5,15 @@ namespace PSR2R\Sniffs\Namespaces;
 use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Tokens;
 use PSR2R\Tools\AbstractSniff;
+use PSR2R\Tools\Traits\NamespaceTrait;
 use RuntimeException;
 
 /**
  * All inline FQCN must be moved to use statements.
  */
 class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
+
+	use NamespaceTrait;
 
 	/**
 	 * @var array
@@ -361,7 +364,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 		$statements = [];
 		foreach ($tokens as $index => $token) {
-			if ($token['code'] !== T_USE || $token['level'] > 0) {
+			if ($token['code'] !== T_USE) {
+				continue;
+			}
+			if ($this->shouldIgnoreUse($phpcsFile, $index)) {
 				continue;
 			}
 

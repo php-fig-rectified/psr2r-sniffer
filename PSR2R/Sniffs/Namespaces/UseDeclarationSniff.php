@@ -17,6 +17,7 @@ namespace PSR2R\Sniffs\Namespaces;
 use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Sniff;
 use PHP_CodeSniffer_Tokens;
+use PSR2R\Tools\Traits\NamespaceTrait;
 
 /**
  * PSR2_Sniffs_Namespaces_UseDeclarationSniff.
@@ -30,6 +31,8 @@ use PHP_CodeSniffer_Tokens;
  * @link http://pear.php.net/package/PHP_CodeSniffer
  */
 class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
+
+	use NamespaceTrait;
 
 	/**
 	 * @inheritDoc
@@ -140,32 +143,6 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Check if this use statement is part of the namespace block.
-	 *
-	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
-	 * @param int $stackPtr The position of the current token in
-	 *                                        the stack passed in $tokens.
-	 *
-	 * @return bool
-	 */
-	protected function shouldIgnoreUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$tokens = $phpcsFile->getTokens();
-
-		// Ignore USE keywords inside closures.
-		$next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-		if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
-			return true;
-		}
-
-		// Ignore USE keywords for traits.
-		if ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT]) === true) {
-			return true;
-		}
-
-		return false;
 	}
 
 }
