@@ -57,10 +57,12 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 		}
 
 		if ($tokens[$stackPtr]['code'] === T_EQUAL) {
+			/*
 			// Skip for '=&' case.
 			if (isset($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND) {
 				return;
 			}
+			*/
 		}
 
 		if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
