@@ -113,6 +113,7 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 					T_COMMA,
 					T_OPEN_PARENTHESIS,
 					T_OPEN_SQUARE_BRACKET,
+					T_OPEN_SHORT_ARRAY,
 					T_DOUBLE_ARROW,
 					T_COLON,
 					T_INLINE_THEN,
