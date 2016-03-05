@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer_File;
+use PHP_CodeSniffer_Tokens;
 
 /**
  * No whitespace should be at the beginning and end of an array.
@@ -37,7 +38,7 @@ class ArraySpacingSniff implements \PHP_CodeSniffer_Sniff {
 	protected function checkBeginning(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$nextIndex = $phpcsFile->findNext(\PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+		$nextIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 		if ($nextIndex - $stackPtr === 1) {
 			return;
 		}
@@ -58,7 +59,7 @@ class ArraySpacingSniff implements \PHP_CodeSniffer_Sniff {
 	protected function checkEnding(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$previousIndex = $phpcsFile->findPrevious(\PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+		$previousIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 		if ($stackPtr - $previousIndex === 1) {
 			return;
 		}
