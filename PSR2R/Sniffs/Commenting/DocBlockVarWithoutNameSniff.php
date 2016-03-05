@@ -13,8 +13,6 @@
 namespace PSR2R\Sniffs\Commenting;
 
 use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Standards_AbstractScopeSniff;
-use PHP_CodeSniffer_Tokens;
 use PSR2R\Tools\AbstractSniff;
 
 /**

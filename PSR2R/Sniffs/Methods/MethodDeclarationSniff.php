@@ -16,7 +16,6 @@ namespace PSR2R\Sniffs\Methods;
 
 use PHP_CodeSniffer_Exception;
 use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
 use PHP_CodeSniffer_Standards_AbstractScopeSniff;
 use PHP_CodeSniffer_Tokens;
 

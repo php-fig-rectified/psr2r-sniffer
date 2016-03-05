@@ -13,6 +13,7 @@ class FullyQualifiedClassNameInDocBlockSniffTest extends \PHPUnit_Framework_Test
 	 */
 	public function testInstance() {
 		$this->assertTrue(class_exists('PSR2R\Sniffs\Commenting\FullyQualifiedClassNameInDocBlockSniff'));
+		$sniff = new FullyQualifiedClassNameInDocBlockSniff();
 	}
 
 }

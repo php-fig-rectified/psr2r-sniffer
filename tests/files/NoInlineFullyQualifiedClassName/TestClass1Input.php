@@ -4,6 +4,8 @@ namespace Fixtures\NoInlineFullyQualifiedClassNameSniff\Input;
 
 use Php\Foo\Bar;
 use DateTime;
+use X\Y\Z;
+use Faa\SomeTrait;
 
 class TestClass1Input extends \Foo\Bar implements \Bar\Baz, \Bar\Xxx {
 
