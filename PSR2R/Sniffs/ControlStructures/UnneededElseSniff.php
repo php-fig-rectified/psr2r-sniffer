@@ -31,6 +31,9 @@ class UnneededElseSniff extends AbstractSniff {
 		}
 
 		$prevScopeEndIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		if (!$prevScopeEndIndex || empty($tokens[$prevScopeEndIndex]['scope_opener'])) {
+			return;
+		}
 
 		$scopeStartIndex = $tokens[$prevScopeEndIndex]['scope_opener'];
 
