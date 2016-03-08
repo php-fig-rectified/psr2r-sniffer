@@ -38,8 +38,11 @@ class TabIndentSniff implements \PHP_CodeSniffer_Sniff {
 
 		if ($tokens[$stackPtr]['code'] !== T_WHITESPACE) {
 			// Doc block
-			for ($i = $stackPtr + 1; $i < $tokens[$stackPtr]['comment_closer']; $i++) {
+			if (empty($tokens[$stackPtr]['comment_closer'])) {
+				return;
+			}
 
+			for ($i = $stackPtr + 1; $i < $tokens[$stackPtr]['comment_closer']; $i++) {
 				if ($tokens[$i]['code'] === 'PHPCS_T_DOC_COMMENT_WHITESPACE' && $tokens[$i]['column'] === 1) {
 					$this->fixTab($phpcsFile, $i, $tokens);
 				} elseif ($tokens[$i]['code'] === 'PHPCS_T_DOC_COMMENT_WHITESPACE') {

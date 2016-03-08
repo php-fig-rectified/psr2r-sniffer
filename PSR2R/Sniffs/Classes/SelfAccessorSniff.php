@@ -35,6 +35,9 @@ class SelfAccessorSniff extends AbstractSniff {
 		}
 
 		$startIndex = $tokens[$stackPtr]['scope_opener'];
+		if (!$startIndex || empty($tokens[$stackPtr]['scope_closer'])) {
+			return;
+		}
 		$endIndex = $tokens[$stackPtr]['scope_closer'];
 
 		$nameIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);

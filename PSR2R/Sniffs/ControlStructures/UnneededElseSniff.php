@@ -123,6 +123,11 @@ class UnneededElseSniff extends AbstractSniff {
 	protected function isNotLastCondition(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
+		// Abort if not known
+		if (empty($tokens[$stackPtr]['scope_closer'])) {
+			return true;
+		}
+
 		$nextScopeEndIndex = $tokens[$stackPtr]['scope_closer'];
 
 		$nextConditionStartIndex = $phpcsFile->findNext(T_WHITESPACE, ($nextScopeEndIndex - 1), null, true);
