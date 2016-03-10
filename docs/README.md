@@ -10,6 +10,8 @@ Runs on all OS, tested on Unix and Windows.
 The following sniffers are bundles together with `PSR-2-R` already, but you can
 also use them standalone/separately in any way you like.
 
+*Currently PSR2R ships with over 100 sniffs.*
+
 ### PSR-2 Basics
 - Inherited from included sniffer rulesets (> 10).
 
@@ -42,6 +44,7 @@ also use them standalone/separately in any way you like.
 - PSR2R.Whitespace.OperatorSpacing
 - PSR2R.Whitespace.ObjectAttributeSpacing
 - PSR2R.Whitespace.LanguageConstructSpacing
+- ...
 - And some more inherited ruleset sniffers (> 20).
 
 Most of the sniffers also provide auto-fixing using `-f` option where it is possible.
