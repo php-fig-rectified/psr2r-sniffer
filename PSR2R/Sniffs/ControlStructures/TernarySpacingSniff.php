@@ -5,7 +5,8 @@ use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Tokens;
 
 /**
- * Asserts no whitespace between ternary operator (? and :) and surroundings.
+ * Asserts single space between ternary operator parts (? and :) and surroundings.
+ * Also asserts no whitespace between short ternary operator (?:), which was introduced in PHP 5.3.
  *
  * @see https://github.com/dereuromark/codesniffer-standards/blob/master/MyCakePHP/Sniffs/WhiteSpace/TernarySpacingSniff.php
  * @author Mark Scherer
@@ -30,25 +31,25 @@ class TernarySpacingSniff extends \PSR2R\Tools\AbstractSniff {
 
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile
-	 * @param int $stackPtr
+	 * @param int $thenIndex
 	 * @return void
 	 */
-	protected function checkAfter(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		$inlineElseIndex = $phpcsFile->findNext(T_INLINE_ELSE, $stackPtr + 1);
-		if (!$inlineElseIndex) {
+	protected function checkAfter(PHP_CodeSniffer_File $phpcsFile, $thenIndex) {
+		$elseIndex = $phpcsFile->findNext(T_INLINE_ELSE, $thenIndex + 1);
+		if (!$elseIndex) {
 			return;
 		}
 
 		// Skip for short ternary
-		$prevIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $inlineElseIndex - 1, null, true);
-		if ($prevIndex === $stackPtr) {
-			return;
+		$prevIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $elseIndex - 1, null, true);
+		if ($prevIndex === $thenIndex) {
+			$this->assertNoSpaceBetween($phpcsFile, $thenIndex, $elseIndex);
+		} else {
+			$this->assertSpaceAfter($phpcsFile, $thenIndex);
+			$this->assertSpaceBefore($phpcsFile, $elseIndex);
 		}
 
-		$this->assertSpaceAfter($phpcsFile, $stackPtr);
-
-		$this->assertSpaceBefore($phpcsFile, $inlineElseIndex);
-		$this->assertSpaceAfter($phpcsFile, $inlineElseIndex);
+		$this->assertSpaceAfter($phpcsFile, $elseIndex);
 	}
 
 	/**
@@ -118,7 +119,7 @@ class TernarySpacingSniff extends \PSR2R\Tools\AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @param int $stackPtr
-	 * @param int $previous
+	 * @param int $next
 	 */
 	protected function assertSingleSpaceAfterIfNotMultiline(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $next) {
 		$tokens = $phpcsFile->getTokens();
@@ -134,6 +135,28 @@ class TernarySpacingSniff extends \PSR2R\Tools\AbstractSniff {
 		$fix = $phpcsFile->addFixableError($error, $stackPtr + 1, 'InvalidSpaceAfter');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr + 1, ' ');
+		}
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $thenIndex
+	 * @param int $elseIndex
+	 * @return void
+     */
+	protected function assertNoSpaceBetween(PHP_CodeSniffer_File $phpcsFile, $thenIndex, $elseIndex) {
+		if ($elseIndex - $thenIndex === 1) {
+			return;
+		}
+
+		$error = 'There must be no space between ? and : for short ternary';
+		$fix = $phpcsFile->addFixableError($error, $thenIndex, 'SpaceInlineElse');
+		if (!$fix) {
+			return;
+		}
+
+		for ($i = $thenIndex + 1; $i < $elseIndex; ++$i) {
+			$phpcsFile->fixer->replaceToken($i, '');
 		}
 	}
 
