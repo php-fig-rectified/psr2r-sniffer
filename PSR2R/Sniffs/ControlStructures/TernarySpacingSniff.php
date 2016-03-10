@@ -98,7 +98,8 @@ class TernarySpacingSniff extends \PSR2R\Tools\AbstractSniff {
 	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @param int $stackPtr
 	 * @param int $previous
-     */
+	 * @return void
+	 */
 	protected function assertSingleSpaceBeforeIfNotMultiline(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $previous) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -120,6 +121,7 @@ class TernarySpacingSniff extends \PSR2R\Tools\AbstractSniff {
 	 * @param \PHP_CodeSniffer_File $phpcsFile
 	 * @param int $stackPtr
 	 * @param int $next
+	 * @return void
 	 */
 	protected function assertSingleSpaceAfterIfNotMultiline(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $next) {
 		$tokens = $phpcsFile->getTokens();
@@ -143,7 +145,7 @@ class TernarySpacingSniff extends \PSR2R\Tools\AbstractSniff {
 	 * @param int $thenIndex
 	 * @param int $elseIndex
 	 * @return void
-     */
+	 */
 	protected function assertNoSpaceBetween(PHP_CodeSniffer_File $phpcsFile, $thenIndex, $elseIndex) {
 		if ($elseIndex - $thenIndex === 1) {
 			return;
