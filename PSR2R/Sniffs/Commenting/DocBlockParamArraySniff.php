@@ -73,7 +73,7 @@ class DocBlockParamArraySniff extends AbstractSniff {
 			if (!in_array('array', $pieces, true)) {
 				continue;
 			}
-			if (!$this->isOfTypeArray($pieces)) {
+			if (!$this->containsTypeArray($pieces)) {
 				continue;
 			}
 

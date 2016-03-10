@@ -92,24 +92,24 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			if ($methodSignatureValue['typehint']) {
 				$typeIndex = $methodSignatureValue['typehint'];
 				$type = $tokens[$typeIndex]['content'];
-				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->isOfTypeArray($pieces))) {
+				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
+					$pieces[] = $type;
 					$error = 'Possible doc block error: `' . $content . '` seems to be missing type `' . $type . '`.';
 					$fix = $phpCsFile->addFixableError($error, $classNameIndex, 'Typehint');
 					if ($fix) {
-						$pieces[] = $type;
 						$content = implode('|', $pieces);
 						$phpCsFile->fixer->replaceToken($classNameIndex, $content . $appendix);
 					}
 				}
 			}
 			if ($methodSignatureValue['default']) {
-				$typeIndex = $methodSignatureValue['default'];
-				$type = $tokens[$typeIndex]['content'];
-				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->isOfTypeArray($pieces))) {
+				$type = $methodSignatureValue['default'];
+
+				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
+					$pieces[] = $type;
 					$error = 'Possible doc block error: `' . $content . '` seems to be missing type `' . $type . '`.';
 					$fix = $phpCsFile->addFixableError($error, $classNameIndex, 'Default');
 					if ($fix) {
-						$pieces[] = $type;
 						$content = implode('|', $pieces);
 						$phpCsFile->fixer->replaceToken($classNameIndex, $content . $appendix);
 					}
@@ -132,27 +132,42 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 		$arguments = [];
 		$i = $startIndex;
 		while ($nextVariableIndex = $phpCsFile->findNext(T_VARIABLE, $i + 1, $endIndex)) {
-			$typehint = $default = null;
+			$typehintIndex = $defaultIndex = $default = null;
 			$possibleTypeHint = $phpCsFile->findPrevious([T_ARRAY_HINT, T_CALLABLE], $nextVariableIndex - 1, $nextVariableIndex - 3);
 			if ($possibleTypeHint) {
-				$typehint = $possibleTypeHint;
-			}
-			if ($possibleTypeHint) {
-				$typehint = $possibleTypeHint;
+				$typehintIndex = $possibleTypeHint;
 			}
 
-			$possibleEqualIndex = $phpCsFile->findNext([T_EQUAL], $nextVariableIndex + 1, $nextVariableIndex + 2);
+			$possibleEqualIndex = $phpCsFile->findNext([T_EQUAL], $nextVariableIndex + 1, $nextVariableIndex + 3);
 			if ($possibleEqualIndex) {
-				$possibleDefaultValue = $phpCsFile->findNext([T_STRING, T_TRUE, T_FALSE, T_NULL, T_ARRAY], $possibleEqualIndex + 1, $possibleEqualIndex + 2);
+				$whitelist = [T_CONSTANT_ENCAPSED_STRING, T_TRUE, T_FALSE, T_NULL, T_OPEN_SHORT_ARRAY, T_LNUMBER, T_DNUMBER];
+				$possibleDefaultValue = $phpCsFile->findNext($whitelist, $possibleEqualIndex + 1, $possibleEqualIndex + 3);
 				if ($possibleDefaultValue) {
-					$default = $possibleDefaultValue;
+					$defaultIndex = $possibleDefaultValue;
+					//$default = $tokens[$defaultIndex]['content'];
+					if ($tokens[$defaultIndex]['code'] === T_CONSTANT_ENCAPSED_STRING) {
+						$default = 'string';
+					} elseif ($tokens[$defaultIndex]['code'] === T_OPEN_SHORT_ARRAY) {
+						$default = 'array';
+					} elseif ($tokens[$defaultIndex]['code'] === T_FALSE || $tokens[$defaultIndex]['code'] === T_TRUE) {
+						$default = 'bool';
+					} elseif ($tokens[$defaultIndex]['code'] === T_LNUMBER) {
+						$default = 'int';
+					} elseif ($tokens[$defaultIndex]['code'] === T_DNUMBER) {
+						$default = 'float';
+					} elseif ($tokens[$defaultIndex]['code'] === T_NULL) {
+						$default = 'null';
+					} else {
+						//die('Invalid default type: ' . $default);
+					}
 				}
 			}
 
 			$arguments[] = [
 				'variable' => $nextVariableIndex,
-				'typehint' => $typehint,
-				'default' => $default
+				'typehint' => $typehintIndex,
+				'defaultIndex' => $defaultIndex,
+				'default' => $default,
 			];
 
 			$i = $nextVariableIndex;
