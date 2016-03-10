@@ -220,7 +220,7 @@ abstract class AbstractSniff implements \PHP_CodeSniffer_Sniff {
 
 		$firstIndex = $this->getFirstTokenOfLine($tokens, $index);
 		$whitespace = '';
-		if ($tokens[$firstIndex]['type'] === 'T_WHITESPACE') {
+		if ($tokens[$firstIndex]['type'] === 'T_WHITESPACE' || $tokens[$firstIndex]['type'] === 'T_DOC_COMMENT_WHITESPACE') {
 			$whitespace = $tokens[$firstIndex]['content'];
 		}
 

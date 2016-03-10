@@ -4,6 +4,7 @@ namespace PSR2R\Sniffs\Commenting;
 
 use PHP_CodeSniffer_File;
 use PSR2R\Tools\AbstractSniff;
+use PSR2R\Tools\Traits\CommentingTrait;
 
 /**
  * Makes sure doc block param types match the variable name of the method signature.
@@ -12,6 +13,8 @@ use PSR2R\Tools\AbstractSniff;
  * @license MIT
  */
 class DocBlockParamSniff extends AbstractSniff {
+
+	use CommentingTrait;
 
 	/**
 	 * @inheritDoc
@@ -159,31 +162,6 @@ class DocBlockParamSniff extends AbstractSniff {
 		}
 
 		return $arguments;
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
-	 * @param int $docBlockStartIndex
-	 * @param int $docBlockEndIndex
-	 *
-	 * @return bool
-	 */
-	protected function hasInheritDoc(PHP_CodeSniffer_File $phpCsFile, $docBlockStartIndex, $docBlockEndIndex) {
-		$tokens = $phpCsFile->getTokens();
-
-		for ($i = $docBlockStartIndex + 1; $i < $docBlockEndIndex; ++$i) {
-			if (empty($tokens[$i]['content'])) {
-				continue;
-			}
-			$content = strtolower($tokens[$i]['content']);
-			if (strpos($content, '@inheritdoc') === false) {
-				continue;
-			}
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

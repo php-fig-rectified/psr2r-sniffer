@@ -4,6 +4,7 @@ namespace PSR2R\Sniffs\Commenting;
 
 use PHP_CodeSniffer_File;
 use PSR2R\Tools\AbstractSniff;
+use PSR2R\Tools\Traits\CommentingTrait;
 
 /**
  * Makes sure doc block param types allow `|null`, `|array` etc, when those are used
@@ -13,6 +14,8 @@ use PSR2R\Tools\AbstractSniff;
  * @license MIT
  */
 class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
+
+	use CommentingTrait;
 
 	/**
 	 * @inheritDoc
@@ -89,9 +92,9 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			if ($methodSignatureValue['typehint']) {
 				$typeIndex = $methodSignatureValue['typehint'];
 				$type = $tokens[$typeIndex]['content'];
-				if (!in_array($type, $pieces)) {
+				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->isOfTypeArray($pieces))) {
 					$error = 'Possible doc block error: `' . $content . '` seems to be missing type `' . $type . '`.';
-					$fix = $phpCsFile->addFixableError($error, $classNameIndex);
+					$fix = $phpCsFile->addFixableError($error, $classNameIndex, 'Typehint');
 					if ($fix) {
 						$pieces[] = $type;
 						$content = implode('|', $pieces);
@@ -102,9 +105,9 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			if ($methodSignatureValue['default']) {
 				$typeIndex = $methodSignatureValue['default'];
 				$type = $tokens[$typeIndex]['content'];
-				if (!in_array($type, $pieces)) {
+				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->isOfTypeArray($pieces))) {
 					$error = 'Possible doc block error: `' . $content . '` seems to be missing type `' . $type . '`.';
-					$fix = $phpCsFile->addFixableError($error, $classNameIndex);
+					$fix = $phpCsFile->addFixableError($error, $classNameIndex, 'Default');
 					if ($fix) {
 						$pieces[] = $type;
 						$content = implode('|', $pieces);

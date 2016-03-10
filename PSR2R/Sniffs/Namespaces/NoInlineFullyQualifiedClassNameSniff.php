@@ -5,6 +5,7 @@ namespace PSR2R\Sniffs\Namespaces;
 use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Tokens;
 use PSR2R\Tools\AbstractSniff;
+use PSR2R\Tools\Traits\CommentingTrait;
 use PSR2R\Tools\Traits\NamespaceTrait;
 use RuntimeException;
 
@@ -13,6 +14,7 @@ use RuntimeException;
  */
 class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
+	use CommentingTrait;
 	use NamespaceTrait;
 
 	/**
