@@ -89,8 +89,8 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 				continue;
 			}
 
-			if ($methodSignatureValue['typehint']) {
-				$typeIndex = $methodSignatureValue['typehint'];
+			if ($methodSignatureValue['typehintIndex']) {
+				$typeIndex = $methodSignatureValue['typehintIndex'];
 				$type = $tokens[$typeIndex]['content'];
 				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
 					$pieces[] = $type;
@@ -165,7 +165,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 
 			$arguments[] = [
 				'variable' => $nextVariableIndex,
-				'typehint' => $typehintIndex,
+				'typehintIndex' => $typehintIndex,
 				'defaultIndex' => $defaultIndex,
 				'default' => $default,
 			];
