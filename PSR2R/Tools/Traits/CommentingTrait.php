@@ -42,8 +42,7 @@ trait CommentingTrait {
 	 * @param array $docBlockTypes
 	 * @return bool
 	 */
-	protected function isOfTypeArray($docBlockTypes)
-	{
+	protected function isOfTypeArray($docBlockTypes) {
 		foreach ($docBlockTypes as $docBlockType) {
 			if (strpos($docBlockType, '[]') !== false) {
 				return true;
