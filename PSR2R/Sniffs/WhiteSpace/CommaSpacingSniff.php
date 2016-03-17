@@ -27,17 +27,7 @@ class CommaSpacingSniff implements PHP_CodeSniffer_Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-
-		if ($tokens[$next]['code'] !== T_WHITESPACE && ($next !== $stackPtr + 2)) {
-			// Last character in a line is ok.
-			if ($tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
-				$error = 'Missing space after comma';
-				$fix = $phpcsFile->addFixableError($error, $next);
-				if ($fix) {
-					$phpcsFile->fixer->addContent($stackPtr, ' ');
-				}
-			}
-		}
+		$this->checkNext($phpcsFile, $stackPtr, $next);
 
 		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
 
@@ -50,6 +40,44 @@ class CommaSpacingSniff implements PHP_CodeSniffer_Sniff {
 			$fix = $phpcsFile->addFixableError($error, $previous);
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($previous + 1, '');
+			}
+		}
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $stackPtr
+	 * @param int $next
+	 * @return void
+	 */
+	public function checkNext(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $next) {
+		$tokens = $phpcsFile->getTokens();
+
+		// Closing inline array should not have a comma before
+		if ($tokens[$next]['code'] === T_CLOSE_SHORT_ARRAY && $tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
+			$error = 'Invalid comma before closing inline array end `]`.';
+			$fix = $phpcsFile->addFixableError($error, $next);
+			if ($fix) {
+				$phpcsFile->fixer->replaceToken($stackPtr, '');
+			}
+			return;
+		}
+
+		if ($tokens[$next]['code'] !== T_WHITESPACE && ($next !== $stackPtr + 2)) {
+			// Last character in a line is ok.
+			if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
+				return;
+			}
+
+			// Closing inline array is also ignored
+			if ($tokens[$next]['code'] === T_CLOSE_SHORT_ARRAY) {
+				return;
+			}
+
+			$error = 'Missing space after comma';
+			$fix = $phpcsFile->addFixableError($error, $next);
+			if ($fix) {
+				$phpcsFile->fixer->addContent($stackPtr, ' ');
 			}
 		}
 	}

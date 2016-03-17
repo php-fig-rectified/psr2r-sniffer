@@ -39,7 +39,7 @@ class ArraySpacingSniff implements \PHP_CodeSniffer_Sniff {
 	protected function checkBeginning(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$nextIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
 		if ($nextIndex - $stackPtr === 1) {
 			return;
 		}
@@ -47,7 +47,7 @@ class ArraySpacingSniff implements \PHP_CodeSniffer_Sniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError('No whitespace after opening bracket', $stackPtr);
+		$fix = $phpcsFile->addFixableError('No whitespace after opening bracket', $stackPtr, 'InvalidAfter');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($nextIndex - 1, '');
 		}
@@ -61,7 +61,7 @@ class ArraySpacingSniff implements \PHP_CodeSniffer_Sniff {
 	protected function checkEnding(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$previousIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+		$previousIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
 		if ($stackPtr - $previousIndex === 1) {
 			return;
 		}
@@ -69,7 +69,12 @@ class ArraySpacingSniff implements \PHP_CodeSniffer_Sniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError('No whitespace before closing bracket', $stackPtr);
+		// Let another sniffer take care of invalid commas
+		if ($tokens[$previousIndex]['code'] === T_COMMA) {
+			return;
+		}
+
+		$fix = $phpcsFile->addFixableError('No whitespace before closing bracket', $stackPtr, 'InvalidBefore');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($previousIndex + 1, '');
 		}
