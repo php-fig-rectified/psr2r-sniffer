@@ -3,7 +3,6 @@
 namespace PSR2R\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
 
 /**
  * No whitespace should be at the beginning and end of an array.

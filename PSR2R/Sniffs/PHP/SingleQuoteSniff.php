@@ -13,6 +13,7 @@
 namespace PSR2R\Sniffs\PHP;
 
 use PHP_CodeSniffer_File;
+use PHP_CodeSniffer_Tokens;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -37,7 +38,7 @@ class SingleQuoteSniff extends AbstractSniff {
 		$tokens = $phpcsFile->getTokens();
 
 		// Skip for complex multiline
-		$prevIndex = $phpcsFile->findPrevious(\PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+		$prevIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
 		if ($prevIndex && $tokens[$prevIndex]['code'] === T_CONSTANT_ENCAPSED_STRING) {
 			return;
 		}

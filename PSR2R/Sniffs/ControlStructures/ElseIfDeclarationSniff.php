@@ -23,7 +23,6 @@ use PHP_CodeSniffer_Sniff;
  *
  * Verifies that there are no else if statements. Elseif should be used instead.
  *
- *
  * @author Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence

@@ -163,9 +163,11 @@ class DocCommentSniff extends AbstractSniff {
 			return;
 		}
 
-		//FIXME
-		/*
 		$firstTag = $tokens[$commentStart]['comment_tags'][0];
+		if ($tokens[$firstTag]['line'] === $tokens[$commentStart]['line'] + 1) {
+			return;
+		}
+
 		$prev = $phpcsFile->findPrevious($empty, ($firstTag - 1), $stackPtr, true);
 		if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)) {
 			$error = 'There must be exactly one blank line before the tags in a doc comment';
@@ -180,12 +182,11 @@ class DocCommentSniff extends AbstractSniff {
 					$phpcsFile->fixer->replaceToken($i, '');
 				}
 
-				$indent = str_repeat(' ', $tokens[$stackPtr]['column']);
+				$indent = str_repeat("\t", $tokens[$stackPtr]['column'] - 1) . ' ';
 				$phpcsFile->fixer->addContent($prev, $phpcsFile->eolChar . $indent . '*' . $phpcsFile->eolChar);
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
-		*/
 	}
 
 }
