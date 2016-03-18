@@ -36,9 +36,16 @@ class SingleQuoteSniff extends AbstractSniff {
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
+		// Skip for complex multiline
+		$prevIndex = $phpcsFile->findPrevious(\PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+		if ($prevIndex && $tokens[$prevIndex]['code'] === T_CONSTANT_ENCAPSED_STRING) {
+			return;
+		}
+
 		$content = $tokens[$stackPtr]['content'];
 		if ($content[0] === '"'
 			&& strpos($content, "'") === false
+			&& strpos($content, "\n") === false
 			// regex: odd number of backslashes, not followed by double quote or dollar
 			&& !preg_match('/(?<!\\\\)(?:\\\\{2})*\\\\(?!["$\\\\])/', $content)
 		) {
