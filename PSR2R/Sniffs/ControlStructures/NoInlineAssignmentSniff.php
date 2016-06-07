@@ -71,6 +71,8 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	 * @return void
 	 */
 	protected function checkConditions($phpcsFile, $stackPtr) {
+		$tokens = $phpcsFile->getTokens();
+
 		$openingBraceIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 		if (!$openingBraceIndex) {
 			return;
@@ -81,7 +83,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 
 		$closingBraceIndex = $tokens[$openingBraceIndex]['parenthesis_closer'];
 
-		$hasInlineAssignment = $this->contains($phpcsFile, $openingBraceIndex, $closingBraceIndex, T_EQUAL);
+		$hasInlineAssignment = $this->contains($phpcsFile, T_EQUAL, $openingBraceIndex + 1, $closingBraceIndex - 1);
 		if (!$hasInlineAssignment) {
 			return;
 		}
