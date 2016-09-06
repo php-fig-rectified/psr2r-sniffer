@@ -116,17 +116,17 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (in_array($tokens[$i]['content'], self::$whitelistedTags)) {
+			if (in_array($tokens[$i]['content'], static::$whitelistedTags)) {
 				continue;
 			}
 
 			$error = 'Unexpected tag type `' . $tokens[$i]['content'] . '` in doc block';
-			if (!in_array($tokens[$i]['content'], self::$blacklistedTags, true) && !isset(self::$mapping[$tokens[$i]['content']])) {
+			if (!in_array($tokens[$i]['content'], static::$blacklistedTags, true) && !isset(static::$mapping[$tokens[$i]['content']])) {
 				$phpcsFile->addWarning($error, $i, 'Unknown');
 				continue;
 			}
 
-			$mappingTag = isset(self::$mapping[$tokens[$i]['content']]) ? self::$mapping[$tokens[$i]['content']] : null;
+			$mappingTag = isset(static::$mapping[$tokens[$i]['content']]) ? static::$mapping[$tokens[$i]['content']] : null;
 			if ($mappingTag) {
 				$error .= ', expected `' . $mappingTag . '`';
 			}
@@ -161,8 +161,8 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		if (!empty($this->whitelist)) {
 			$whitelist = explode(',', $this->whitelist);
 			foreach ($whitelist as $tag) {
-				if (!in_array($tag, self::$whitelistedTags)) {
-					self::$whitelistedTags[] = $tag;
+				if (!in_array($tag, static::$whitelistedTags)) {
+					static::$whitelistedTags[] = $tag;
 				}
 			}
 		}

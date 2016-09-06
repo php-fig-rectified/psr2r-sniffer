@@ -37,7 +37,6 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	 */
 	public $indent = 4;
 
-
 	/**
 	 * @inheritDoc
 	 */
@@ -45,7 +44,6 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		return [T_SWITCH];
 
 	}
-
 
 	/**
 	 * @inheritDoc
@@ -207,7 +205,6 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 	}
-
 
 	/**
 	 * Find the next CASE or DEFAULT statement from a point in the file.

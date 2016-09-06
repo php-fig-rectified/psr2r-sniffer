@@ -48,7 +48,7 @@ class Tokenizer {
 		$_SERVER['argv'] = [];
 		$_SERVER['argv'][] = '--encoding=utf8';
 
-		$standard = $this->root . self::STANDARD;
+		$standard = $this->root . static::STANDARD;
 		$_SERVER['argv'][] = '--standard=' . $standard;
 
 		$_SERVER['argv'][] = $this->path;
@@ -78,7 +78,7 @@ class Tokenizer {
 	 */
 	protected function _getTokens($path) {
 		$phpcs = new PHP_CodeSniffer();
-		$phpcs->process([], $this->root . self::STANDARD, []);
+		$phpcs->process([], $this->root . static::STANDARD, []);
 		$file = $phpcs->processFile($path);
 		$file->start();
 		return $file->getTokens();
