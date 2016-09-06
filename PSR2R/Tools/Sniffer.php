@@ -43,7 +43,7 @@ class Sniffer {
 		}
 
 		$root = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR;
-		$standard = $root . self::STANDARD;
+		$standard = $root . static::STANDARD;
 		$argv[] = '--standard=' . $standard;
 		if ($ignore) {
 			$argv[] = '--ignore=' . str_replace(DIRECTORY_SEPARATOR, '/', $ignore);

@@ -39,7 +39,7 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 
 		$tokenContent = $tokens[$stackPtr]['content'];
 		$key = strtolower($tokenContent);
-		if (!isset(self::$matching[$key])) {
+		if (!isset(static::$matching[$key])) {
 			return;
 		}
 
@@ -60,7 +60,7 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 			return;
 		}
 
-		$error = $tokenContent . '() found, should be ' . self::$matching[$key] . ' cast.';
+		$error = $tokenContent . '() found, should be ' . static::$matching[$key] . ' cast.';
 
 		$fix = $phpcsFile->addFixableError($error, $stackPtr);
 		if ($fix) {
@@ -81,7 +81,7 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 
 		$tokens = $phpcsFile->getTokens();
 
-		$cast = '(' . self::$matching[$key] . ')';
+		$cast = '(' . static::$matching[$key] . ')';
 
 		$phpcsFile->fixer->replaceToken($stackPtr, $cast);
 		if (!$needsBrackets) {

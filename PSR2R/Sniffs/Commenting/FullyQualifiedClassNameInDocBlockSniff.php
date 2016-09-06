@@ -128,7 +128,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 				$className = substr($className, 0, $pos);
 			}
 
-			if (in_array($className, self::$whitelistedTypes)) {
+			if (in_array($className, static::$whitelistedTypes)) {
 				continue;
 			}
 
