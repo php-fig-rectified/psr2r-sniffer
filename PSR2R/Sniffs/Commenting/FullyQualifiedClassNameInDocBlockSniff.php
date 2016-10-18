@@ -22,6 +22,13 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	];
 
 	/**
+	 * @var array
+	 */
+	public static $whitelistedTags = [
+		'@return', '@param', '@throws', '@var', '@method', '@property', '@yield', '@see'
+	];
+
+	/**
 	 * @inheritDoc
 	 */
 	public function register() {
@@ -31,6 +38,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			T_TRAIT,
 			T_FUNCTION,
 			T_VARIABLE,
+			T_COMMENT
 		];
 	}
 
@@ -40,11 +48,70 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
+		if ($tokens[$stackPointer]['code'] === T_COMMENT) {
+			$this->processInlineComments($phpCsFile, $stackPointer);
+			return;
+		}
+
+		$this->processDocBlockComments($phpCsFile, $stackPointer);
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param int $stackPointer
+	 *
+	 * @return void
+	 */
+	protected function processInlineComments(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+		$tokens = $phpCsFile->getTokens();
+
+		if (!preg_match('|^\/\* @var (.+) \$.+\*\/$|', $tokens[$stackPointer]['content'], $matches)) {
+			return;
+		}
+
+		$content = $matches[1];
+
+		$classNames = explode('|', $content);
+
+		$result = $this->generateClassNameMap($phpCsFile, $stackPointer, $classNames);
+		if (!$result) {
+			return;
+		}
+
+		$message = [];
+		foreach ($result as $className => $useStatement) {
+			$message[] = $className . ' => ' . $useStatement;
+		}
+
+		$fix = $phpCsFile->addFixableError(implode(', ', $message), $stackPointer);
+		if (!$fix) {
+			return;
+		}
+
+		$classes = implode('|', $classNames);
+		$content = preg_replace('|@var (.+) \$|', '@var ' . $classes . ' $', $tokens[$stackPointer]['content']);
+
+		$phpCsFile->fixer->beginChangeset();
+
+		$phpCsFile->fixer->replaceToken($stackPointer, $content);
+
+		$phpCsFile->fixer->endChangeset();
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param int $stackPointer
+	 *
+	 * @return void
+	 */
+	protected function processDocBlockComments(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
 			return;
 		}
+
+		$tokens = $phpCsFile->getTokens();
 
 		$docBlockStartIndex = $tokens[$docBlockEndIndex]['comment_opener'];
 
@@ -52,7 +119,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@return', '@yield', '@param', '@throws', '@var', '@method', '@see'])) {
+			if (!in_array($tokens[$i]['content'], static::$whitelistedTags)) {
 				continue;
 			}
 
@@ -71,7 +138,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 				$content = substr($content, 0, $spaceIndex);
 			}
 
-			if (empty($content)) {
+			if (!$content) {
 				continue;
 			}
 
@@ -82,6 +149,44 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 
 			$this->fixClassNames($phpCsFile, $classNameIndex, $classNames, $tokens[$i]['content'], $appendix);
 		}
+	}
+
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param int $classNameIndex
+	 * @param array $classNames
+	 *
+	 * @return array
+	 */
+	protected function generateClassNameMap(PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array &$classNames) {
+		$result = [];
+		foreach ($classNames as $key => $className) {
+			if (strpos($className, '\\') !== false) {
+				continue;
+			}
+
+			$arrayOfObject = false;
+			if (substr($className, -2) === '[]') {
+				$arrayOfObject = true;
+				$className = substr($className, 0, -2);
+			}
+
+			if (in_array($className, static::$whitelistedTypes)) {
+				continue;
+			}
+
+			$useStatement = $this->findUseStatementForClassName($phpCsFile, $className);
+			if (!$useStatement) {
+				$phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex);
+				continue;
+			}
+
+			$classNames[$key] = $useStatement . ($arrayOfObject ? '[]' : '');
+			$result[$className . ($arrayOfObject ? '[]' : '')] = $classNames[$key];
+		}
+
+		return $result;
 	}
 
 	/**

@@ -43,7 +43,6 @@ class ElseIfDeclarationSniff implements PHP_CodeSniffer_Sniff {
 			   ];
 	}
 
-
 	/**
 	 * @inheritDoc
 	 */
