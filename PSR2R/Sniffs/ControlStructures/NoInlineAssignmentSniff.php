@@ -12,9 +12,7 @@ use PSR2R\Tools\AbstractSniff;
 class NoInlineAssignmentSniff extends AbstractSniff {
 
 	/**
-	 * Returns an array of tokens this test wants to listen for.
-	 *
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function register() {
 		// We skip T_FOR, T_WHILE for now as they can have valid inline assignment
@@ -22,12 +20,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	}
 
 	/**
-	 * Processes this test, when one of its tokens is encountered.
-	 *
-	 * @param \PHP_CodeSniffer_File $phpcsFile All the tokens found in the document.
-	 * @param int $stackPtr The position of the current token
-	 *    in the stack passed in $tokens.
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();

@@ -34,13 +34,11 @@ class EmptyLinesSniff extends AbstractSniff {
 			&& $tokens[($stackPtr + 1)]['content'] === $phpcsFile->eolChar
 			&& isset($tokens[($stackPtr + 2)]) === true
 			&& $tokens[($stackPtr + 2)]['content'] === $phpcsFile->eolChar
-			&& isset($tokens[($stackPtr + 3)]) === true
-			&& $tokens[($stackPtr + 3)]['content'] === $phpcsFile->eolChar
 		) {
 			$error = '2 empty lines and more are not allowed';
 			$fix = $phpcsFile->addFixableError($error, ($stackPtr + 3), 'EmptyLines');
 			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr + 3, '');
+				$phpcsFile->fixer->replaceToken($stackPtr + 2, '');
 			}
 		}
 	}
