@@ -151,7 +151,6 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 		}
 	}
 
-
 	/**
 	 * @param \PHP_CodeSniffer_File $phpCsFile
 	 * @param int $classNameIndex
