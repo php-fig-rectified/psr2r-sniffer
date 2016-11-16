@@ -35,6 +35,9 @@ class MethodMultilineArgumentsSniff extends AbstractSniff {
 		if ($tokens[$parenthesisStartIndex]['type'] !== 'T_OPEN_PARENTHESIS') {
 			return;
 		}
+		if (empty($tokens[$parenthesisStartIndex]['parenthesis_closer'])) {
+			return;
+		}
 
 		$parenthesisEndIndex = $tokens[$parenthesisStartIndex]['parenthesis_closer'];
 

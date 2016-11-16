@@ -44,6 +44,10 @@ class MethodSpacingSniff extends AbstractSniff {
 			}
 		}
 
+		if (empty($tokens[$parenthesisIndex]['parenthesis_closer'])) {
+			return;
+		}
+
 		$parenthesisEndIndex = $tokens[$parenthesisIndex]['parenthesis_closer'];
 
 		$braceStartIndex = $phpcsFile->findNext(T_WHITESPACE, ($parenthesisEndIndex + 1), null, true);
