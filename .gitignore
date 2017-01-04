@@ -2,4 +2,5 @@
 /phpunit.phar
 /composer.phar
 /.idea
+clover.xml
 /composer.lock
