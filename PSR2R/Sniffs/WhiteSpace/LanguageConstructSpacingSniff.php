@@ -2,8 +2,8 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Ensures all language constructs contain a
@@ -13,7 +13,7 @@ use PHP_CodeSniffer_Sniff;
  * @author Mark Scherer
  * @license MIT
  */
-class LanguageConstructSpacingSniff implements PHP_CodeSniffer_Sniff {
+class LanguageConstructSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
@@ -33,7 +33,7 @@ class LanguageConstructSpacingSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[($stackPtr + 1)]['code'] === T_SEMICOLON) {

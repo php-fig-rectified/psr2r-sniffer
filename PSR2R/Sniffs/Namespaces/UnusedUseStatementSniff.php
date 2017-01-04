@@ -1,8 +1,8 @@
 <?php
 namespace PSR2R\Sniffs\Namespaces;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 use PSR2R\Tools\Traits\CommentingTrait;
 use PSR2R\Tools\Traits\NamespaceTrait;
 
@@ -24,7 +24,7 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($this->shouldIgnoreUse($phpcsFile, $stackPtr)) {
@@ -37,7 +37,7 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 		}
 
 		$classNameIndex = $phpcsFile->findPrevious(
-			PHP_CodeSniffer_Tokens::$emptyTokens,
+			Tokens::$emptyTokens,
 			($semicolonIndex - 1),
 			null,
 			true
@@ -58,7 +58,7 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 
 		while ($classUsed !== false) {
 			$beforeUsage = $phpcsFile->findPrevious(
-				PHP_CodeSniffer_Tokens::$emptyTokens,
+				Tokens::$emptyTokens,
 				($classUsed - 1),
 				null,
 				true

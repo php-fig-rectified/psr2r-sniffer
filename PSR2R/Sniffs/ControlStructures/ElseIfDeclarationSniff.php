@@ -15,8 +15,8 @@
 
 namespace PSR2R\Sniffs\ControlStructures;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff.
@@ -31,7 +31,7 @@ use PHP_CodeSniffer_Sniff;
  *
  * @link http://pear.php.net/package/PHP_CodeSniffer
  */
-class ElseIfDeclarationSniff implements PHP_CodeSniffer_Sniff {
+class ElseIfDeclarationSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
@@ -46,7 +46,7 @@ class ElseIfDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['code'] === T_ELSEIF) {

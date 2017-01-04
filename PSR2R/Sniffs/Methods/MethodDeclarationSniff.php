@@ -14,14 +14,10 @@
 
 namespace PSR2R\Sniffs\Methods;
 
-use PHP_CodeSniffer_Exception;
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Standards_AbstractScopeSniff;
-use PHP_CodeSniffer_Tokens;
-
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-	throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
-}
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * PSR2_Sniffs_Methods_MethodDeclarationSniff.
@@ -34,7 +30,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version Release: @package_version@
  * @link http://pear.php.net/package/PHP_CodeSniffer
  */
-class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff {
+class MethodDeclarationSniff extends AbstractScopeSniff {
 
 	/**
 	 * @inheritDoc
@@ -46,7 +42,7 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 	/**
 	 * @inheritDoc
 	 */
-	protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope) {
+	protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope) {
 		$tokens = $phpcsFile->getTokens();
 
 		$methodName = $phpcsFile->getDeclarationName($stackPtr);
@@ -60,12 +56,12 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 		$abstract = 0;
 		$final = 0;
 
-		$find = PHP_CodeSniffer_Tokens::$methodPrefixes;
+		$find = Tokens::$methodPrefixes;
 		$find[] = T_WHITESPACE;
 		$prev = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
 		$prefix = $stackPtr;
-		while (($prefix = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$methodPrefixes, ($prefix - 1), $prev)) !== false) {
+		while (($prefix = $phpcsFile->findPrevious(Tokens::$methodPrefixes, ($prefix - 1), $prev)) !== false) {
 			switch ($tokens[$prefix]['code']) {
 				case T_STATIC:
 					$static = $prefix;
@@ -137,4 +133,11 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 		}
 	}
 
+	/**
+	 * @inheritdoc
+	 */
+	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+	{
+		// TODO: Implement processTokenOutsideScope() method.
+	}
 }

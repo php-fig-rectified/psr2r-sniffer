@@ -15,8 +15,8 @@
 
 namespace PSR2R\Sniffs\ControlStructures;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * PSR2_Sniffs_WhiteSpace_ControlStructureSpacingSniff.
@@ -31,7 +31,7 @@ use PHP_CodeSniffer_Sniff;
  *
  * @link http://pear.php.net/package/PHP_CodeSniffer
  */
-class ControlStructureSpacingSniff implements PHP_CodeSniffer_Sniff {
+class ControlStructureSpacingSniff implements Sniff {
 
 	/**
 	 * How many spaces should follow the opening bracket.
@@ -68,7 +68,7 @@ class ControlStructureSpacingSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$this->requiredSpacesAfterOpen = (int)$this->requiredSpacesAfterOpen;
 		$this->requiredSpacesBeforeClose = (int)$this->requiredSpacesBeforeClose;
 		$tokens = $phpcsFile->getTokens();

@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\ControlStructures;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -23,7 +23,7 @@ class UnneededElseSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['code'] === T_ELSEIF && $this->isNotLastCondition($phpcsFile, $stackPtr)) {
@@ -116,11 +116,11 @@ class UnneededElseSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @return bool
 	 */
-	protected function isNotLastCondition(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function isNotLastCondition(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Abort if not known
@@ -140,11 +140,11 @@ class UnneededElseSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @return void
 	 */
-	protected function fixElseIfToIf(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function fixElseIfToIf(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$phpcsFile->fixer->beginChangeset();

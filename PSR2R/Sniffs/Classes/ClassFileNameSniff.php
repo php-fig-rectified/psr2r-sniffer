@@ -14,7 +14,7 @@
  */
 namespace PSR2R\Sniffs\Classes;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -45,7 +45,7 @@ class ClassFileNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$fullPath = basename($phpcsFile->getFilename());
 		$fileName = substr($fullPath, 0, strrpos($fullPath, '.'));
 		if ($fileName === '') {

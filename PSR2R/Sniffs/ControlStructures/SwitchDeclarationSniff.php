@@ -14,8 +14,8 @@
 
 namespace PSR2R\Sniffs\ControlStructures;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff.
@@ -28,7 +28,7 @@ use PHP_CodeSniffer_Sniff;
  * @version Release: @package_version@
  * @link http://pear.php.net/package/PHP_CodeSniffer
  */
-class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
+class SwitchDeclarationSniff implements Sniff {
 
 	/**
 	 * The number of spaces code should be indented.
@@ -47,7 +47,7 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// TODO: Auto-detect spaces vs tabs, maybe using a trait method indent($index, $this->indent)
@@ -209,13 +209,13 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	 *
 	 * Note that nested switches are ignored.
 	 *
-	 * @param \PHP_CodeSniffer_File $phpcsFile The file being scanned.
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
 	 * @param int $stackPtr The position to start looking at.
 	 * @param int $end The position to stop looking at.
 	 *
 	 * @return int | bool
 	 */
-	protected function findNextCase(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $end) {
+	protected function findNextCase(File $phpcsFile, $stackPtr, $end) {
 		$tokens = $phpcsFile->getTokens();
 		while (($stackPtr = $phpcsFile->findNext([T_CASE, T_DEFAULT, T_SWITCH], $stackPtr, $end)) !== false) {
 			// Skip nested SWITCH statements; they are handled on their own.

@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * No whitespace should be between unary operator and variable. Also account for ~, @ and & operator.
@@ -10,7 +10,7 @@ use PHP_CodeSniffer_File;
  * @author Mark Scherer
  * @license MIT
  */
-class UnaryOperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
+class UnaryOperatorSpacingSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	 * @inheritDoc
@@ -22,7 +22,7 @@ class UnaryOperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['code'] === T_PLUS) {
@@ -85,11 +85,11 @@ class UnaryOperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @return void
 	 */
-	protected function checkBefore(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function checkBefore(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
@@ -106,11 +106,11 @@ class UnaryOperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @return void
 	 */
-	protected function checkAfter(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function checkAfter(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);

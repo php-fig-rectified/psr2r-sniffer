@@ -15,7 +15,7 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -36,7 +36,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$leftWall = [
 			T_CLASS,
@@ -134,11 +134,11 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
 	 * @return int|null
 	 */
-	protected function findFirstNonWhitespaceInLine(PHP_CodeSniffer_File $phpcsFile, $index) {
+	protected function findFirstNonWhitespaceInLine(File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
 		$firstIndex = $index;

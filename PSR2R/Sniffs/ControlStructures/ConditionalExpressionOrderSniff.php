@@ -2,8 +2,8 @@
 
 namespace PSR2R\Sniffs\ControlStructures;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -18,16 +18,16 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	 * @inheritDoc
 	 */
 	public function register() {
-		return PHP_CodeSniffer_Tokens::$comparisonTokens;
+		return Tokens::$comparisonTokens;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
-		$prevIndex = $phpCsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPointer - 1), null, true);
+		$prevIndex = $phpCsFile->findPrevious(Tokens::$emptyTokens, ($stackPointer - 1), null, true);
 		if (!$this->isGivenKind([T_CLOSE_SHORT_ARRAY, T_TRUE, T_FALSE, T_NULL, T_LNUMBER, T_CONSTANT_ENCAPSED_STRING], $tokens[$prevIndex])) {
 			return;
 		}
@@ -40,11 +40,11 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 
 		$leftIndexStart = $prevIndex;
 
-		$prevIndex = $phpCsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($prevIndex - 1), null, true);
+		$prevIndex = $phpCsFile->findPrevious(Tokens::$emptyTokens, ($prevIndex - 1), null, true);
 		if (!$prevIndex) {
 			return;
 		}
-		if ($this->isGivenKind(PHP_CodeSniffer_Tokens::$arithmeticTokens, $tokens[$prevIndex])) {
+		if ($this->isGivenKind(Tokens::$arithmeticTokens, $tokens[$prevIndex])) {
 			return;
 		}
 		if ($this->isGivenKind([T_STRING_CONCAT], $tokens[$prevIndex])) {
@@ -55,8 +55,8 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		$error = 'Usage of Yoda conditions is not allowed. Switch the expression order.';
 		$prevContent = $tokens[$prevIndex]['content'];
 
-		if (!$this->isGivenKind(PHP_CodeSniffer_Tokens::$assignmentTokens, $tokens[$prevIndex])
-			&& !$this->isGivenKind(PHP_CodeSniffer_Tokens::$booleanOperators, $tokens[$prevIndex])
+		if (!$this->isGivenKind(Tokens::$assignmentTokens, $tokens[$prevIndex])
+			&& !$this->isGivenKind(Tokens::$booleanOperators, $tokens[$prevIndex])
 			&& $prevContent !== '('
 			&& $prevContent !== ','
 		) {
@@ -65,10 +65,10 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 			return;
 		}
 
-		$rightIndexStart = $phpCsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPointer + 1, null, true);
+		$rightIndexStart = $phpCsFile->findNext(Tokens::$emptyTokens, $stackPointer + 1, null, true);
 
 		if ($this->isGivenKind(T_OPEN_PARENTHESIS, $tokens[$prevIndex])) {
-			$rightIndexEnd = $phpCsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $tokens[$prevIndex]['parenthesis_closer'] - 1, null, true);
+			$rightIndexEnd = $phpCsFile->findPrevious(Tokens::$emptyTokens, $tokens[$prevIndex]['parenthesis_closer'] - 1, null, true);
 		} else {
 			$previousParenthesisOpenerIndex = $phpCsFile->findPrevious(T_OPEN_PARENTHESIS, $prevIndex - 1);
 			$limit = null;
@@ -109,13 +109,13 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $index
 	 * @param int $limit
 	 *
 	 * @return int|null
 	 */
-	protected function detectRightEnd(PHP_CodeSniffer_File $phpCsFile, $index, $limit = 0) {
+	protected function detectRightEnd(File $phpCsFile, $index, $limit = 0) {
 		$tokens = $phpCsFile->getTokens();
 
 		$rightEndIndex = $index;
@@ -127,7 +127,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		}
 
 		while (true) {
-			$nextIndex = $phpCsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $nextIndex + 1, null, true);
+			$nextIndex = $phpCsFile->findNext(Tokens::$emptyTokens, $nextIndex + 1, null, true);
 			if (!$nextIndex) {
 				return $rightEndIndex;
 			}
@@ -158,7 +158,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $index
 	 * @param int $leftIndexStart
 	 * @param int int $leftIndexEnd
@@ -167,7 +167,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function applyFix(PHP_CodeSniffer_File $phpCsFile, $index, $leftIndexStart, $leftIndexEnd, $rightIndexStart, $rightIndexEnd) {
+	protected function applyFix(File $phpCsFile, $index, $leftIndexStart, $leftIndexEnd, $rightIndexStart, $rightIndexEnd) {
 		$tokens = $phpCsFile->getTokens();
 
 		$token = $tokens[$index];

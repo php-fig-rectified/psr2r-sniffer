@@ -15,8 +15,8 @@
 
 namespace PSR2R\Sniffs\Files;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * PSR2_Sniffs_Files_LineEndingsSniff.
@@ -31,7 +31,7 @@ use PHP_CodeSniffer_Sniff;
  *
  * @link http://pear.php.net/package/PHP_CodeSniffer
  */
-class ClosingTagSniff implements PHP_CodeSniffer_Sniff {
+class ClosingTagSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
@@ -43,7 +43,7 @@ class ClosingTagSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Make sure this file only contains PHP code.

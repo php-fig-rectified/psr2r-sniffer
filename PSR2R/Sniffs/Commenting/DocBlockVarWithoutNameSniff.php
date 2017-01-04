@@ -12,7 +12,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -35,7 +35,7 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$docBlockStartIndex = $stackPtr;
 		$docBlockEndIndex = $tokens[$stackPtr]['comment_closer'];
@@ -55,7 +55,7 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 				continue;
 			}
 
-			//$nextIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $i + 1, $docBlockEndIndex, true);
+			//$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $i + 1, $docBlockEndIndex, true);
 			$nextIndex = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $i + 1, $docBlockEndIndex);
 			if (!$nextIndex || strpos($tokens[$nextIndex]['content'], ' ') === false) {
 				continue;

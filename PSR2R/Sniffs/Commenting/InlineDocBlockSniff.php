@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -22,7 +22,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 		$startIndex = $phpCsFile->findNext(T_OPEN_CURLY_BRACKET, $stackPointer + 1);
 		if (empty($tokens[$startIndex]['bracket_closer'])) {
@@ -37,13 +37,13 @@ class InlineDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $startIndex
 	 * @param int $endIndex
 	 *
 	 * @return void
 	 */
-	protected function fixDocCommentOpenTags(PHP_CodeSniffer_File $phpCsFile, $startIndex, $endIndex) {
+	protected function fixDocCommentOpenTags(File $phpCsFile, $startIndex, $endIndex) {
 		$tokens = $phpCsFile->getTokens();
 
 		for ($i = $startIndex + 1; $i < $endIndex; $i++) {
@@ -63,13 +63,13 @@ class InlineDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $startIndex
 	 * @param int $endIndex
 	 *
 	 * @return void
 	 */
-	protected function checkInlineComments(PHP_CodeSniffer_File $phpCsFile, $startIndex, $endIndex) {
+	protected function checkInlineComments(File $phpCsFile, $startIndex, $endIndex) {
 		$tokens = $phpCsFile->getTokens();
 
 		for ($i = $startIndex + 1; $i < $endIndex; $i++) {

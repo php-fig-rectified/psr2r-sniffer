@@ -5,8 +5,8 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 use PSR2R\Tools\AbstractSniff;
 use PSR2R\Tools\Traits\CommentingTrait;
 
@@ -28,18 +28,18 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$nextIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr + 1, null, true);
+		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		if ($tokens[$nextIndex]['content'] === '__construct' || $tokens[$nextIndex]['content'] === '__destruct') {
 			$this->checkConstructorAndDestructor($phpcsFile, $nextIndex);
 			return;
 		}
 
 		// Don't mess with closures
-		$prevIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
-		if (!$this->isGivenKind(PHP_CodeSniffer_Tokens::$methodPrefixes, $tokens[$prevIndex])) {
+		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);
+		if (!$this->isGivenKind(Tokens::$methodPrefixes, $tokens[$prevIndex])) {
 			return;
 		}
 
@@ -83,11 +83,11 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
 	 * @return void
 	 */
-	protected function checkConstructorAndDestructor(PHP_CodeSniffer_File $phpcsFile, $index) {
+	protected function checkConstructorAndDestructor(File $phpcsFile, $index) {
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpcsFile, $index);
 		if (!$docBlockEndIndex) {
 			return;
@@ -115,13 +115,13 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $docBlockStartIndex
 	 * @param int $docBlockEndIndex
 	 *
 	 * @return int|null
 	 */
-	protected function findDocBlockReturn(PHP_CodeSniffer_File $phpcsFile, $docBlockStartIndex, $docBlockEndIndex) {
+	protected function findDocBlockReturn(File $phpcsFile, $docBlockStartIndex, $docBlockEndIndex) {
 		$tokens = $phpcsFile->getTokens();
 
 		for ($i = $docBlockStartIndex + 1; $i < $docBlockEndIndex; $i++) {
@@ -139,14 +139,14 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $docBlockStartIndex
 	 * @param int $docBlockEndIndex
 	 * @param string $returnType
 	 *
 	 * @return void
 	 */
-	protected function addReturnAnnotation(PHP_CodeSniffer_File $phpcsFile, $docBlockStartIndex, $docBlockEndIndex, $returnType = 'void') {
+	protected function addReturnAnnotation(File $phpcsFile, $docBlockStartIndex, $docBlockEndIndex, $returnType = 'void') {
 		$tokens = $phpcsFile->getTokens();
 
 		$indentation = $this->getIndentationWhitespace($phpcsFile, $docBlockEndIndex);
@@ -173,12 +173,12 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 	/**
 	 * For right now we only try to detect void.
 	 *
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
 	 *
 	 * @return string|null
 	 */
-	protected function detectReturnTypeVoid(PHP_CodeSniffer_File $phpcsFile, $index) {
+	protected function detectReturnTypeVoid(File $phpcsFile, $index) {
 		$tokens = $phpcsFile->getTokens();
 
 		$type = 'void';
@@ -197,7 +197,7 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 				continue;
 			}
 
-			$nextIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $i + 1, null, true);
+			$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $i + 1, null, true);
 			if (!$this->isGivenKind(T_SEMICOLON, $tokens[$nextIndex])) {
 				return null;
 			}

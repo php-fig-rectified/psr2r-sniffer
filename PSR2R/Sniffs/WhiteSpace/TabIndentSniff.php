@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Check for any line starting with 4 spaces - which would indicate space indenting.
@@ -10,7 +10,7 @@ use PHP_CodeSniffer_File;
  * @author Mark Scherer
  * @license MIT
  */
-class TabIndentSniff implements \PHP_CodeSniffer_Sniff {
+class TabIndentSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	 * A list of tokenizers this sniff supports.
@@ -33,7 +33,7 @@ class TabIndentSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['code'] !== T_WHITESPACE) {
@@ -61,12 +61,12 @@ class TabIndentSniff implements \PHP_CodeSniffer_Sniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @param array $tokens
 	 * @return void
 	 */
-	protected function fixTab(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens) {
+	protected function fixTab(File $phpcsFile, $stackPtr, $tokens) {
 		$content = $tokens[$stackPtr]['content'];
 		$tabs = 0;
 		while (strpos($content, '    ') === 0) {
@@ -84,12 +84,12 @@ class TabIndentSniff implements \PHP_CodeSniffer_Sniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @param array $tokens
 	 * @return void
 	 */
-	protected function fixSpace(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $tokens) {
+	protected function fixSpace(File $phpcsFile, $stackPtr, $tokens) {
 		$content = $tokens[$stackPtr]['content'];
 
 		$newContent = str_replace("\t", '    ', $content);

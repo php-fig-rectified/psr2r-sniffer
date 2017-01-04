@@ -1,7 +1,7 @@
 <?php
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 class EmptyLinesSniff extends AbstractSniff {
@@ -27,7 +27,7 @@ class EmptyLinesSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['content'] === $phpcsFile->eolChar
 			&& isset($tokens[($stackPtr + 1)]) === true

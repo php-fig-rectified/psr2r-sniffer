@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -45,7 +45,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		if ($tokens[$stackPointer]['code'] === T_COMMENT) {
@@ -57,12 +57,12 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPointer
 	 *
 	 * @return void
 	 */
-	protected function processInlineComments(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	protected function processInlineComments(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		if (!preg_match('|^\/\* @var (.+) \$.+\*\/$|', $tokens[$stackPointer]['content'], $matches)) {
@@ -99,12 +99,12 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPointer
 	 *
 	 * @return void
 	 */
-	protected function processDocBlockComments(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	protected function processDocBlockComments(File $phpCsFile, $stackPointer) {
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
@@ -152,13 +152,13 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $classNameIndex
 	 * @param array $classNames
 	 *
 	 * @return array
 	 */
-	protected function generateClassNameMap(PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array &$classNames) {
+	protected function generateClassNameMap(File $phpCsFile, $classNameIndex, array &$classNames) {
 		$result = [];
 		foreach ($classNames as $key => $className) {
 			if (strpos($className, '\\') !== false) {
@@ -189,13 +189,13 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param array $classNames
 	 * @param int $index
 	 *
 	 * @return void
 	 */
-	protected function assertUniqueParts(PHP_CodeSniffer_File $phpCsFile, array $classNames, $index) {
+	protected function assertUniqueParts(File $phpCsFile, array $classNames, $index) {
 		$exists = [];
 		foreach ($classNames as $className) {
 			if (in_array($className, $exists, true)) {
@@ -207,7 +207,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $classNameIndex
 	 * @param array $classNames
 	 * @param string $docBlockType
@@ -215,7 +215,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function fixClassNames(PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $classNames, $docBlockType, $appendix) {
+	protected function fixClassNames(File $phpCsFile, $classNameIndex, array $classNames, $docBlockType, $appendix) {
 		$result = [];
 		foreach ($classNames as $key => $className) {
 			if (strpos($className, '\\') !== false) {
@@ -268,12 +268,12 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param string $className
 	 *
 	 * @return string|null
 	 */
-	protected function findUseStatementForClassName(PHP_CodeSniffer_File $phpCsFile, $className) {
+	protected function findUseStatementForClassName(File $phpCsFile, $className) {
 		$useStatements = $this->parseUseStatements($phpCsFile);
 		if (!isset($useStatements[$className])) {
 			$useStatement = $this->findInSameNameSpace($phpCsFile, $className);
@@ -288,12 +288,12 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param string $className
 	 *
 	 * @return string|null
 	 */
-	protected function findInSameNameSpace(PHP_CodeSniffer_File $phpCsFile, $className) {
+	protected function findInSameNameSpace(File $phpCsFile, $className) {
 		if (!$this->hasNamespace($phpCsFile)) {
 			return null;
 		}
@@ -309,11 +309,11 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 *
 	 * @return array
 	 */
-	protected function parseUseStatements(PHP_CodeSniffer_File $phpCsFile) {
+	protected function parseUseStatements(File $phpCsFile) {
 		$useStatements = [];
 		$tokens = $phpCsFile->getTokens();
 

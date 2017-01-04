@@ -2,8 +2,8 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Verifies that operators have valid spacing surrounding them.
@@ -11,7 +11,7 @@ use PHP_CodeSniffer_Tokens;
  * @author Mark Scherer
  * @license MIT
  */
-class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
+class OperatorSpacingSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	 * A list of tokenizers this sniff supports.
@@ -27,9 +27,9 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	 * @inheritDoc
 	 */
 	public function register() {
-		$comparison = PHP_CodeSniffer_Tokens::$comparisonTokens;
-		$operators = PHP_CodeSniffer_Tokens::$operators;
-		$assignment = PHP_CodeSniffer_Tokens::$assignmentTokens;
+		$comparison = Tokens::$comparisonTokens;
+		$operators = Tokens::$operators;
+		$assignment = Tokens::$assignmentTokens;
 
 		return array_unique(array_merge($comparison, $operators, $assignment));
 	}
@@ -37,7 +37,7 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Skip default values in function declarations.
@@ -97,12 +97,12 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 					return;
 				}
 
-				if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$operators) === true) {
+				if (in_array($tokens[$prev]['code'], Tokens::$operators) === true) {
 					// Just trying to operate on a negative value; eg. ($var * -1).
 					return;
 				}
 
-				if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true) {
+				if (in_array($tokens[$prev]['code'], Tokens::$comparisonTokens) === true) {
 					// Just trying to compare a negative value; eg. ($var === -1).
 					return;
 				}
@@ -125,7 +125,7 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 					// Just trying to use a negative value; eg. myFunction($var, -2).
 					return;
 				}
-				if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true) {
+				if (in_array($tokens[$prev]['code'], Tokens::$assignmentTokens) === true) {
 					// Just trying to assign a negative value; eg. ($var = -1).
 					return;
 				}

@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\PHP;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Use short form of boolean and integer casts.
@@ -10,7 +10,7 @@ use PHP_CodeSniffer_File;
  * @author Mark Scherer
  * @license MIT
  */
-class ShortCastSniff implements \PHP_CodeSniffer_Sniff {
+class ShortCastSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	 * @var array
@@ -30,7 +30,7 @@ class ShortCastSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['content'] === '!') {

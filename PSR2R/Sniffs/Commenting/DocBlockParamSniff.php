@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 use PSR2R\Tools\Traits\CommentingTrait;
 use PSR2R\Tools\Traits\SignatureTrait;
@@ -30,7 +30,7 @@ class DocBlockParamSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
@@ -124,13 +124,13 @@ class DocBlockParamSniff extends AbstractSniff {
 	}
 
 	/**
-	* //TODO: Replace with SignatureTrait
-	 *
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * //TODO: Replace with SignatureTrait
+	 * 
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPtr
 	 * @return array
 	 */
-	private function getMethodSignature(PHP_CodeSniffer_File $phpCsFile, $stackPtr) {
+	private function getMethodSignature(File $phpCsFile, $stackPtr) {
 		$tokens = $phpCsFile->getTokens();
 
 		$startIndex = $phpCsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);

@@ -1,7 +1,7 @@
 {
 	"name": "fig-r/psr2r-sniffer",
 	"license": "MIT",
-	"description": "Code-Sniffer, Auto-Fixer and Tokenizer for PSR2-R",
+	"description": "Code-Sniffer, Auto-Fixer and Tokenizer for PSR-2-R",
 	"authors": [
 		{
 			"name": "Mark Scherer",
@@ -11,7 +11,7 @@
 	],
 	"require": {
 		"php": ">=5.4.16",
-		"squizlabs/php_codesniffer": "~2.3"
+		"squizlabs/php_codesniffer": "^3.0@dev"
 	},
 	"autoload": {
 		"psr-4": {
@@ -20,7 +20,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"PSR2T\\Test\\": "tests"
+			"PSR2R\\Test\\": "tests"
 		}
 	},
 	"bin": [
@@ -28,6 +28,26 @@
 		"bin/sniff"
 	],
 	"scripts": {
-		"docs": "php docs/generate.php"
+		"docs": "php docs/generate.php",
+		"increase-severity": "sed -i.bak 's/<severity>0<\\/severity>/<!--<severity>0<\\/severity>-->/' PSR2R/ruleset.xml",
+		"reset-ruleset": [
+			"sed -i.bak 's/<!--<severity>0<\\/severity>-->/<severity>0<\\/severity>/' PSR2R/ruleset.xml",
+			"rm -f PSR2R/ruleset.xml.bak"
+		],
+		"add-standard" : "phpcs --config-set installed_paths $(pwd)",
+		"test": [
+			"@add-standard",
+			"@increase-severity",
+			"php phpunit.phar",
+			"@reset-ruleset"
+		],
+		"test-coverage": [
+			"@add-standard",
+			"@increase-severity",
+			"php phpunit.phar --coverage-clover=clover.xml",
+			"@reset-ruleset"
+		],
+		"cs-check": "phpcs --colors -p --extensions=php --standard=PSR2R ./PSR2R",
+		"cs-fix": "phpcbf --colors --extensions=php --standard=PSR2R ./PSR2R"
 	}
 }

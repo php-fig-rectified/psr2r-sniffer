@@ -2,14 +2,9 @@
 
 namespace PSR2R\Sniffs\Classes;
 
-use PHP_CodeSniffer_Exception;
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Standards_AbstractVariableSniff;
-use PHP_CodeSniffer_Tokens;
-
-if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
-	throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
-}
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Verifies that properties are declared correctly.
@@ -22,17 +17,17 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  *
  * @link http://pear.php.net/package/PHP_CodeSniffer
  */
-class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff {
+class PropertyDeclarationSniff extends AbstractVariableSniff {
 	/**
 	 * @inheritDoc
 	 */
-	protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function processMemberVar(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Detect multiple properties defined at the same time. Throw an error
 		// for this, but also only process the first property in the list so we don't
 		// repeat errors.
-		$find = PHP_CodeSniffer_Tokens::$scopeModifiers;
+		$find = Tokens::$scopeModifiers;
 		$find = array_merge($find, [T_VARIABLE, T_VAR, T_SEMICOLON]);
 		$prev = $phpcsFile->findPrevious($find, ($stackPtr - 1));
 		if ($tokens[$prev]['code'] === T_VARIABLE) {
@@ -50,7 +45,7 @@ class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariabl
 			$phpcsFile->addError($error, $stackPtr, 'Multiple');
 		}
 
-		$modifier = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$scopeModifiers, $stackPtr);
+		$modifier = $phpcsFile->findPrevious(Tokens::$scopeModifiers, $stackPtr);
 		if (($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'])) {
 			$error = 'Visibility must be declared on property "%s"';
 			$data = [$tokens[$stackPtr]['content']];
@@ -61,7 +56,7 @@ class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariabl
 	/**
 	 * @inheritDoc
 	 */
-	protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function processVariable(File $phpcsFile, $stackPtr) {
 		/*
             We don't care about normal variables.
         */
@@ -70,7 +65,7 @@ class PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariabl
 	/**
 	 * @inheritDoc
 	 */
-	protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	protected function processVariableInString(File $phpcsFile, $stackPtr) {
 		/*
             We don't care about normal variables.
         */

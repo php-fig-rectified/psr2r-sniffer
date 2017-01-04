@@ -2,7 +2,9 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+use PHP_CodeSniffer\Sniffs\PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Standards_AbstractScopeSniff;
 
 /**
@@ -12,7 +14,7 @@ use PHP_CodeSniffer_Standards_AbstractScopeSniff;
  * @author Mark Scherer
  * @license MIT
  */
-class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff {
+class DocBlockReturnTagSniff extends AbstractScopeSniff {
 
 	/**
 	 * @inheritDoc
@@ -24,7 +26,7 @@ class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 	/**
 	 * @inheritDoc
 	 */
-	protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope) {
+	protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Type of method
@@ -87,4 +89,11 @@ class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 		}
 	}
 
+	/**
+	 * @inheritdoc
+	 */
+	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+	{
+		// TODO: Implement processTokenOutsideScope() method.
+	}
 }

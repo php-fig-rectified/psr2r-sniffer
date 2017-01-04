@@ -2,12 +2,12 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Ensures unnecessary comments, especially //end ... ones are removed.
  */
-class NoControlStructureEndCommentSniff implements \PHP_CodeSniffer_Sniff {
+class NoControlStructureEndCommentSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	 * @inheritDoc
@@ -19,7 +19,7 @@ class NoControlStructureEndCommentSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$possibleCurlyBracket = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), 0, true);
