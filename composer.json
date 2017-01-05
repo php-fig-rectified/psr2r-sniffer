@@ -26,5 +26,8 @@
 	"bin": [
 		"bin/tokenize",
 		"bin/sniff"
-	]
+	],
+	"scripts": {
+		"docs": "php docs/generate.php"
+	}
 }
