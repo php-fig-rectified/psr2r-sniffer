@@ -2,4 +2,4 @@
 /phpunit.phar
 /composer.phar
 /.idea
-
+/composer.lock
