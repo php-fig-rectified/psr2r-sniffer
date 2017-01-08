@@ -48,6 +48,9 @@ class Sniffer {
 		if ($ignore) {
 			$argv[] = '--ignore=' . str_replace(DIRECTORY_SEPARATOR, '/', $ignore);
 		}
+		if (!$fix) {
+			$argv[ ] = '-p';
+		}
 
 		$argv[] = $path;
 
