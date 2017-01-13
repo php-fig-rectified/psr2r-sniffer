@@ -22,7 +22,6 @@ class BraceOnSameLineSniff implements \PHP_CodeSniffer_Sniff {
 			T_TRAIT,
 			T_FUNCTION
 		];
-
 	}
 
 	/**

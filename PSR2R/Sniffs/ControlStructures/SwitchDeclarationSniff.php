@@ -42,7 +42,6 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	 */
 	public function register() {
 		return [T_SWITCH];
-
 	}
 
 	/**
@@ -203,7 +202,6 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -230,7 +228,6 @@ class SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		return $stackPtr;
-
 	}
 
 }

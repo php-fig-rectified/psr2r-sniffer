@@ -135,7 +135,6 @@ class MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 
 			$phpcsFile->fixer->endChangeset();
 		}
-
 	}
 
 }

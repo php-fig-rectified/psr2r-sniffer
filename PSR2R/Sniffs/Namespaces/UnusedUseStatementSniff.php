@@ -19,7 +19,6 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 	 */
 	public function register() {
 		return [T_USE];
-
 	}
 
 	/**

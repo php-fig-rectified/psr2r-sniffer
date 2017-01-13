@@ -29,7 +29,6 @@ class Tokenizer {
 	 * @throws \Exception
 	 */
 	public function __construct($argv) {
-
 		$file = !empty($argv[1]) ? $argv[1] : null;
 		if (!$file || !file_exists($file)) {
 			throw new Exception('Please provide a valid file.');

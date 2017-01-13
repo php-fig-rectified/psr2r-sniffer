@@ -43,7 +43,6 @@ class DocCommentSniff extends AbstractSniff {
 	 */
 	public function register() {
 		return [T_DOC_COMMENT_OPEN_TAG];
-
 	}
 
 	/**
