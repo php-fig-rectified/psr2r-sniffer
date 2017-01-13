@@ -44,10 +44,6 @@ class MethodSpacingSniff extends AbstractSniff {
 			}
 		}
 
-		if (empty($tokens[$parenthesisIndex]['parenthesis_closer'])) {
-			return;
-		}
-
 		$parenthesisEndIndex = $tokens[$parenthesisIndex]['parenthesis_closer'];
 
 		$braceStartIndex = $phpcsFile->findNext(T_WHITESPACE, ($parenthesisEndIndex + 1), null, true);
@@ -55,11 +51,50 @@ class MethodSpacingSniff extends AbstractSniff {
 			return;
 		}
 
-		if ($braceStartIndex - $parenthesisEndIndex === 2 && $tokens[$braceStartIndex - 1]['content'] === ' ') {
+		$braceEndIndex = $tokens[$braceStartIndex]['bracket_closer'];
+		$nextContentIndex = $phpcsFile->findNext(T_WHITESPACE, ($braceStartIndex + 1), null, true);
+		if ($nextContentIndex === $braceEndIndex) {
+			$this->assertNoAdditionalNewlinesForEmptyBody($phpcsFile, $braceStartIndex, $braceEndIndex);
 			return;
 		}
 
-		//TODO: beginning and end of method: no newlines
+		if ($tokens[$nextContentIndex]['line'] - $tokens[$braceStartIndex]['line'] > 1) {
+			$error = 'There should be no extra newline at beginning of a method';
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpen');
+			if ($fix === true) {
+				$phpcsFile->fixer->replaceToken($braceStartIndex + 1, '');
+			}
+		}
+
+		$lastContentIndex = $phpcsFile->findPrevious(T_WHITESPACE, $braceEndIndex - 1, null, true);
+
+		if ($tokens[$braceEndIndex]['line'] - $tokens[$lastContentIndex]['line'] > 1) {
+			$error = 'There should be no extra newline at the end of a method';
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'ContentBeforeClose');
+			if ($fix === true) {
+				$phpcsFile->fixer->replaceToken($lastContentIndex + 1, '');
+			}
+		}
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param int $from
+	 * @param int $to
+	 *
+	 * @return void
+	 */
+	protected function assertNoAdditionalNewlinesForEmptyBody(PHP_CodeSniffer_File $phpcsFile, $from, $to) {
+		$tokens = $phpcsFile->getTokens();
+
+		$startLine = $tokens[$from]['line'];
+		$endLine = $tokens[$to]['line'];
+		if ($endLine === $startLine + 2) {
+			$error = 'There should be no extra newline in empty methods';
+			if ($phpcsFile->addFixableError($error, $from, 'ContentEmpty')) {
+				$phpcsFile->fixer->replaceToken($from + 1, '');
+			}
+		}
 	}
 
 }
