@@ -5,6 +5,7 @@ namespace PSR2R\Sniffs\Commenting;
 use PHP_CodeSniffer_File;
 use PSR2R\Tools\AbstractSniff;
 use PSR2R\Tools\Traits\CommentingTrait;
+use PSR2R\Tools\Traits\SignatureTrait;
 
 /**
  * Makes sure doc block param types match the variable name of the method signature.
@@ -15,6 +16,7 @@ use PSR2R\Tools\Traits\CommentingTrait;
 class DocBlockParamSniff extends AbstractSniff {
 
 	use CommentingTrait;
+	use SignatureTrait;
 
 	/**
 	 * @inheritDoc
@@ -122,6 +124,8 @@ class DocBlockParamSniff extends AbstractSniff {
 	}
 
 	/**
+	* //TODO: Replace with SignatureTrait
+	 *
 	 * @param \PHP_CodeSniffer_File $phpCsFile
 	 * @param int $stackPtr
 	 * @return array
