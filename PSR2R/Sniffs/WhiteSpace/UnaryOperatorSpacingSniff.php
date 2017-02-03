@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * No whitespace should be between unary operator and variable. Also account for ~, @ and & operator.
@@ -10,7 +11,7 @@ use PHP_CodeSniffer\Files\File;
  * @author Mark Scherer
  * @license MIT
  */
-class UnaryOperatorSpacingSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+class UnaryOperatorSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc

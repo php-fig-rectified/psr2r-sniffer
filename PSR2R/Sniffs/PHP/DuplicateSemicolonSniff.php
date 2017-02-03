@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 
 /**
@@ -11,7 +12,7 @@ use PHP_CodeSniffer\Util\Tokens;
  * @author Mark Scherer
  * @license MIT
  */
-class DuplicateSemicolonSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+class DuplicateSemicolonSniff implements Sniff {
 
 	/**
 	 * @inheritDoc

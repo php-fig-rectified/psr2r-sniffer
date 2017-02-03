@@ -3,11 +3,12 @@
 namespace PSR2R\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Ensures unnecessary comments, especially //end ... ones are removed.
  */
-class NoControlStructureEndCommentSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+class NoControlStructureEndCommentSniff implements Sniff {
 
 	/**
 	 * @inheritDoc

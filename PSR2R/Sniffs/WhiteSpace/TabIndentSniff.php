@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Check for any line starting with 4 spaces - which would indicate space indenting.
@@ -10,7 +11,7 @@ use PHP_CodeSniffer\Files\File;
  * @author Mark Scherer
  * @license MIT
  */
-class TabIndentSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+class TabIndentSniff implements Sniff {
 
 	/**
 	 * A list of tokenizers this sniff supports.

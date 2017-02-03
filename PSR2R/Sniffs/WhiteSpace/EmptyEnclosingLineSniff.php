@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Always have an extra new line at the beginning and end of a classy body.
@@ -10,7 +11,7 @@ use PHP_CodeSniffer\Files\File;
  * @author Mark Scherer
  * @license MIT
  */
-class EmptyEnclosingLineSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+class EmptyEnclosingLineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc

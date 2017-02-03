@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\Classes;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Makes sure opening braces are on the same line for class, interface and trait.
@@ -10,7 +11,7 @@ use PHP_CodeSniffer\Files\File;
  * @author Mark Scherer
  * @license MIT
  */
-class BraceOnSameLineSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+class BraceOnSameLineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc

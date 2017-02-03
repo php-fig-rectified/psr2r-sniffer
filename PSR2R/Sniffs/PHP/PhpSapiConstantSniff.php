@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Use PHP_SAPI constant instead of php_sapi_name() function.
@@ -10,7 +11,7 @@ use PHP_CodeSniffer\Files\File;
  * @author Mark Scherer
  * @license MIT
  */
-class PhpSapiConstantSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+class PhpSapiConstantSniff implements Sniff {
 
 	const PHP_SAPI = 'PHP_SAPI';
 

@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Use short form of boolean and integer casts.
@@ -10,7 +11,7 @@ use PHP_CodeSniffer\Files\File;
  * @author Mark Scherer
  * @license MIT
  */
-class ShortCastSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+class ShortCastSniff implements Sniff {
 
 	/**
 	 * @var array

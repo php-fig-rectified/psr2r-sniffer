@@ -1,6 +1,7 @@
 /vendor/*
 /phpunit.phar
 /composer.phar
+/composer.lock
 /.idea
 clover.xml
 /composer.lock

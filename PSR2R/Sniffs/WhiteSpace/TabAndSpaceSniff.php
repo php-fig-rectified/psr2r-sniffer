@@ -18,12 +18,13 @@
 namespace PSR2R\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Check for any line starting with 2 spaces - which would indicate space indenting
  * Also check for "\t " - a tab followed by a space, which is a common similar mistake
  */
-class TabAndSpaceSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+class TabAndSpaceSniff implements Sniff {
 
 	/**
 	 * A list of tokenizers this sniff supports.

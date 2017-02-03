@@ -14,9 +14,8 @@
 
 namespace PSR2R\Sniffs\Methods;
 
-use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Sniffs\PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Util\Tokens;
 
 /**
@@ -134,10 +133,10 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 	}
 
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
-	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
-	{
+	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr) {
 		// TODO: Implement processTokenOutsideScope() method.
 	}
+
 }

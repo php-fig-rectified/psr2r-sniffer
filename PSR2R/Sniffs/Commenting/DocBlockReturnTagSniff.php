@@ -4,8 +4,6 @@ namespace PSR2R\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
-use PHP_CodeSniffer\Sniffs\PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Standards_AbstractScopeSniff;
 
 /**
  * Verifies that a `@return` tag exists for all functions and methods and that it does not exist
@@ -90,10 +88,10 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 	}
 
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
-	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
-	{
+	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr) {
 		// TODO: Implement processTokenOutsideScope() method.
 	}
+
 }

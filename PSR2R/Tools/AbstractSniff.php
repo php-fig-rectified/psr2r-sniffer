@@ -3,8 +3,9 @@
 namespace PSR2R\Tools;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
-abstract class AbstractSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
+abstract class AbstractSniff implements Sniff {
 
 	/**
 	 * Checks if the given token is of this token code/type.
