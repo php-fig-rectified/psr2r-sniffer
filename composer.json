@@ -47,7 +47,7 @@
 			"php phpunit.phar --coverage-clover=clover.xml",
 			"@reset-ruleset"
 		],
-		"cs-check": "phpcs --colors -p --extensions=php --standard=PSR2R ./PSR2R",
-		"cs-fix": "phpcbf --colors --extensions=php --standard=PSR2R ./PSR2R"
+		"cs-check": "phpcs --colors -p --extensions=php --standard=PSR2R --ignore=/psr2r-sniffer/vendor/,/tests/ .",
+		"cs-fix": "phpcbf --colors --extensions=php --standard=PSR2R --ignore=/psr2r-sniffer/vendor/,/tests/ ."
 	}
 }
