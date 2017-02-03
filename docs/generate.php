@@ -1,7 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-exec('vendor/bin/phpcs --standard=PSR2R/ruleset.xml -e', $output, $ret);
+$root = dirname(__DIR__) . DIRECTORY_SEPARATOR;
+exec($root . 'vendor/bin/phpcs --standard=PSR2R/ruleset.xml -e', $output, $ret);
 if ($ret !== 0) {
 	die('Invalid execution. Run from ROOT after composer install etc as `php docs/generate.php`.');
 }
