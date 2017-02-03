@@ -125,7 +125,7 @@ class DocBlockParamSniff extends AbstractSniff {
 
 	/**
 	 * //TODO: Replace with SignatureTrait
-	 * 
+	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPtr
 	 * @return array
