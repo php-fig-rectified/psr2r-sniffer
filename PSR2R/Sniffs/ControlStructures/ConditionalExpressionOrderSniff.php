@@ -61,7 +61,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 			&& $prevContent !== ','
 		) {
 			// Not fixable
-			$phpCsFile->addError($error, $stackPointer);
+			$phpCsFile->addError($error, $stackPointer, 'Yoda');
 			return;
 		}
 
@@ -79,7 +79,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 			$rightIndexEnd = $this->detectRightEnd($phpCsFile, $rightIndexStart, $limit);
 		}
 
-		$fix = $phpCsFile->addFixableError($error, $stackPointer);
+		$fix = $phpCsFile->addFixableError($error, $stackPointer, 'YodaOrder');
 		if ($fix) {
 			$this->applyFix($phpCsFile, $stackPointer, $leftIndexStart, $leftIndexEnd, $rightIndexStart, $rightIndexEnd);
 		}

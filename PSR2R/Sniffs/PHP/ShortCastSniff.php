@@ -40,7 +40,7 @@ class ShortCastSniff implements Sniff {
 				return;
 			}
 
-			$fix = $phpcsFile->addFixableError('`!!` cast not allowed, use `(bool)`', $stackPtr);
+			$fix = $phpcsFile->addFixableError('`!!` cast not allowed, use `(bool)`', $stackPtr, 'DoubleCast');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($prevIndex, '');
 				$phpcsFile->fixer->replaceToken($stackPtr, '(bool)');
@@ -56,7 +56,7 @@ class ShortCastSniff implements Sniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError($content . ' found, expected ' . static::$matching[$key], $stackPtr);
+		$fix = $phpcsFile->addFixableError($content . ' found, expected ' . static::$matching[$key], $stackPtr, 'LongCastInvalid');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr, static::$matching[$key]);
 		}

@@ -51,7 +51,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 				continue;
 			}
 
-			$fix = $phpCsFile->addFixableError('Inline Doc Block Comment should be using /* ... */', $i);
+			$fix = $phpCsFile->addFixableError('Inline Doc Block Comment should be using /* ... */', $i, 'InlineDocBlock');
 			if ($fix) {
 				$phpCsFile->fixer->beginChangeset();
 
@@ -84,7 +84,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 
 			preg_match('|^\/\*\s*@var\s+(.+?)(\s+)(.+?)\s*\*\/$|', $comment, $contentMatches);
 			if (!$contentMatches || !$contentMatches[1] || !$contentMatches[3]) {
-				$phpCsFile->addError('Invalid Inline Doc Block content', $i);
+				$phpCsFile->addError('Invalid Inline Doc Block content', $i, 'DocBlockInvalid');
 				continue;
 			}
 
@@ -113,7 +113,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 				continue;
 			}
 
-			$fix = $phpCsFile->addFixableError('Invalid Inline Doc Block: ' . implode(', ', $errors), $i);
+			$fix = $phpCsFile->addFixableError('Invalid Inline Doc Block: ' . implode(', ', $errors), $i, 'InlineDocBlockInvalid');
 			if (!$fix) {
 				continue;
 			}

@@ -37,7 +37,7 @@ class DocBlockVarSniff extends AbstractSniff {
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
-			$phpCsFile->addError('Doc Block for variable missing', $stackPointer);
+			$phpCsFile->addError('Doc Block for variable missing', $stackPointer, 'DocBlockMissing');
 			return;
 		}
 
@@ -174,12 +174,12 @@ class DocBlockVarSniff extends AbstractSniff {
 
 		$error = 'Doc Block annotation @var for variable missing';
 		if ($defaultValueType === null) {
-			$phpCsFile->addError($error, $docBlockEndIndex);
+			$phpCsFile->addError($error, $docBlockEndIndex, 'DocBlockVariableMissing');
 			return;
 		}
 
 		$error .= ', type `' . $defaultValueType . '` detected';
-		$fix = $phpCsFile->addFixableError($error, $docBlockEndIndex);
+		$fix = $phpCsFile->addFixableError($error, $docBlockEndIndex, 'DocBlockVariableWrong');
 		if (!$fix) {
 			return;
 		}
@@ -209,7 +209,7 @@ class DocBlockVarSniff extends AbstractSniff {
 		}
 
 		$error .= ', type `' . $defaultValueType . '` detected';
-		$fix = $phpCsFile->addFixableError($error, $varIndex);
+		$fix = $phpCsFile->addFixableError($error, $varIndex, 'VarTypeWrong');
 		if (!$fix) {
 			return;
 		}

@@ -38,7 +38,7 @@ class ListCommaSniff extends AbstractSniff {
 			$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $prevIndex - 1, null, true);
 		}
 		if ($markIndex !== null) {
-			$fix = $phpcsFile->addFixableError('Superflouos commas in list', $markIndex);
+			$fix = $phpcsFile->addFixableError('Superflouos commas in list', $markIndex, 'CommaSuperflouos');
 			if ($fix) {
 				$this->clearRange(
 					$phpcsFile,

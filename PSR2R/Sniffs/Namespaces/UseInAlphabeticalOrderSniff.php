@@ -86,7 +86,7 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 			}
 
 			$error = 'Use classes must be in alphabetical order.';
-			$fix = $phpcsFile->addFixableError($error, $used[$wrongName], 'Order', []);
+			$fix = $phpcsFile->addFixableError($error, $used[$wrongName], 'Order');
 			if ($fix) {
 				$map = [];
 				foreach ($sorted as $name) {

@@ -55,7 +55,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 			return;
 		}
 
-		$phpcsFile->addError('Inline assignment not allowed', $stackPtr);
+		$phpcsFile->addError('Inline assignment not allowed', $stackPtr, 'InlineAssignmentIllegal');
 	}
 
 	/**
@@ -81,7 +81,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 			return;
 		}
 
-		$phpcsFile->addError('Conditional inline assignment not allowed', $stackPtr);
+		$phpcsFile->addError('Conditional inline assignment not allowed', $stackPtr, 'InlineAssignment');
 	}
 
 	/**

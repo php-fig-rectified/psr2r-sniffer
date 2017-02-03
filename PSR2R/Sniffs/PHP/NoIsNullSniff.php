@@ -56,21 +56,21 @@ class NoIsNullSniff extends \PSR2R\Tools\AbstractSniff {
 		if ($negated) {
 			$anotherPossibleCastIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($possibleCastIndex - 1), null, true);
 			if ($tokens[$anotherPossibleCastIndex]['code'] === T_BOOLEAN_NOT) {
-				$phpcsFile->addError($error, $stackPtr);
+				$phpcsFile->addError($error, $stackPtr, 'DoubleNot');
 				return;
 			}
 		}
 
 		// We don't want to fix stuff with bad inline assignment
 		if ($this->contains($phpcsFile, 'T_EQUAL', $openingBraceIndex + 1, $closingBraceIndex - 1)) {
-			$phpcsFile->addError($error, $stackPtr);
+			$phpcsFile->addError($error, $stackPtr, 'InlineAssignment');
 			return;
 		}
 
 		$beginningIndex = $negated ? $possibleCastIndex : $stackPtr;
 		$endIndex = $closingBraceIndex;
 
-		$fix = $phpcsFile->addFixableError($error, $stackPtr);
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'NoStrict');
 		if ($fix) {
 			$needsBrackets = $this->needsBrackets($phpcsFile, $openingBraceIndex, $closingBraceIndex);
 			$leadingComparison = $this->hasLeadingComparison($phpcsFile, $beginningIndex);

@@ -62,7 +62,7 @@ class UnneededElseSniff extends AbstractSniff {
 			}
 		}
 
-		$fix = $phpcsFile->addFixableError('Unneeded ' . $tokens[$stackPtr]['type'] . ' detected.', $stackPtr);
+		$fix = $phpcsFile->addFixableError('Unneeded ' . $tokens[$stackPtr]['type'] . ' detected.', $stackPtr, 'Unneeded');
 		if (!$fix) {
 			return;
 		}

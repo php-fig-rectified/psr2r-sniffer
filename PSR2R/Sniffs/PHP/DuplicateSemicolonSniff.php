@@ -38,7 +38,7 @@ class DuplicateSemicolonSniff implements Sniff {
 		}
 
 		$error = 'Double semicolon found';
-		$fix = $phpcsFile->addFixableError($error, $stackPtr);
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'DoubleSemicolon');
 		if ($fix) {
 			$phpcsFile->fixer->beginChangeset();
 

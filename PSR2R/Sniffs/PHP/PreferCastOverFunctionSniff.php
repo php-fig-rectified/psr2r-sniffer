@@ -62,7 +62,7 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 
 		$error = $tokenContent . '() found, should be ' . static::$matching[$key] . ' cast.';
 
-		$fix = $phpcsFile->addFixableError($error, $stackPtr);
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'FunctionInsteadOfCast');
 		if ($fix) {
 			$this->fixContent($phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex);
 		}

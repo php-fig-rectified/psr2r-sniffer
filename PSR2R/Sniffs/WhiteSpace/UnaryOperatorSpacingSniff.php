@@ -38,7 +38,8 @@ class UnaryOperatorSpacingSniff implements Sniff {
 				return;
 			}
 
-			$fix = $phpcsFile->addFixableError('No whitespace should be between ' . $tokens[$stackPtr]['content'] . ' operator and variable.', $stackPtr);
+			$error = 'No whitespace should be between ' . $tokens[$stackPtr]['content'] . ' operator and variable.';
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'InvalidWhitespaceAfterOperator');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}
@@ -99,7 +100,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 				return;
 			}
 
-			$fix = $phpcsFile->addFixableError('No whitespace should be between variable and incrementor.', $stackPtr);
+			$fix = $phpcsFile->addFixableError('No whitespace should be between variable and incrementor.', $stackPtr, 'InvalidWhitespaceBeforeIncrementor');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr - 1, '');
 			}
@@ -120,7 +121,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 				return;
 			}
 
-			$fix = $phpcsFile->addFixableError('No whitespace should be between incrementor and variable.', $stackPtr);
+			$fix = $phpcsFile->addFixableError('No whitespace should be between incrementor and variable.', $stackPtr, 'InvalidWhitespaceAfterIncrementor');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}

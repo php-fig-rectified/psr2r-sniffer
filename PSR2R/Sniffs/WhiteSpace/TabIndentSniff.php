@@ -77,7 +77,7 @@ class TabIndentSniff implements Sniff {
 
 		if ($tabs) {
 			$error = ($tabs * 4) . ' spaces found, expected ' . $tabs . ' tabs';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr);
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpacesInvalid');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr, str_repeat("\t", $tabs) . $content);
 			}
@@ -97,7 +97,7 @@ class TabIndentSniff implements Sniff {
 
 		if ($newContent !== $content) {
 			$error = 'Non-indentation (inline) tabs found, expected spaces';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr);
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'InlineTabInvalid');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr, $newContent);
 			}

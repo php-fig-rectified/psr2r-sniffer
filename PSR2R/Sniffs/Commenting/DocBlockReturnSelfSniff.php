@@ -100,7 +100,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			$message[] = $part . ' => ' . $useStatement;
 		}
 
-		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex);
+		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'SelfInvalid');
 		if ($fix) {
 			$newContent = implode('|', $parts);
 			$phpCsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);

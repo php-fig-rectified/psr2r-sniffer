@@ -83,7 +83,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			$message[] = $className . ' => ' . $useStatement;
 		}
 
-		$fix = $phpCsFile->addFixableError(implode(', ', $message), $stackPointer);
+		$fix = $phpCsFile->addFixableError(implode(', ', $message), $stackPointer, 'InvalidClassName');
 		if (!$fix) {
 			return;
 		}
@@ -177,7 +177,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 
 			$useStatement = $this->findUseStatementForClassName($phpCsFile, $className);
 			if (!$useStatement) {
-				$phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex);
+				$phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex, 'ClassNameInvalid');
 				continue;
 			}
 
@@ -199,7 +199,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 		$exists = [];
 		foreach ($classNames as $className) {
 			if (in_array($className, $exists, true)) {
-				$phpCsFile->addError('Type `' . $className . '` used twice', $index);
+				$phpCsFile->addError('Type `' . $className . '` used twice', $index, 'TypeTwice');
 				continue;
 			}
 			$exists[] = $className;
@@ -242,7 +242,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 					continue;
 				}
 
-				$phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex);
+				$phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex, 'ClassNameInvalid2');
 				continue;
 			}
 
@@ -259,7 +259,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			$message[] = $className . ' => ' . $useStatement;
 		}
 
-		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex);
+		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'InvalidClassName2');
 		if ($fix) {
 			$newContent = implode('|', $classNames);
 

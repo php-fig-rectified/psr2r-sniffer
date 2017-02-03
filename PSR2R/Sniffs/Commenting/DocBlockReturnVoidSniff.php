@@ -57,7 +57,7 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 		// If interface we will at least report it
 		if (empty($tokens[$stackPtr]['scope_opener']) || empty($tokens[$stackPtr]['scope_closer'])) {
 			if (!$docBlockReturnIndex && !$hasInheritDoc) {
-				$phpcsFile->addError('Method does not have a return statement in doc block: ' . $tokens[$nextIndex]['content'], $nextIndex);
+				$phpcsFile->addError('Method does not have a return statement in doc block: ' . $tokens[$nextIndex]['content'], $nextIndex, 'MissingReturnStatementInterface');
 			}
 			return;
 		}
@@ -70,11 +70,11 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 		// We only look for void methods right now
 		$returnType = $this->detectReturnTypeVoid($phpcsFile, $stackPtr);
 		if ($returnType === null) {
-			$phpcsFile->addError('Method does not have a return statement in doc block: ' . $tokens[$nextIndex]['content'], $nextIndex);
+			$phpcsFile->addError('Method does not have a return statement in doc block: ' . $tokens[$nextIndex]['content'], $nextIndex, 'MissingReturnStatement');
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError('Method does not have a return void statement in doc block: ' . $tokens[$nextIndex]['content'], $nextIndex);
+		$fix = $phpcsFile->addFixableError('Method does not have a return void statement in doc block: ' . $tokens[$nextIndex]['content'], $nextIndex, 'MissingReturnVoid');
 		if (!$fix) {
 			return;
 		}
@@ -102,7 +102,7 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError($tokens[$index]['content'] . ' has invalid return statement.', $docBlockReturnIndex);
+		$fix = $phpcsFile->addFixableError($tokens[$index]['content'] . ' has invalid return statement.', $docBlockReturnIndex, 'ReturnTypeInvalid');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($docBlockReturnIndex, '');
 
