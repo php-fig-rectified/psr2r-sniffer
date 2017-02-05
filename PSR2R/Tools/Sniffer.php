@@ -11,7 +11,7 @@ class Sniffer {
 	/**
 	 * @var bool
 	 */
-	protected $fix;
+	protected $fix = false;
 
 	/**
 	 * @param array $argv
@@ -67,9 +67,9 @@ class Sniffer {
 	public function sniff() {
 		$cli = new Runner();
 		if ($this->fix) {
-			$cli->runphpcbf();
+			$cli->runPHPCBF();
 		} else {
-			$cli->runphpcs();
+			$cli->runPHPCS();
 		}
 	}
 
