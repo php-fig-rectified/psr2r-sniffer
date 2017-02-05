@@ -38,7 +38,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			T_TRAIT,
 			T_FUNCTION,
 			T_VARIABLE,
-			T_COMMENT
+			T_COMMENT,
 		];
 	}
 
@@ -46,65 +46,6 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	 * @inheritDoc
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
-		$tokens = $phpCsFile->getTokens();
-
-		if ($tokens[$stackPointer]['code'] === T_COMMENT) {
-			$this->processInlineComments($phpCsFile, $stackPointer);
-			return;
-		}
-
-		$this->processDocBlockComments($phpCsFile, $stackPointer);
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
-	 * @param int $stackPointer
-	 *
-	 * @return void
-	 */
-	protected function processInlineComments(File $phpCsFile, $stackPointer) {
-		$tokens = $phpCsFile->getTokens();
-
-		if (!preg_match('|^\/\* @var (.+) \$.+\*\/$|', $tokens[$stackPointer]['content'], $matches)) {
-			return;
-		}
-
-		$content = $matches[1];
-
-		$classNames = explode('|', $content);
-
-		$result = $this->generateClassNameMap($phpCsFile, $stackPointer, $classNames);
-		if (!$result) {
-			return;
-		}
-
-		$message = [];
-		foreach ($result as $className => $useStatement) {
-			$message[] = $className . ' => ' . $useStatement;
-		}
-
-		$fix = $phpCsFile->addFixableError(implode(', ', $message), $stackPointer, 'InvalidClassName');
-		if (!$fix) {
-			return;
-		}
-
-		$classes = implode('|', $classNames);
-		$content = preg_replace('|@var (.+) \$|', '@var ' . $classes . ' $', $tokens[$stackPointer]['content']);
-
-		$phpCsFile->fixer->beginChangeset();
-
-		$phpCsFile->fixer->replaceToken($stackPointer, $content);
-
-		$phpCsFile->fixer->endChangeset();
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
-	 * @param int $stackPointer
-	 *
-	 * @return void
-	 */
-	protected function processDocBlockComments(File $phpCsFile, $stackPointer) {
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
@@ -143,11 +84,12 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			}
 
 			$classNames = explode('|', $content);
-			if (count($classNames) > 1) {
-				$this->assertUniqueParts($phpCsFile, $classNames, $i);
-			}
 
-			$this->fixClassNames($phpCsFile, $classNameIndex, $classNames, $tokens[$i]['content'], $appendix);
+			$strict = true;
+			if ($tokens[$i]['content'] === '@see') {
+				$strict = false;
+			}
+			$this->fixClassNames($phpCsFile, $classNameIndex, $classNames, $appendix, $strict);
 		}
 	}
 
@@ -155,116 +97,66 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $classNameIndex
 	 * @param array $classNames
-	 *
-	 * @return array
-	 */
-	protected function generateClassNameMap(File $phpCsFile, $classNameIndex, array &$classNames) {
-		$result = [];
-		foreach ($classNames as $key => $className) {
-			if (strpos($className, '\\') !== false) {
-				continue;
-			}
-
-			$arrayOfObject = false;
-			if (substr($className, -2) === '[]') {
-				$arrayOfObject = true;
-				$className = substr($className, 0, -2);
-			}
-
-			if (in_array($className, static::$whitelistedTypes)) {
-				continue;
-			}
-
-			$useStatement = $this->findUseStatementForClassName($phpCsFile, $className);
-			if (!$useStatement) {
-				$phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex, 'ClassNameInvalid');
-				continue;
-			}
-
-			$classNames[$key] = $useStatement . ($arrayOfObject ? '[]' : '');
-			$result[$className . ($arrayOfObject ? '[]' : '')] = $classNames[$key];
-		}
-
-		return $result;
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
-	 * @param array $classNames
-	 * @param int $index
-	 *
-	 * @return void
-	 */
-	protected function assertUniqueParts(File $phpCsFile, array $classNames, $index) {
-		$exists = [];
-		foreach ($classNames as $className) {
-			if (in_array($className, $exists, true)) {
-				$phpCsFile->addError('Type `' . $className . '` used twice', $index, 'TypeTwice');
-				continue;
-			}
-			$exists[] = $className;
-		}
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
-	 * @param int $classNameIndex
-	 * @param array $classNames
-	 * @param string $docBlockType
 	 * @param string $appendix
+	 * @param bool $strict
 	 *
 	 * @return void
 	 */
-	protected function fixClassNames(File $phpCsFile, $classNameIndex, array $classNames, $docBlockType, $appendix) {
-		$result = [];
-		foreach ($classNames as $key => $className) {
-			if (strpos($className, '\\') !== false) {
-				continue;
-			}
-
-			$suffix = '';
-			if (substr($className, -2) === '[]') {
-				$suffix = '[]';
-				$className = substr($className, 0, -2);
-			} elseif ($docBlockType === '@see' && preg_match('/^[a-z]+\:\:/i', $className, $matches)) {
-				$pos = strpos($className, '::');
-				$suffix = substr($className, $pos);
-				$className = substr($className, 0, $pos);
-			}
-
-			if (in_array($className, static::$whitelistedTypes)) {
-				continue;
-			}
-
-			$useStatement = $this->findUseStatementForClassName($phpCsFile, $className);
-			if (!$useStatement) {
-				if ($docBlockType === '@see' && strpos($suffix, '::') !== 0) {
-					continue;
-				}
-
-				$phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex, 'ClassNameInvalid2');
-				continue;
-			}
-
-			$classNames[$key] = $useStatement . ($suffix ?: '');
-			$result[$className . ($suffix ?: '')] = $classNames[$key];
-		}
-
-		if (!$result) {
+	protected function fixClassNames(File $phpCsFile, $classNameIndex, array $classNames, $appendix, $strict = true) {
+		$classNameMap = $this->generateClassNameMap($phpCsFile, $classNameIndex, $classNames, $strict);
+		if (!$classNameMap) {
 			return;
 		}
 
 		$message = [];
-		foreach ($result as $className => $useStatement) {
+		foreach ($classNameMap as $className => $useStatement) {
 			$message[] = $className . ' => ' . $useStatement;
 		}
 
-		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'InvalidClassName2');
+		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'FQCN');
 		if ($fix) {
 			$newContent = implode('|', $classNames);
 
 			$phpCsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);
 		}
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param int $classNameIndex
+	 * @param array &$classNames
+	 * @param bool $strict
+	 *
+	 * @return array
+	 */
+	protected function generateClassNameMap(File $phpCsFile, $classNameIndex, array &$classNames, $strict = true) {
+		$result = [];
+
+		foreach ($classNames as $key => $className) {
+			if (strpos($className, '\\') !== false) {
+				continue;
+			}
+			$arrayOfObject = false;
+			if (substr($className, -2) === '[]') {
+				$arrayOfObject = true;
+				$className = substr($className, 0, -2);
+			}
+			if (in_array($className, static::$whitelistedTypes)) {
+				continue;
+			}
+			$useStatement = $this->findUseStatementForClassName($phpCsFile, $className);
+			if (!$useStatement) {
+				if (!$strict) {
+					return [];
+				}
+				$phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex, 'ClassNameInvalid');
+				continue;
+			}
+			$classNames[$key] = $useStatement . ($arrayOfObject ? '[]' : '');
+			$result[$className . ($arrayOfObject ? '[]' : '')] = $classNames[$key];
+		}
+
+		return $result;
 	}
 
 	/**
@@ -294,10 +186,10 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	 * @return string|null
 	 */
 	protected function findInSameNameSpace(File $phpCsFile, $className) {
-		if (!$this->hasNamespace($phpCsFile)) {
+		$currentNameSpace = $this->getNamespace($phpCsFile);
+		if (!$currentNameSpace) {
 			return null;
 		}
-		$currentNameSpace = $this->getNamespaceInfo($phpCsFile);
 
 		$file = $phpCsFile->getFilename();
 		$dir = dirname($file) . DIRECTORY_SEPARATOR;
@@ -306,6 +198,65 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 		}
 
 		return '\\' . $currentNameSpace . '\\' . $className;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 *
+	 * @return string
+	 */
+	protected function getNamespace(File $phpCsFile) {
+		$tokens = $phpCsFile->getTokens();
+
+		$namespaceStart = null;
+		foreach ($tokens as $id => $token) {
+			if ($token['code'] !== T_NAMESPACE) {
+				continue;
+			}
+
+			$namespaceStart = $id + 1;
+			break;
+		}
+		if (!$namespaceStart) {
+			return '';
+		}
+
+		$namespaceEnd = $phpCsFile->findNext(
+			[
+				T_NS_SEPARATOR,
+				T_STRING,
+				T_WHITESPACE,
+			],
+			$namespaceStart,
+			null,
+			true
+		);
+
+		$namespace = trim($phpCsFile->getTokensAsString(($namespaceStart), ($namespaceEnd - $namespaceStart)));
+
+		return $namespace;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param int $stackPointer
+	 *
+	 * @return int|null Stackpointer value of docblock end tag, or null if cannot be found
+	 */
+	protected function findRelatedDocBlock(File $phpCsFile, $stackPointer) {
+		$tokens = $phpCsFile->getTokens();
+
+		$line = $tokens[$stackPointer]['line'];
+		$beginningOfLine = $stackPointer;
+		while (!empty($tokens[$beginningOfLine - 1]) && $tokens[$beginningOfLine - 1]['line'] === $line) {
+			$beginningOfLine--;
+		}
+
+		if (!empty($tokens[$beginningOfLine - 2]) && $tokens[$beginningOfLine - 2]['type'] === 'T_DOC_COMMENT_CLOSE_TAG') {
+			return $beginningOfLine - 2;
+		}
+
+		return null;
 	}
 
 	/**
