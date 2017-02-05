@@ -87,7 +87,7 @@ class Tokenizer {
 
 		$config = new Config();
 		$phpcs->config = $config;
-		$phpcs->config->standards = array($this->root . static::STANDARD);
+		$phpcs->config->standards = [$this->root . static::STANDARD];
 		$phpcs->init();
 		$phpcs->reporter = new Reporter($config);
 
