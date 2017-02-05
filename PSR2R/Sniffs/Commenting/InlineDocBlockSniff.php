@@ -212,9 +212,10 @@ class InlineDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $typeIndex
 	 * @param int $contentIndex
+	 * @return void
 	 */
 	protected function findErrorsBetweenTypeAndContent(File $phpCsFile, $typeIndex, $contentIndex) {
 		$tokens = $phpCsFile->getTokens();
