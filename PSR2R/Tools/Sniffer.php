@@ -2,7 +2,7 @@
 
 namespace PSR2R\Tools;
 
-use PHP_CodeSniffer_CLI;
+use PHP_CodeSniffer\Runner;
 
 class Sniffer {
 
@@ -65,7 +65,7 @@ class Sniffer {
 	 * @return void
 	 */
 	public function sniff() {
-		$cli = new PHP_CodeSniffer_CLI();
+		$cli = new Runner();
 		if ($this->fix) {
 			$cli->runphpcbf();
 		} else {

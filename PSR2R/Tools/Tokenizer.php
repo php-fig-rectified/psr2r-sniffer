@@ -3,7 +3,11 @@
 namespace PSR2R\Tools;
 
 use Exception;
-use PHP_CodeSniffer;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Reporter;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Runner;
 
 class Tokenizer {
 
@@ -54,6 +58,7 @@ class Tokenizer {
 		$_SERVER['argc'] = count($_SERVER['argv']);
 		$res = [];
 		$tokens = $this->_getTokens($this->path);
+
 		$array = file($this->path);
 		foreach ($array as $key => $row) {
 			$res[] = rtrim($row);
@@ -76,10 +81,22 @@ class Tokenizer {
 	 * @return array Tokens
 	 */
 	protected function _getTokens($path) {
-		$phpcs = new PHP_CodeSniffer();
-		$phpcs->process([], $this->root . static::STANDARD, []);
-		$file = $phpcs->processFile($path);
-		$file->start();
+		$phpcs = new Runner();
+
+		define('PHP_CODESNIFFER_CBF', false);
+
+		$config = new Config();
+		$phpcs->config = $config;
+		$phpcs->config->standards = array($this->root . static::STANDARD);
+		$phpcs->init();
+		$phpcs->reporter = new Reporter($config);
+
+		$ruleset = new Ruleset($config);
+
+		$file = new File($path, $ruleset, $config);
+		$file->setContent(file_get_contents($path));
+		$file->parse();
+
 		return $file->getTokens();
 	}
 
