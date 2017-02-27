@@ -297,7 +297,8 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 		if (!$this->hasNamespace($phpCsFile)) {
 			return null;
 		}
-		$currentNameSpace = $this->getNamespaceInfo($phpCsFile);
+		$currentNameSpaceInfo = $this->getNamespaceInfo($phpCsFile);
+		$currentNameSpace = $currentNameSpaceInfo['namespace'];
 
 		$file = $phpCsFile->getFilename();
 		$dir = dirname($file) . DIRECTORY_SEPARATOR;
