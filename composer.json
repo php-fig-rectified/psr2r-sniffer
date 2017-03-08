@@ -28,6 +28,8 @@
 		"bin/sniff"
 	],
 	"scripts": {
-		"docs": "php docs/generate.php"
+		"docs": "php docs/generate.php",
+		"cs-check": "vendor/bin/phpcs --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/files/ ./",
+		"cs-fix": "vendor/bin/phpcbf --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/files/ ./"
 	}
 }

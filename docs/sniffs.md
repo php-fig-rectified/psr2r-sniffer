@@ -1,7 +1,7 @@
 # PSR2R Code Sniffer
 
 
-The PSR2R/ruleset.xml standard contains 101 sniffs
+The PSR2R/ruleset.xml standard contains 102 sniffs
 
 Generic (13 sniffs)
 -------------------
@@ -25,7 +25,7 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
-PSR2R (64 sniffs)
+PSR2R (65 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
@@ -38,6 +38,7 @@ PSR2R (64 sniffs)
 - PSR2R.Commenting.DocBlockParamAllowDefaultValue
 - PSR2R.Commenting.DocBlockParamArray
 - PSR2R.Commenting.DocBlockParamNoOp
+- PSR2R.Commenting.DocBlockParamNotJustNull
 - PSR2R.Commenting.DocBlockParam
 - PSR2R.Commenting.DocBlockPipeSpacing
 - PSR2R.Commenting.DocBlockReturnSelf
