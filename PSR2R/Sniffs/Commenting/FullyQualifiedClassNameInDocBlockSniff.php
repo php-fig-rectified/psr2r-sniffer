@@ -2,6 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer_File;
 use PSR2R\Tools\AbstractSniff;
 
@@ -45,7 +46,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		if ($tokens[$stackPointer]['code'] === T_COMMENT) {
@@ -57,12 +58,12 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPointer
 	 *
 	 * @return void
 	 */
-	protected function processInlineComments(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	protected function processInlineComments(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		if (!preg_match('|^\/\* @var (.+) \$.+\*\/$|', $tokens[$stackPointer]['content'], $matches)) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PSR2R\Test\Sniffs\Commenting;
+namespace PSR2R\Tests\Commenting;
 
 use PSR2R\Sniffs\Commenting\FullyQualifiedClassNameInDocBlockSniff;
 
