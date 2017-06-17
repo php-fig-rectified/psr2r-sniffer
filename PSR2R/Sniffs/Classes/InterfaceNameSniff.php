@@ -1,7 +1,7 @@
 <?php
 namespace PSR2R\Sniffs\Classes;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -19,7 +19,7 @@ class InterfaceNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$nameIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);

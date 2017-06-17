@@ -24,6 +24,7 @@ class BraceOnSameLineUnitTest extends AbstractBase {
 					40 => 1,
 					];
 		}
+		return [];
 	}
 
 	protected function getWarningList($file = '') {

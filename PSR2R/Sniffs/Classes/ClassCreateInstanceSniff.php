@@ -1,8 +1,8 @@
 <?php
 namespace PSR2R\Sniffs\Classes;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 use PSR2R\Tools\AbstractSniff;
 
 class ClassCreateInstanceSniff extends AbstractSniff {
@@ -17,7 +17,7 @@ class ClassCreateInstanceSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$nextParenthesisIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
@@ -28,7 +28,7 @@ class ClassCreateInstanceSniff extends AbstractSniff {
 		}
 
 		$error = 'Calling class constructors must always include parentheses';
-		$constructorIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true, null, true);
+		$constructorIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true, null, true);
 
 		// We can only invoke the fixer if we know this is a static constructor function call.
 		if ($tokens[$constructorIndex]['code'] !== T_STRING && $tokens[$constructorIndex]['code'] !== T_NS_SEPARATOR) {
@@ -40,7 +40,7 @@ class ClassCreateInstanceSniff extends AbstractSniff {
 		$nextConstructorPart = $constructorIndex;
 		while (true) {
 			$nextConstructorPart = $phpcsFile->findNext(
-				PHP_CodeSniffer_Tokens::$emptyTokens,
+				Tokens::$emptyTokens,
 				($nextConstructorPart + 1),
 				null,
 				true,
