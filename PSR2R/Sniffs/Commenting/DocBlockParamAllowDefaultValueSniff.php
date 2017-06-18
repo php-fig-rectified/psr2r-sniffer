@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 use PSR2R\Tools\Traits\CommentingTrait;
 use PSR2R\Tools\Traits\SignatureTrait;
@@ -31,7 +31,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
@@ -65,7 +65,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			$classNameIndex = $i + 2;
 
 			if ($tokens[$classNameIndex]['type'] !== 'T_DOC_COMMENT_STRING') {
-				$phpCsFile->addError('Missing type in param doc block', $i);
+				$phpCsFile->addError('Missing type in param doc block', $i, 'CommentAllowDefault');
 				continue;
 			}
 

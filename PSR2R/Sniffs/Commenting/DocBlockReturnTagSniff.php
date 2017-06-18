@@ -2,8 +2,9 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Standards_AbstractScopeSniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Verifies that a `@return` tag exists for all functions and methods and that it does not exist
@@ -12,7 +13,7 @@ use PHP_CodeSniffer_Standards_AbstractScopeSniff;
  * @author Mark Scherer
  * @license MIT
  */
-class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff {
+class DocBlockReturnTagSniff extends AbstractScopeSniff {
 
 	/**
 	 * @inheritDoc
@@ -22,9 +23,16 @@ class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 	}
 
 	/**
+	 * @param File $phpcsFile
+	 * @param int $stackPtr
+	 */
+	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr) {
+
+	}
+	/**
 	 * @inheritDoc
 	 */
-	protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope) {
+	protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Type of method
@@ -38,6 +46,7 @@ class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 			T_FUNCTION,
 			T_OPEN_TAG,
 		];
+		$find = array_merge($find, Tokens::$commentTokens);
 
 		$commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
 
@@ -45,17 +54,19 @@ class DocBlockReturnTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSnif
 			return;
 		}
 
-		if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
+		if ($tokens[$commentEnd]['type'] !== 'T_DOC_COMMENT_CLOSE_TAG') {
 			// Function doesn't have a comment. Let someone else warn about that.
 			return;
 		}
 
-		$commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
+		$commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, ($commentEnd - 1), null, false) + 1);
 
 		$commentWithReturn = null;
 		for ($i = $commentEnd; $i >= $commentStart; $i--) {
 			$currentComment = $tokens[$i]['content'];
-			if (strpos($currentComment, '@return ') !== false) {
+
+			// '@return' is separate token from return value
+			if (strpos($currentComment, '@return') !== false) {
 				$commentWithReturn = $i;
 				break;
 			}
