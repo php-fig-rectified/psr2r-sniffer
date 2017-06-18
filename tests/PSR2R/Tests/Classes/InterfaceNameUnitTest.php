@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ewb
- * Date: 6/17/17
- * Time: 2:56 PM
- */
 
 namespace PSR2R\Tests\Classes;
 
 use PSR2R\Base\AbstractBase;
 
+/**
+ * Class InterfaceNameUnitTest
+ *
+ * @author  Ed Barnard
+ * @license MIT
+ * @package PSR2R\Tests\Classes
+ */
 class InterfaceNameUnitTest extends AbstractBase {
 	protected function getErrorList() {
 		return [];

@@ -10,21 +10,12 @@ use PSR2R\Tools\Traits\CommentingTrait;
  * Makes sure doc block param type array is only used once.
  * So `array|\Foo\Bar[]` would prefer just `\Foo\Bar[]`.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class DocBlockParamArraySniff extends AbstractSniff {
 
 	use CommentingTrait;
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
-	}
 
 	/**
 	 * @inheritDoc
@@ -44,12 +35,11 @@ class DocBlockParamArraySniff extends AbstractSniff {
 			return;
 		}
 
-		$docBlockParams = [];
 		for ($i = $docBlockStartIndex + 1; $i < $docBlockEndIndex; $i++) {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@param', '@return'])) {
+			if (!in_array($tokens[$i]['content'], ['@param', '@return'], true)) {
 				continue;
 			}
 
@@ -90,16 +80,19 @@ class DocBlockParamArraySniff extends AbstractSniff {
 			}
 			$content = implode('|', $pieces);
 
-			/*
-			var_dump($content);
-			var_dump($tokens[$classNameIndex]);
-			ob_flush();
-			*/
-
 			$phpCsFile->fixer->beginChangeset();
 			$phpCsFile->fixer->replaceToken($classNameIndex, $content . $appendix);
 			$phpCsFile->fixer->endChangeset();
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
 	}
 
 }

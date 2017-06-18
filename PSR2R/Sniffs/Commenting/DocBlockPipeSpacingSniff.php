@@ -8,19 +8,10 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * No spaces around pipes in doc block hints.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class DocBlockPipeSpacingSniff extends AbstractSniff {
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_DOC_COMMENT_STRING,
-		];
-	}
 
 	/**
 	 * @inheritDoc
@@ -37,11 +28,21 @@ class DocBlockPipeSpacingSniff extends AbstractSniff {
 		$newContent = trim($left) . '|' . trim($right);
 
 		if ($newContent !== $content) {
-			$fix = $phpcsFile->addFixableError('There should be no space around pipes in doc blocks.', $stackPtr, 'PipeSpacing');
+			$fix = $phpcsFile->addFixableError('There should be no space around pipes in doc blocks.', $stackPtr,
+				'PipeSpacing');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr, $newContent);
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_DOC_COMMENT_STRING,
+		];
 	}
 
 }

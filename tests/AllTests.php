@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ewb
- * Date: 6/17/17
- * Time: 11:54 AM
- */
 
 namespace PSR2RT;
 
@@ -14,6 +8,15 @@ use PHP_CodeSniffer\Tests\TestSuite;
 use PHP_CodeSniffer\Util\Standards;
 use PSR2R\Tools\AbstractSniff;
 
+/**
+ * Class AllTests
+ * Run all tests in this sniffer package
+ * Hooks into the PHP_CodeSniffer unit-testing system
+ *
+ * @author Ed Barnard
+ * @license MIT
+ * @package PSR2RT
+ */
 class AllTests extends PHP_CodeSniffer_AllTests {
 	/**
 	 * Add all PHP_CodeSniffer test suites into a single test suite.

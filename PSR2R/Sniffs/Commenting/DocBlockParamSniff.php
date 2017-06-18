@@ -10,22 +10,13 @@ use PSR2R\Tools\Traits\SignatureTrait;
 /**
  * Makes sure doc block param types match the variable name of the method signature.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class DocBlockParamSniff extends AbstractSniff {
 
 	use CommentingTrait;
 	use SignatureTrait;
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
-	}
 
 	/**
 	 * @inheritDoc
@@ -55,7 +46,7 @@ class DocBlockParamSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@param'])) {
+			if ('@param' !== $tokens[$i]['content']) {
 				continue;
 			}
 
@@ -75,6 +66,7 @@ class DocBlockParamSniff extends AbstractSniff {
 				$content = substr($content, 0, $spacePos);
 			}
 
+			/** @noinspection NotOptimalRegularExpressionsInspection */
 			preg_match('/\$[^\s]+/', $appendix, $matches);
 			$variable = $matches ? $matches[0] : '';
 
@@ -124,7 +116,16 @@ class DocBlockParamSniff extends AbstractSniff {
 	}
 
 	/**
-	* //TODO: Replace with SignatureTrait
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
+	}
+
+	/**
+	 * //TODO: Replace with SignatureTrait
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPtr
@@ -140,7 +141,8 @@ class DocBlockParamSniff extends AbstractSniff {
 		$i = $startIndex;
 		while ($nextVariableIndex = $phpCsFile->findNext(T_VARIABLE, $i + 1, $endIndex)) {
 			$typehint = $default = null;
-			$possibleTypeHint = $phpCsFile->findPrevious([T_ARRAY_HINT, T_CALLABLE], $nextVariableIndex - 1, $nextVariableIndex - 3);
+			$possibleTypeHint =
+				$phpCsFile->findPrevious([T_ARRAY_HINT, T_CALLABLE], $nextVariableIndex - 1, $nextVariableIndex - 3);
 			if ($possibleTypeHint) {
 				$typehint = $possibleTypeHint;
 			}
@@ -150,7 +152,9 @@ class DocBlockParamSniff extends AbstractSniff {
 
 			$possibleEqualIndex = $phpCsFile->findNext([T_EQUAL], $nextVariableIndex + 1, $nextVariableIndex + 2);
 			if ($possibleEqualIndex) {
-				$possibleDefaultValue = $phpCsFile->findNext([T_STRING, T_TRUE, T_FALSE, T_NULL, T_ARRAY], $possibleEqualIndex + 1, $possibleEqualIndex + 2);
+				$possibleDefaultValue =
+					$phpCsFile->findNext([T_STRING, T_TRUE, T_FALSE, T_NULL, T_ARRAY], $possibleEqualIndex + 1,
+						$possibleEqualIndex + 2);
 				if ($possibleDefaultValue) {
 					$default = $possibleDefaultValue;
 				}
@@ -159,7 +163,7 @@ class DocBlockParamSniff extends AbstractSniff {
 			$arguments[] = [
 				'variable' => $nextVariableIndex,
 				'typehint' => $typehint,
-				'default' => $default
+				'default' => $default,
 			];
 
 			$i = $nextVariableIndex;

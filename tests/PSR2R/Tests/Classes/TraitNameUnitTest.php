@@ -1,22 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ewb
- * Date: 6/17/17
- * Time: 2:56 PM
- */
 
 namespace PSR2R\Tests\Classes;
 
 use PSR2R\Base\AbstractBase;
 
+/**
+ * Class TraitNameUnitTest
+ *
+ * @author  Ed Barnard
+ * @license MIT
+ * @package PSR2R\Tests\Classes
+ */
 class TraitNameUnitTest extends AbstractBase {
 	protected function getErrorList() {
 		return [
-			];
+		];
 	}
 
 	protected function getWarningList() {
-		return [13 => 1];
+		return [7 => 1];
 	}
 }

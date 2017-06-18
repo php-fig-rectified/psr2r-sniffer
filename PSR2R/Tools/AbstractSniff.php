@@ -10,7 +10,7 @@ abstract class AbstractSniff implements Sniff {
 	/**
 	 * Checks if the given token is of this token code/type.
 	 *
-	 * @param int|string $search
+	 * @param array|int|string $search
 	 * @param array $token
 	 * @return bool
 	 */

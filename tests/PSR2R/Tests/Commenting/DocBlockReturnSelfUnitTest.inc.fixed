@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ewb
- * Date: 6/17/17
- * Time: 12:51 PM
- */
 
 namespace PSR2R\Tests\Commenting;
 /**
@@ -13,7 +7,7 @@ namespace PSR2R\Tests\Commenting;
  * @package PSR2R\Tests\Commenting
  * @return $this
  */
-class DocBlockReturnSelfUnitTest {
+class DocBlockReturnSelfUnitTestInc {
 	/**
 	 * @return $this
 	 */

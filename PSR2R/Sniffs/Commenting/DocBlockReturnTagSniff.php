@@ -10,7 +10,7 @@ use PHP_CodeSniffer\Util\Tokens;
  * Verifies that a `@return` tag exists for all functions and methods and that it does not exist
  * for all constructors and destructors.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class DocBlockReturnTagSniff extends AbstractScopeSniff {
@@ -29,6 +29,7 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr) {
 
 	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -36,8 +37,8 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 		$tokens = $phpcsFile->getTokens();
 
 		// Type of method
-		$method = $phpcsFile->findNext(T_STRING, ($stackPtr + 1));
-		$returnRequired = !in_array($tokens[$method]['content'], ['__construct', '__destruct']);
+		$method = $phpcsFile->findNext(T_STRING, $stackPtr + 1);
+		$returnRequired = !in_array($tokens[$method]['content'], ['__construct', '__destruct'], true);
 
 		$find = [
 			T_COMMENT,
@@ -48,7 +49,7 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 		];
 		$find = array_merge($find, Tokens::$commentTokens);
 
-		$commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
+		$commentEnd = $phpcsFile->findPrevious($find, $stackPtr - 1);
 
 		if ($commentEnd === false) {
 			return;
@@ -59,7 +60,7 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 			return;
 		}
 
-		$commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, ($commentEnd - 1), null, false) + 1);
+		$commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, $commentEnd - 1, null, false) + 1);
 
 		$commentWithReturn = null;
 		for ($i = $commentEnd; $i >= $commentStart; $i--) {

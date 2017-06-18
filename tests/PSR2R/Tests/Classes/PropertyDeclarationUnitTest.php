@@ -1,23 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ewb
- * Date: 6/17/17
- * Time: 2:56 PM
- */
 
 namespace PSR2R\Tests\Classes;
 
 use PSR2R\Base\AbstractBase;
 
+/**
+ * Class PropertyDeclarationUnitTest
+ *
+ * @author  Ed Barnard
+ * @license MIT
+ * @package PSR2R\Tests\Classes
+ */
 class PropertyDeclarationUnitTest extends AbstractBase {
 	protected function getErrorList() {
-		return [14 => 1,
-			15 => 2,
-			17 => 1,
-			18 => 1,
-			19 => 1,
-			];
+		return [
+			8 => 1,
+			9 => 2,
+			11 => 1,
+			12 => 1,
+			13 => 1,
+		];
 	}
 
 	protected function getWarningList() {

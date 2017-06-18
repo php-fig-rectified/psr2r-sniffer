@@ -8,7 +8,7 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Doc Blocks that return $this should be declared as such.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class DocBlockReturnSelfSniff extends AbstractSniff {
@@ -16,22 +16,9 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-			T_TRAIT,
-			T_FUNCTION,
-			T_VARIABLE,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
-		if (($stackPointer > 1) && ('T_STATIC' === $tokens[$stackPointer-2]['type'])) {
+		if (($stackPointer > 1) && ('T_STATIC' === $tokens[$stackPointer - 2]['type'])) {
 			return; // Skip static function declarations
 		}
 
@@ -47,7 +34,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@return'])) {
+			if ('@return' !== $tokens[$i]['content']) {
 				continue;
 			}
 
@@ -74,6 +61,21 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			$this->fixParts($phpCsFile, $classNameIndex, $parts, $appendix);
 		}
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+			T_TRAIT,
+			T_FUNCTION,
+			T_VARIABLE,
+		];
+	}
+
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile

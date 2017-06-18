@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ewb
- * Date: 6/17/17
- * Time: 8:43 AM
- */
 
 namespace PSR2R\Tests\Classes;
 

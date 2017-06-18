@@ -1,4 +1,11 @@
 <?php
+/**
+ * The PHP_CodeSniffer has its own autoloading system, which we
+ * need to hook into
+ *
+ * @author Ed Barnard
+ * @license MIT
+ */
 
 /** @noinspection UsingInclusionOnceReturnValueInspection */
 $autoloader = require_once dirname(__DIR__) . DIRECTORY_SEPARATOR .

@@ -11,17 +11,10 @@ use PSR2R\Tools\AbstractSniff;
  *
  * A better and more complete version of Squiz.Classes.SelfMemberReference.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class SelfAccessorSniff extends AbstractSniff {
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_SELF, T_CLASS, T_INTERFACE, T_TRAIT];
-	}
 
 	/**
 	 * @inheritDoc
@@ -40,7 +33,7 @@ class SelfAccessorSniff extends AbstractSniff {
 		}
 		$endIndex = $tokens[$stackPtr]['scope_closer'];
 
-		$nameIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+		$nameIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		if ($tokens[$nameIndex]['code'] !== T_STRING) {
 			return;
 		}
@@ -58,6 +51,13 @@ class SelfAccessorSniff extends AbstractSniff {
 				continue;
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_SELF, T_CLASS, T_INTERFACE, T_TRAIT];
 	}
 
 	/**
@@ -88,37 +88,16 @@ class SelfAccessorSniff extends AbstractSniff {
 	protected function checkNew(File $phpcsFile, $i, $name) {
 		$tokens = $phpcsFile->getTokens();
 
-		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
+		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $i + 1, null, true);
 		if ($tokens[$nextIndex]['code'] !== T_STRING) {
 			return;
 		}
-		$openingBraceIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextIndex + 1), null, true);
+		$openingBraceIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $nextIndex + 1, null, true);
 		if ($tokens[$openingBraceIndex]['code'] !== T_OPEN_PARENTHESIS) {
 			return;
 		}
 
 		$this->fixNameToSelf($phpcsFile, $nextIndex, $name);
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param int $i
-	 * @param string $name
-	 * @return void
-	 */
-	protected function checkDoubleColon(File $phpcsFile, $i, $name) {
-		$tokens = $phpcsFile->getTokens();
-
-		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($i - 1), null, true);
-		if ($tokens[$prevIndex]['code'] !== T_STRING) {
-			return;
-		}
-		$possibleSeparatorIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prevIndex - 1), null, true);
-		if ($tokens[$possibleSeparatorIndex]['code'] === T_NS_SEPARATOR) {
-			return;
-		}
-
-		$this->fixNameToSelf($phpcsFile, $prevIndex, $name);
 	}
 
 	/**
@@ -140,6 +119,27 @@ class SelfAccessorSniff extends AbstractSniff {
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($index, 'self');
 		}
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $i
+	 * @param string $name
+	 * @return void
+	 */
+	protected function checkDoubleColon(File $phpcsFile, $i, $name) {
+		$tokens = $phpcsFile->getTokens();
+
+		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $i - 1, null, true);
+		if ($tokens[$prevIndex]['code'] !== T_STRING) {
+			return;
+		}
+		$possibleSeparatorIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $prevIndex - 1, null, true);
+		if ($tokens[$possibleSeparatorIndex]['code'] === T_NS_SEPARATOR) {
+			return;
+		}
+
+		$this->fixNameToSelf($phpcsFile, $prevIndex, $name);
 	}
 
 }

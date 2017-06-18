@@ -11,22 +11,13 @@ use PSR2R\Tools\Traits\SignatureTrait;
  * Makes sure doc block param types allow `|null`, `|array` etc, when those are used
  * as default values in the method signature.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 
 	use CommentingTrait;
 	use SignatureTrait;
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
-	}
 
 	/**
 	 * @inheritDoc
@@ -52,7 +43,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@param'])) {
+			if ('@param' !== $tokens[$i]['content']) {
 				continue;
 			}
 
@@ -94,7 +85,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			if ($methodSignatureValue['typehintIndex']) {
 				$typeIndex = $methodSignatureValue['typehintIndex'];
 				$type = $tokens[$typeIndex]['content'];
-				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
+				if (!in_array($type, $pieces, false) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
 					$pieces[] = $type;
 					$error = 'Possible doc block error: `' . $content . '` seems to be missing type `' . $type . '`.';
 					$fix = $phpCsFile->addFixableError($error, $classNameIndex, 'Typehint');
@@ -107,7 +98,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			if ($methodSignatureValue['default']) {
 				$type = $methodSignatureValue['default'];
 
-				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
+				if (!in_array($type, $pieces, false) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
 					$pieces[] = $type;
 					$error = 'Possible doc block error: `' . $content . '` seems to be missing type `' . $type . '`.';
 					$fix = $phpCsFile->addFixableError($error, $classNameIndex, 'Default');
@@ -118,6 +109,15 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
 	}
 
 }
