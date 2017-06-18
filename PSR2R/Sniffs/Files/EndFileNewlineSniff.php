@@ -15,23 +15,23 @@
 
 namespace PSR2R\Sniffs\Files;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Generic_Sniffs_Files_EndFileNewlineSniff.
  *
  * Ensures the file ends with a newline character.
  *
- * @author Greg Sherwood <gsherwood@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  *
- * @version Release: @package_version@
+ * @version   Release: @package_version@
  *
- * @link http://pear.php.net/package/PHP_CodeSniffer
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class EndFileNewlineSniff implements PHP_CodeSniffer_Sniff {
+class EndFileNewlineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
@@ -43,8 +43,8 @@ class EndFileNewlineSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-		if ($phpcsFile->findNext(T_INLINE_HTML, ($stackPtr + 1)) !== false) {
+	public function process(File $phpcsFile, $stackPtr) {
+		if ($phpcsFile->findNext(T_INLINE_HTML, $stackPtr + 1) !== false) {
 			return $phpcsFile->numTokens + 1;
 		}
 
@@ -68,10 +68,9 @@ class EndFileNewlineSniff implements PHP_CodeSniffer_Sniff {
 
 		// Go looking for the last non-empty line.
 		$lastLine = $tokens[$lastToken]['line'];
+		$lastCode = $lastToken;
 		if ($tokens[$lastToken]['code'] === T_WHITESPACE) {
-			$lastCode = $phpcsFile->findPrevious(T_WHITESPACE, ($lastToken - 1), null, true);
-		} else {
-			$lastCode = $lastToken;
+			$lastCode = $phpcsFile->findPrevious(T_WHITESPACE, $lastToken - 1, null, true);
 		}
 
 		$lastCodeLine = $tokens[$lastCode]['line'];
