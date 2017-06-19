@@ -14,8 +14,8 @@
 
 namespace PSR2R\Sniffs\Namespaces;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff.
@@ -28,7 +28,7 @@ use PHP_CodeSniffer_Sniff;
  * @version Release: @package_version@
  * @link http://pear.php.net/package/PHP_CodeSniffer
  */
-class NamespaceDeclarationSniff implements PHP_CodeSniffer_Sniff {
+class NamespaceDeclarationSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
@@ -40,7 +40,7 @@ class NamespaceDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		for ($i = ($stackPtr + 1); $i < ($phpcsFile->numTokens - 1); $i++) {
