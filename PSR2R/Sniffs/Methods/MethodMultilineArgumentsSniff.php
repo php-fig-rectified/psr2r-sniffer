@@ -2,13 +2,13 @@
 
 namespace PSR2R\Sniffs\Methods;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
  * Checks that the method declaration of arguments has a single one per line for multiline.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class MethodMultilineArgumentsSniff extends AbstractSniff {
@@ -23,15 +23,15 @@ class MethodMultilineArgumentsSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$stringIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$stringIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 		if ($tokens[$stringIndex]['code'] !== T_STRING) {
 			return;
 		}
 
-		$parenthesisStartIndex = $phpcsFile->findNext(T_WHITESPACE, ($stringIndex + 1), null, true);
+		$parenthesisStartIndex = $phpcsFile->findNext(T_WHITESPACE, $stringIndex + 1, null, true);
 		if ($tokens[$parenthesisStartIndex]['type'] !== 'T_OPEN_PARENTHESIS') {
 			return;
 		}
@@ -50,7 +50,7 @@ class MethodMultilineArgumentsSniff extends AbstractSniff {
 				continue;
 			}
 
-			$possibleCommaIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), null, true);
+			$possibleCommaIndex = $phpcsFile->findPrevious(T_WHITESPACE, $i - 1, null, true);
 			if (!$possibleCommaIndex || $tokens[$possibleCommaIndex]['type'] !== 'T_COMMA') {
 				continue;
 			}
