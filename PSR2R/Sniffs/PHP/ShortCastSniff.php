@@ -2,15 +2,16 @@
 
 namespace PSR2R\Sniffs\PHP;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Use short form of boolean and integer casts.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
-class ShortCastSniff implements \PHP_CodeSniffer_Sniff {
+class ShortCastSniff implements Sniff {
 
 	/**
 	 * @var array
@@ -30,16 +31,16 @@ class ShortCastSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['content'] === '!') {
-			$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+			$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 			if ($tokens[$prevIndex]['content'] !== '!') {
 				return;
 			}
 
-			$fix = $phpcsFile->addFixableError('`!!` cast not allowed, use `(bool)`', $stackPtr);
+			$fix = $phpcsFile->addFixableError('`!!` cast not allowed, use `(bool)`', $stackPtr, 'DoubleNotCast');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($prevIndex, '');
 				$phpcsFile->fixer->replaceToken($stackPtr, '(bool)');
@@ -55,7 +56,8 @@ class ShortCastSniff implements \PHP_CodeSniffer_Sniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError($content . ' found, expected ' . static::$matching[$key], $stackPtr);
+		$fix = $phpcsFile->addFixableError($content . ' found, expected ' . static::$matching[$key], $stackPtr,
+			'ShortCast');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr, static::$matching[$key]);
 		}
