@@ -2,15 +2,16 @@
 
 namespace PSR2R\Sniffs\PHP;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
+use PSR2R\Tools\AbstractSniff;
 
 /**
  * Always use simple casts instead of method invocation.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
-class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
+class PreferCastOverFunctionSniff extends AbstractSniff {
 
 	/**
 	 * @var array
@@ -32,7 +33,7 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];
 
 		$tokens = $phpcsFile->getTokens();
@@ -43,12 +44,12 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 			return;
 		}
 
-		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-		if (!$previous || in_array($tokens[$previous]['code'], $wrongTokens)) {
+		$previous = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+		if (!$previous || in_array($tokens[$previous]['code'], $wrongTokens, false)) {
 			return;
 		}
 
-		$openingBraceIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$openingBraceIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 		if (!$openingBraceIndex || $tokens[$openingBraceIndex]['type'] !== 'T_OPEN_PARENTHESIS') {
 			return;
 		}
@@ -62,24 +63,24 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 
 		$error = $tokenContent . '() found, should be ' . static::$matching[$key] . ' cast.';
 
-		$fix = $phpcsFile->addFixableError($error, $stackPtr);
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'ShouldCast');
 		if ($fix) {
 			$this->fixContent($phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex);
 		}
 	}
 
+	/** @noinspection MoreThanThreeArgumentsInspection */
+
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @param string $key
 	 * @param int $openingBraceIndex
 	 * @param int $closingBraceIndex
 	 * @return void
 	 */
-	protected function fixContent(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex) {
+	protected function fixContent(File $phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex) {
 		$needsBrackets = $this->needsBrackets($phpcsFile, $openingBraceIndex, $closingBraceIndex);
-
-		$tokens = $phpcsFile->getTokens();
 
 		$cast = '(' . static::$matching[$key] . ')';
 
