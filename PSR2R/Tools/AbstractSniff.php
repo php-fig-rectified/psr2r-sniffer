@@ -6,6 +6,7 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
 abstract class AbstractSniff implements Sniff {
+	protected $myTrace = 1;
 
 	/**
 	 * Checks if the given token is of this token code/type.
@@ -301,6 +302,7 @@ abstract class AbstractSniff implements Sniff {
 			$endIndex = $phpcsFile->findNext(T_SEMICOLON, $startIndex + 1);
 		}
 
+		/** @noinspection IsEmptyFunctionUsageInspection */
 		if (empty($startIndex) || empty($endIndex)) {
 			return [];
 		}
@@ -330,4 +332,20 @@ abstract class AbstractSniff implements Sniff {
 		return trim($namespace);
 	}
 
+	protected function myTrace($event, $detail) {
+		if (!$this->myTrace) {
+			return;
+		}
+		$bt = debug_backtrace();
+		@ob_end_clean();
+		echo '--myTrace--: ';
+		print_r([
+			'class' => $bt[1]['class'],
+			'method' => $bt[1]['function'],
+			'line' => $bt[0]['line'],
+			'event' => $event,
+			'detail' => $detail,
+		]);
+		@ob_start();
+	}
 }

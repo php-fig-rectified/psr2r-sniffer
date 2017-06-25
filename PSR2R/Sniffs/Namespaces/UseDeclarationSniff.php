@@ -14,9 +14,9 @@
 
 namespace PSR2R\Sniffs\Namespaces;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PSR2R\Tools\AbstractSniff;
 use PSR2R\Tools\Traits\CommentingTrait;
 use PSR2R\Tools\Traits\NamespaceTrait;
 
@@ -25,13 +25,13 @@ use PSR2R\Tools\Traits\NamespaceTrait;
  *
  * Ensures USE blocks are declared correctly.
  *
- * @author Greg Sherwood <gsherwood@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version Release: @package_version@
- * @link http://pear.php.net/package/PHP_CodeSniffer
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version   Release: @package_version@
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
+class UseDeclarationSniff extends AbstractSniff {
 
 	use CommentingTrait;
 	use NamespaceTrait;
@@ -39,14 +39,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_USE];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		if ($this->shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
 			return;
 		}
@@ -54,16 +47,16 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		// One space after the use keyword.
-		if ($tokens[($stackPtr + 1)]['content'] !== ' ') {
+		if ($tokens[$stackPtr + 1]['content'] !== ' ') {
 			$error = 'There must be a single space after the USE keyword';
 			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterUse');
 			if ($fix === true) {
-				$phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+				$phpcsFile->fixer->replaceToken($stackPtr + 1, ' ');
 			}
 		}
 
 		// Namespaces in use statements must not have a leading separator
-		$next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+		$next = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		if ($tokens[$next]['code'] === T_NS_SEPARATOR) {
 			$error = 'Namespaces in use statements should not start with a namespace separator';
 			$fix = $phpcsFile->addFixableError($error, $next, 'NamespaceStart');
@@ -73,7 +66,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		// Only one USE declaration allowed per statement.
-		$next = $phpcsFile->findNext([T_COMMA, T_SEMICOLON], ($stackPtr + 1));
+		$next = $phpcsFile->findNext([T_COMMA, T_SEMICOLON], $stackPtr + 1);
 		if ($tokens[$next]['code'] === T_COMMA) {
 			$error = 'There must be one USE keyword per declaration';
 			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
@@ -94,7 +87,7 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		// Make sure this USE comes after the first namespace declaration.
-		$prev = $phpcsFile->findPrevious(T_NAMESPACE, ($stackPtr - 1));
+		$prev = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr - 1);
 		if ($prev !== false) {
 			$first = $phpcsFile->findNext(T_NAMESPACE, 1);
 			if ($prev !== $first) {
@@ -104,9 +97,9 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 		}
 
 		// Only interested in the last USE statement from here onwards.
-		$nextUse = $phpcsFile->findNext(T_USE, ($stackPtr + 1));
+		$nextUse = $phpcsFile->findNext(T_USE, $stackPtr + 1);
 		while ($this->shouldIgnoreUse($phpcsFile, $nextUse)) {
-			$nextUse = $phpcsFile->findNext(T_USE, ($nextUse + 1));
+			$nextUse = $phpcsFile->findNext(T_USE, $nextUse + 1);
 			if ($nextUse === false) {
 				break;
 			}
@@ -116,8 +109,8 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 			return;
 		}
 
-		$end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-		$next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
+		$end = $phpcsFile->findNext(T_SEMICOLON, $stackPtr + 1);
+		$next = $phpcsFile->findNext(T_WHITESPACE, $end + 1, null, true);
 		$diff = ($tokens[$next]['line'] - $tokens[$end]['line'] - 1);
 		if ($diff !== 1) {
 			if ($diff < 0) {
@@ -145,6 +138,13 @@ class UseDeclarationSniff implements PHP_CodeSniffer_Sniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_USE];
 	}
 
 }

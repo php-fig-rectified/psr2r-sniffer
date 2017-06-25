@@ -1,15 +1,17 @@
 <?php
+
 namespace PSR2R\Sniffs\Namespaces;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PSR2R\Tools\AbstractSniff;
 use PSR2R\Tools\Traits\CommentingTrait;
 use PSR2R\Tools\Traits\NamespaceTrait;
 
 /**
  * Checks for "use" statements that are not needed in a file.
  */
-class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
+class UnusedUseStatementSniff extends AbstractSniff {
 
 	use CommentingTrait;
 	use NamespaceTrait;
@@ -17,14 +19,7 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_USE];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($this->shouldIgnoreUse($phpcsFile, $stackPtr)) {
@@ -37,15 +32,15 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 		}
 
 		$classNameIndex = $phpcsFile->findPrevious(
-			PHP_CodeSniffer_Tokens::$emptyTokens,
-			($semicolonIndex - 1),
+			Tokens::$emptyTokens,
+			$semicolonIndex - 1,
 			null,
 			true
 		);
 
 		// Seek along the statement to get the last part, which is the class/interface name.
-		while (isset($tokens[($classNameIndex + 1)]) === true
-			&& in_array($tokens[($classNameIndex + 1)]['code'], [T_STRING, T_NS_SEPARATOR])
+		while (isset($tokens[$classNameIndex + 1]) === true
+			&& in_array($tokens[$classNameIndex + 1]['code'], [T_STRING, T_NS_SEPARATOR], false)
 		) {
 			$classNameIndex++;
 		}
@@ -54,12 +49,13 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 			return;
 		}
 
-		$classUsed = $phpcsFile->findNext([T_STRING, T_RETURN_TYPE], ($classNameIndex + 1), null, false, $tokens[$classNameIndex]['content']);
+		$classUsed = $phpcsFile->findNext([T_STRING, T_RETURN_TYPE], $classNameIndex + 1, null, false,
+			$tokens[$classNameIndex]['content']);
 
 		while ($classUsed !== false) {
 			$beforeUsage = $phpcsFile->findPrevious(
-				PHP_CodeSniffer_Tokens::$emptyTokens,
-				($classUsed - 1),
+				Tokens::$emptyTokens,
+				$classUsed - 1,
 				null,
 				true
 			);
@@ -74,7 +70,8 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 				return;
 			}
 
-			$classUsed = $phpcsFile->findNext([T_STRING, T_RETURN_TYPE], ($classUsed + 1), null, false, $tokens[$classNameIndex]['content']);
+			$classUsed = $phpcsFile->findNext([T_STRING, T_RETURN_TYPE], $classUsed + 1, null, false,
+				$tokens[$classNameIndex]['content']);
 		}
 
 		$warning = 'Unused use statement';
@@ -99,6 +96,13 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 		}
 
 		$phpcsFile->fixer->endChangeset();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_USE];
 	}
 
 }
