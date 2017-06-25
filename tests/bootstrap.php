@@ -7,6 +7,8 @@
  * @license MIT
  */
 
+//defined('PHP_CODESNIFFER_VERBOSITY') or define('PHP_CODESNIFFER_VERBOSITY', 2);
+
 /** @noinspection UsingInclusionOnceReturnValueInspection */
 $autoloader = require_once dirname(__DIR__) . DIRECTORY_SEPARATOR .
 	'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
