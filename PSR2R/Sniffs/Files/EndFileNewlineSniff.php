@@ -35,6 +35,7 @@ class EndFileNewlineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_OPEN_TAG];
@@ -42,6 +43,7 @@ class EndFileNewlineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return int
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		if ($phpcsFile->findNext(T_INLINE_HTML, $stackPtr + 1) !== false) {

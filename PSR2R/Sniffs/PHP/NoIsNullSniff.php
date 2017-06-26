@@ -16,6 +16,7 @@ class NoIsNullSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];
@@ -129,6 +130,7 @@ class NoIsNullSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_STRING];

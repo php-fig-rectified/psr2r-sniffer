@@ -15,6 +15,7 @@ class EmptyEnclosingLineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [
@@ -26,6 +27,7 @@ class EmptyEnclosingLineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();

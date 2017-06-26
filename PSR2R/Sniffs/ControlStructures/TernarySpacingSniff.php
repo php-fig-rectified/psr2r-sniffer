@@ -18,6 +18,7 @@ class TernarySpacingSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_INLINE_THEN];
@@ -25,6 +26,7 @@ class TernarySpacingSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$this->assertSpaceBefore($phpcsFile, $stackPtr);

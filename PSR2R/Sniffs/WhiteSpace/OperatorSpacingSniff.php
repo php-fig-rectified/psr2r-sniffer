@@ -26,6 +26,7 @@ class OperatorSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		$comparison = Tokens::$comparisonTokens;
@@ -37,6 +38,7 @@ class OperatorSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -56,15 +58,6 @@ class OperatorSpacingSniff implements Sniff {
 				}
 			}
 		}
-
-		//if ($tokens[$stackPtr]['code'] === T_EQUAL) {
-		/*
-     // Skip for '=&' case.
-     if (isset($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND) {
-        return;
-     }
-     */
-		//}
 
 		if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
 			// If its not a reference, then we expect one space either side of the

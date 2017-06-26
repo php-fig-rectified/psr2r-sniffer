@@ -44,6 +44,7 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		if (isset($this->_processed[$phpcsFile->getFilename()])) {
@@ -105,6 +106,7 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_USE];

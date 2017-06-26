@@ -49,6 +49,7 @@ class ControlStructureSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [
@@ -67,6 +68,7 @@ class ControlStructureSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$this->requiredSpacesAfterOpen = (int)$this->requiredSpacesAfterOpen;

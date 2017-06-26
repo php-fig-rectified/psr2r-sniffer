@@ -36,6 +36,7 @@ class RemoveFunctionAliasSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_STRING, T_EXIT];
@@ -43,10 +44,10 @@ class RemoveFunctionAliasSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
-		//print_r($tokens);exit;
 
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];
 

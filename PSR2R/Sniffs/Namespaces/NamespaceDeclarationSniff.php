@@ -32,6 +32,7 @@ class NamespaceDeclarationSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_NAMESPACE];
@@ -39,6 +40,7 @@ class NamespaceDeclarationSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();

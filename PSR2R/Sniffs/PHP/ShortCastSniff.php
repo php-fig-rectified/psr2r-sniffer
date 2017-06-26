@@ -23,6 +23,7 @@ class ShortCastSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_BOOL_CAST, T_INT_CAST, T_BOOLEAN_NOT];
@@ -30,6 +31,7 @@ class ShortCastSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();

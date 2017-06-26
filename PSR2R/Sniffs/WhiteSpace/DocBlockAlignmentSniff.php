@@ -28,6 +28,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_DOC_COMMENT_OPEN_TAG];
@@ -35,6 +36,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();

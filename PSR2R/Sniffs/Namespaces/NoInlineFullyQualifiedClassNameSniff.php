@@ -37,6 +37,9 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 */
 	protected $useStatements;
 
+	/**
+	 * @var int Last token we will process
+	 */
 	protected $sentinelPtr;
 
 	/**
@@ -46,6 +49,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 * @throws \RuntimeException
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
@@ -73,6 +77,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_NEW, T_FUNCTION, T_DOUBLE_COLON, T_CLASS];
@@ -646,7 +651,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param $stackPtr
+	 * @param int $stackPtr
 	 * @return void
 	 */
 	protected function insertUseWhenSentinel(File $phpcsFile, $stackPtr) {

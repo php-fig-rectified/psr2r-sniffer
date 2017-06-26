@@ -16,6 +16,7 @@ class ArraySpacingSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_OPEN_SHORT_ARRAY];
@@ -23,6 +24,7 @@ class ArraySpacingSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();

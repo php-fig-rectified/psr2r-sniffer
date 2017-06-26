@@ -13,6 +13,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		// We skip T_FOR, T_WHILE for now as they can have valid inline assignment
@@ -21,6 +22,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();

@@ -15,6 +15,7 @@ class ObjectAttributeSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return [T_OBJECT_OPERATOR, T_DOUBLE_COLON];
@@ -22,6 +23,7 @@ class ObjectAttributeSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();

@@ -16,6 +16,7 @@ class CastSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return array
 	 */
 	public function register() {
 		return array_merge(Tokens::$castTokens, [T_BOOLEAN_NOT]);
@@ -23,6 +24,7 @@ class CastSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
+	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
