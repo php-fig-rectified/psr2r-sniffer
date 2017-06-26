@@ -2,16 +2,17 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Verifies that operators have valid spacing surrounding them.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
-class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
+class OperatorSpacingSniff implements Sniff {
 
 	/**
 	 * A list of tokenizers this sniff supports.
@@ -27,9 +28,9 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	 * @inheritDoc
 	 */
 	public function register() {
-		$comparison = PHP_CodeSniffer_Tokens::$comparisonTokens;
-		$operators = PHP_CodeSniffer_Tokens::$operators;
-		$assignment = PHP_CodeSniffer_Tokens::$assignmentTokens;
+		$comparison = Tokens::$comparisonTokens;
+		$operators = Tokens::$operators;
+		$assignment = Tokens::$assignmentTokens;
 
 		return array_unique(array_merge($comparison, $operators, $assignment));
 	}
@@ -37,7 +38,7 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Skip default values in function declarations.
@@ -56,21 +57,21 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 			}
 		}
 
-		if ($tokens[$stackPtr]['code'] === T_EQUAL) {
-			/*
-			// Skip for '=&' case.
-			if (isset($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND) {
-				return;
-			}
-			*/
-		}
+		//if ($tokens[$stackPtr]['code'] === T_EQUAL) {
+		/*
+     // Skip for '=&' case.
+     if (isset($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND) {
+        return;
+     }
+     */
+		//}
 
 		if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
 			// If its not a reference, then we expect one space either side of the
 			// bitwise operator.
 			if ($phpcsFile->isReference($stackPtr) === false) {
 				// Check there is one space before the & operator.
-				if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+				if ($tokens[$stackPtr - 1]['code'] !== T_WHITESPACE) {
 					$error = 'Expected 1 space before "&" operator; 0 found';
 					$fix = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBeforeAmp');
 					if ($fix) {
@@ -79,7 +80,7 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 				}
 
 				// Check there is one space after the & operator.
-				if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+				if ($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE) {
 					$error = 'Expected 1 space after "&" operator; 0 found';
 					$fix = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfterAmp');
 					if ($fix) {
@@ -91,18 +92,18 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 			if ($tokens[$stackPtr]['code'] === T_MINUS) {
 				// Check minus spacing, but make sure we aren't just assigning
 				// a minus value or returning one.
-				$prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+				$prev = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 				if ($tokens[$prev]['code'] === T_RETURN) {
 					// Just returning a negative value; eg. return -1.
 					return;
 				}
 
-				if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$operators) === true) {
+				if (in_array($tokens[$prev]['code'], Tokens::$operators, false) === true) {
 					// Just trying to operate on a negative value; eg. ($var * -1).
 					return;
 				}
 
-				if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$comparisonTokens) === true) {
+				if (in_array($tokens[$prev]['code'], Tokens::$comparisonTokens, false) === true) {
 					// Just trying to compare a negative value; eg. ($var === -1).
 					return;
 				}
@@ -121,11 +122,11 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 					T_CASE,
 				];
 
-				if (in_array($tokens[$prev]['code'], $invalidTokens) === true) {
+				if (in_array($tokens[$prev]['code'], $invalidTokens, false) === true) {
 					// Just trying to use a negative value; eg. myFunction($var, -2).
 					return;
 				}
-				if (in_array($tokens[$prev]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true) {
+				if (in_array($tokens[$prev]['code'], Tokens::$assignmentTokens, false) === true) {
 					// Just trying to assign a negative value; eg. ($var = -1).
 					return;
 				}
@@ -133,7 +134,7 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 
 			$operator = $tokens[$stackPtr]['content'];
 
-			if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+			if ($tokens[$stackPtr - 1]['code'] !== T_WHITESPACE) {
 				$error = "Expected 1 space before \"$operator\"; 0 found";
 				$fix = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore');
 				if ($fix) {
@@ -141,7 +142,7 @@ class OperatorSpacingSniff implements \PHP_CodeSniffer_Sniff {
 				}
 			}
 
-			if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+			if ($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE) {
 				$error = "Expected 1 space after \"$operator\"; 0 found";
 				$fix = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter');
 				if ($fix) {
