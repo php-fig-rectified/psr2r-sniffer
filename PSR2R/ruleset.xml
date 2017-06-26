@@ -92,5 +92,4 @@
 	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
 
-
 </ruleset>

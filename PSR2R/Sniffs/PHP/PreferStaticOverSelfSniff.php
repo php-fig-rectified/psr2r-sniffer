@@ -2,14 +2,14 @@
 
 namespace PSR2R\Sniffs\PHP;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 use PSR2R\Tools\AbstractSniff;
 
 /**
  * Always use `static::` and "late static binding" over `self::` usage.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class PreferStaticOverSelfSniff extends AbstractSniff {
@@ -17,17 +17,10 @@ class PreferStaticOverSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_DOUBLE_COLON];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$index = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+		$index = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);
 		if ($tokens[$index]['code'] !== T_SELF) {
 			return;
 		}
@@ -41,6 +34,13 @@ class PreferStaticOverSelfSniff extends AbstractSniff {
 		}
 
 		$phpcsFile->fixer->replaceToken($index, 'static');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_DOUBLE_COLON];
 	}
 
 }

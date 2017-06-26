@@ -15,6 +15,9 @@
 		<testsuite name="Sniffer Test Suite">
 			<directory>./tests/Sniffs</directory>
 		</testsuite>
+		<testsuite name="Extension of PHP_CodeSniffer Test Suite">
+			<file>tests/AllTests.php</file>
+		</testsuite>
 		<!-- Add plugin test suites here. -->
 	</testsuites>
 

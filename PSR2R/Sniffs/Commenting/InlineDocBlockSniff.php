@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -13,16 +13,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 		$startIndex = $phpCsFile->findNext(T_OPEN_CURLY_BRACKET, $stackPointer + 1);
 		if (empty($tokens[$startIndex]['bracket_closer'])) {
@@ -37,13 +28,22 @@ class InlineDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $startIndex
 	 * @param int $endIndex
 	 *
 	 * @return void
 	 */
-	protected function fixDocCommentOpenTags(PHP_CodeSniffer_File $phpCsFile, $startIndex, $endIndex) {
+	protected function fixDocCommentOpenTags(File $phpCsFile, $startIndex, $endIndex) {
 		$tokens = $phpCsFile->getTokens();
 
 		for ($i = $startIndex + 1; $i < $endIndex; $i++) {
@@ -51,7 +51,8 @@ class InlineDocBlockSniff extends AbstractSniff {
 				continue;
 			}
 
-			$fix = $phpCsFile->addFixableError('Inline Doc Block Comment should be using /* ... */', $i);
+			$fix =
+				$phpCsFile->addFixableError('Inline Doc Block Comment should be using /* ... */', $i, 'InlineDocBlock');
 			if ($fix) {
 				$phpCsFile->fixer->beginChangeset();
 
@@ -63,13 +64,13 @@ class InlineDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $startIndex
 	 * @param int $endIndex
 	 *
 	 * @return void
 	 */
-	protected function checkInlineComments(PHP_CodeSniffer_File $phpCsFile, $startIndex, $endIndex) {
+	protected function checkInlineComments(File $phpCsFile, $startIndex, $endIndex) {
 		$tokens = $phpCsFile->getTokens();
 
 		for ($i = $startIndex + 1; $i < $endIndex; $i++) {
@@ -84,7 +85,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 
 			preg_match('|^\/\*\s*@var\s+(.+?)(\s+)(.+?)\s*\*\/$|', $comment, $contentMatches);
 			if (!$contentMatches || !$contentMatches[1] || !$contentMatches[3]) {
-				$phpCsFile->addError('Invalid Inline Doc Block content', $i);
+				$phpCsFile->addError('Invalid Inline Doc Block content', $i, 'InvalidInlineDocContent');
 				continue;
 			}
 
@@ -102,18 +103,22 @@ class InlineDocBlockSniff extends AbstractSniff {
 			}
 
 			if ($contentMatches[2] !== ' ') {
-				$errors['space-between-type-and-var'] = 'Expected a single space between type and var, got `' . $contentMatches[2] . '`';
+				$errors['space-between-type-and-var'] =
+					'Expected a single space between type and var, got `' . $contentMatches[2] . '`';
 			}
 
 			if (!preg_match('|^\$[a-z0-9]+$|i', $contentMatches[3])) {
-				$errors['order'] = 'Expected ´{Type} ${var}´, got `' . $contentMatches[1] . $contentMatches[2] . $contentMatches[3] . '`';
+				$errors['order'] =
+					'Expected ´{Type} ${var}´, got `' . $contentMatches[1] . $contentMatches[2] . $contentMatches[3] .
+					'`';
 			}
 
 			if (!$errors) {
 				continue;
 			}
 
-			$fix = $phpCsFile->addFixableError('Invalid Inline Doc Block: ' . implode(', ', $errors), $i);
+			$fix = $phpCsFile->addFixableError('Invalid Inline Doc Block: ' . implode(', ', $errors), $i,
+				'InvalidInlineDocBlock');
 			if (!$fix) {
 				continue;
 			}

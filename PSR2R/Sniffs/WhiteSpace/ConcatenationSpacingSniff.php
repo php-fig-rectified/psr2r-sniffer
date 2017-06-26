@@ -17,37 +17,30 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Makes sure there are spaces between the concatenation operator (.) and
  * the strings being concatenated.
  */
-class ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff {
+class ConcatenationSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_STRING_CONCAT];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 
-		if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+		if ($tokens[$stackPtr - 1]['code'] !== T_WHITESPACE) {
 			$message = 'Expected 1 space before ., but 0 found';
 			$phpcsFile->addFixableError($message, $stackPtr, 'MissingBefore');
 			$this->addSpace($phpcsFile, $stackPtr - 1);
 		} else {
 			$content = $tokens[$stackPtr - 1]['content'];
-			if ($tokens[$prevIndex]['line'] === $tokens[$stackPtr]['line'] && $content !== ' ') {
+			if ($content !== ' ' && $tokens[$prevIndex]['line'] === $tokens[$stackPtr]['line']) {
 				$message = 'Expected 1 space before `.`, but %d found';
 				$data = [strlen($content)];
 				$fix = $phpcsFile->addFixableError($message, $stackPtr, 'TooManyBefore', $data);
@@ -57,15 +50,15 @@ class ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff {
 			}
 		}
 
-		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 
-		if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+		if ($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE) {
 			$message = 'Expected 1 space after ., but 0 found';
 			$phpcsFile->addFixableError($message, $stackPtr, 'MissingAfter');
 			$this->addSpace($phpcsFile, $stackPtr);
 		} else {
-			$content = $tokens[($stackPtr + 1)]['content'];
-			if ($tokens[$nextIndex]['line'] === $tokens[$stackPtr]['line'] && $content !== ' ') {
+			$content = $tokens[$stackPtr + 1]['content'];
+			if ($content !== ' ' && $tokens[$nextIndex]['line'] === $tokens[$stackPtr]['line']) {
 				$message = 'Expected 1 space after `.`, but %d found';
 				$data = [strlen($content)];
 				$fix = $phpcsFile->addFixableError($message, $stackPtr, 'TooManyAfter', $data);
@@ -77,14 +70,21 @@ class ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_STRING_CONCAT];
+	}
+
+	/**
 	 * Add a single space on the right sight.
 	 *
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
 	 *
 	 * @return void
 	 */
-	protected function addSpace(PHP_CodeSniffer_File $phpcsFile, $index) {
+	protected function addSpace(File $phpcsFile, $index) {
 		if ($phpcsFile->fixer->enabled !== true) {
 			return;
 		}

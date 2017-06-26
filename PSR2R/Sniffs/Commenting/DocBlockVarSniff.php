@@ -2,8 +2,8 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -17,19 +17,10 @@ class DocBlockVarSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_VARIABLE,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
-		$previousIndex = $phpCsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPointer - 1, null, true);
+		$previousIndex = $phpCsFile->findPrevious(Tokens::$emptyTokens, $stackPointer - 1, null, true);
 		if (!$this->isGivenKind([T_PUBLIC, T_PROTECTED, T_PRIVATE], $tokens[$previousIndex])) {
 			return;
 		}
@@ -37,7 +28,7 @@ class DocBlockVarSniff extends AbstractSniff {
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
-			$phpCsFile->addError('Doc Block for variable missing', $stackPointer);
+			$phpCsFile->addError('Doc Block for variable missing', $stackPointer, 'DocVarMissing');
 			return;
 		}
 
@@ -50,7 +41,7 @@ class DocBlockVarSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@var'])) {
+			if ($tokens[$i]['content'] !== '@var') {
 				continue;
 			}
 
@@ -99,34 +90,47 @@ class DocBlockVarSniff extends AbstractSniff {
 			return;
 		}
 
-		if (count($parts) > 1 || $defaultValueType === 'null') {
-			$fix = $phpCsFile->addFixableError('Doc Block type for annotation @var incorrect, type `' . $defaultValueType . '` missing', $stackPointer, 'VarTypeIncorrect');
+		if ($defaultValueType === 'null' || count($parts) > 1) {
+			$fix =
+				$phpCsFile->addFixableError('Doc Block type for annotation @var incorrect, type `' . $defaultValueType .
+					'` missing', $stackPointer, 'VarTypeIncorrect');
 			if ($fix) {
-				$phpCsFile->fixer->replaceToken($classNameIndex, implode('|', $parts) . '|' . $defaultValueType . $appendix);
+				$phpCsFile->fixer->replaceToken($classNameIndex,
+					implode('|', $parts) . '|' . $defaultValueType . $appendix);
 			}
 			return;
 		}
 
-		$fix = $phpCsFile->addFixableError('Doc Block type `' . $content . '` for annotation @var incorrect, type `' . $defaultValueType . '` expected', $stackPointer, 'VarTypeIncorrect');
+		$fix = $phpCsFile->addFixableError('Doc Block type `' . $content . '` for annotation @var incorrect, type `' .
+			$defaultValueType . '` expected', $stackPointer, 'VarTypeIncorrect');
 		if ($fix) {
 			$phpCsFile->fixer->replaceToken($classNameIndex, $defaultValueType . $appendix);
 		}
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_VARIABLE,
+		];
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPointer
 	 * @return string|null
 	 */
-	protected function findDefaultValueType(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	protected function findDefaultValueType(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
-		$nextIndex = $phpCsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPointer + 1, null, true);
+		$nextIndex = $phpCsFile->findNext(Tokens::$emptyTokens, $stackPointer + 1, null, true);
 		if (!$nextIndex || !$this->isGivenKind(T_EQUAL, $tokens[$nextIndex])) {
 			return null;
 		}
 
-		$nextIndex = $phpCsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $nextIndex + 1, null, true);
+		$nextIndex = $phpCsFile->findNext(Tokens::$emptyTokens, $nextIndex + 1, null, true);
 		if (!$nextIndex) {
 			return null;
 		}
@@ -162,29 +166,29 @@ class DocBlockVarSniff extends AbstractSniff {
 		return null;
 	}
 
+	/** @noinspection MoreThanThreeArgumentsInspection */
+
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $docBlockEndIndex
 	 * @param int $docBlockStartIndex
 	 * @param string|null $defaultValueType
 	 * @return void
 	 */
-	protected function handleMissingVar(PHP_CodeSniffer_File $phpCsFile, $docBlockEndIndex, $docBlockStartIndex, $defaultValueType) {
-		$tokens = $phpCsFile->getTokens();
-
+	protected function handleMissingVar(File $phpCsFile, $docBlockEndIndex, $docBlockStartIndex, $defaultValueType) {
 		$error = 'Doc Block annotation @var for variable missing';
 		if ($defaultValueType === null) {
-			$phpCsFile->addError($error, $docBlockEndIndex);
+			$phpCsFile->addError($error, $docBlockEndIndex, 'VarMissing');
 			return;
 		}
 
 		$error .= ', type `' . $defaultValueType . '` detected';
-		$fix = $phpCsFile->addFixableError($error, $docBlockEndIndex);
+		$fix = $phpCsFile->addFixableError($error, $docBlockEndIndex, 'TypeFixable');
 		if (!$fix) {
 			return;
 		}
 
-		$index = $phpCsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $docBlockEndIndex - 1, $docBlockStartIndex, true);
+		$index = $phpCsFile->findPrevious(Tokens::$emptyTokens, $docBlockEndIndex - 1, $docBlockStartIndex, true);
 		if (!$index) {
 			$index = $docBlockStartIndex;
 		}
@@ -196,12 +200,12 @@ class DocBlockVarSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $varIndex
 	 * @param string|null $defaultValueType
 	 * @return void
 	 */
-	protected function handleMissingVarType(PHP_CodeSniffer_File $phpCsFile, $varIndex, $defaultValueType) {
+	protected function handleMissingVarType(File $phpCsFile, $varIndex, $defaultValueType) {
 		$error = 'Doc Block type for annotation @var for variable missing';
 		if ($defaultValueType === null) {
 			$phpCsFile->addError($error, $varIndex, 'VarTypeMissing');
@@ -209,7 +213,7 @@ class DocBlockVarSniff extends AbstractSniff {
 		}
 
 		$error .= ', type `' . $defaultValueType . '` detected';
-		$fix = $phpCsFile->addFixableError($error, $varIndex);
+		$fix = $phpCsFile->addFixableError($error, $varIndex, 'TypeDetected');
 		if (!$fix) {
 			return;
 		}

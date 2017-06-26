@@ -12,8 +12,8 @@
 
 namespace PSR2R\Sniffs\PHP;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -27,18 +27,11 @@ class SingleQuoteSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_CONSTANT_ENCAPSED_STRING];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// Skip for complex multiline
-		$prevIndex = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, $stackPtr - 1, null, true);
+		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);
 		if ($prevIndex && $tokens[$prevIndex]['code'] === T_CONSTANT_ENCAPSED_STRING) {
 			return;
 		}
@@ -50,13 +43,21 @@ class SingleQuoteSniff extends AbstractSniff {
 			// regex: odd number of backslashes, not followed by double quote or dollar
 			&& !preg_match('/(?<!\\\\)(?:\\\\{2})*\\\\(?!["$\\\\])/', $content)
 		) {
-			$fix = $phpcsFile->addFixableError('Use single instead of double quotes for simple strings.', $stackPtr);
+			$fix = $phpcsFile->addFixableError('Use single instead of double quotes for simple strings.', $stackPtr,
+				'UseSingleQuote');
 			if ($fix) {
 				$content = substr($content, 1, -1);
 				$content = str_replace(['\\"', '\\$'], ['"', '$'], $content);
 				$phpcsFile->fixer->replaceToken($stackPtr, '\'' . $content . '\'');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_CONSTANT_ENCAPSED_STRING];
 	}
 
 }

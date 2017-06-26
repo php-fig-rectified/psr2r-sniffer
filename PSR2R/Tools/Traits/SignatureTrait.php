@@ -2,7 +2,7 @@
 
 namespace PSR2R\Tools\Traits;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Method signature functionality.
@@ -10,12 +10,12 @@ use PHP_CodeSniffer_File;
 trait SignatureTrait {
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPtr
 	 *
 	 * @return array
 	 */
-	protected function getMethodSignature(PHP_CodeSniffer_File $phpCsFile, $stackPtr) {
+	protected function getMethodSignature(File $phpCsFile, $stackPtr) {
 		$tokens = $phpCsFile->getTokens();
 
 		$startIndex = $phpCsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);

@@ -17,30 +17,20 @@
 
 namespace PSR2R\Sniffs\PHP;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Disallow short open tags
  *
  * But permit short-open echo tags (<?=) [T_OPEN_TAG_WITH_ECHO] as they are part of PHP 5.4+
  */
-class NoShortOpenTagSniff implements PHP_CodeSniffer_Sniff {
+class NoShortOpenTagSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_OPEN_TAG,
-			T_INLINE_HTML
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$openTag = $tokens[$stackPtr];
 
@@ -50,6 +40,16 @@ class NoShortOpenTagSniff implements PHP_CodeSniffer_Sniff {
 			$data = [$content];
 			$phpcsFile->addError($error, $stackPtr, 'Found', $data);
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_OPEN_TAG,
+			T_INLINE_HTML,
+		];
 	}
 
 }

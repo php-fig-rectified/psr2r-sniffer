@@ -13,7 +13,7 @@
 	],
 	"require": {
 		"php": ">=5.4.16",
-		"squizlabs/php_codesniffer": "~2.3"
+		"squizlabs/php_codesniffer": "^3.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -22,7 +22,8 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"PSR2T\\Test\\": "tests"
+			"PSR2R\\Base\\": "tests/PSR2R/Base",
+			"PSR2R\\Tests\\": "tests/PSR2R/Tests"
 		}
 	},
 	"bin": [
@@ -31,7 +32,11 @@
 	],
 	"scripts": {
 		"docs": "php docs/generate.php",
-		"cs-check": "vendor/bin/phpcs --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/files/ ./",
-		"cs-fix": "vendor/bin/phpcbf --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/files/ ./"
+		"cs-check": "vendor/bin/phpcs --standard=PSR2R/ruleset.xml -vs --ignore=psr2r-sniffer/vendor/,tests/files/,*.inc,*.fixed ./",
+		"cs-fix": "vendor/bin/phpcbf --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/files/,*.inc,*.fixed ./",
+		"test": "php phpunit.phar",
+		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-5.7.phar && mv phpunit-5.7.phar phpunit.phar || true",
+		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-5.7.phar && mv phpunit-5.7.phar phpunit.phar || true",
+		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml"
 	}
 }

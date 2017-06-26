@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 use PSR2R\Tools\Traits\CommentingTrait;
 
@@ -20,16 +20,7 @@ class DocBlockParamArraySniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
@@ -44,12 +35,11 @@ class DocBlockParamArraySniff extends AbstractSniff {
 			return;
 		}
 
-		$docBlockParams = [];
 		for ($i = $docBlockStartIndex + 1; $i < $docBlockEndIndex; $i++) {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@param', '@return'])) {
+			if (!in_array($tokens[$i]['content'], ['@param', '@return'], true)) {
 				continue;
 			}
 
@@ -90,16 +80,19 @@ class DocBlockParamArraySniff extends AbstractSniff {
 			}
 			$content = implode('|', $pieces);
 
-			/*
-			var_dump($content);
-			var_dump($tokens[$classNameIndex]);
-			ob_flush();
-			*/
-
 			$phpCsFile->fixer->beginChangeset();
 			$phpCsFile->fixer->replaceToken($classNameIndex, $content . $appendix);
 			$phpCsFile->fixer->endChangeset();
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
 	}
 
 }

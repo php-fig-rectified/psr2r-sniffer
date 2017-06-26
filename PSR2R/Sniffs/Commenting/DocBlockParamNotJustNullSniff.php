@@ -2,7 +2,7 @@
 
 namespace PSR2R\Sniffs\Commenting;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 use PSR2R\Tools\Traits\CommentingTrait;
 use PSR2R\Tools\Traits\SignatureTrait;
@@ -21,16 +21,7 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
@@ -51,14 +42,13 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@param'])) {
+			if ($tokens[$i]['content'] !== '@param') {
 				continue;
 			}
 
 			if (empty($methodSignature[$paramCount])) {
 				continue;
 			}
-			$methodSignatureValue = $methodSignature[$paramCount];
 			$paramCount++;
 
 			$classNameIndex = $i + 2;
@@ -70,10 +60,8 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 
 			$content = $tokens[$classNameIndex]['content'];
 
-			$appendix = '';
 			$spaceIndex = strpos($content, ' ');
 			if ($spaceIndex) {
-				$appendix = substr($content, $spaceIndex);
 				$content = substr($content, 0, $spaceIndex);
 			}
 			if (empty($content) || $content !== 'null') {
@@ -82,6 +70,15 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 
 			$phpCsFile->addError('"null" as only param type does not make sense', $classNameIndex, 'NotJustNull');
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
 	}
 
 }

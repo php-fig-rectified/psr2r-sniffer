@@ -2,8 +2,9 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * No whitespace should be between cast and variable. Also account for implicit casts (!).
@@ -11,22 +12,15 @@ use PHP_CodeSniffer_Tokens;
  * @author Mark Scherer
  * @license MIT
  */
-class CastSpacingSniff implements \PHP_CodeSniffer_Sniff {
+class CastSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return array_merge(PHP_CodeSniffer_Tokens::$castTokens, [T_BOOLEAN_NOT]);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 
 		if ($nextIndex - $stackPtr === 1) {
 			return;
@@ -38,10 +32,18 @@ class CastSpacingSniff implements \PHP_CodeSniffer_Sniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError('No whitespace should be between cast and variable.', $stackPtr);
+		$fix = $phpcsFile->addFixableError('No whitespace should be between cast and variable.', $stackPtr,
+			'CastWhitespace');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return array_merge(Tokens::$castTokens, [T_BOOLEAN_NOT]);
 	}
 
 }
