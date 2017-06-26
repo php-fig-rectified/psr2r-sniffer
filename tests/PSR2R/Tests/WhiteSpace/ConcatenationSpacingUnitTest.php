@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class ConcatenationSpacingUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\WhiteSpace
  */
 class ConcatenationSpacingUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -23,4 +22,5 @@ class ConcatenationSpacingUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

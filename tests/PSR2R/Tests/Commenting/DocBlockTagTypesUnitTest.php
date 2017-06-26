@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class DocBlockTagTypesUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Commenting
  */
 class DocBlockTagTypesUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -43,4 +42,5 @@ class DocBlockTagTypesUnitTest extends AbstractBase {
 			77 => 1,
 		];
 	}
+
 }

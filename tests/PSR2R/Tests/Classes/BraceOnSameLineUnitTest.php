@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class BraceOnSameLineUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Classes
  */
 class BraceOnSameLineUnitTest extends AbstractBase {
 	protected function getErrorList($file = '') {
@@ -31,4 +30,5 @@ class BraceOnSameLineUnitTest extends AbstractBase {
 	protected function getWarningList($file = '') {
 		return [];
 	}
+
 }

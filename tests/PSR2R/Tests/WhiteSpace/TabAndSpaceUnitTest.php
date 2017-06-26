@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class TabAndSpaceUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\WhiteSpace
  */
 class TabAndSpaceUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -24,4 +23,5 @@ class TabAndSpaceUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

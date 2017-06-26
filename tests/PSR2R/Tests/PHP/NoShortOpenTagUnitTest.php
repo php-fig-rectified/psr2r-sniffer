@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class NoShortOpenTagUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class NoShortOpenTagUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -22,4 +21,5 @@ class NoShortOpenTagUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

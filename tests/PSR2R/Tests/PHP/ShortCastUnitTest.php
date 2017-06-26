@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class ShortCastUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class ShortCastUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -24,4 +23,5 @@ class ShortCastUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

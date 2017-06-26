@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class SingleQuoteUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class SingleQuoteUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -24,4 +23,5 @@ class SingleQuoteUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

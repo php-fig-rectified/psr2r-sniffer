@@ -6,9 +6,11 @@ if ($ret !== 0) {
 	exit('Invalid execution. Run from ROOT after composer install etc as `php docs/generate.php`.');
 }
 
+/** @noinspection ForeachSourceInspection */
 foreach ($output as &$row) {
 	$row = str_replace('  ', '- ', $row);
 }
+unset($row);
 
 $content = implode(PHP_EOL, $output);
 

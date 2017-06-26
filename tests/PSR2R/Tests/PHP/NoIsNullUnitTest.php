@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class NoIsNullUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class NoIsNullUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -26,4 +25,5 @@ class NoIsNullUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class PreferCastOverFunctionUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class PreferCastOverFunctionUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -25,4 +24,5 @@ class PreferCastOverFunctionUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

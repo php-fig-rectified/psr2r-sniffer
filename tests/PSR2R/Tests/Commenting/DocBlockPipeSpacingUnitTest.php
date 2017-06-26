@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class DocBlockPipeSpacingUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Commenting
  */
 class DocBlockPipeSpacingUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -24,4 +23,5 @@ class DocBlockPipeSpacingUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

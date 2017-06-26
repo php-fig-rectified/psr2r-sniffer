@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class PropertyDeclarationUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Classes
  */
 class PropertyDeclarationUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -25,4 +24,5 @@ class PropertyDeclarationUnitTest extends AbstractBase {
 	protected function getWarningList() {
 		return [];
 	}
+
 }

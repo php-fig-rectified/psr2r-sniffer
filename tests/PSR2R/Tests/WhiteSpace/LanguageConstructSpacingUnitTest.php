@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class LanguageConstructSpacingUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\WhiteSpace
  */
 class LanguageConstructSpacingUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -35,4 +34,5 @@ class LanguageConstructSpacingUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

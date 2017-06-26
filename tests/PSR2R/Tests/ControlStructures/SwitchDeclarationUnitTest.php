@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class SwitchDeclarationUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\ControlStructures
  */
 class SwitchDeclarationUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -38,4 +37,5 @@ class SwitchDeclarationUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

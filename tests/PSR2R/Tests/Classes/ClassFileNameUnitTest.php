@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class ClassFileNameUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Classes
  */
 class ClassFileNameUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -19,4 +18,5 @@ class ClassFileNameUnitTest extends AbstractBase {
 	protected function getWarningList() {
 		return [];
 	}
+
 }

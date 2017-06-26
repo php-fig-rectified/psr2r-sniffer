@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class EmptyLinesUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\WhiteSpace
  */
 class EmptyLinesUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -27,4 +26,5 @@ class EmptyLinesUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

@@ -12,14 +12,15 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
  *
  * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Base
  */
 abstract class AbstractBase extends AbstractSniffUnitTest {
 	protected function setUp() {
 		parent::setUp();
 		$config = new Config();
+		/* @noinspection PhpUndefinedFieldInspection */
 		$config->cache = false;
 		$ruleset = new Ruleset($config);
 		$GLOBALS['PHP_CODESNIFFER_RULESET'] = $ruleset;
 	}
+
 }

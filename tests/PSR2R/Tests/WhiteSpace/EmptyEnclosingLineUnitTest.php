@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class EmptyEnclosingLineUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\WhiteSpace
  */
 class EmptyEnclosingLineUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -26,4 +25,5 @@ class EmptyEnclosingLineUnitTest extends AbstractBase {
 			25 => 1,
 		];
 	}
+
 }

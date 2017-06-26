@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class ElseIfDeclarationUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\ControlStructures
  */
 class ElseIfDeclarationUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -25,4 +24,5 @@ class ElseIfDeclarationUnitTest extends AbstractBase {
 			37 => 1,
 		];
 	}
+
 }

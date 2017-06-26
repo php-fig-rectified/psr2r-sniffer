@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class ListCommaUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class ListCommaUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -23,4 +22,5 @@ class ListCommaUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class PhpSapiConstantUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class PhpSapiConstantUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -23,4 +22,5 @@ class PhpSapiConstantUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

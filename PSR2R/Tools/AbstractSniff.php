@@ -7,7 +7,9 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 abstract class AbstractSniff implements Sniff {
 
-	/** @var array These markers must remain as inline comments */
+	/**
+	 * @var array These markers must remain as inline comments
+	 */
 	protected static $phpStormMarkers = ['@noinspection'];
 
 	/** @noinspection MoreThanThreeArgumentsInspection */
@@ -161,7 +163,7 @@ abstract class AbstractSniff implements Sniff {
 
 		$char = "\t";
 		$countTabs = $countSpaces = 0;
-		/** @noinspection PhpUnusedLocalVariableInspection */
+		/* @noinspection PhpUnusedLocalVariableInspection */
 		foreach ($parts as $part) {
 			$countTabs += substr_count($content, $char);
 			$countSpaces += (int)(substr_count($content, ' ') / 4);

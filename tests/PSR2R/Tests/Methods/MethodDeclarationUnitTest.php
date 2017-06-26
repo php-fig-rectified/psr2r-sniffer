@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class MethodDeclarationUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Methods
  */
 class MethodDeclarationUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -25,4 +24,5 @@ class MethodDeclarationUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

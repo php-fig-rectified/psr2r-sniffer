@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class DocBlockShortTypeUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Commenting
  */
 class DocBlockShortTypeUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -27,4 +26,5 @@ class DocBlockShortTypeUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

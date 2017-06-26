@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class RemoveFunctionAliasUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class RemoveFunctionAliasUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -36,4 +35,5 @@ class RemoveFunctionAliasUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

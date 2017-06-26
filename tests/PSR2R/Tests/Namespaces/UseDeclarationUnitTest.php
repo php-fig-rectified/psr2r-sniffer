@@ -9,7 +9,6 @@ use PSR2R\Base\AbstractBase;
  *
  * @author  Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Namespaces
  */
 class UseDeclarationUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -25,4 +24,5 @@ class UseDeclarationUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

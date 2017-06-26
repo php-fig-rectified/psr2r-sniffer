@@ -7,7 +7,7 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class EndFileNewlineUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
  * @package PSR2R\Tests\Files
  */

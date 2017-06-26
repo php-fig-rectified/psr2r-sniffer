@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class FullyQualifiedClassNameInDocBlockUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Commenting
  */
 class FullyQualifiedClassNameInDocBlockUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -22,4 +21,5 @@ class FullyQualifiedClassNameInDocBlockUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

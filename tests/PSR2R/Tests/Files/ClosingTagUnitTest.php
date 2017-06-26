@@ -7,7 +7,7 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class ClosingTagUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
  * @package PSR2R\Tests\Files
  */

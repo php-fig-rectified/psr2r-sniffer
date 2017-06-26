@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class InterfaceNameUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Classes
  */
 class InterfaceNameUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -19,4 +18,5 @@ class InterfaceNameUnitTest extends AbstractBase {
 	protected function getWarningList() {
 		return [13 => 1];
 	}
+
 }

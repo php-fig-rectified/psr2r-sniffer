@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class NoInlineFullyQualifiedClassNameUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Namespaces
  */
 class NoInlineFullyQualifiedClassNameUnitTest extends AbstractBase {
 	protected function getErrorList($file = '') {
@@ -45,4 +44,5 @@ class NoInlineFullyQualifiedClassNameUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

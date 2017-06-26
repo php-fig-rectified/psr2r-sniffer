@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class ControlStructureSpacingUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\ControlStructures
  */
 class ControlStructureSpacingUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -29,4 +28,5 @@ class ControlStructureSpacingUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

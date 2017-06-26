@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class CommaSpacingUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\WhiteSpace
  */
 class CommaSpacingUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -26,4 +25,5 @@ class CommaSpacingUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

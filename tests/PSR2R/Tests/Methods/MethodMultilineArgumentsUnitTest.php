@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class MethodMultilineArgumentsUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Methods
  */
 class MethodMultilineArgumentsUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -28,4 +27,5 @@ class MethodMultilineArgumentsUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class UnneededElseUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\ControlStructures
  */
 class UnneededElseUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -23,4 +22,5 @@ class UnneededElseUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

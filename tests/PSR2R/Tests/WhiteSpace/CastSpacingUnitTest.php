@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class CastSpacingUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\WhiteSpace
  */
 class CastSpacingUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -29,4 +28,5 @@ class CastSpacingUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

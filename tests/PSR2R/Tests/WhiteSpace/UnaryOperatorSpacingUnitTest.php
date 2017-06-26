@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class UnaryOperatorSpacingUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\WhiteSpace
  */
 class UnaryOperatorSpacingUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -26,4 +25,5 @@ class UnaryOperatorSpacingUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class UnusedUseStatementUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Namespaces
  */
 class UnusedUseStatementUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -22,4 +21,5 @@ class UnusedUseStatementUnitTest extends AbstractBase {
 			5 => 1,
 		];
 	}
+
 }

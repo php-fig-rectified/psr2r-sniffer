@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class PreferStaticOverSelfUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class PreferStaticOverSelfUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -24,4 +23,5 @@ class PreferStaticOverSelfUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

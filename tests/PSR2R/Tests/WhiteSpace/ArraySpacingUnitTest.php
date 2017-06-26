@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class ArraySpacingUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\WhiteSpace
  */
 class ArraySpacingUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -23,4 +22,5 @@ class ArraySpacingUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

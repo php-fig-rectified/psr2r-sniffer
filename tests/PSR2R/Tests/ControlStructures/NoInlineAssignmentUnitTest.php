@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class NoInlineAssignmentUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\ControlStructures
  */
 class NoInlineAssignmentUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -22,4 +21,5 @@ class NoInlineAssignmentUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

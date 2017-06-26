@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class NamespaceDeclarationUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\Namespaces
  */
 class NamespaceDeclarationUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -22,4 +21,5 @@ class NamespaceDeclarationUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }

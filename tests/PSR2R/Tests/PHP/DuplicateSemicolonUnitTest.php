@@ -7,9 +7,8 @@ use PSR2R\Base\AbstractBase;
 /**
  * Class DuplicateSemicolonUnitTest
  *
- * @author  Ed Barnard
+ * @author Ed Barnard
  * @license MIT
- * @package PSR2R\Tests\PHP
  */
 class DuplicateSemicolonUnitTest extends AbstractBase {
 	protected function getErrorList() {
@@ -25,4 +24,5 @@ class DuplicateSemicolonUnitTest extends AbstractBase {
 		return [
 		];
 	}
+
 }
