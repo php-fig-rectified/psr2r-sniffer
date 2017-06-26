@@ -46,7 +46,7 @@ class DocBlockParamSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if ('@param' !== $tokens[$i]['content']) {
+			if ($tokens[$i]['content'] !== '@param') {
 				continue;
 			}
 
@@ -66,7 +66,7 @@ class DocBlockParamSniff extends AbstractSniff {
 				$content = substr($content, 0, $spacePos);
 			}
 
-			/** @noinspection NotOptimalRegularExpressionsInspection */
+			/* @noinspection NotOptimalRegularExpressionsInspection */
 			preg_match('/\$[^\s]+/', $appendix, $matches);
 			$variable = $matches ? $matches[0] : '';
 

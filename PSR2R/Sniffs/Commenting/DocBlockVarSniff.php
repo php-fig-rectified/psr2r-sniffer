@@ -41,7 +41,7 @@ class DocBlockVarSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if ('@var' !== $tokens[$i]['content']) {
+			if ($tokens[$i]['content'] !== '@var') {
 				continue;
 			}
 
@@ -166,7 +166,9 @@ class DocBlockVarSniff extends AbstractSniff {
 		return null;
 	}
 
-	/** @noinspection MoreThanThreeArgumentsInspection */
+	/**
+	 * @noinspection MoreThanThreeArgumentsInspection
+	 */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile

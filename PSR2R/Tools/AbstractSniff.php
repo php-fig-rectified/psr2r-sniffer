@@ -25,7 +25,9 @@ abstract class AbstractSniff implements Sniff {
 		return false;
 	}
 
-	/** @noinspection MoreThanThreeArgumentsInspection */
+	/**
+	 * @noinspection MoreThanThreeArgumentsInspection
+	 */
 
 	/**
 	 * Checks if the given token scope contains a single or multiple token codes/types.
@@ -301,7 +303,7 @@ abstract class AbstractSniff implements Sniff {
 			$endIndex = $phpcsFile->findNext(T_SEMICOLON, $startIndex + 1);
 		}
 
-		/** @noinspection IsEmptyFunctionUsageInspection */
+		/* @noinspection IsEmptyFunctionUsageInspection */
 		if (empty($startIndex) || empty($endIndex)) {
 			return [];
 		}
@@ -330,4 +332,5 @@ abstract class AbstractSniff implements Sniff {
 
 		return trim($namespace);
 	}
+
 }

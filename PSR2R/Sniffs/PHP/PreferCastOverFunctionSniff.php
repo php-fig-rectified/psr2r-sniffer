@@ -69,7 +69,9 @@ class PreferCastOverFunctionSniff extends AbstractSniff {
 		}
 	}
 
-	/** @noinspection MoreThanThreeArgumentsInspection */
+	/**
+	 * @noinspection MoreThanThreeArgumentsInspection
+	 */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile

@@ -39,7 +39,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 	}
 
 	/**
-	 * @param File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @return void
 	 */

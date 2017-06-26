@@ -65,7 +65,7 @@ class DocBlockEndingSniff implements Sniff {
 		foreach ($comments as $commentPointer) {
 			// Check the spacing after each asterisk.
 			$content = $tokens[$commentPointer]['content'];
-			/** @noinspection SubStrUsedAsArrayAccessInspection */
+			/* @noinspection SubStrUsedAsArrayAccessInspection */
 			$firstChar = substr($content, 0, 1);
 			$lastChar = substr($content, -1);
 			if ($firstChar === '/' || $lastChar !== '/') {

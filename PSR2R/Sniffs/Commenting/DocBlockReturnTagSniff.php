@@ -23,11 +23,11 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 	}
 
 	/**
-	 * @param File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+	 * @return void
 	 */
 	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr) {
-
 	}
 
 	/**

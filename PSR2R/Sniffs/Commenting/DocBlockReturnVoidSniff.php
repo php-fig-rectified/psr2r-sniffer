@@ -178,7 +178,9 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 		return $type;
 	}
 
-	/** @noinspection MoreThanThreeArgumentsInspection */
+	/**
+	 * @noinspection MoreThanThreeArgumentsInspection
+	 */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile

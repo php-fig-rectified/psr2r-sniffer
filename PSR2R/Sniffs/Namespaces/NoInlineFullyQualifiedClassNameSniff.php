@@ -32,12 +32,16 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 */
 	protected $allStatements;
 
-	/** @var array */
+	/**
+	 * @var array
+	 */
 	protected $useStatements;
 
 	protected $sentinelPtr;
 
-	/** @var File */
+	/**
+	 * @var \PHP_CodeSniffer\Files\File
+	 */
 	protected $sentinelFile;
 
 	/**
@@ -134,7 +138,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 				$alias = null;
 			} else {
 				$fullName = $statementParts[0];
-				/** @noinspection MultiAssignmentUsageInspection */
+				/* @noinspection MultiAssignmentUsageInspection */
 				$alias = $statementParts[1];
 				$statementParts = explode('\\', $fullName);
 				$shortName = end($statementParts);
@@ -168,7 +172,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @return void
 	 */
 	protected function findSentinel(File $phpcsFile) {
@@ -231,7 +235,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 				return;
 			}
 
-			/** @noinspection DisconnectedForeachInstructionInspection */
+			/* @noinspection DisconnectedForeachInstructionInspection */
 			$phpcsFile->fixer->beginChangeset();
 			$addedUseStatement = $this->addUseStatement($className, $extractedUseStatement['statement']);
 
@@ -243,7 +247,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 				$phpcsFile->fixer->replaceToken($extractedUseStatement['end'], $addedUseStatement['alias']);
 			}
 
-			/** @noinspection DisconnectedForeachInstructionInspection */
+			/* @noinspection DisconnectedForeachInstructionInspection */
 			$phpcsFile->fixer->endChangeset();
 		}
 	}
@@ -366,7 +370,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		while (isset($this->allStatements[$alias])) {
 			$alias = $shortName;
 
-			/** @noinspection PhpParamsInspection */
+			/* @noinspection PhpParamsInspection */
 			if (count($pieces) - 1 < $count && !in_array($pieces, 'Php', true)) {
 				$pieces[] = 'Php';
 			}
@@ -375,7 +379,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 			}
 
 			$prefix = '';
-			/** @noinspection ForeachInvariantsInspection */
+			/* @noinspection ForeachInvariantsInspection */
 			for ($i = 0; $i <= $count; ++$i) {
 				$prefix .= $pieces[$i];
 			}
@@ -422,7 +426,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 				continue;
 			}
 
-			/** @noinspection DisconnectedForeachInstructionInspection */
+			/* @noinspection DisconnectedForeachInstructionInspection */
 			$phpcsFile->fixer->beginChangeset();
 			$addedUseStatement = $this->addUseStatement($className, $extractedUseStatement['statement']);
 			//$lastSeparatorIndex = $phpcsFile->findPrevious(T_NS_SEPARATOR, $extractedUseStatement['end'] - 1, $extractedUseStatement['start']);
@@ -435,7 +439,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 				$phpcsFile->fixer->replaceToken($extractedUseStatement['end'], $addedUseStatement['alias']);
 			}
 
-			/** @noinspection DisconnectedForeachInstructionInspection */
+			/* @noinspection DisconnectedForeachInstructionInspection */
 			$phpcsFile->fixer->endChangeset();
 		}
 	}
@@ -641,7 +645,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param $stackPtr
 	 * @return void
 	 */
@@ -665,7 +669,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 				$phpcsFile->fixer->addNewline($lastUseStatementIndex);
 			}
 			foreach ($this->useStatements as $useStatement) {
-				/** @noinspection DisconnectedForeachInstructionInspection */
+				/* @noinspection DisconnectedForeachInstructionInspection */
 				$phpcsFile->fixer->addNewline($lastUseStatementIndex);
 				$phpcsFile->fixer->addContent($lastUseStatementIndex, $this->generateUseStatement($useStatement));
 			}

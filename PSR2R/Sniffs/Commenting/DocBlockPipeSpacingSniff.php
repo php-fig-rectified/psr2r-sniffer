@@ -20,7 +20,7 @@ class DocBlockPipeSpacingSniff extends AbstractSniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$content = $tokens[$stackPtr]['content'];
-		if (1 !== substr_count($content, '|')) {
+		if (substr_count($content, '|') !== 1) {
 			return;
 		}
 

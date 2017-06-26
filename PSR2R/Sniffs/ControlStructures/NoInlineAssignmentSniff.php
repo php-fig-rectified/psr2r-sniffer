@@ -84,7 +84,9 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 		$phpcsFile->addError('Conditional inline assignment not allowed', $stackPtr, 'ConditionalInlineNotAllowed');
 	}
 
-	/** @noinspection MoreThanThreeArgumentsInspection */
+	/**
+	 * @noinspection MoreThanThreeArgumentsInspection
+	 */
 
 	/**
 	 * //TODO: activate

@@ -209,7 +209,7 @@ class SwitchDeclarationSniff implements Sniff {
 	 * @param int|bool $stackPtr                     The position to start looking at.
 	 * @param int $end                               The position to stop looking at.
 	 *
-	 * @return int | bool
+	 * @return int|bool
 	 */
 	protected function findNextCase(File $phpcsFile, $stackPtr, $end) {
 		$tokens = $phpcsFile->getTokens();

@@ -47,7 +47,7 @@ class ClosingTagSniff implements Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		// Make sure this file only contains PHP code.
-		/** @noinspection ForeachInvariantsInspection */
+		/* @noinspection ForeachInvariantsInspection */
 		for ($i = 0; $i < $phpcsFile->numTokens; $i++) {
 			if ($tokens[$i]['code'] === T_INLINE_HTML
 				&& trim($tokens[$i]['content']) !== ''

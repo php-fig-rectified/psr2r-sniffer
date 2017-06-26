@@ -18,7 +18,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
-		if (($stackPointer > 1) && ('T_STATIC' === $tokens[$stackPointer - 2]['type'])) {
+		if (($stackPointer > 1) && ($tokens[$stackPointer - 2]['type'] === 'T_STATIC')) {
 			return; // Skip static function declarations
 		}
 
@@ -34,7 +34,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if ('@return' !== $tokens[$i]['content']) {
+			if ($tokens[$i]['content'] !== '@return') {
 				continue;
 			}
 
@@ -75,7 +75,9 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 		];
 	}
 
-	/** @noinspection MoreThanThreeArgumentsInspection */
+	/**
+	 * @noinspection MoreThanThreeArgumentsInspection
+	 */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile

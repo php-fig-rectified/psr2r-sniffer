@@ -161,7 +161,9 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		return $rightEndIndex;
 	}
 
-	/** @noinspection MoreThanThreeArgumentsInspection */
+	/**
+	 * @noinspection MoreThanThreeArgumentsInspection
+	 */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
@@ -173,7 +175,11 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function applyFix(File $phpCsFile, $index, $leftIndexStart, $leftIndexEnd, $rightIndexStart,
+	protected function applyFix(File $phpCsFile,
+	$index,
+	$leftIndexStart,
+	$leftIndexEnd,
+	$rightIndexStart,
 		$rightIndexEnd) {
 		$tokens = $phpCsFile->getTokens();
 

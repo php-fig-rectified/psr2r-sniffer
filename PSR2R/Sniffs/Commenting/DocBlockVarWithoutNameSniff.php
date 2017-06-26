@@ -44,7 +44,7 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if ('@var' !== $tokens[$i]['content']) {
+			if ($tokens[$i]['content'] !== '@var') {
 				continue;
 			}
 
