@@ -10,7 +10,7 @@ use PHP_CodeSniffer\Util\Tokens;
  * Verifies that a `@return` tag exists for all functions and methods and that it does not exist
  * for all constructors and destructors.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockReturnTagSniff extends AbstractScopeSniff {
@@ -61,7 +61,7 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 			return;
 		}
 
-		$commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, $commentEnd - 1, null, false) + 1);
+		$commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, $commentEnd - 1) + 1);
 
 		$commentWithReturn = null;
 		for ($i = $commentEnd; $i >= $commentStart; $i--) {
@@ -73,19 +73,26 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 				break;
 			}
 		}
+		$inheritDocPtr = $phpcsFile->findNext(T_DOC_COMMENT_TAG, $commentStart, $commentEnd, false, '@inheritDoc');
+		$haveInheritDoc = $inheritDocPtr !== false;
 
 		if (!$commentWithReturn && !$returnRequired) {
 			return;
 		}
 
-		if ($commentWithReturn && $returnRequired) {
+		if ($commentWithReturn && $returnRequired && !$haveInheritDoc) {
 			return;
 		}
 
-		// A class method should have @return
-		if (!$commentWithReturn) {
+		// A class method should have @return unless @inheritDoc
+		if (!$commentWithReturn && !$haveInheritDoc) {
 			$error = 'Missing @return tag in function comment';
 			$phpcsFile->addError($error, $stackPtr, 'Missing');
+			return;
+		}
+		if ($commentWithReturn && $haveInheritDoc) {
+			$error = 'Should not have both @inheritDoc and @return in function comment';
+			$phpcsFile->addError($error, $stackPtr, 'RedundantReturn');
 			return;
 		}
 

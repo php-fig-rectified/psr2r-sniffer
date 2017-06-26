@@ -38,3 +38,18 @@ class DocBlockReturnTagUnitTestInc {
 
 	}
 }
+
+class DocBlockReturnTagInherit extends DocBlockReturnTagUnitTestInc {
+	/**
+	 * @inheritDoc
+	 */
+	public function three() {
+	}
+
+	/**
+	 * @inheritDoc
+	 * @return void
+	 */
+	public function two() {
+	}
+}

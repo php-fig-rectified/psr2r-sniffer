@@ -17,6 +17,7 @@ class DocBlockReturnTagUnitTest extends AbstractBase {
 			15 => 1,
 			22 => 1,
 			31 => 1,
+			53 => 1,
 		];
 	}
 
