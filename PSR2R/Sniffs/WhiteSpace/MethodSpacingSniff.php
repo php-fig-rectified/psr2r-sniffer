@@ -2,13 +2,13 @@
 
 namespace PSR2R\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
  * Checks that the method declaration has correct spacing.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class MethodSpacingSniff extends AbstractSniff {
@@ -23,15 +23,15 @@ class MethodSpacingSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$stringIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$stringIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 		if ($tokens[$stringIndex]['code'] !== T_STRING) {
 			return;
 		}
 
-		$parenthesisIndex = $phpcsFile->findNext(T_WHITESPACE, ($stringIndex + 1), null, true);
+		$parenthesisIndex = $phpcsFile->findNext(T_WHITESPACE, $stringIndex + 1, null, true);
 		if ($tokens[$parenthesisIndex]['type'] !== 'T_OPEN_PARENTHESIS') {
 			return;
 		}
@@ -46,13 +46,13 @@ class MethodSpacingSniff extends AbstractSniff {
 
 		$parenthesisEndIndex = $tokens[$parenthesisIndex]['parenthesis_closer'];
 
-		$braceStartIndex = $phpcsFile->findNext(T_WHITESPACE, ($parenthesisEndIndex + 1), null, true);
+		$braceStartIndex = $phpcsFile->findNext(T_WHITESPACE, $parenthesisEndIndex + 1, null, true);
 		if ($tokens[$braceStartIndex]['code'] !== T_OPEN_CURLY_BRACKET) {
 			return;
 		}
 
 		$braceEndIndex = $tokens[$braceStartIndex]['bracket_closer'];
-		$nextContentIndex = $phpcsFile->findNext(T_WHITESPACE, ($braceStartIndex + 1), null, true);
+		$nextContentIndex = $phpcsFile->findNext(T_WHITESPACE, $braceStartIndex + 1, null, true);
 		if ($nextContentIndex === $braceEndIndex) {
 			$this->assertNoAdditionalNewlinesForEmptyBody($phpcsFile, $braceStartIndex, $braceEndIndex);
 			return;
@@ -78,13 +78,13 @@ class MethodSpacingSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer_File $phpcsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $from
 	 * @param int $to
 	 *
 	 * @return void
 	 */
-	protected function assertNoAdditionalNewlinesForEmptyBody(PHP_CodeSniffer_File $phpcsFile, $from, $to) {
+	protected function assertNoAdditionalNewlinesForEmptyBody(File $phpcsFile, $from, $to) {
 		$tokens = $phpcsFile->getTokens();
 
 		$startLine = $tokens[$from]['line'];
