@@ -32,7 +32,6 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope) {
 		$tokens = $phpcsFile->getTokens();

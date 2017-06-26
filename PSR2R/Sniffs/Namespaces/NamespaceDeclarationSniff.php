@@ -32,15 +32,6 @@ class NamespaceDeclarationSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_NAMESPACE];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -91,6 +82,13 @@ class NamespaceDeclarationSniff implements Sniff {
 			$phpcsFile->fixer->addNewline($i);
 			$phpcsFile->fixer->endChangeset();
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_NAMESPACE];
 	}
 
 }

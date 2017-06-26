@@ -8,22 +8,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Too much else is considered a code-smell and can often be resolved by returning early.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class UnneededElseSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_ELSE, T_ELSEIF];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -117,6 +108,13 @@ class UnneededElseSniff extends AbstractSniff {
 		}
 
 		$phpcsFile->fixer->endChangeset();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_ELSE, T_ELSEIF];
 	}
 
 	/**

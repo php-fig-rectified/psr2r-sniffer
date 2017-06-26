@@ -9,7 +9,7 @@ use PHP_CodeSniffer\Util\Tokens;
 /**
  * Verifies that operators have valid spacing surrounding them.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class OperatorSpacingSniff implements Sniff {
@@ -26,19 +26,6 @@ class OperatorSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		$comparison = Tokens::$comparisonTokens;
-		$operators = Tokens::$operators;
-		$assignment = Tokens::$assignmentTokens;
-
-		return array_unique(array_merge($comparison, $operators, $assignment));
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -143,6 +130,17 @@ class OperatorSpacingSniff implements Sniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		$comparison = Tokens::$comparisonTokens;
+		$operators = Tokens::$operators;
+		$assignment = Tokens::$assignmentTokens;
+
+		return array_unique(array_merge($comparison, $operators, $assignment));
 	}
 
 }

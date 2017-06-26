@@ -11,7 +11,7 @@ use PSR2R\Tools\Traits\SignatureTrait;
  * Makes sure doc block param types allow `|null`, `|array` etc, when those are used
  * as default values in the method signature.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
@@ -21,7 +21,6 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
@@ -114,7 +113,6 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [

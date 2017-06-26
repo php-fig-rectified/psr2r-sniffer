@@ -11,14 +11,13 @@ use PSR2R\Tools\AbstractSniff;
  *
  * A better and more complete version of Squiz.Classes.SelfMemberReference.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class SelfAccessorSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -56,7 +55,6 @@ class SelfAccessorSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [T_SELF, T_CLASS, T_INTERFACE, T_TRAIT];

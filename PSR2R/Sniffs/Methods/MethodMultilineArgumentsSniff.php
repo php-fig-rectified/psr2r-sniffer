@@ -8,22 +8,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Checks that the method declaration of arguments has a single one per line for multiline.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class MethodMultilineArgumentsSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_FUNCTION];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -79,6 +70,13 @@ class MethodMultilineArgumentsSniff extends AbstractSniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_FUNCTION];
 	}
 
 }

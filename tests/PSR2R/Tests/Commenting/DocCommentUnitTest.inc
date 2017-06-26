@@ -8,6 +8,9 @@ namespace PSR2R\Tests\Commenting;
  * @package PSR2R\Tests\Commenting
  */ // Comment
 class DocCommentUnitTestInc {
+
+	/** @noinspection MoreThanThreeArgumentsInspection */
+
 	protected function getErrorList() {
 		return [
 		];

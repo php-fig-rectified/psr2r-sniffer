@@ -16,15 +16,6 @@ class DuplicateSemicolonSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_SEMICOLON];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -53,6 +44,13 @@ class DuplicateSemicolonSniff implements Sniff {
 
 			$phpcsFile->fixer->endChangeset();
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_SEMICOLON];
 	}
 
 }

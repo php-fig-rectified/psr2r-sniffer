@@ -44,7 +44,6 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		if (isset($this->_processed[$phpcsFile->getFilename()])) {
@@ -106,7 +105,6 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [T_USE];
@@ -116,7 +114,7 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 	 * Check all the use tokens in a file.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file to check.
-	 * @param int $stackPtr                          The index of the first use token.
+	 * @param int $stackPtr The index of the first use token.
 	 * @return void
 	 */
 	protected function checkUseToken(File $phpcsFile, $stackPtr) {

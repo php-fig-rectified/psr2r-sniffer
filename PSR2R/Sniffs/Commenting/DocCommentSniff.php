@@ -40,10 +40,15 @@ class DocCommentSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
+
+		// Skip for PhpStorm markers which must remain as inline comments
+		if ($this->isPhpStormMarker($phpcsFile, $stackPtr)) {
+			return;
+		}
+
 		$commentStart = $stackPtr;
 		$commentEnd = $tokens[$stackPtr]['comment_closer'];
 
@@ -184,7 +189,6 @@ class DocCommentSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [T_DOC_COMMENT_OPEN_TAG];

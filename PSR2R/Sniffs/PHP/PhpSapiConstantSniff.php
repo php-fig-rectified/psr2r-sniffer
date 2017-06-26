@@ -8,7 +8,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Use PHP_SAPI constant instead of php_sapi_name() function.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class PhpSapiConstantSniff implements Sniff {
@@ -17,7 +17,6 @@ class PhpSapiConstantSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -56,7 +55,6 @@ class PhpSapiConstantSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [T_STRING];

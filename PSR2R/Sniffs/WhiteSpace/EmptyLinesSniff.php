@@ -20,15 +20,6 @@ class EmptyLinesSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_WHITESPACE];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -43,6 +34,13 @@ class EmptyLinesSniff extends AbstractSniff {
 				$phpcsFile->fixer->replaceToken($stackPtr + 2, '');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_WHITESPACE];
 	}
 
 }

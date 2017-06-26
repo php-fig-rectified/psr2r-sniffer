@@ -14,7 +14,7 @@ use PSR2R\Base\AbstractBase;
 class DocBlockReturnSelfUnitTest extends AbstractBase {
 	protected function getErrorList() {
 		return [
-			20 => 2,
+			22 => 5,
 		];
 	}
 

@@ -8,14 +8,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * No spaces around pipes in doc block hints.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockPipeSpacingSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -39,7 +38,6 @@ class DocBlockPipeSpacingSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [

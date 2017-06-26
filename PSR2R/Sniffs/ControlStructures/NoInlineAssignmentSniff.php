@@ -13,16 +13,6 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		// We skip T_FOR, T_WHILE for now as they can have valid inline assignment
-		return [T_FOREACH, T_IF, T_SWITCH, T_OBJECT_OPERATOR, T_DOUBLE_COLON];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -32,6 +22,14 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 		}
 
 		$this->checkConditions($phpcsFile, $stackPtr);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		// We skip T_FOR, T_WHILE for now as they can have valid inline assignment
+		return [T_FOREACH, T_IF, T_SWITCH, T_OBJECT_OPERATOR, T_DOUBLE_COLON];
 	}
 
 	/**
@@ -86,9 +84,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 		$phpcsFile->addError('Conditional inline assignment not allowed', $stackPtr, 'ConditionalInlineNotAllowed');
 	}
 
-	/**
-	 * @noinspection MoreThanThreeArgumentsInspection
-	 */
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * //TODO: activate

@@ -15,11 +15,13 @@ class DocBlockReturnSelfUnitTestInc {
 		return $this;
 	}
 
+	/** @noinspection MoreThanThreeArgumentsInspection */
+
 	/**
 	 * @param $var
 	 * @return self
 	 */
-	public function two($var) {
+	public function two($var, $a, $b, $c) {
 		return $this;
 	}
 

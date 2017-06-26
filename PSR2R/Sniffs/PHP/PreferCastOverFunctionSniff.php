@@ -8,7 +8,7 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Always use simple casts instead of method invocation.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class PreferCastOverFunctionSniff extends AbstractSniff {
@@ -25,15 +25,6 @@ class PreferCastOverFunctionSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_STRING];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];
@@ -72,8 +63,13 @@ class PreferCastOverFunctionSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @noinspection MoreThanThreeArgumentsInspection
+	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_STRING];
+	}
+
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile

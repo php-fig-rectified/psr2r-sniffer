@@ -8,22 +8,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Ensures no whitespaces and one whitespace is placed around each comma.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class CommaSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_COMMA];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -44,6 +35,13 @@ class CommaSpacingSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($previous + 1, '');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_COMMA];
 	}
 
 	/**

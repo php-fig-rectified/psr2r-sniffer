@@ -38,7 +38,6 @@ class UseDeclarationSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		if ($this->shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
@@ -143,7 +142,6 @@ class UseDeclarationSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [T_USE];

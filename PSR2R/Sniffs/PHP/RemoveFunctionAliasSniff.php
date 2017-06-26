@@ -8,7 +8,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Eliminate alias usage of basic PHP functions.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class RemoveFunctionAliasSniff implements Sniff {
@@ -36,15 +36,6 @@ class RemoveFunctionAliasSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_STRING, T_EXIT];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -72,6 +63,13 @@ class RemoveFunctionAliasSniff implements Sniff {
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr, static::$matching[$key]);
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_STRING, T_EXIT];
 	}
 
 }

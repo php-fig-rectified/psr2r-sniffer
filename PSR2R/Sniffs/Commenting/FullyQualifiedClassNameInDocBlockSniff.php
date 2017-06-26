@@ -8,7 +8,7 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Make sure all class names in doc blocks are FQCN (Fully Qualified Class Name).
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
@@ -30,7 +30,6 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
@@ -45,7 +44,6 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [
@@ -290,9 +288,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 		}
 	}
 
-	/**
-	 * @noinspection MoreThanThreeArgumentsInspection
-	 */
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile

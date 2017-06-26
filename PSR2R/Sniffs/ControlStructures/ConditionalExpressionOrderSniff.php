@@ -9,22 +9,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Verifies that Yoda conditions (reversed expression order) are not used for comparison.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class ConditionalExpressionOrderSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return Tokens::$comparisonTokens;
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
@@ -94,26 +85,10 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param array $token
-	 *
-	 * @return int
+	 * @inheritDoc
 	 */
-	protected function getComparisonValue(array $token) {
-		$comparisonIndexValue = $token['content'];
-		$operatorsToMap = [T_GREATER_THAN, T_LESS_THAN, T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL];
-		if (in_array($token['code'], $operatorsToMap, true)) {
-			$mapping = [
-				T_GREATER_THAN => '<',
-				T_LESS_THAN => '>',
-				T_IS_GREATER_OR_EQUAL => '<=',
-				T_IS_SMALLER_OR_EQUAL => '>=',
-			];
-			$comparisonIndexValue = $mapping[$token['code']];
-
-			return $comparisonIndexValue;
-		}
-
-		return $comparisonIndexValue;
+	public function register() {
+		return Tokens::$comparisonTokens;
 	}
 
 	/**
@@ -163,9 +138,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		return $rightEndIndex;
 	}
 
-	/**
-	 * @noinspection MoreThanThreeArgumentsInspection
-	 */
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
@@ -178,10 +151,10 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	 * @return void
 	 */
 	protected function applyFix(File $phpCsFile,
-	$index,
-	$leftIndexStart,
-	$leftIndexEnd,
-	$rightIndexStart,
+		$index,
+		$leftIndexStart,
+		$leftIndexEnd,
+		$rightIndexStart,
 		$rightIndexEnd) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -207,6 +180,29 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		$phpCsFile->fixer->replaceToken($rightIndexStart, $leftValue);
 
 		$phpCsFile->fixer->endChangeset();
+	}
+
+	/**
+	 * @param array $token
+	 *
+	 * @return int
+	 */
+	protected function getComparisonValue(array $token) {
+		$comparisonIndexValue = $token['content'];
+		$operatorsToMap = [T_GREATER_THAN, T_LESS_THAN, T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL];
+		if (in_array($token['code'], $operatorsToMap, true)) {
+			$mapping = [
+				T_GREATER_THAN => '<',
+				T_LESS_THAN => '>',
+				T_IS_GREATER_OR_EQUAL => '<=',
+				T_IS_SMALLER_OR_EQUAL => '>=',
+			];
+			$comparisonIndexValue = $mapping[$token['code']];
+
+			return $comparisonIndexValue;
+		}
+
+		return $comparisonIndexValue;
 	}
 
 }

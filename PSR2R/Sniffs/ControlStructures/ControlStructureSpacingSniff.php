@@ -49,26 +49,6 @@ class ControlStructureSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [
-			T_IF,
-			T_WHILE,
-			T_FOREACH,
-			T_FOR,
-			T_SWITCH,
-			T_DO,
-			T_ELSE,
-			T_ELSEIF,
-			T_TRY,
-			T_CATCH,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$this->requiredSpacesAfterOpen = (int)$this->requiredSpacesAfterOpen;
@@ -140,6 +120,24 @@ class ControlStructureSpacingSniff implements Sniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_IF,
+			T_WHILE,
+			T_FOREACH,
+			T_FOR,
+			T_SWITCH,
+			T_DO,
+			T_ELSE,
+			T_ELSEIF,
+			T_TRY,
+			T_CATCH,
+		];
 	}
 
 }

@@ -9,14 +9,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * is_null() should be replaced by === null check.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class NoIsNullSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];
@@ -130,7 +129,6 @@ class NoIsNullSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [T_STRING];
@@ -155,7 +153,8 @@ class NoIsNullSniff extends AbstractSniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$blacklistedCodes = [
-			T_IS_NOT_EQUAL, T_IS_EQUAL, T_IS_IDENTICAL, T_IS_NOT_IDENTICAL, T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL,
+			T_IS_NOT_EQUAL, T_IS_EQUAL, T_IS_IDENTICAL, T_IS_NOT_IDENTICAL, T_IS_GREATER_OR_EQUAL,
+			T_IS_SMALLER_OR_EQUAL,
 		];
 		$blacklistedTypes = [
 			'T_LESS_THAN', 'T_GREATER_THAN',

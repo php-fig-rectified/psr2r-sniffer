@@ -10,7 +10,7 @@ use PSR2R\Tools\Traits\SignatureTrait;
 /**
  * Makes sure doc block param types are never just `null`, but always another type and optionally nullable on top.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockParamNotJustNullSniff extends AbstractSniff {
@@ -20,7 +20,6 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
@@ -75,7 +74,6 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [

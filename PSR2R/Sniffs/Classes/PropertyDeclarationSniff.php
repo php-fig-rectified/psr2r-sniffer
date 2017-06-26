@@ -20,7 +20,6 @@ use PHP_CodeSniffer\Util\Tokens;
 class PropertyDeclarationSniff extends AbstractVariableSniff {
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	protected function processMemberVar(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -56,7 +55,6 @@ class PropertyDeclarationSniff extends AbstractVariableSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	protected function processVariable(File $phpcsFile, $stackPtr) {
 		/*
@@ -66,7 +64,6 @@ class PropertyDeclarationSniff extends AbstractVariableSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	protected function processVariableInString(File $phpcsFile, $stackPtr) {
 		/*

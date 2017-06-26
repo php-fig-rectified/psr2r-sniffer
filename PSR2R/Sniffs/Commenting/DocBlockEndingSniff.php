@@ -9,14 +9,13 @@ use PHP_CodeSniffer\Util\Tokens;
 /**
  * Makes sure ending docblocks have a single asterix.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockEndingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -91,7 +90,6 @@ class DocBlockEndingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return Tokens::$commentTokens;

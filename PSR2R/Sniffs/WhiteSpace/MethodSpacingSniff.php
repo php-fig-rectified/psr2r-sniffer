@@ -8,22 +8,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Checks that the method declaration has correct spacing.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class MethodSpacingSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_FUNCTION];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -77,6 +68,13 @@ class MethodSpacingSniff extends AbstractSniff {
 				$phpcsFile->fixer->replaceToken($lastContentIndex + 1, '');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_FUNCTION];
 	}
 
 	/**

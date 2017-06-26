@@ -10,7 +10,7 @@ use PSR2R\Tools\Traits\CommentingTrait;
  * Makes sure doc block param type array is only used once.
  * So `array|\Foo\Bar[]` would prefer just `\Foo\Bar[]`.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockParamArraySniff extends AbstractSniff {
@@ -19,7 +19,6 @@ class DocBlockParamArraySniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
@@ -89,7 +88,6 @@ class DocBlockParamArraySniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [

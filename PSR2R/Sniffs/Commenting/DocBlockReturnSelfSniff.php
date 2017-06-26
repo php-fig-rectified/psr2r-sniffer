@@ -8,14 +8,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Doc Blocks that return $this should be declared as such.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockReturnSelfSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
@@ -65,7 +64,6 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [
@@ -77,9 +75,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 		];
 	}
 
-	/**
-	 * @noinspection MoreThanThreeArgumentsInspection
-	 */
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile

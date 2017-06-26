@@ -33,7 +33,7 @@
 	"scripts": {
 		"docs": "php docs/generate.php",
 		"cs-check": "vendor/bin/phpcs --standard=PSR2R/ruleset.xml -vs --ignore=psr2r-sniffer/vendor/,tests/files/,*.inc,*.fixed ./",
-		"cs-fix": "vendor/bin/phpcbf --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/ ./",
+		"cs-fix": "vendor/bin/phpcbf --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/files/,*.inc,*.fixed ./",
 		"test": "php phpunit.phar",
 		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-5.7.phar && mv phpunit-5.7.phar phpunit.phar || true",
 		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-5.7.phar && mv phpunit-5.7.phar phpunit.phar || true",

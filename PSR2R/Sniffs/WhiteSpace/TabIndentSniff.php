@@ -26,15 +26,6 @@ class TabIndentSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_WHITESPACE, T_DOC_COMMENT_OPEN_TAG];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -63,6 +54,13 @@ class TabIndentSniff implements Sniff {
 		}
 
 		$this->fixTab($phpcsFile, $stackPtr, $tokens);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_WHITESPACE, T_DOC_COMMENT_OPEN_TAG];
 	}
 
 	/**

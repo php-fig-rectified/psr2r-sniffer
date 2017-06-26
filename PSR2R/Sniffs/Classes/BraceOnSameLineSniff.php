@@ -8,7 +8,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Makes sure opening braces are on the same line for class, interface and trait.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class BraceOnSameLineSniff implements Sniff {
@@ -49,7 +49,6 @@ class BraceOnSameLineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [

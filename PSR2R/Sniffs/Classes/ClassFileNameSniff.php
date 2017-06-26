@@ -35,7 +35,6 @@ class ClassFileNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$fullPath = basename($phpcsFile->getFilename());
@@ -68,7 +67,6 @@ class ClassFileNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [

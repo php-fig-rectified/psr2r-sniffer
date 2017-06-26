@@ -9,14 +9,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Ensures Doc Blocks for variables exist and are correct.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockVarSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
@@ -111,7 +110,6 @@ class DocBlockVarSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [
@@ -168,9 +166,7 @@ class DocBlockVarSniff extends AbstractSniff {
 		return null;
 	}
 
-	/**
-	 * @noinspection MoreThanThreeArgumentsInspection
-	 */
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile

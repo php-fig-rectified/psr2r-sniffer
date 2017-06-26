@@ -39,15 +39,6 @@ class SwitchDeclarationSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_SWITCH];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -65,14 +56,11 @@ class SwitchDeclarationSniff implements Sniff {
 		$switch = $tokens[$stackPtr];
 		$nextCase = $stackPtr;
 		$caseAlignment = ($switch['column'] + $this->indent);
-		$caseCount = 0;
 
 		while (($nextCase = $this->findNextCase($phpcsFile, $nextCase + 1, $switch['scope_closer'])) !== false) {
+			$type = 'case';
 			if ($tokens[$nextCase]['code'] === T_DEFAULT) {
 				$type = 'default';
-			} else {
-				$type = 'case';
-				$caseCount++;
 			}
 
 			if ($tokens[$nextCase]['content'] !== strtolower($tokens[$nextCase]['content'])) {
@@ -203,13 +191,20 @@ class SwitchDeclarationSniff implements Sniff {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_SWITCH];
+	}
+
+	/**
 	 * Find the next CASE or DEFAULT statement from a point in the file.
 	 *
 	 * Note that nested switches are ignored.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
-	 * @param int|bool $stackPtr                     The position to start looking at.
-	 * @param int $end                               The position to stop looking at.
+	 * @param int|bool $stackPtr The position to start looking at.
+	 * @param int $end The position to stop looking at.
 	 *
 	 * @return int|bool
 	 */

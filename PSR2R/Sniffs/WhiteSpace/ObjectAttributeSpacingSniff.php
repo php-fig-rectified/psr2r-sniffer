@@ -8,22 +8,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Verifies that that object operator and class double colon have no additional whitespace around.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class ObjectAttributeSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_OBJECT_OPERATOR, T_DOUBLE_COLON];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -49,6 +40,13 @@ class ObjectAttributeSpacingSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_OBJECT_OPERATOR, T_DOUBLE_COLON];
 	}
 
 }

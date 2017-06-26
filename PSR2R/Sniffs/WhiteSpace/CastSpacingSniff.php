@@ -9,22 +9,13 @@ use PHP_CodeSniffer\Util\Tokens;
 /**
  * No whitespace should be between cast and variable. Also account for implicit casts (!).
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class CastSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return array_merge(Tokens::$castTokens, [T_BOOLEAN_NOT]);
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -46,6 +37,13 @@ class CastSpacingSniff implements Sniff {
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return array_merge(Tokens::$castTokens, [T_BOOLEAN_NOT]);
 	}
 
 }

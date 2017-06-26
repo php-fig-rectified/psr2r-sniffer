@@ -21,22 +21,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Ensures doc block alignment with its code.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockAlignmentSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_DOC_COMMENT_OPEN_TAG];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -141,6 +132,13 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_DOC_COMMENT_OPEN_TAG];
 	}
 
 	/**

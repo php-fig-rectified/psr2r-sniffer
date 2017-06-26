@@ -8,22 +8,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * No whitespace should be between unary operator and variable. Also account for ~, @ and & operator.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class UnaryOperatorSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_INC, T_DEC, T_MINUS, T_PLUS, T_NONE, T_ASPERAND, T_BITWISE_AND];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -87,6 +78,13 @@ class UnaryOperatorSpacingSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_INC, T_DEC, T_MINUS, T_PLUS, T_NONE, T_ASPERAND, T_BITWISE_AND];
 	}
 
 	/**

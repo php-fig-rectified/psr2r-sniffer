@@ -19,15 +19,14 @@ use PSR2R\Tools\AbstractSniff;
  * Doc blocks for class attributes should not have the variable name duplicated.
  * Type suffices: `@var <type>`.
  *
- * @author  Graham Campbell <graham@mineuk.com>
- * @author  Mark Scherer
+ * @author Graham Campbell <graham@mineuk.com>
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockVarWithoutNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -70,7 +69,6 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [T_DOC_COMMENT_OPEN_TAG];

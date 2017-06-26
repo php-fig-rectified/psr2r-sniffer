@@ -26,15 +26,6 @@ class SingleQuoteSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_CONSTANT_ENCAPSED_STRING];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -60,6 +51,13 @@ class SingleQuoteSniff extends AbstractSniff {
 				$phpcsFile->fixer->replaceToken($stackPtr, '\'' . $content . '\'');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_CONSTANT_ENCAPSED_STRING];
 	}
 
 }

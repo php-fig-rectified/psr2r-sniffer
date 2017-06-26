@@ -49,7 +49,6 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 * @throws \RuntimeException
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
@@ -77,7 +76,6 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [T_NEW, T_FUNCTION, T_DOUBLE_COLON, T_CLASS];

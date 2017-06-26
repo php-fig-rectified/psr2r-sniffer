@@ -133,6 +133,8 @@ class DocBlockTagTypesUnitTestInc {
 		return true;
 	}
 
+	/** @noinspection MoreThanThreeArgumentsInspection */
+
 	/**
 	 * @param array $c
 	 * @param int $d

@@ -10,30 +10,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  * single space between themselves and their content.
  * Also asserts that no unneeded parenthesis are used.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class LanguageConstructSpacingSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [
-			T_INCLUDE,
-			T_INCLUDE_ONCE,
-			T_REQUIRE,
-			T_REQUIRE_ONCE,
-			T_ECHO,
-			T_PRINT,
-			T_RETURN,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -84,6 +67,21 @@ class LanguageConstructSpacingSniff implements Sniff {
 			$phpcsFile->fixer->replaceToken($nextIndex, $replacement);
 			$phpcsFile->fixer->replaceToken($closingTokenIndex, '');
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_INCLUDE,
+			T_INCLUDE_ONCE,
+			T_REQUIRE,
+			T_REQUIRE_ONCE,
+			T_ECHO,
+			T_PRINT,
+			T_RETURN,
+		];
 	}
 
 }

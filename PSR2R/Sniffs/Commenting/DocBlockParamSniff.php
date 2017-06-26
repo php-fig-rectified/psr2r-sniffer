@@ -10,7 +10,7 @@ use PSR2R\Tools\Traits\SignatureTrait;
 /**
  * Makes sure doc block param types match the variable name of the method signature.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockParamSniff extends AbstractSniff {
@@ -20,7 +20,6 @@ class DocBlockParamSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
@@ -118,7 +117,6 @@ class DocBlockParamSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
 	 */
 	public function register() {
 		return [

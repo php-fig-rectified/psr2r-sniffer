@@ -9,22 +9,13 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * No whitespace should be at the beginning and end of an array.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class ArraySpacingSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [T_OPEN_SHORT_ARRAY];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -32,6 +23,13 @@ class ArraySpacingSniff extends AbstractSniff {
 		$endIndex = $tokens[$stackPtr]['bracket_closer'];
 		$this->checkBeginning($phpcsFile, $stackPtr);
 		$this->checkEnding($phpcsFile, $endIndex);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_OPEN_SHORT_ARRAY];
 	}
 
 	/**

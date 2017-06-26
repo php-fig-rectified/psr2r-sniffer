@@ -8,26 +8,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Always have an extra new line at the beginning and end of a classy body.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class EmptyEnclosingLineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
-	 * @return array
-	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-			T_TRAIT,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return void
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
@@ -80,6 +67,17 @@ class EmptyEnclosingLineSniff implements Sniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+			T_TRAIT,
+		];
 	}
 
 }
