@@ -1,7 +1,7 @@
 # PSR2R Code Sniffer
 
 
-The PSR2R/ruleset.xml standard contains 102 sniffs
+The PSR2R standard contains 102 sniffs
 
 Generic (13 sniffs)
 -------------------
@@ -25,6 +25,12 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
+PSR2 (3 sniffs)
+---------------
+- PSR2.ControlStructures.ElseIfDeclaration
+- PSR2.Namespaces.NamespaceDeclaration
+- PSR2.Namespaces.UseDeclaration
+
 PSR2R (65 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
@@ -35,11 +41,11 @@ PSR2R (65 sniffs)
 - PSR2R.Classes.SelfAccessor
 - PSR2R.Classes.TraitName
 - PSR2R.Commenting.DocBlockEnding
+- PSR2R.Commenting.DocBlockParam
 - PSR2R.Commenting.DocBlockParamAllowDefaultValue
 - PSR2R.Commenting.DocBlockParamArray
 - PSR2R.Commenting.DocBlockParamNoOp
 - PSR2R.Commenting.DocBlockParamNotJustNull
-- PSR2R.Commenting.DocBlockParam
 - PSR2R.Commenting.DocBlockPipeSpacing
 - PSR2R.Commenting.DocBlockReturnSelf
 - PSR2R.Commenting.DocBlockReturnTag
@@ -93,20 +99,14 @@ PSR2R (65 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-PSR2 (3 sniffs)
----------------
-- PSR2.ControlStructures.ElseIfDeclaration
-- PSR2.Namespaces.NamespaceDeclaration
-- PSR2.Namespaces.UseDeclaration
-
 Squiz (17 sniffs)
 -----------------
 - Squiz.Arrays.ArrayBracketSpacing
 - Squiz.Classes.LowercaseClassKeywords
 - Squiz.ControlStructures.ForEachLoopDeclaration
 - Squiz.ControlStructures.LowercaseDeclaration
-- Squiz.Functions.FunctionDeclarationArgumentSpacing
 - Squiz.Functions.FunctionDeclaration
+- Squiz.Functions.FunctionDeclarationArgumentSpacing
 - Squiz.Operators.ValidLogicalOperators
 - Squiz.PHP.Eval
 - Squiz.PHP.NonExecutableCode
@@ -119,6 +119,6 @@ Squiz (17 sniffs)
 - Squiz.WhiteSpace.SemicolonSpacing
 - Squiz.WhiteSpace.SuperfluousWhitespace
 
-Zend (1 sniffs)
+Zend (1 sniff)
 ---------------
 - Zend.Files.ClosingTag;
