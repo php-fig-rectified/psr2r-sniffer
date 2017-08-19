@@ -111,11 +111,17 @@ You can also test specific methods per Test file using `--filter=testNameOfMetho
 ### Running own sniffs on this project
 There is a convenience script to run all sniffs for this repository:
 ```
-sh phpcs.sh
+composer cs-check
 ```
 If you want to fix the fixable errors, use
 ```
-sh phpcs.sh -f
+composer cs-fix
 ```
 Make sure the root folder name is the same as the GitHub repository name (psr2r-sniffer) to exclude vendor as expected.
 Once everything is green you can make a PR with your changes.
+
+### Updating docs
+Run
+```
+composer docs
+```

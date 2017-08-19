@@ -54,7 +54,7 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 			return;
 		}
 
-		$classUsed = $phpcsFile->findNext(T_STRING, ($classNameIndex + 1), null, false, $tokens[$classNameIndex]['content']);
+		$classUsed = $phpcsFile->findNext([T_STRING, T_RETURN_TYPE], ($classNameIndex + 1), null, false, $tokens[$classNameIndex]['content']);
 
 		while ($classUsed !== false) {
 			$beforeUsage = $phpcsFile->findPrevious(
@@ -74,7 +74,7 @@ class UnusedUseStatementSniff extends \PSR2R\Tools\AbstractSniff {
 				return;
 			}
 
-			$classUsed = $phpcsFile->findNext(T_STRING, ($classUsed + 1), null, false, $tokens[$classNameIndex]['content']);
+			$classUsed = $phpcsFile->findNext([T_STRING, T_RETURN_TYPE], ($classUsed + 1), null, false, $tokens[$classNameIndex]['content']);
 		}
 
 		$warning = 'Unused use statement';

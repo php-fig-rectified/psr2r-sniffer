@@ -190,6 +190,8 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 		if (!$currentNameSpace) {
 			return null;
 		}
+		$currentNameSpaceInfo = $this->getNamespaceInfo($phpCsFile);
+		$currentNameSpace = $currentNameSpaceInfo['namespace'];
 
 		$file = $phpCsFile->getFilename();
 		$dir = dirname($file) . DIRECTORY_SEPARATOR;
