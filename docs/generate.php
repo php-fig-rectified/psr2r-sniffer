@@ -1,7 +1,9 @@
 #!/usr/bin/env php
 <?php
+$phar = file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'composer.phar');
+$command = ($phar ? 'php composer.phar' : 'composer') . ' docs-listing';
 
-exec('composer docs-listing', $output, $ret);
+exec($command, $output, $ret);
 if ($ret !== 0) {
 	exit('Invalid execution. Run from ROOT after composer install etc as `php docs/generate.php`.');
 }
