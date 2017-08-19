@@ -17,20 +17,13 @@ use PSR2R\Tools\AbstractSniff;
 
 /**
  * Doc blocks for class attributes should not have the variable name duplicated.
- * Type suffices: `@var type`.
+ * Type suffices: `@var <type>`.
  *
  * @author Graham Campbell <graham@mineuk.com>
  * @author Mark Scherer
  * @license MIT
  */
 class DocBlockVarWithoutNameSniff extends AbstractSniff {
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_DOC_COMMENT_OPEN_TAG];
-	}
 
 	/**
 	 * @inheritDoc
@@ -51,11 +44,11 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@var'])) {
+			if ($tokens[$i]['content'] !== '@var') {
 				continue;
 			}
 
-			//$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $i + 1, $docBlockEndIndex, true);
+			//$nextIndex = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $i + 1, $docBlockEndIndex, true);
 			$nextIndex = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $i + 1, $docBlockEndIndex);
 			if (!$nextIndex || strpos($tokens[$nextIndex]['content'], ' ') === false) {
 				continue;
@@ -65,12 +58,20 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 			preg_match_all('/ \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $content, $matches);
 
 			if (isset($matches[0][0])) {
-				$fix = $phpcsFile->addFixableError('@var annotations should not contain the variable name.', $i);
+				$fix = $phpcsFile->addFixableError('@var annotations should not contain the variable name.', $i,
+					'RemoveVarName');
 				if ($fix) {
 					$phpcsFile->fixer->replaceToken($nextIndex, str_replace($matches[0][0], '', $content));
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_DOC_COMMENT_OPEN_TAG];
 	}
 
 }

@@ -16,22 +16,15 @@ class MethodSpacingSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_FUNCTION];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$stringIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$stringIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 		if ($tokens[$stringIndex]['code'] !== T_STRING) {
 			return;
 		}
 
-		$parenthesisIndex = $phpcsFile->findNext(T_WHITESPACE, ($stringIndex + 1), null, true);
+		$parenthesisIndex = $phpcsFile->findNext(T_WHITESPACE, $stringIndex + 1, null, true);
 		if ($tokens[$parenthesisIndex]['type'] !== 'T_OPEN_PARENTHESIS') {
 			return;
 		}
@@ -46,13 +39,13 @@ class MethodSpacingSniff extends AbstractSniff {
 
 		$parenthesisEndIndex = $tokens[$parenthesisIndex]['parenthesis_closer'];
 
-		$braceStartIndex = $phpcsFile->findNext(T_WHITESPACE, ($parenthesisEndIndex + 1), null, true);
+		$braceStartIndex = $phpcsFile->findNext(T_WHITESPACE, $parenthesisEndIndex + 1, null, true);
 		if ($tokens[$braceStartIndex]['code'] !== T_OPEN_CURLY_BRACKET) {
 			return;
 		}
 
 		$braceEndIndex = $tokens[$braceStartIndex]['bracket_closer'];
-		$nextContentIndex = $phpcsFile->findNext(T_WHITESPACE, ($braceStartIndex + 1), null, true);
+		$nextContentIndex = $phpcsFile->findNext(T_WHITESPACE, $braceStartIndex + 1, null, true);
 		if ($nextContentIndex === $braceEndIndex) {
 			$this->assertNoAdditionalNewlinesForEmptyBody($phpcsFile, $braceStartIndex, $braceEndIndex);
 			return;
@@ -75,6 +68,13 @@ class MethodSpacingSniff extends AbstractSniff {
 				$phpcsFile->fixer->replaceToken($lastContentIndex + 1, '');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_FUNCTION];
 	}
 
 	/**

@@ -8,21 +8,10 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Verifies that only whitelisted `@...` tags are being used.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class DocBlockTagTypesSniff extends AbstractSniff {
-
-	/**
-	 * Comma separated whitelist of further tags you can include in your ruleset.xml as
-	 *
-	 * <properties>
-	 *     <property name="whitelist" value="@foo,@bar"/>
-	 * </properties>
-	 *
-	 * @var string
-	 */
-	public $whitelist = '';
 
 	protected static $whitelistedTags = [
 		'@api',
@@ -71,6 +60,8 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@codeCoverageIgnoreEnd',
 		// PHPMD
 		'@SuppressWarnings(PHPMD)',
+		// PhpStorm
+		'@noinspection',
 	];
 
 	protected static $blacklistedTags = [
@@ -91,11 +82,15 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	];
 
 	/**
-	 * @inheritDoc
+	 * Comma separated whitelist of further tags you can include in your ruleset.xml as
+	 *
+	 * <properties>
+	 *     <property name="whitelist" value="@foo,@bar"/>
+	 * </properties>
+	 *
+	 * @var string
 	 */
-	public function register() {
-		return [T_CLASS, T_FUNCTION];
-	}
+	public $whitelist = '';
 
 	/**
 	 * @inheritDoc
@@ -116,23 +111,26 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (in_array($tokens[$i]['content'], static::$whitelistedTags)) {
+			$content = $tokens[$i]['content'];
+			if (in_array($content, static::$whitelistedTags, true)) {
 				continue;
 			}
 
 			$error = 'Unexpected tag type `' . $tokens[$i]['content'] . '` in doc block';
-			if (!in_array($tokens[$i]['content'], static::$blacklistedTags, true) && !isset(static::$mapping[$tokens[$i]['content']])) {
+			if (!array_key_exists($content, static::$mapping) && !in_array($content, static::$blacklistedTags, true)) {
 				$phpcsFile->addWarning($error, $i, 'Unknown');
 				continue;
 			}
 
-			$mappingTag = isset(static::$mapping[$tokens[$i]['content']]) ? static::$mapping[$tokens[$i]['content']] : null;
+			$mappingTag =
+				isset(static::$mapping[$content]) ? static::$mapping[$tokens[$i]['content']] : null;
 			if ($mappingTag) {
 				$error .= ', expected `' . $mappingTag . '`';
 			}
 
 			$prevAsterix = $phpcsFile->findPrevious(T_DOC_COMMENT_STAR, $i - 1, $docBlockStartIndex);
-			$nextAsterix = $phpcsFile->findNext([T_DOC_COMMENT_STAR, T_DOC_COMMENT_CLOSE_TAG], $i + 1, $docBlockEndIndex + 1);
+			$nextAsterix =
+				$phpcsFile->findNext([T_DOC_COMMENT_STAR, T_DOC_COMMENT_CLOSE_TAG], $i + 1, $docBlockEndIndex + 1);
 			if (!$prevAsterix || !$nextAsterix) {
 				$phpcsFile->addError($error, $i, 'Invalid');
 				continue;
@@ -155,13 +153,20 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_CLASS, T_FUNCTION];
+	}
+
+	/**
 	 * @return void
 	 */
 	protected function prepareWhitelist() {
 		if (!empty($this->whitelist)) {
 			$whitelist = explode(',', $this->whitelist);
 			foreach ($whitelist as $tag) {
-				if (!in_array($tag, static::$whitelistedTags)) {
+				if (!in_array($tag, static::$whitelistedTags, true)) {
 					static::$whitelistedTags[] = $tag;
 				}
 			}

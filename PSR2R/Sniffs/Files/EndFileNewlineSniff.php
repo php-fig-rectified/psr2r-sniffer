@@ -23,28 +23,21 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  *
  * Ensures the file ends with a newline character.
  *
- * @author Greg Sherwood <gsherwood@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  *
- * @version Release: @package_version@
+ * @version   Release: @package_version@
  *
- * @link http://pear.php.net/package/PHP_CodeSniffer
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class EndFileNewlineSniff implements Sniff {
 
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_OPEN_TAG];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
-		if ($phpcsFile->findNext(T_INLINE_HTML, ($stackPtr + 1)) !== false) {
+		if ($phpcsFile->findNext(T_INLINE_HTML, $stackPtr + 1) !== false) {
 			return $phpcsFile->numTokens + 1;
 		}
 
@@ -68,10 +61,9 @@ class EndFileNewlineSniff implements Sniff {
 
 		// Go looking for the last non-empty line.
 		$lastLine = $tokens[$lastToken]['line'];
+		$lastCode = $lastToken;
 		if ($tokens[$lastToken]['code'] === T_WHITESPACE) {
-			$lastCode = $phpcsFile->findPrevious(T_WHITESPACE, ($lastToken - 1), null, true);
-		} else {
-			$lastCode = $lastToken;
+			$lastCode = $phpcsFile->findPrevious(T_WHITESPACE, $lastToken - 1, null, true);
 		}
 
 		$lastCodeLine = $tokens[$lastCode]['line'];
@@ -97,6 +89,13 @@ class EndFileNewlineSniff implements Sniff {
 
 		// Skip the rest of the file.
 		return $phpcsFile->numTokens + 1;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_OPEN_TAG];
 	}
 
 }

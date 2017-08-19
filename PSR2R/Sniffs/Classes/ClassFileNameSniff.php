@@ -12,6 +12,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 namespace PSR2R\Sniffs\Classes;
 
 use PHP_CodeSniffer\Files\File;
@@ -23,24 +24,14 @@ use PSR2R\Tools\AbstractSniff;
  * Tests that the file name and the name of the class contained within the file
  * match.
  *
- * @author Greg Sherwood <gsherwood@squiz.net>
- * @author Marc McIntyre <mmcintyre@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version Release: @package_version@
- * @link http://pear.php.net/package/PHP_CodeSniffer
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version   Release: @package_version@
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class ClassFileNameSniff extends AbstractSniff {
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-		];
-	}
 
 	/**
 	 * @inheritDoc
@@ -72,6 +63,16 @@ class ClassFileNameSniff extends AbstractSniff {
 			];
 			$phpcsFile->addError($error, $stackPtr, 'NoMatch', $data);
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+		];
 	}
 
 }

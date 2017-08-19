@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
+use PSR2R\Tools\AbstractSniff;
 
 /**
  * Always use simple casts instead of method invocation.
@@ -10,7 +11,7 @@ use PHP_CodeSniffer\Files\File;
  * @author Mark Scherer
  * @license MIT
  */
-class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
+class PreferCastOverFunctionSniff extends AbstractSniff {
 
 	/**
 	 * @var array
@@ -21,13 +22,6 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 		'floatval' => 'float',
 		'boolval' => 'bool',
 	];
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_STRING];
-	}
 
 	/**
 	 * @inheritDoc
@@ -43,12 +37,12 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 			return;
 		}
 
-		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-		if (!$previous || in_array($tokens[$previous]['code'], $wrongTokens)) {
+		$previous = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+		if (!$previous || in_array($tokens[$previous]['code'], $wrongTokens, false)) {
 			return;
 		}
 
-		$openingBraceIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$openingBraceIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 		if (!$openingBraceIndex || $tokens[$openingBraceIndex]['type'] !== 'T_OPEN_PARENTHESIS') {
 			return;
 		}
@@ -62,11 +56,20 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 
 		$error = $tokenContent . '() found, should be ' . static::$matching[$key] . ' cast.';
 
-		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'FunctionInsteadOfCast');
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'ShouldCast');
 		if ($fix) {
 			$this->fixContent($phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex);
 		}
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_STRING];
+	}
+
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
@@ -78,8 +81,6 @@ class PreferCastOverFunctionSniff extends \PSR2R\Tools\AbstractSniff {
 	 */
 	protected function fixContent(File $phpcsFile, $stackPtr, $key, $openingBraceIndex, $closingBraceIndex) {
 		$needsBrackets = $this->needsBrackets($phpcsFile, $openingBraceIndex, $closingBraceIndex);
-
-		$tokens = $phpcsFile->getTokens();
 
 		$cast = '(' . static::$matching[$key] . ')';
 

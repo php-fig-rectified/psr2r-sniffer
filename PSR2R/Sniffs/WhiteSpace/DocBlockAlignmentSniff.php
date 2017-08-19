@@ -29,13 +29,6 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_DOC_COMMENT_OPEN_TAG];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$leftWall = [
@@ -43,12 +36,12 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 			T_NAMESPACE,
 			T_INTERFACE,
 			T_TRAIT,
-			T_USE
+			T_USE,
 		];
 		$oneIndentation = [
 			T_FUNCTION,
 			T_VARIABLE,
-			T_CONST
+			T_CONST,
 		];
 		$allTokens = array_merge($leftWall, $oneIndentation);
 		$isNotFlatFile = $phpcsFile->findNext(T_NAMESPACE, 0);
@@ -69,13 +62,17 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 		}
 
 		if ($nextIndex) {
-			$isNotWalled = (in_array($tokens[$nextIndex]['code'], $leftWall) && $tokens[$stackPtr]['column'] !== 1);
+			$isNotWalled =
+				(in_array($tokens[$nextIndex]['code'], $leftWall, false) && $tokens[$stackPtr]['column'] !== 1);
 			$isNotIndented = false;
 			if ($isNotFlatFile) {
-				$isNotIndented = (in_array($tokens[$nextIndex]['code'], $oneIndentation) && $tokens[$stackPtr]['column'] !== $expectedColumn && $tokens[$stackPtr]['column'] !== $expectedColumnAdjusted);
+				$isNotIndented = (in_array($tokens[$nextIndex]['code'], $oneIndentation, false) &&
+					$tokens[$stackPtr]['column'] !== $expectedColumn &&
+					$tokens[$stackPtr]['column'] !== $expectedColumnAdjusted);
 			}
 			if ($isNotWalled || $isNotIndented) {
-				$fix = $phpcsFile->addFixableError('Expected docblock to be aligned with code.', $stackPtr, 'NotAllowed');
+				$fix =
+					$phpcsFile->addFixableError('Expected docblock to be aligned with code.', $stackPtr, 'NotAllowed');
 				if ($fix) {
 					$docBlockEndIndex = $tokens[$stackPtr]['comment_closer'];
 
@@ -90,7 +87,9 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 						$this->outdent($phpcsFile, $prevIndex);
 
 						for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
-							if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) || $tokens[$i]['column'] !== 1) {
+							if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
+								$tokens[$i]['column'] !== 1
+							) {
 								continue;
 							}
 							$this->outdent($phpcsFile, $i);
@@ -100,7 +99,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 					}
 
 					if ($isNotIndented) {
-						// + means too much indentation (we need to outdend), - means not enough indentation (needs indenting)
+						// + means too much indentation (we need to outdent), - means not enough indentation (needs indenting)
 						if ($tokens[$stackPtr]['column'] < $expectedColumnAdjusted) {
 							$diff = $tokens[$stackPtr]['column'] - $expectedColumn;
 						} else {
@@ -117,7 +116,9 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 						}
 
 						for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
-							if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) || $tokens[$i]['column'] !== 1) {
+							if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
+								$tokens[$i]['column'] !== 1
+							) {
 								continue;
 							}
 							if ($diff < 0) {
@@ -131,6 +132,13 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_DOC_COMMENT_OPEN_TAG];
 	}
 
 	/**

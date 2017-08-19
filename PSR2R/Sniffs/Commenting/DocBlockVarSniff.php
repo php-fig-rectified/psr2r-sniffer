@@ -17,15 +17,6 @@ class DocBlockVarSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_VARIABLE,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -37,7 +28,7 @@ class DocBlockVarSniff extends AbstractSniff {
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
-			$phpCsFile->addError('Doc Block for variable missing', $stackPointer, 'DocBlockMissing');
+			$phpCsFile->addError('Doc Block for variable missing', $stackPointer, 'DocVarMissing');
 			return;
 		}
 
@@ -50,7 +41,7 @@ class DocBlockVarSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@var'])) {
+			if ($tokens[$i]['content'] !== '@var') {
 				continue;
 			}
 
@@ -99,18 +90,31 @@ class DocBlockVarSniff extends AbstractSniff {
 			return;
 		}
 
-		if (count($parts) > 1 || $defaultValueType === 'null') {
-			$fix = $phpCsFile->addFixableError('Doc Block type for annotation @var incorrect, type `' . $defaultValueType . '` missing', $stackPointer, 'VarTypeIncorrect');
+		if ($defaultValueType === 'null' || count($parts) > 1) {
+			$fix =
+				$phpCsFile->addFixableError('Doc Block type for annotation @var incorrect, type `' . $defaultValueType .
+					'` missing', $stackPointer, 'VarTypeIncorrect');
 			if ($fix) {
-				$phpCsFile->fixer->replaceToken($classNameIndex, implode('|', $parts) . '|' . $defaultValueType . $appendix);
+				$phpCsFile->fixer->replaceToken($classNameIndex,
+					implode('|', $parts) . '|' . $defaultValueType . $appendix);
 			}
 			return;
 		}
 
-		$fix = $phpCsFile->addFixableError('Doc Block type `' . $content . '` for annotation @var incorrect, type `' . $defaultValueType . '` expected', $stackPointer, 'VarTypeIncorrect');
+		$fix = $phpCsFile->addFixableError('Doc Block type `' . $content . '` for annotation @var incorrect, type `' .
+			$defaultValueType . '` expected', $stackPointer, 'VarTypeIncorrect');
 		if ($fix) {
 			$phpCsFile->fixer->replaceToken($classNameIndex, $defaultValueType . $appendix);
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_VARIABLE,
+		];
 	}
 
 	/**
@@ -162,6 +166,8 @@ class DocBlockVarSniff extends AbstractSniff {
 		return null;
 	}
 
+	/** @noinspection MoreThanThreeArgumentsInspection */
+
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $docBlockEndIndex
@@ -170,16 +176,14 @@ class DocBlockVarSniff extends AbstractSniff {
 	 * @return void
 	 */
 	protected function handleMissingVar(File $phpCsFile, $docBlockEndIndex, $docBlockStartIndex, $defaultValueType) {
-		$tokens = $phpCsFile->getTokens();
-
 		$error = 'Doc Block annotation @var for variable missing';
 		if ($defaultValueType === null) {
-			$phpCsFile->addError($error, $docBlockEndIndex, 'DocBlockVariableMissing');
+			$phpCsFile->addError($error, $docBlockEndIndex, 'VarMissing');
 			return;
 		}
 
 		$error .= ', type `' . $defaultValueType . '` detected';
-		$fix = $phpCsFile->addFixableError($error, $docBlockEndIndex, 'DocBlockVariableWrong');
+		$fix = $phpCsFile->addFixableError($error, $docBlockEndIndex, 'TypeFixable');
 		if (!$fix) {
 			return;
 		}
@@ -209,7 +213,7 @@ class DocBlockVarSniff extends AbstractSniff {
 		}
 
 		$error .= ', type `' . $defaultValueType . '` detected';
-		$fix = $phpCsFile->addFixableError($error, $varIndex, 'VarTypeWrong');
+		$fix = $phpCsFile->addFixableError($error, $varIndex, 'TypeDetected');
 		if (!$fix) {
 			return;
 		}

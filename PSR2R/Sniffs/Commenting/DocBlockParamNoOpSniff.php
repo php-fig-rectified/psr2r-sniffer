@@ -6,21 +6,12 @@ use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
- * Warn about `@param null $var` etc as a null/true/false would be a NO-OP.
+ * Warn about `@param null $var ` etc as a null/true/false would be a NO-OP.
  *
  * @author Mark Scherer
  * @license MIT
  */
 class DocBlockParamNoOpSniff extends AbstractSniff {
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
-	}
 
 	/**
 	 * @inheritDoc
@@ -40,7 +31,7 @@ class DocBlockParamNoOpSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@param'])) {
+			if ($tokens[$i]['content'] !== '@param') {
 				continue;
 			}
 
@@ -52,10 +43,8 @@ class DocBlockParamNoOpSniff extends AbstractSniff {
 
 			$content = $tokens[$classNameIndex]['content'];
 
-			$appendix = '';
 			$spaceIndex = strpos($content, ' ');
 			if ($spaceIndex) {
-				$appendix = substr($content, $spaceIndex);
 				$content = substr($content, 0, $spaceIndex);
 			}
 			if (empty($content) || strpos($content, '|') !== false) {
@@ -66,9 +55,19 @@ class DocBlockParamNoOpSniff extends AbstractSniff {
 				continue;
 			}
 
-			$error = 'Possible doc block error: `' . $content . '` as only param type does not seem right. Makes this a no-op.';
-			$phpCsFile->addWarning($error, $i);
+			$error = 'Possible doc block error: `' . $content .
+				'` as only param type does not seem right. Makes this a no-op.';
+			$phpCsFile->addWarning($error, $i, 'ParamNoOp');
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
 	}
 
 }

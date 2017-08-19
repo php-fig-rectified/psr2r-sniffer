@@ -27,13 +27,6 @@ class SingleQuoteSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_CONSTANT_ENCAPSED_STRING];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -50,13 +43,21 @@ class SingleQuoteSniff extends AbstractSniff {
 			// regex: odd number of backslashes, not followed by double quote or dollar
 			&& !preg_match('/(?<!\\\\)(?:\\\\{2})*\\\\(?!["$\\\\])/', $content)
 		) {
-			$fix = $phpcsFile->addFixableError('Use single instead of double quotes for simple strings.', $stackPtr, 'NoDoubleQuotes');
+			$fix = $phpcsFile->addFixableError('Use single instead of double quotes for simple strings.', $stackPtr,
+				'UseSingleQuote');
 			if ($fix) {
 				$content = substr($content, 1, -1);
 				$content = str_replace(['\\"', '\\$'], ['"', '$'], $content);
 				$phpcsFile->fixer->replaceToken($stackPtr, '\'' . $content . '\'');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_CONSTANT_ENCAPSED_STRING];
 	}
 
 }

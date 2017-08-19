@@ -16,32 +16,32 @@ class CommaSpacingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_COMMA];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 		$this->checkNext($phpcsFile, $stackPtr, $next);
 
-		$previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		$previous = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 
-		if ($tokens[$previous]['code'] !== T_WHITESPACE && ($previous !== $stackPtr - 1)) {
+		if (($previous !== $stackPtr - 1) && $tokens[$previous]['code'] !== T_WHITESPACE) {
 			if ($tokens[$previous]['code'] === T_COMMA) {
 				return;
 			}
 
 			$error = 'Space before comma, expected none, though';
-			$fix = $phpcsFile->addFixableError($error, $previous, 'InvalidCommaBefore');
+			$fix = $phpcsFile->addFixableError($error, $previous, 'SpaceBeforeComma');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($previous + 1, '');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_COMMA];
 	}
 
 	/**
@@ -56,14 +56,14 @@ class CommaSpacingSniff implements Sniff {
 		// Closing inline array should not have a comma before
 		if ($tokens[$next]['code'] === T_CLOSE_SHORT_ARRAY && $tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
 			$error = 'Invalid comma before closing inline array end `]`.';
-			$fix = $phpcsFile->addFixableError($error, $next, 'InvalidCommaInline');
+			$fix = $phpcsFile->addFixableError($error, $next, 'InvalidComma');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr, '');
 			}
 			return;
 		}
 
-		if ($tokens[$next]['code'] !== T_WHITESPACE && ($next !== $stackPtr + 2)) {
+		if (($next !== $stackPtr + 2) && $tokens[$next]['code'] !== T_WHITESPACE) {
 			// Last character in a line is ok.
 			if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
 				return;
@@ -75,7 +75,7 @@ class CommaSpacingSniff implements Sniff {
 			}
 
 			$error = 'Missing space after comma';
-			$fix = $phpcsFile->addFixableError($error, $next, 'MissingCommaAfter');
+			$fix = $phpcsFile->addFixableError($error, $next, 'MissingCommaSpace');
 			if ($fix) {
 				$phpcsFile->fixer->addContent($stackPtr, ' ');
 			}

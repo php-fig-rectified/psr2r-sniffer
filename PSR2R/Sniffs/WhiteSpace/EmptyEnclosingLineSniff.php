@@ -16,17 +16,6 @@ class EmptyEnclosingLineSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-			T_TRAIT,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$errorData = [strtolower($tokens[$stackPtr]['content'])];
@@ -40,7 +29,7 @@ class EmptyEnclosingLineSniff implements Sniff {
 		$curlyBraceStartIndex = $tokens[$stackPtr]['scope_opener'];
 		$curlyBraceEndIndex = $tokens[$stackPtr]['scope_closer'];
 
-		$lastContentIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($curlyBraceEndIndex - 1), $stackPtr, true);
+		$lastContentIndex = $phpcsFile->findPrevious(T_WHITESPACE, $curlyBraceEndIndex - 1, $stackPtr, true);
 
 		if ($lastContentIndex === $curlyBraceStartIndex) {
 			// Single new line for empty classes
@@ -69,7 +58,7 @@ class EmptyEnclosingLineSniff implements Sniff {
 			$phpcsFile->recordMetric($stackPtr, 'Class closing brace placement', 'lines');
 			$error = 'Closing brace of a %s must have a new line between itself and the last content.';
 
-			$fix = $phpcsFile->addFixableError($error, $curlyBraceEndIndex, 'CloseBraceNewLine', $errorData);
+			$fix = $phpcsFile->addFixableError($error, $curlyBraceEndIndex, 'CloseBraceNewLine2', $errorData);
 			if ($fix === true) {
 				if ($braceLine < $contentLine + 2) {
 					$phpcsFile->fixer->addNewlineBefore($curlyBraceEndIndex);
@@ -78,6 +67,17 @@ class EmptyEnclosingLineSniff implements Sniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+			T_TRAIT,
+		];
 	}
 
 }

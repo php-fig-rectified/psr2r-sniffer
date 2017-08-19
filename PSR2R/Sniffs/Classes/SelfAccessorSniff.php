@@ -19,13 +19,6 @@ class SelfAccessorSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_SELF, T_CLASS, T_INTERFACE, T_TRAIT];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -40,7 +33,7 @@ class SelfAccessorSniff extends AbstractSniff {
 		}
 		$endIndex = $tokens[$stackPtr]['scope_closer'];
 
-		$nameIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+		$nameIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		if ($tokens[$nameIndex]['code'] !== T_STRING) {
 			return;
 		}
@@ -61,6 +54,13 @@ class SelfAccessorSniff extends AbstractSniff {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_SELF, T_CLASS, T_INTERFACE, T_TRAIT];
+	}
+
+	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @return void
@@ -73,7 +73,7 @@ class SelfAccessorSniff extends AbstractSniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError('Expected `self::`, got `' . $content . '::`', $stackPtr, 'SelfToStatic');
+		$fix = $phpcsFile->addFixableError('Expected `self::`, got `' . $content . '::`', $stackPtr, 'ExpectedSelf1');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr, 'self');
 		}
@@ -88,37 +88,16 @@ class SelfAccessorSniff extends AbstractSniff {
 	protected function checkNew(File $phpcsFile, $i, $name) {
 		$tokens = $phpcsFile->getTokens();
 
-		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
+		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $i + 1, null, true);
 		if ($tokens[$nextIndex]['code'] !== T_STRING) {
 			return;
 		}
-		$openingBraceIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextIndex + 1), null, true);
+		$openingBraceIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $nextIndex + 1, null, true);
 		if ($tokens[$openingBraceIndex]['code'] !== T_OPEN_PARENTHESIS) {
 			return;
 		}
 
 		$this->fixNameToSelf($phpcsFile, $nextIndex, $name);
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param int $i
-	 * @param string $name
-	 * @return void
-	 */
-	protected function checkDoubleColon(File $phpcsFile, $i, $name) {
-		$tokens = $phpcsFile->getTokens();
-
-		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($i - 1), null, true);
-		if ($tokens[$prevIndex]['code'] !== T_STRING) {
-			return;
-		}
-		$possibleSeparatorIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prevIndex - 1), null, true);
-		if ($tokens[$possibleSeparatorIndex]['code'] === T_NS_SEPARATOR) {
-			return;
-		}
-
-		$this->fixNameToSelf($phpcsFile, $prevIndex, $name);
 	}
 
 	/**
@@ -136,10 +115,31 @@ class SelfAccessorSniff extends AbstractSniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError('Expected `self::`, got `' . $content . '::`', $index, 'DoubleColon');
+		$fix = $phpcsFile->addFixableError('Expected `self::`, got `' . $content . '::`', $index, 'ExpectedSelf2');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($index, 'self');
 		}
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $i
+	 * @param string $name
+	 * @return void
+	 */
+	protected function checkDoubleColon(File $phpcsFile, $i, $name) {
+		$tokens = $phpcsFile->getTokens();
+
+		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $i - 1, null, true);
+		if ($tokens[$prevIndex]['code'] !== T_STRING) {
+			return;
+		}
+		$possibleSeparatorIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $prevIndex - 1, null, true);
+		if ($tokens[$possibleSeparatorIndex]['code'] === T_NS_SEPARATOR) {
+			return;
+		}
+
+		$this->fixNameToSelf($phpcsFile, $prevIndex, $name);
 	}
 
 }

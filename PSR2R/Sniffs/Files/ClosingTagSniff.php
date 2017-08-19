@@ -23,22 +23,15 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  *
  * Checks that the file does not end with a closing tag.
  *
- * @author Greg Sherwood <gsherwood@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  *
- * @version Release: @package_version@
+ * @version   Release: @package_version@
  *
- * @link http://pear.php.net/package/PHP_CodeSniffer
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class ClosingTagSniff implements Sniff {
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_OPEN_TAG];
-	}
 
 	/**
 	 * @inheritDoc
@@ -47,6 +40,7 @@ class ClosingTagSniff implements Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		// Make sure this file only contains PHP code.
+		/* @noinspection ForeachInvariantsInspection */
 		for ($i = 0; $i < $phpcsFile->numTokens; $i++) {
 			if ($tokens[$i]['code'] === T_INLINE_HTML
 				&& trim($tokens[$i]['content']) !== ''
@@ -76,6 +70,13 @@ class ClosingTagSniff implements Sniff {
 
 		// Ignore the rest of the file.
 		return $phpcsFile->numTokens;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_OPEN_TAG];
 	}
 
 }

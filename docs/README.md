@@ -107,6 +107,51 @@ php phpunit.phar tests/Sniffs/FolderName/SnifferNameSniffTest.php
 
 You can also test specific methods per Test file using `--filter=testNameOfMethodTest` etc.
 
+### The Testing Structure
+
+`phpunit.xml.dist` has two sections of test suites.
+
+* Standard PHPUnit-style unit tests are in `tests/Sniffs`. Fixtures for these tests are in
+`tests/files`. These fixtures are currently unused but can be examined as examples.
+* PHP_CodeSniffer-style unit tests are in `tests/PSR2R`. The rest of this section describes
+this structure.
+
+The latter test suite runs via `tests/AllTests.php`. Each unit tests extends
+`tests/PSR2R/Base/AbstractBase.php`. All unit tests reside in
+`tests/PSR2R/Tests`.
+
+#### PHP_CodeSniffer Testing Structure
+
+The PHP_CodeSniffer project intermingles its unit tests and sniffs. Each standards category
+has directories for Docs, Sniffs, Tests. Each of those three directories has folders by
+section. Using the standard `Squiz.Arrays.ArrayBracketSpacing` as an example, we find in
+`PHP_CodeSniffer/src/Standards/Squiz/`:
+
+* `Docs/Arrays/ArrayBracketSpacingStandard.xml` provides documentation on the standard:
+"When referencing arrays you should not put whitespace around the opening bracket or
+before the closing bracket." along with sample valid and invalid usage.
+* `Sniffs/Arrays/ArrayBracketSpacingSniff.php` implements the standard.
+* `Tests/Arrays/ArrayBracketSpacingUnitTest.php` is the unit test. It provides lists of
+line numbers: For each error or warning, the line number and number of errors/warnings
+expected on that line of the test fixture. The test fixture is the same name as the
+unit test with file extension `.inc` rather than `.php`.
+* For errors deemed fixable, there is a second fixture with extension `.inc.fixed`. This
+is what the file should look like after being fixed.
+
+See `Squiz/Tests/Arrays/ArrayDeclarationUnitTest.php` for an example of using multiple
+fixtures. The fixtures are the same name with extensions `.1.inc`, `.1.inc.fixed`,
+`.2.inc`, `.2.inc.fixed`, and so on. The unit test uses a `switch` statement based on
+fixture file name.
+
+#### PSR2R-Sniffer Testing Structure
+
+This project follows the same structure except that the tests are in `tests/` rather
+than being mixed in with the Sniffs.
+
+### Please also add docs.
+
+This coding standard is more useful and more easily adopted if we create the explanation
+for each sniff, like with the `ArrayBracketSpacingStandard.xml` described above.
 
 ### Running own sniffs on this project
 There is a convenience script to run all sniffs for this repository:

@@ -14,14 +14,6 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		// We skip T_FOR, T_WHILE for now as they can have valid inline assignment
-		return [T_FOREACH, T_IF, T_SWITCH, T_OBJECT_OPERATOR, T_DOUBLE_COLON];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['code'] === T_OBJECT_OPERATOR || $tokens[$stackPtr]['code'] === T_DOUBLE_COLON) {
@@ -33,6 +25,14 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		// We skip T_FOR, T_WHILE for now as they can have valid inline assignment
+		return [T_FOREACH, T_IF, T_SWITCH, T_OBJECT_OPERATOR, T_DOUBLE_COLON];
+	}
+
+	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @return void
@@ -40,7 +40,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	protected function checkMethodCalls(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$openingBraceIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($stackPtr + 1), $stackPtr + 4);
+		$openingBraceIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1, $stackPtr + 4);
 		if (!$openingBraceIndex) {
 			return;
 		}
@@ -55,7 +55,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 			return;
 		}
 
-		$phpcsFile->addError('Inline assignment not allowed', $stackPtr, 'InlineAssignmentIllegal');
+		$phpcsFile->addError('Inline assignment not allowed', $stackPtr, 'InlineNotAllowed');
 	}
 
 	/**
@@ -66,7 +66,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	protected function checkConditions($phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$openingBraceIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+		$openingBraceIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		if (!$openingBraceIndex) {
 			return;
 		}
@@ -81,8 +81,10 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 			return;
 		}
 
-		$phpcsFile->addError('Conditional inline assignment not allowed', $stackPtr, 'InlineAssignment');
+		$phpcsFile->addError('Conditional inline assignment not allowed', $stackPtr, 'ConditionalInlineNotAllowed');
 	}
+
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * //TODO: activate

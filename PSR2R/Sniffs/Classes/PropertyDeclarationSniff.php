@@ -9,13 +9,13 @@ use PHP_CodeSniffer\Util\Tokens;
 /**
  * Verifies that properties are declared correctly.
  *
- * @author Greg Sherwood <gsherwood@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  *
- * @version Release: @package_version@
+ * @version   Release: @package_version@
  *
- * @link http://pear.php.net/package/PHP_CodeSniffer
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PropertyDeclarationSniff extends AbstractVariableSniff {
 	/**
@@ -29,7 +29,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff {
 		// repeat errors.
 		$find = Tokens::$scopeModifiers;
 		$find = array_merge($find, [T_VARIABLE, T_VAR, T_SEMICOLON]);
-		$prev = $phpcsFile->findPrevious($find, ($stackPtr - 1));
+		$prev = $phpcsFile->findPrevious($find, $stackPtr - 1);
 		if ($tokens[$prev]['code'] === T_VARIABLE) {
 			return;
 		}
@@ -39,7 +39,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff {
 			$phpcsFile->addError($error, $stackPtr, 'VarUsed');
 		}
 
-		$next = $phpcsFile->findNext([T_VARIABLE, T_SEMICOLON], ($stackPtr + 1));
+		$next = $phpcsFile->findNext([T_VARIABLE, T_SEMICOLON], $stackPtr + 1);
 		if ($tokens[$next]['code'] === T_VARIABLE) {
 			$error = 'There must not be more than one property declared per statement';
 			$phpcsFile->addError($error, $stackPtr, 'Multiple');

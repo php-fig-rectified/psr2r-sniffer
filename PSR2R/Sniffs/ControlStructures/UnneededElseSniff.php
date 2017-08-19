@@ -16,13 +16,6 @@ class UnneededElseSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_ELSE, T_ELSEIF];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -30,28 +23,29 @@ class UnneededElseSniff extends AbstractSniff {
 			return;
 		}
 
-		$prevScopeEndIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		$prevScopeEndIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 		if (!$prevScopeEndIndex || empty($tokens[$prevScopeEndIndex]['scope_opener'])) {
 			return;
 		}
 
 		$scopeStartIndex = $tokens[$prevScopeEndIndex]['scope_opener'];
 
-		$prevParenthesisEndIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($scopeStartIndex - 1), null, true);
+		$prevParenthesisEndIndex = $phpcsFile->findPrevious(T_WHITESPACE, $scopeStartIndex - 1, null, true);
 		$parenthesisStartIndex = $tokens[$prevParenthesisEndIndex]['parenthesis_opener'];
 
-		$prevConditionIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($parenthesisStartIndex - 1), null, true);
+		$prevConditionIndex = $phpcsFile->findPrevious(T_WHITESPACE, $parenthesisStartIndex - 1, null, true);
 		// We only do trivial fixes right now
 		if ($tokens[$prevConditionIndex]['code'] !== T_IF) {
 			return;
 		}
 
-		$prevScopeLastTokenIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($prevScopeEndIndex - 1), null, true);
+		$prevScopeLastTokenIndex = $phpcsFile->findPrevious(T_WHITESPACE, $prevScopeEndIndex - 1, null, true);
 		if ($tokens[$prevScopeLastTokenIndex]['type'] !== 'T_SEMICOLON') {
 			return;
 		}
 
-		$returnEarlyIndex = $phpcsFile->findPrevious([T_RETURN, T_CONTINUE, T_BREAK], ($prevScopeLastTokenIndex - 1), $scopeStartIndex + 1);
+		$returnEarlyIndex = $phpcsFile->findPrevious([T_RETURN, T_CONTINUE, T_BREAK], $prevScopeLastTokenIndex - 1,
+			$scopeStartIndex + 1);
 		if (!$returnEarlyIndex) {
 			return;
 		}
@@ -62,7 +56,8 @@ class UnneededElseSniff extends AbstractSniff {
 			}
 		}
 
-		$fix = $phpcsFile->addFixableError('Unneeded ' . $tokens[$stackPtr]['type'] . ' detected.', $stackPtr, 'Unneeded');
+		$fix = $phpcsFile->addFixableError('Unneeded ' . $tokens[$stackPtr]['type'] . ' detected.', $stackPtr,
+			'UnneededElse');
 		if (!$fix) {
 			return;
 		}
@@ -74,7 +69,7 @@ class UnneededElseSniff extends AbstractSniff {
 
 		$phpcsFile->fixer->beginChangeset();
 
-		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 		//$indentationLevel = $tokens[$prevIndex]['column'] - 1;
 		$line = $tokens[$prevIndex]['line'];
 
@@ -93,7 +88,7 @@ class UnneededElseSniff extends AbstractSniff {
 			$phpcsFile->fixer->replaceToken($i, '');
 		}
 
-		$prevEndIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($nextScopeEndIndex - 1), null, true);
+		$prevEndIndex = $phpcsFile->findPrevious(T_WHITESPACE, $nextScopeEndIndex - 1, null, true);
 
 		$phpcsFile->fixer->replaceToken($nextScopeStartIndex, '');
 		$phpcsFile->fixer->replaceToken($nextScopeEndIndex, '');
@@ -116,6 +111,13 @@ class UnneededElseSniff extends AbstractSniff {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_ELSE, T_ELSEIF];
+	}
+
+	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @return bool
@@ -130,9 +132,9 @@ class UnneededElseSniff extends AbstractSniff {
 
 		$nextScopeEndIndex = $tokens[$stackPtr]['scope_closer'];
 
-		$nextConditionStartIndex = $phpcsFile->findNext(T_WHITESPACE, ($nextScopeEndIndex - 1), null, true);
+		$nextConditionStartIndex = $phpcsFile->findNext(T_WHITESPACE, $nextScopeEndIndex - 1, null, true);
 
-		if (in_array($tokens[$nextConditionStartIndex]['code'], [T_ELSEIF, T_ELSE])) {
+		if (in_array($tokens[$nextConditionStartIndex]['code'], [T_ELSEIF, T_ELSE], true)) {
 			return true;
 		}
 
@@ -149,7 +151,7 @@ class UnneededElseSniff extends AbstractSniff {
 
 		$phpcsFile->fixer->beginChangeset();
 
-		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 		$indentationLevel = $tokens[$prevIndex]['column'] - 1;
 		$indentationCharacter = $this->getIndentationCharacter($this->getIndentationWhitespace($phpcsFile, $prevIndex));
 

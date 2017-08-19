@@ -22,11 +22,11 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  *
  * Ensures all switch statements are defined correctly.
  *
- * @author Greg Sherwood <gsherwood@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version Release: @package_version@
- * @link http://pear.php.net/package/PHP_CodeSniffer
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version   Release: @package_version@
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class SwitchDeclarationSniff implements Sniff {
 
@@ -36,13 +36,6 @@ class SwitchDeclarationSniff implements Sniff {
 	 * @var int
 	 */
 	public $indent = 4;
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_SWITCH];
-	}
 
 	/**
 	 * @inheritDoc
@@ -63,25 +56,20 @@ class SwitchDeclarationSniff implements Sniff {
 		$switch = $tokens[$stackPtr];
 		$nextCase = $stackPtr;
 		$caseAlignment = ($switch['column'] + $this->indent);
-		$caseCount = 0;
-		$foundDefault = false;
 
-		while (($nextCase = $this->findNextCase($phpcsFile, ($nextCase + 1), $switch['scope_closer'])) !== false) {
+		while (($nextCase = $this->findNextCase($phpcsFile, $nextCase + 1, $switch['scope_closer'])) !== false) {
+			$type = 'case';
 			if ($tokens[$nextCase]['code'] === T_DEFAULT) {
 				$type = 'default';
-				$foundDefault = true;
-			} else {
-				$type = 'case';
-				$caseCount++;
 			}
 
 			if ($tokens[$nextCase]['content'] !== strtolower($tokens[$nextCase]['content'])) {
 				$expected = strtolower($tokens[$nextCase]['content']);
 				$error = strtoupper($type) . ' keyword must be lowercase; expected "%s" but found "%s"';
 				$data = [
-							 $expected,
-							 $tokens[$nextCase]['content'],
-							];
+					$expected,
+					$tokens[$nextCase]['content'],
+				];
 
 				$fix = $phpcsFile->addFixableError($error, $nextCase, $type . 'NotLower', $data);
 				if ($fix === true) {
@@ -90,36 +78,34 @@ class SwitchDeclarationSniff implements Sniff {
 			}
 
 			if ($type === 'case'
-				&& ($tokens[($nextCase + 1)]['code'] !== T_WHITESPACE
-				|| $tokens[($nextCase + 1)]['content'] !== ' ')
+				&& ($tokens[$nextCase + 1]['code'] !== T_WHITESPACE
+					|| $tokens[$nextCase + 1]['content'] !== ' ')
 			) {
 				$error = 'CASE keyword must be followed by a single space';
 				$fix = $phpcsFile->addFixableError($error, $nextCase, 'SpacingAfterCase');
 				if ($fix === true) {
-					if ($tokens[($nextCase + 1)]['code'] !== T_WHITESPACE) {
+					if ($tokens[$nextCase + 1]['code'] !== T_WHITESPACE) {
 						$phpcsFile->fixer->addContent($nextCase, ' ');
 					} else {
-						$phpcsFile->fixer->replaceToken(($nextCase + 1), ' ');
+						$phpcsFile->fixer->replaceToken($nextCase + 1, ' ');
 					}
 				}
 			}
 
 			$opener = $tokens[$nextCase]['scope_opener'];
 			if ($tokens[$opener]['code'] === T_COLON) {
-				if ($tokens[($opener - 1)]['code'] === T_WHITESPACE) {
+				if ($tokens[$opener - 1]['code'] === T_WHITESPACE) {
 					$error = 'There must be no space before the colon in a ' . strtoupper($type) . ' statement';
 					$fix = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon' . strtoupper($type));
 					if ($fix === true) {
-						$phpcsFile->fixer->replaceToken(($opener - 1), '');
+						$phpcsFile->fixer->replaceToken($opener - 1, '');
 					}
 				}
 
-				$next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
-				if ($tokens[$next]['line'] === $tokens[$opener]['line']
-					&& $tokens[$next]['code'] === T_COMMENT
-				) {
+				$next = $phpcsFile->findNext(T_WHITESPACE, $opener + 1, null, true);
+				if ($tokens[$next]['code'] === T_COMMENT && $tokens[$next]['line'] === $tokens[$opener]['line']) {
 					// Skip comments on the same line.
-					$next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
+					$next = $phpcsFile->findNext(T_WHITESPACE, $next + 1, null, true);
 				}
 
 				if ($tokens[$next]['line'] !== ($tokens[$opener]['line'] + 1)) {
@@ -127,7 +113,7 @@ class SwitchDeclarationSniff implements Sniff {
 					$fix = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon' . strtoupper($type));
 					if ($fix === true) {
 						if ($tokens[$next]['line'] === $tokens[$opener]['line']) {
-							$padding = str_repeat(' ', ($caseAlignment + $this->indent - 1));
+							$padding = str_repeat(' ', $caseAlignment + $this->indent - 1);
 							$phpcsFile->fixer->addContentBefore($next, $phpcsFile->eolChar . $padding);
 						} else {
 							$phpcsFile->fixer->beginChangeset();
@@ -139,7 +125,7 @@ class SwitchDeclarationSniff implements Sniff {
 								$phpcsFile->fixer->replaceToken($i, '');
 							}
 
-							$phpcsFile->fixer->addNewLineBefore($i);
+							$phpcsFile->fixer->addNewlineBefore($i);
 							$phpcsFile->fixer->endChangeset();
 						}
 					}
@@ -154,12 +140,12 @@ class SwitchDeclarationSniff implements Sniff {
 				// Only need to check some things once, even if the
 				// closer is shared between multiple case statements, or even
 				// the default case.
-				$prev = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCloser - 1), $nextCase, true);
+				$prev = $phpcsFile->findPrevious(T_WHITESPACE, $nextCloser - 1, $nextCase, true);
 				if ($tokens[$prev]['line'] === $tokens[$nextCloser]['line']) {
 					$error = 'Terminating statement must be on a line by itself';
 					$fix = $phpcsFile->addFixableError($error, $nextCloser, 'BreakNotNewLine');
 					if ($fix === true) {
-						$phpcsFile->fixer->addNewLine($prev);
+						$phpcsFile->fixer->addNewline($prev);
 						$phpcsFile->fixer->replaceToken($nextCloser, trim($tokens[$nextCloser]['content']));
 					}
 				} else {
@@ -171,7 +157,7 @@ class SwitchDeclarationSniff implements Sniff {
 							if ($diff > 0) {
 								$phpcsFile->fixer->addContentBefore($nextCloser, str_repeat(' ', $diff));
 							} else {
-								$phpcsFile->fixer->substrToken(($nextCloser - 1), 0, $diff);
+								$phpcsFile->fixer->substrToken($nextCloser - 1, 0, $diff);
 							}
 						}
 					}
@@ -184,7 +170,7 @@ class SwitchDeclarationSniff implements Sniff {
 			}
 
 			$nextCode = $phpcsFile->findNext(T_WHITESPACE,
-				($tokens[$nextCase]['scope_opener'] + 1),
+				$tokens[$nextCase]['scope_opener'] + 1,
 				$nextCloser,
 				true);
 
@@ -192,9 +178,9 @@ class SwitchDeclarationSniff implements Sniff {
 				// This case statement has content. If the next case or default comes
 				// before the closer, it means we dont have a terminating statement
 				// and instead need a comment.
-				$nextCode = $this->findNextCase($phpcsFile, ($tokens[$nextCase]['scope_opener'] + 1), $nextCloser);
+				$nextCode = $this->findNextCase($phpcsFile, $tokens[$nextCase]['scope_opener'] + 1, $nextCloser);
 				if ($nextCode !== false) {
-					$prevCode = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCode - 1), $nextCase, true);
+					$prevCode = $phpcsFile->findPrevious(T_WHITESPACE, $nextCode - 1, $nextCase, true);
 					if ($tokens[$prevCode]['code'] !== T_COMMENT) {
 						$error = 'There must be a comment when fall-through is intentional in a non-empty case body';
 						$phpcsFile->addError($error, $nextCase, 'TerminatingComment');
@@ -205,15 +191,22 @@ class SwitchDeclarationSniff implements Sniff {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_SWITCH];
+	}
+
+	/**
 	 * Find the next CASE or DEFAULT statement from a point in the file.
 	 *
 	 * Note that nested switches are ignored.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
-	 * @param int $stackPtr The position to start looking at.
+	 * @param int|bool $stackPtr The position to start looking at.
 	 * @param int $end The position to stop looking at.
 	 *
-	 * @return int | bool
+	 * @return int|bool
 	 */
 	protected function findNextCase(File $phpcsFile, $stackPtr, $end) {
 		$tokens = $phpcsFile->getTokens();

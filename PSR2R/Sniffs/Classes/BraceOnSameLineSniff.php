@@ -16,18 +16,6 @@ class BraceOnSameLineSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-			T_TRAIT,
-			T_FUNCTION
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$errorData = [strtolower($tokens[$stackPtr]['content'])];
@@ -37,7 +25,7 @@ class BraceOnSameLineSniff implements Sniff {
 		}
 
 		$curlyBrace = $tokens[$stackPtr]['scope_opener'];
-		$lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($curlyBrace - 1), $stackPtr, true);
+		$lastContent = $phpcsFile->findPrevious(T_WHITESPACE, $curlyBrace - 1, $stackPtr, true);
 		$classLine = $tokens[$lastContent]['line'];
 		$braceLine = $tokens[$curlyBrace]['line'];
 		if ($braceLine !== $classLine) {
@@ -57,6 +45,18 @@ class BraceOnSameLineSniff implements Sniff {
 
 			return;
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+			T_TRAIT,
+			T_FUNCTION,
+		];
 	}
 
 }

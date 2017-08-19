@@ -20,11 +20,11 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Ensures doc blocks follow basic formatting.
  *
- * @author Greg Sherwood <gsherwood@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version Release: @package_version@
- * @link http://pear.php.net/package/PHP_CodeSniffer
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version   Release: @package_version@
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class DocCommentSniff extends AbstractSniff {
 
@@ -41,15 +41,14 @@ class DocCommentSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_DOC_COMMENT_OPEN_TAG];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
+
+		// Skip for PhpStorm markers which must remain as inline comments
+		if ($this->isPhpStormMarker($phpcsFile, $stackPtr)) {
+			return;
+		}
+
 		$commentStart = $stackPtr;
 		$commentEnd = $tokens[$stackPtr]['comment_closer'];
 
@@ -65,7 +64,7 @@ class DocCommentSniff extends AbstractSniff {
 			T_DOC_COMMENT_STAR,
 		];
 
-		$short = $phpcsFile->findNext($empty, ($stackPtr + 1), $commentEnd, true);
+		$short = $phpcsFile->findNext($empty, $stackPtr + 1, $commentEnd, true);
 		if ($short === false) {
 			return;
 		}
@@ -86,7 +85,7 @@ class DocCommentSniff extends AbstractSniff {
 		}
 
 		// The last line of the comment should just be the */ code.
-		$prev = $phpcsFile->findPrevious($empty, ($commentEnd - 1), $stackPtr, true);
+		$prev = $phpcsFile->findPrevious($empty, $commentEnd - 1, $stackPtr, true);
 		if ($tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
 			$error = 'The close comment tag must be the only content on the line';
 			$fix = $phpcsFile->addFixableError($error, $commentEnd, 'ContentBeforeClose');
@@ -110,7 +109,7 @@ class DocCommentSniff extends AbstractSniff {
 			if ($fix === true) {
 				$phpcsFile->fixer->beginChangeset();
 				for ($i = ($prev + 1); $i < $commentEnd; $i++) {
-					if ($tokens[($i + 1)]['line'] === $tokens[$commentEnd]['line']) {
+					if ($tokens[$i + 1]['line'] === $tokens[$commentEnd]['line']) {
 						break;
 					}
 
@@ -167,7 +166,7 @@ class DocCommentSniff extends AbstractSniff {
 			return;
 		}
 
-		$prev = $phpcsFile->findPrevious($empty, ($firstTag - 1), $stackPtr, true);
+		$prev = $phpcsFile->findPrevious($empty, $firstTag - 1, $stackPtr, true);
 		if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)) {
 			$error = 'There must be exactly one blank line before the tags in a doc comment';
 			$fix = $phpcsFile->addFixableError($error, $firstTag, 'SpacingBeforeTags');
@@ -186,6 +185,13 @@ class DocCommentSniff extends AbstractSniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_DOC_COMMENT_OPEN_TAG];
 	}
 
 }

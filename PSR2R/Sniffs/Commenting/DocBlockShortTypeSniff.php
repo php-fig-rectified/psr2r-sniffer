@@ -8,23 +8,10 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Use short types for boolean and integer in doc blocks.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class DocBlockShortTypeSniff extends AbstractSniff {
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-			T_TRAIT,
-			T_FUNCTION,
-			T_VARIABLE,
-		];
-	}
 
 	/**
 	 * @inheritDoc
@@ -44,7 +31,7 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@return', '@param'])) {
+			if (!in_array($tokens[$i]['content'], ['@return', '@param'], true)) {
 				continue;
 			}
 
@@ -71,6 +58,21 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 			$this->fixParts($phpCsFile, $classNameIndex, $parts, $appendix);
 		}
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+			T_TRAIT,
+			T_FUNCTION,
+			T_VARIABLE,
+		];
+	}
+
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
@@ -105,7 +107,7 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 			$message[] = $part . ' => ' . $useStatement;
 		}
 
-		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'LongTypeInvalid');
+		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'ShortType');
 		if ($fix) {
 			$newContent = implode('|', $parts);
 			$phpCsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);

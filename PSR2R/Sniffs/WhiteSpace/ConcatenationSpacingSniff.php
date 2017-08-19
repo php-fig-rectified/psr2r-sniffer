@@ -29,25 +29,18 @@ class ConcatenationSpacingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_STRING_CONCAT];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 
-		if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+		if ($tokens[$stackPtr - 1]['code'] !== T_WHITESPACE) {
 			$message = 'Expected 1 space before ., but 0 found';
 			$phpcsFile->addFixableError($message, $stackPtr, 'MissingBefore');
 			$this->addSpace($phpcsFile, $stackPtr - 1);
 		} else {
 			$content = $tokens[$stackPtr - 1]['content'];
-			if ($tokens[$prevIndex]['line'] === $tokens[$stackPtr]['line'] && $content !== ' ') {
+			if ($content !== ' ' && $tokens[$prevIndex]['line'] === $tokens[$stackPtr]['line']) {
 				$message = 'Expected 1 space before `.`, but %d found';
 				$data = [strlen($content)];
 				$fix = $phpcsFile->addFixableError($message, $stackPtr, 'TooManyBefore', $data);
@@ -57,15 +50,15 @@ class ConcatenationSpacingSniff implements Sniff {
 			}
 		}
 
-		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 
-		if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+		if ($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE) {
 			$message = 'Expected 1 space after ., but 0 found';
 			$phpcsFile->addFixableError($message, $stackPtr, 'MissingAfter');
 			$this->addSpace($phpcsFile, $stackPtr);
 		} else {
-			$content = $tokens[($stackPtr + 1)]['content'];
-			if ($tokens[$nextIndex]['line'] === $tokens[$stackPtr]['line'] && $content !== ' ') {
+			$content = $tokens[$stackPtr + 1]['content'];
+			if ($content !== ' ' && $tokens[$nextIndex]['line'] === $tokens[$stackPtr]['line']) {
 				$message = 'Expected 1 space after `.`, but %d found';
 				$data = [strlen($content)];
 				$fix = $phpcsFile->addFixableError($message, $stackPtr, 'TooManyAfter', $data);
@@ -74,6 +67,13 @@ class ConcatenationSpacingSniff implements Sniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_STRING_CONCAT];
 	}
 
 	/**

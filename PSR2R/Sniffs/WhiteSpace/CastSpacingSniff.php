@@ -17,17 +17,10 @@ class CastSpacingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return array_merge(Tokens::$castTokens, [T_BOOLEAN_NOT]);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 
 		if ($nextIndex - $stackPtr === 1) {
 			return;
@@ -39,10 +32,18 @@ class CastSpacingSniff implements Sniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError('No whitespace should be between cast and variable.', $stackPtr, 'InvalidWhitespaceBetween');
+		$fix = $phpcsFile->addFixableError('No whitespace should be between cast and variable.', $stackPtr,
+			'CastWhitespace');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return array_merge(Tokens::$castTokens, [T_BOOLEAN_NOT]);
 	}
 
 }

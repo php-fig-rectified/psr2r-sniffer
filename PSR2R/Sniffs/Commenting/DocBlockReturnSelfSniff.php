@@ -16,21 +16,11 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-			T_TRAIT,
-			T_FUNCTION,
-			T_VARIABLE,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
+		if (($stackPointer > 1) && ($tokens[$stackPointer - 2]['type'] === 'T_STATIC')) {
+			return; // Skip static function declarations
+		}
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
 
@@ -44,7 +34,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@return'])) {
+			if ($tokens[$i]['content'] !== '@return') {
 				continue;
 			}
 
@@ -71,6 +61,21 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			$this->fixParts($phpCsFile, $classNameIndex, $parts, $appendix);
 		}
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+			T_TRAIT,
+			T_FUNCTION,
+			T_VARIABLE,
+		];
+	}
+
+	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
@@ -100,7 +105,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			$message[] = $part . ' => ' . $useStatement;
 		}
 
-		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'SelfInvalid');
+		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'ReturnSelf');
 		if ($fix) {
 			$newContent = implode('|', $parts);
 			$phpCsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);

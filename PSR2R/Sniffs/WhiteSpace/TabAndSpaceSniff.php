@@ -34,15 +34,8 @@ class TabAndSpaceSniff implements Sniff {
 	public $supportedTokenizers = [
 		'PHP',
 		'JS',
-		'CSS'
+		'CSS',
 	];
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_WHITESPACE];
-	}
 
 	/**
 	 * @inheritDoc
@@ -51,7 +44,7 @@ class TabAndSpaceSniff implements Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$line = $tokens[$stackPtr]['line'];
-		if ($stackPtr > 0 && $tokens[($stackPtr - 1)]['line'] !== $line) {
+		if ($stackPtr > 0 && $tokens[$stackPtr - 1]['line'] !== $line) {
 			return;
 		}
 
@@ -76,6 +69,13 @@ class TabAndSpaceSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($stackPtr, ' ');
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_WHITESPACE];
 	}
 
 }

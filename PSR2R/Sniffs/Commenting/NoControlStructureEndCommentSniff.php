@@ -13,17 +13,10 @@ class NoControlStructureEndCommentSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_COMMENT];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$possibleCurlyBracket = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), 0, true);
+		$possibleCurlyBracket = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, 0, true);
 		if ($possibleCurlyBracket === false || $tokens[$possibleCurlyBracket]['type'] !== 'T_CLOSE_CURLY_BRACKET') {
 			return;
 		}
@@ -36,8 +29,16 @@ class NoControlStructureEndCommentSniff implements Sniff {
 		$error = 'The unnecessary end comment must be removed';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'Unnecessary');
 		if ($fix === true) {
+			/* @noinspection NotOptimalRegularExpressionsInspection */
 			$phpcsFile->fixer->replaceToken($stackPtr, preg_replace('/[^\s]/', '', $content));
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_COMMENT];
 	}
 
 }

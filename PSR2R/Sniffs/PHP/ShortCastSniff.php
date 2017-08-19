@@ -8,7 +8,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Use short form of boolean and integer casts.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class ShortCastSniff implements Sniff {
@@ -24,23 +24,16 @@ class ShortCastSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_BOOL_CAST, T_INT_CAST, T_BOOLEAN_NOT];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['content'] === '!') {
-			$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+			$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 			if ($tokens[$prevIndex]['content'] !== '!') {
 				return;
 			}
 
-			$fix = $phpcsFile->addFixableError('`!!` cast not allowed, use `(bool)`', $stackPtr, 'DoubleCast');
+			$fix = $phpcsFile->addFixableError('`!!` cast not allowed, use `(bool)`', $stackPtr, 'DoubleNotCast');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($prevIndex, '');
 				$phpcsFile->fixer->replaceToken($stackPtr, '(bool)');
@@ -56,10 +49,18 @@ class ShortCastSniff implements Sniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError($content . ' found, expected ' . static::$matching[$key], $stackPtr, 'LongCastInvalid');
+		$fix = $phpcsFile->addFixableError($content . ' found, expected ' . static::$matching[$key], $stackPtr,
+			'ShortCast');
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr, static::$matching[$key]);
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_BOOL_CAST, T_INT_CAST, T_BOOLEAN_NOT];
 	}
 
 }

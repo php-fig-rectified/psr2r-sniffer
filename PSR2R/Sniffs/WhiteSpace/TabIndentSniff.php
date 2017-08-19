@@ -8,7 +8,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Check for any line starting with 4 spaces - which would indicate space indenting.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class TabIndentSniff implements Sniff {
@@ -21,15 +21,8 @@ class TabIndentSniff implements Sniff {
 	public $supportedTokenizers = [
 		'PHP',
 		'JS',
-		'CSS'
+		'CSS',
 	];
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_WHITESPACE, T_DOC_COMMENT_OPEN_TAG];
-	}
 
 	/**
 	 * @inheritDoc
@@ -46,7 +39,9 @@ class TabIndentSniff implements Sniff {
 			for ($i = $stackPtr + 1; $i < $tokens[$stackPtr]['comment_closer']; $i++) {
 				if ($tokens[$i]['code'] === 'PHPCS_T_DOC_COMMENT_WHITESPACE' && $tokens[$i]['column'] === 1) {
 					$this->fixTab($phpcsFile, $i, $tokens);
-				} elseif ($tokens[$i]['code'] === 'PHPCS_T_DOC_COMMENT_WHITESPACE') {
+				} /* @noinspection NotOptimalIfConditionsInspection */ elseif ($tokens[$i]['code'] ===
+					'PHPCS_T_DOC_COMMENT_WHITESPACE'
+				) {
 					$this->fixSpace($phpcsFile, $i, $tokens);
 				}
 			}
@@ -54,11 +49,18 @@ class TabIndentSniff implements Sniff {
 		}
 
 		$line = $tokens[$stackPtr]['line'];
-		if ($stackPtr > 0 && $tokens[($stackPtr - 1)]['line'] === $line) {
+		if ($stackPtr > 0 && $tokens[$stackPtr - 1]['line'] === $line) {
 			return;
 		}
 
 		$this->fixTab($phpcsFile, $stackPtr, $tokens);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_WHITESPACE, T_DOC_COMMENT_OPEN_TAG];
 	}
 
 	/**
@@ -77,7 +79,7 @@ class TabIndentSniff implements Sniff {
 
 		if ($tabs) {
 			$error = ($tabs * 4) . ' spaces found, expected ' . $tabs . ' tabs';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpacesInvalid');
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpacesFound');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr, str_repeat("\t", $tabs) . $content);
 			}
@@ -97,7 +99,7 @@ class TabIndentSniff implements Sniff {
 
 		if ($newContent !== $content) {
 			$error = 'Non-indentation (inline) tabs found, expected spaces';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'InlineTabInvalid');
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'TabsFound');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr, $newContent);
 			}

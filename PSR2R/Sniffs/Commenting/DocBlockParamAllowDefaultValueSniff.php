@@ -22,15 +22,6 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -52,7 +43,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@param'])) {
+			if ($tokens[$i]['content'] !== '@param') {
 				continue;
 			}
 
@@ -65,7 +56,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			$classNameIndex = $i + 2;
 
 			if ($tokens[$classNameIndex]['type'] !== 'T_DOC_COMMENT_STRING') {
-				$phpCsFile->addError('Missing type in param doc block', $i, 'TypeMissing');
+				$phpCsFile->addError('Missing type in param doc block', $i, 'CommentAllowDefault');
 				continue;
 			}
 
@@ -94,7 +85,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			if ($methodSignatureValue['typehintIndex']) {
 				$typeIndex = $methodSignatureValue['typehintIndex'];
 				$type = $tokens[$typeIndex]['content'];
-				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
+				if (!in_array($type, $pieces, false) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
 					$pieces[] = $type;
 					$error = 'Possible doc block error: `' . $content . '` seems to be missing type `' . $type . '`.';
 					$fix = $phpCsFile->addFixableError($error, $classNameIndex, 'Typehint');
@@ -107,7 +98,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 			if ($methodSignatureValue['default']) {
 				$type = $methodSignatureValue['default'];
 
-				if (!in_array($type, $pieces) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
+				if (!in_array($type, $pieces, false) && ($type !== 'array' || !$this->containsTypeArray($pieces))) {
 					$pieces[] = $type;
 					$error = 'Possible doc block error: `' . $content . '` seems to be missing type `' . $type . '`.';
 					$fix = $phpCsFile->addFixableError($error, $classNameIndex, 'Default');
@@ -118,6 +109,15 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
 	}
 
 }

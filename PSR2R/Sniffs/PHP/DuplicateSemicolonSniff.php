@@ -9,7 +9,7 @@ use PHP_CodeSniffer\Util\Tokens;
 /**
  * Makes sure there is no duplicate semicolon.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class DuplicateSemicolonSniff implements Sniff {
@@ -17,22 +17,15 @@ class DuplicateSemicolonSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_SEMICOLON];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		$previousIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+		$previousIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);
 		if (!$previousIndex || $tokens[$previousIndex]['code'] !== T_SEMICOLON) {
 			return;
 		}
 
-		$possibleForIndex = $phpcsFile->findPrevious(T_FOR, ($previousIndex - 1));
+		$possibleForIndex = $phpcsFile->findPrevious(T_FOR, $previousIndex - 1);
 		if ($possibleForIndex && $tokens[$possibleForIndex]['parenthesis_closer'] > $stackPtr) {
 			return;
 		}
@@ -51,6 +44,13 @@ class DuplicateSemicolonSniff implements Sniff {
 
 			$phpcsFile->fixer->endChangeset();
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_SEMICOLON];
 	}
 
 }

@@ -17,18 +17,11 @@ class DocBlockEndingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_DOC_COMMENT];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		// We are only interested in function/class/interface doc block comments.
-		$nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+		$nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		$ignore = [
 			T_CLASS,
 			T_INTERFACE,
@@ -38,11 +31,11 @@ class DocBlockEndingSniff implements Sniff {
 			T_PROTECTED,
 			T_STATIC,
 			T_ABSTRACT,
-			];
+		];
 
-		if (in_array($tokens[$nextToken]['code'], $ignore) === false) {
+		if (in_array($tokens[$nextToken]['code'], $ignore, true) === false) {
 			// Could be a file comment.
-			$prevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+			$prevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);
 			if ($tokens[$prevToken]['code'] !== T_OPEN_TAG) {
 				return;
 			}
@@ -50,17 +43,15 @@ class DocBlockEndingSniff implements Sniff {
 
 		// We only want to get the first comment in a block. If there is
 		// a comment on the line before this one, return.
-		$docComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($stackPtr - 1));
-		if ($docComment !== false) {
-			if ($tokens[$docComment]['line'] === ($tokens[$stackPtr]['line'] - 1)) {
-				return;
-			}
+		$docComment = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr - 1);
+		if (($docComment !== false) && ($tokens[$docComment]['line'] === ($tokens[$stackPtr]['line'] - 1))) {
+			return;
 		}
 
 		$comments = [$stackPtr];
 		$currentComment = $stackPtr;
 		$lastComment = $stackPtr;
-		while (($currentComment = $phpcsFile->findNext(T_DOC_COMMENT, ($currentComment + 1))) !== false) {
+		while (($currentComment = $phpcsFile->findNext(T_DOC_COMMENT, $currentComment + 1)) !== false) {
 			if ($tokens[$lastComment]['line'] === ($tokens[$currentComment]['line'] - 1)) {
 				$comments[] = $currentComment;
 				$lastComment = $currentComment;
@@ -70,12 +61,11 @@ class DocBlockEndingSniff implements Sniff {
 		}
 
 		// The $comments array now contains pointers to each token in the comment block.
-		$requiredColumn = strpos($tokens[$stackPtr]['content'], '*');
-		$requiredColumn += $tokens[$stackPtr]['column'];
 
 		foreach ($comments as $commentPointer) {
 			// Check the spacing after each asterisk.
 			$content = $tokens[$commentPointer]['content'];
+			/* @noinspection SubStrUsedAsArrayAccessInspection */
 			$firstChar = substr($content, 0, 1);
 			$lastChar = substr($content, -1);
 			if ($firstChar === '/' || $lastChar !== '/') {
@@ -96,6 +86,13 @@ class DocBlockEndingSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($commentPointer, $content);
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return Tokens::$commentTokens;
 	}
 
 }

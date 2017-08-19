@@ -23,7 +23,7 @@ use PHP_CodeSniffer\Util\Tokens;
 /**
  * Ensures all the use are in alphabetical order.
  *
- * @author Mark Scherer
+ * @author  Mark Scherer
  * @license MIT
  */
 class UseInAlphabeticalOrderSniff implements Sniff {
@@ -41,13 +41,6 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 	 * @var array
 	 */
 	protected $_uses = [];
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_USE];
-	}
 
 	/**
 	 * @inheritDoc
@@ -86,7 +79,7 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 			}
 
 			$error = 'Use classes must be in alphabetical order.';
-			$fix = $phpcsFile->addFixableError($error, $used[$wrongName], 'Order');
+			$fix = $phpcsFile->addFixableError($error, $used[$wrongName], 'Order', []);
 			if ($fix) {
 				$map = [];
 				foreach ($sorted as $name) {
@@ -108,6 +101,13 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_USE];
 	}
 
 	/**
@@ -153,7 +153,7 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 	protected function isClosure(File $phpcsFile, $stackPtr) {
 		return $phpcsFile->findPrevious(
 			[T_CLOSURE],
-			($stackPtr - 1),
+			$stackPtr - 1,
 			null,
 			false,
 			null,

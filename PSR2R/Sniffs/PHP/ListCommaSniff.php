@@ -18,13 +18,6 @@ class ListCommaSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
-		return [T_LIST];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -38,7 +31,7 @@ class ListCommaSniff extends AbstractSniff {
 			$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $prevIndex - 1, null, true);
 		}
 		if ($markIndex !== null) {
-			$fix = $phpcsFile->addFixableError('Superflouos commas in list', $markIndex, 'CommaSuperflouos');
+			$fix = $phpcsFile->addFixableError('Superfluous commas in list', $markIndex, 'ExtraCommaList');
 			if ($fix) {
 				$this->clearRange(
 					$phpcsFile,
@@ -47,6 +40,13 @@ class ListCommaSniff extends AbstractSniff {
 				);
 			}
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_LIST];
 	}
 
 	/**
