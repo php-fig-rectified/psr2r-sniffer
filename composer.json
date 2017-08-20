@@ -31,6 +31,9 @@
 		"bin/tokenize",
 		"bin/sniff"
 	],
+	"config": {
+		"process-timeout": 600
+	},
 	"scripts": {
 		"docs": "php docs/generate.php",
 		"docs-listing": "phpcs -e --standard=PSR2R/ruleset.xml",
