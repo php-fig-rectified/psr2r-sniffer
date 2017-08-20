@@ -11,6 +11,33 @@
 
 	<exclude-pattern>\.git</exclude-pattern>
 
+	<rule ref="./vendor/spryker/code-sniffer/Spryker/ruleset.xml">
+		<exclude name="Generic.WhiteSpace.DisallowTabIndent"></exclude>
+		<exclude name="Generic.WhiteSpace.ScopeIndent"></exclude>
+		<exclude name="Squiz.Functions.MultiLineFunctionDeclaration"></exclude>
+		<exclude name="Squiz.Commenting.DocCommentAlignment"></exclude>
+		<exclude name="PSR2.ControlStructures.SwitchDeclaration"></exclude>
+		<exclude name="Squiz.WhiteSpace.LanguageConstructSpacing"></exclude>
+		<exclude name="Spryker.Commenting.ExistingFileDocBlock"></exclude>
+		<exclude name="Spryker.Commenting.MissingFileDocBlock"></exclude>
+		<exclude name="Spryker.Classes.ClassDeclaration"></exclude>
+		<exclude name="Spryker.Namespaces.SprykerNamespace"></exclude>
+		<exclude name="Spryker.Namespaces.SprykerNoPyz"></exclude>
+		<exclude name="Spryker.Namespaces.SprykerUseStatement"></exclude>
+		<exclude name="Spryker.Commenting.SprykerFacade"></exclude>
+		<exclude name="Spryker.Commenting.DocBlockApiAnnotation"></exclude>
+		<exclude name="Spryker.Commenting.DemoshopExistingFileDocBlock"></exclude>
+		<exclude name="Spryker.Commenting.DemoshopMissingFileDocBlock"></exclude>
+		<exclude name="Spryker.Commenting.DocBlockTestGroupAnnotation"></exclude>
+		<exclude name="Spryker.Commenting.DocBlockTestGroupAnnotation2"></exclude>
+		<exclude name="Spryker.Factory"></exclude>
+		<exclude name="Spryker.Facade"></exclude>
+		<exclude name="Spryker.Plugin"></exclude>
+		<exclude name="Spryker.Internal"></exclude>
+		<exclude name="Spryker.DependencyProvider"></exclude>
+	</rule>
+
+	<!-- covered by Spryker
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
 
@@ -22,59 +49,22 @@
 	<rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
 	<rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
 
-
-	<!--
-	<rule ref="Squiz.Commenting.DocCommentAlignment"/>
-	-->
-
 	<rule ref="PEAR.ControlStructures.ControlSignature"/>
-
 	<rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
-	<rule ref="Generic.ControlStructures.InlineControlStructure"/>
+
+	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
 
 	<rule ref="Zend.Files.ClosingTag"/>
 	<rule ref="Generic.Files.LineEndings"/>
 
 	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
 
-	<rule ref="Squiz.Functions.FunctionDeclaration"/>
-	<rule ref="PEAR.Functions.ValidDefaultValue"/>
-
 	<rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
 	<rule ref="PSR2.Namespaces.UseDeclaration"/>
 
-	<!--
-	<rule ref="PSR2.ControlStructures.ControlStructureSpacing"/>
-	<rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
-	-->
-
-	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
-
-	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
-		<properties>
-			<property name="equalsSpacing" value="1"/>
-		</properties>
-	</rule>
-
-	<!-- needs https://github.com/squizlabs/PHP_CodeSniffer/issues/900 to be fixed first -->
-	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
-		<severity>0</severity>
-	</rule>
-
+	<rule ref="Squiz.Functions.FunctionDeclaration"/>
 	<rule ref="PEAR.Functions.ValidDefaultValue"/>
-
-	<!--
-	<rule ref="PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">
-		<severity>0</severity>
-	</rule>
-	-->
-
-	<rule ref="PEAR.NamingConventions.ValidClassName"/>
-
-	<rule ref="Squiz.Operators.ValidLogicalOperators"/>
-
-	<rule ref="Generic.PHP.DeprecatedFunctions"/>
 
 	<rule ref="Squiz.PHP.Eval"/>
 	<rule ref="Generic.PHP.ForbiddenFunctions"/>
@@ -86,10 +76,32 @@
 	<rule ref="Squiz.Scope.MethodScope"/>
 	<rule ref="Squiz.Scope.StaticThisUsage"/>
 
-	<rule ref="Squiz.WhiteSpace.CastSpacing"/>
+	<rule ref="Squiz.Operators.ValidLogicalOperators"/>
+
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+		<properties>
+			<property name="equalsSpacing" value="1"/>
+		</properties>
+	</rule>
+
+	needs https://github.com/squizlabs/PHP_CodeSniffer/issues/900 to be fixed first
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
+		<severity>0</severity>
+	</rule>
+
+	<rule ref="PEAR.NamingConventions.ValidClassName"/>
+
+	<rule ref="Generic.PHP.DeprecatedFunctions"/>
+
 	<rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
 	<rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
 	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+	-->
+
+
+	<rule ref="Generic.ControlStructures.InlineControlStructure"/>
+
+	<rule ref="Squiz.WhiteSpace.CastSpacing"/>
 
 </ruleset>

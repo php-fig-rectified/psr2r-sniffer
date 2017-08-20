@@ -15,7 +15,6 @@ class Sniffer {
 
 	/**
 	 * @param array $argv
-	 * @throws \Exception
 	 */
 	public function __construct($argv) {
 		$path = (!empty($argv[1]) && strpos($argv[1], '-') !== 0) ? $argv[1] : null;

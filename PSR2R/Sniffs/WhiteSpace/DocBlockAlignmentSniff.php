@@ -30,6 +30,11 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 	 * @inheritDoc
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
+		// We skip for comments in the middle of code
+		if ($this->findFirstNonWhitespaceInLine($phpcsFile, $stackPtr)) {
+			return;
+		}
+
 		$tokens = $phpcsFile->getTokens();
 		$leftWall = [
 			T_CLASS,
@@ -144,6 +149,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
+	 *
 	 * @return int|null
 	 */
 	protected function findFirstNonWhitespaceInLine(File $phpcsFile, $index) {

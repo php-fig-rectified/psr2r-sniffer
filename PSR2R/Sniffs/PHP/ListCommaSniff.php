@@ -53,6 +53,7 @@ class ListCommaSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $startIndex
 	 * @param int $endIndex
+	 *
 	 * @return void
 	 */
 	protected function clearRange(File $phpcsFile, $startIndex, $endIndex) {

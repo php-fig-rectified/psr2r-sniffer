@@ -8,7 +8,7 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Verifies that only whitelisted `@...` tags are being used.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockTagTypesSniff extends AbstractSniff {

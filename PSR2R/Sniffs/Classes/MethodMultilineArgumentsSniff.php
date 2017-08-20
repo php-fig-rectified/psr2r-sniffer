@@ -1,6 +1,6 @@
 <?php
 
-namespace PSR2R\Sniffs\Methods;
+namespace PSR2R\Sniffs\Classes;
 
 use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;

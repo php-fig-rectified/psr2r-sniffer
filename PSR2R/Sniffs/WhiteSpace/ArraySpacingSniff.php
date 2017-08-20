@@ -35,6 +35,7 @@ class ArraySpacingSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+	 *
 	 * @return void
 	 */
 	protected function checkBeginning(File $phpcsFile, $stackPtr) {
@@ -57,6 +58,7 @@ class ArraySpacingSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+	 *
 	 * @return void
 	 */
 	protected function checkEnding(File $phpcsFile, $stackPtr) {

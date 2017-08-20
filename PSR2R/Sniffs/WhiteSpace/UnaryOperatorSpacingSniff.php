@@ -90,6 +90,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+	 *
 	 * @return void
 	 */
 	protected function checkBefore(File $phpcsFile, $stackPtr) {
@@ -112,6 +113,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+	 *
 	 * @return void
 	 */
 	protected function checkAfter(File $phpcsFile, $stackPtr) {

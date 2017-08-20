@@ -29,7 +29,7 @@ class NoControlStructureEndCommentSniff implements Sniff {
 		$error = 'The unnecessary end comment must be removed';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'Unnecessary');
 		if ($fix === true) {
-			/* @noinspection NotOptimalRegularExpressionsInspection */
+			/** @noinspection NotOptimalRegularExpressionsInspection */
 			$phpcsFile->fixer->replaceToken($stackPtr, preg_replace('/[^\s]/', '', $content));
 		}
 	}
