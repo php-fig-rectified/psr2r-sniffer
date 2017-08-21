@@ -5,7 +5,6 @@ namespace PSR2R\Tools;
 use Exception;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Reporter;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Runner;
 
