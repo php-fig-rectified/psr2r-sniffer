@@ -17,7 +17,7 @@ abstract class AbstractBase extends AbstractSniffUnitTest {
 	protected function setUp() {
 		parent::setUp();
 		$config = new Config();
-		/* @noinspection PhpUndefinedFieldInspection */
+		/** @noinspection PhpUndefinedFieldInspection */
 		$config->cache = false;
 		$ruleset = new Ruleset($config);
 		$GLOBALS['PHP_CODESNIFFER_RULESET'] = $ruleset;
