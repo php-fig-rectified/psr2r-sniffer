@@ -66,7 +66,7 @@ class DocBlockParamSniff extends AbstractSniff {
 				$content = substr($content, 0, $spacePos);
 			}
 
-			/* @noinspection NotOptimalRegularExpressionsInspection */
+			/** @noinspection NotOptimalRegularExpressionsInspection */
 			preg_match('/\$[^\s]+/', $appendix, $matches);
 			$variable = $matches ? $matches[0] : '';
 

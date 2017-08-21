@@ -163,7 +163,7 @@ abstract class AbstractSniff implements Sniff {
 
 		$char = "\t";
 		$countTabs = $countSpaces = 0;
-		/* @noinspection PhpUnusedLocalVariableInspection */
+		/** @noinspection PhpUnusedLocalVariableInspection */
 		foreach ($parts as $part) {
 			$countTabs += substr_count($content, $char);
 			$countSpaces += (int)(substr_count($content, ' ') / 4);
@@ -311,7 +311,7 @@ abstract class AbstractSniff implements Sniff {
 			$endIndex = $phpcsFile->findNext(T_SEMICOLON, $startIndex + 1);
 		}
 
-		/* @noinspection IsEmptyFunctionUsageInspection */
+		/** @noinspection IsEmptyFunctionUsageInspection */
 		if (empty($startIndex) || empty($endIndex)) {
 			return [];
 		}
