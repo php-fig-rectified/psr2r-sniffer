@@ -20,18 +20,30 @@ class DocBlockPipeSpacingSniff extends AbstractSniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$content = $tokens[$stackPtr]['content'];
-		if (substr_count($content, '|') !== 1) {
-			return;
+
+		// Fix inline doc blocks
+		$appendix = '';
+		$varIndex = strpos($content, '$');
+		if ($varIndex) {
+			$appendix = substr($content, $varIndex);
+			$content = trim(substr($content, 0, $varIndex));
 		}
 
-		list($left, $right) = explode('|', $content);
-		$newContent = trim($left) . '|' . trim($right);
+		$pieces = explode('|', $content);
+		$newContent = [];
+		foreach ($pieces as $piece) {
+			$newContent[] = trim($piece);
+		}
+		$newContent = implode('|', $newContent);
 
 		if ($newContent !== $content) {
 			$fix = $phpcsFile->addFixableError('There should be no space around pipes in doc blocks.', $stackPtr,
 				'PipeSpacing');
 			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr, $newContent);
+				if ($appendix) {
+					$appendix = ' ' . $appendix;
+				}
+				$phpcsFile->fixer->replaceToken($stackPtr, $newContent . $appendix);
 			}
 		}
 	}
