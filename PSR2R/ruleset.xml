@@ -12,22 +12,20 @@
 	<exclude-pattern>\.git</exclude-pattern>
 
 	<rule ref="./vendor/spryker/code-sniffer/Spryker/ruleset.xml">
+		<exclude name="PEAR.Classes.ClassDeclaration.OpenBraceNewLine"></exclude>
+		<exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"></exclude>
+		<exclude name="Spryker.WhiteSpace.EmptyEnclosingLine"></exclude>
 		<exclude name="Generic.WhiteSpace.DisallowTabIndent"></exclude>
 		<exclude name="Generic.WhiteSpace.ScopeIndent"></exclude>
 		<exclude name="Squiz.Functions.MultiLineFunctionDeclaration"></exclude>
 		<exclude name="Squiz.Commenting.DocCommentAlignment"></exclude>
 		<exclude name="PSR2.ControlStructures.SwitchDeclaration"></exclude>
 		<exclude name="Squiz.WhiteSpace.LanguageConstructSpacing"></exclude>
-		<exclude name="Spryker.Commenting.ExistingFileDocBlock"></exclude>
-		<exclude name="Spryker.Commenting.MissingFileDocBlock"></exclude>
-		<exclude name="Spryker.Classes.ClassDeclaration"></exclude>
+		<exclude name="Spryker.Commenting.FileDocBlock"></exclude>
 		<exclude name="Spryker.Namespaces.SprykerNamespace"></exclude>
 		<exclude name="Spryker.Namespaces.SprykerNoPyz"></exclude>
-		<exclude name="Spryker.Namespaces.SprykerUseStatement"></exclude>
 		<exclude name="Spryker.Commenting.SprykerFacade"></exclude>
 		<exclude name="Spryker.Commenting.DocBlockApiAnnotation"></exclude>
-		<exclude name="Spryker.Commenting.DemoshopExistingFileDocBlock"></exclude>
-		<exclude name="Spryker.Commenting.DemoshopMissingFileDocBlock"></exclude>
 		<exclude name="Spryker.Commenting.DocBlockTestGroupAnnotation"></exclude>
 		<exclude name="Spryker.Commenting.DocBlockTestGroupAnnotation2"></exclude>
 		<exclude name="Spryker.Factory"></exclude>
@@ -35,6 +33,7 @@
 		<exclude name="Spryker.Plugin"></exclude>
 		<exclude name="Spryker.Internal"></exclude>
 		<exclude name="Spryker.DependencyProvider"></exclude>
+		<exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"></exclude>
 	</rule>
 
 	<!-- covered by Spryker

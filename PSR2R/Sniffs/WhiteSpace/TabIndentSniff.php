@@ -77,7 +77,7 @@ class TabIndentSniff implements Sniff {
 	 * @return void
 	 */
 	protected function fixTab(File $phpcsFile, $stackPtr, $tokens) {
-		$content = $tokens[$stackPtr]['content'];
+		$content = isset($tokens[$stackPtr]['orig_content']) ? $tokens[$stackPtr]['orig_content'] : $tokens[$stackPtr]['content'];
 		$tabs = 0;
 		while (strpos($content, '    ') === 0) {
 			$content = substr($content, 4);

@@ -7,5 +7,4 @@
 # Download phpunit phar if not available yet
 [ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit.phar && chmod +x phpunit.phar
 
-
-
+php composer.phar update
