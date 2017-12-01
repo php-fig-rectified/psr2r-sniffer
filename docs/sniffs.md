@@ -1,7 +1,7 @@
 # PSR2R Code Sniffer
 
 
-The PSR2R standard contains 148 sniffs
+The PSR2R standard contains 147 sniffs
 
 Generic (20 sniffs)
 -------------------
@@ -105,7 +105,7 @@ SlevomatCodingStandard (6 sniffs)
 - SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing
 - SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing
 
-Spryker (40 sniffs)
+Spryker (39 sniffs)
 -------------------
 - Spryker.Classes.ClassFileName
 - Spryker.Classes.MethodArgumentDefaultValue
@@ -130,7 +130,6 @@ Spryker (40 sniffs)
 - Spryker.ControlStructures.ControlStructureSpacing
 - Spryker.ControlStructures.NoInlineAssignment
 - Spryker.Formatting.ArrayDeclaration
-- Spryker.Namespaces.UseStatement
 - Spryker.Namespaces.UseWithAliasing
 - Spryker.Namespaces.UseWithLeadingBackslash
 - Spryker.PHP.NoIsNull
