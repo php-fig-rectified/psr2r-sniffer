@@ -2,11 +2,12 @@
 
 namespace PSR2R\Tests\Commenting;
 
-use PSR2R\Sniffs\Commenting\FullyQualifiedClassNameInDocBlockSniff;
+use PHPUnit\Framework\TestCase;
+use PSR2R\Sniffs\Commenting\DocBlockParamSniff;
 
 /**
  */
-class FullyQualifiedClassNameInDocBlockSniffTest extends \PHPUnit_Framework_TestCase {
+class FullyQualifiedClassNameInDocBlockSniffTest extends TestCase {
 
 	/**
 	 * @return void
@@ -14,9 +15,9 @@ class FullyQualifiedClassNameInDocBlockSniffTest extends \PHPUnit_Framework_Test
 	 * @throws \PHPUnit_Framework_Exception
 	 */
 	public function testInstance() {
-		$this->assertTrue(class_exists(FullyQualifiedClassNameInDocBlockSniff::class));
-		$sniff = new FullyQualifiedClassNameInDocBlockSniff();
-		static::assertInstanceOf(FullyQualifiedClassNameInDocBlockSniff::class, $sniff);
+		$this->assertTrue(class_exists(DocBlockParamSniff::class));
+		$sniff = new DocBlockParamSniff();
+		static::assertInstanceOf(DocBlockParamSniff::class, $sniff);
 	}
 
 }
