@@ -12,19 +12,19 @@
 		}
 	],
 	"require": {
-		"php": ">=5.4.16",
+		"php": ">=7.0",
 		"spryker/code-sniffer": "*",
 		"squizlabs/php_codesniffer": "^3.0"
 	},
 	"autoload": {
 		"psr-4": {
-			"PSR2R\\": "PSR2R"
+			"PSR2R\\": "PSR2R/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"PSR2R\\Base\\": "tests/PSR2R/Base",
-			"PSR2R\\Tests\\": "tests/PSR2R/Tests"
+			"PSR2R\\Base\\": "tests/PSR2R/Base/",
+			"PSR2R\\Tests\\": "tests/PSR2R/Tests/"
 		}
 	},
 	"bin": [
