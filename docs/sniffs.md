@@ -1,9 +1,9 @@
 # PSR2R Code Sniffer
 
 
-The PSR2R standard contains 120 sniffs
+The PSR2R standard contains 148 sniffs
 
-Generic (14 sniffs)
+Generic (20 sniffs)
 -------------------
 - Generic.Arrays.DisallowLongArraySyntax
 - Generic.CodeAnalysis.ForLoopShouldBeWhileLoop
@@ -12,26 +12,44 @@ Generic (14 sniffs)
 - Generic.CodeAnalysis.UnconditionalIfStatement
 - Generic.CodeAnalysis.UnnecessaryFinalModifier
 - Generic.ControlStructures.InlineControlStructure
+- Generic.Files.ByteOrderMark
 - Generic.Files.LineEndings
+- Generic.Files.LineLength
 - Generic.Formatting.DisallowMultipleStatements
 - Generic.Formatting.NoSpaceAfterCast
+- Generic.Functions.FunctionCallArgumentSpacing
+- Generic.NamingConventions.UpperCaseConstantName
 - Generic.PHP.DeprecatedFunctions
+- Generic.PHP.DisallowShortOpenTag
 - Generic.PHP.ForbiddenFunctions
 - Generic.PHP.LowerCaseConstant
+- Generic.PHP.LowerCaseKeyword
 - Generic.PHP.NoSilencedErrors
 
-PEAR (3 sniffs)
+PEAR (4 sniffs)
 ---------------
+- PEAR.Classes.ClassDeclaration
 - PEAR.ControlStructures.ControlSignature
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
-PSR2 (6 sniffs)
+PSR1 (3 sniffs)
 ---------------
+- PSR1.Classes.ClassDeclaration
+- PSR1.Files.SideEffects
+- PSR1.Methods.CamelCapsMethodName
+
+PSR2 (11 sniffs)
+----------------
+- PSR2.Classes.ClassDeclaration
+- PSR2.Classes.PropertyDeclaration
 - PSR2.ControlStructures.ControlStructureSpacing
 - PSR2.ControlStructures.ElseIfDeclaration
+- PSR2.Files.ClosingTag
 - PSR2.Files.EndFileNewline
 - PSR2.Methods.FunctionCallSignature
+- PSR2.Methods.FunctionClosingBrace
+- PSR2.Methods.MethodDeclaration
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
@@ -78,6 +96,15 @@ PSR2R (40 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
+SlevomatCodingStandard (6 sniffs)
+---------------------------------
+- SlevomatCodingStandard.Arrays.TrailingArrayComma
+- SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses
+- SlevomatCodingStandard.Namespaces.UnusedUses
+- SlevomatCodingStandard.Namespaces.UseFromSameNamespace
+- SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing
+- SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing
+
 Spryker (40 sniffs)
 -------------------
 - Spryker.Classes.ClassFileName
@@ -87,6 +114,7 @@ Spryker (40 sniffs)
 - Spryker.Commenting.DocBlockNoInlineAlignment
 - Spryker.Commenting.DocBlockParam
 - Spryker.Commenting.DocBlockParamAllowDefaultValue
+- Spryker.Commenting.DocBlockParamArray
 - Spryker.Commenting.DocBlockParamNotJustNull
 - Spryker.Commenting.DocBlockPipeSpacing
 - Spryker.Commenting.DocBlockReturnSelf
@@ -102,8 +130,8 @@ Spryker (40 sniffs)
 - Spryker.ControlStructures.ControlStructureSpacing
 - Spryker.ControlStructures.NoInlineAssignment
 - Spryker.Formatting.ArrayDeclaration
-- Spryker.Namespaces.UnusedUseStatement
-- Spryker.Namespaces.UseInAlphabeticalOrder
+- Spryker.Namespaces.UseStatement
+- Spryker.Namespaces.UseWithAliasing
 - Spryker.Namespaces.UseWithLeadingBackslash
 - Spryker.PHP.NoIsNull
 - Spryker.PHP.PhpSapiConstant
@@ -111,24 +139,27 @@ Spryker (40 sniffs)
 - Spryker.PHP.RemoveFunctionAlias
 - Spryker.PHP.ShortCast
 - Spryker.WhiteSpace.CommaSpacing
+- Spryker.WhiteSpace.ConcatenationSpacing
 - Spryker.WhiteSpace.EmptyLines
-- Spryker.Whitespace.ConcatenationSpacing
-- Spryker.Whitespace.EmptyEnclosingLine
-- Spryker.Whitespace.FunctionSpacing
-- Spryker.Whitespace.ImplicitCastSpacing
-- Spryker.Whitespace.MemberVarSpacing
-- Spryker.Whitespace.MethodSpacing
-- Spryker.Whitespace.ObjectAttributeSpacing
-- Spryker.Whitespace.OperatorSpacing
+- Spryker.WhiteSpace.FunctionSpacing
+- Spryker.WhiteSpace.ImplicitCastSpacing
+- Spryker.WhiteSpace.MemberVarSpacing
+- Spryker.WhiteSpace.MethodSpacing
+- Spryker.WhiteSpace.ObjectAttributeSpacing
+- Spryker.WhiteSpace.OperatorSpacing
 
-Squiz (16 sniffs)
+Squiz (23 sniffs)
 -----------------
 - Squiz.Arrays.ArrayBracketSpacing
 - Squiz.Classes.LowercaseClassKeywords
+- Squiz.Classes.ValidClassName
+- Squiz.ControlStructures.ControlSignature
 - Squiz.ControlStructures.ForEachLoopDeclaration
+- Squiz.ControlStructures.ForLoopDeclaration
 - Squiz.ControlStructures.LowercaseDeclaration
 - Squiz.Functions.FunctionDeclaration
 - Squiz.Functions.FunctionDeclarationArgumentSpacing
+- Squiz.Functions.LowercaseFunctionKeywords
 - Squiz.Operators.ValidLogicalOperators
 - Squiz.PHP.Eval
 - Squiz.PHP.NonExecutableCode
@@ -136,7 +167,10 @@ Squiz (16 sniffs)
 - Squiz.Scope.MethodScope
 - Squiz.Scope.StaticThisUsage
 - Squiz.WhiteSpace.CastSpacing
+- Squiz.WhiteSpace.ControlStructureSpacing
 - Squiz.WhiteSpace.LogicalOperatorSpacing
+- Squiz.WhiteSpace.ScopeClosingBrace
+- Squiz.WhiteSpace.ScopeKeywordSpacing
 - Squiz.WhiteSpace.SemicolonSpacing
 - Squiz.WhiteSpace.SuperfluousWhitespace
 

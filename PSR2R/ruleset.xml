@@ -12,6 +12,8 @@
 	<exclude-pattern>\.git</exclude-pattern>
 
 	<rule ref="./vendor/spryker/code-sniffer/Spryker/ruleset.xml">
+		<exclude name="Spryker.Commenting.SprykerAnnotation"></exclude>
+		<exclude name="Spryker.Commenting.SprykerBridge"></exclude>
 		<exclude name="PEAR.Classes.ClassDeclaration.OpenBraceNewLine"></exclude>
 		<exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"></exclude>
 		<exclude name="Spryker.WhiteSpace.EmptyEnclosingLine"></exclude>
