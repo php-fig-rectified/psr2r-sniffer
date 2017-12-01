@@ -32,8 +32,11 @@ class CastSpacingSniff implements Sniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError('No whitespace should be between cast and variable.', $stackPtr,
-			'CastWhitespace');
+		$fix = $phpcsFile->addFixableError(
+			'No whitespace should be between cast and variable.',
+			$stackPtr,
+			'CastWhitespace'
+		);
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 		}
