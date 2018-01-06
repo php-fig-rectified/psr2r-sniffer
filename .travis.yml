@@ -15,7 +15,6 @@ matrix:
   fast_finish: true
 
 before_script:
-  - composer self-update
   - composer install --prefer-dist --no-interaction
 
 script:
