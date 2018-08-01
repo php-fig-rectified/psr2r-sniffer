@@ -31,6 +31,10 @@ class UnneededElseSniff extends AbstractSniff {
 		$scopeStartIndex = $tokens[$prevScopeEndIndex]['scope_opener'];
 
 		$prevParenthesisEndIndex = $phpcsFile->findPrevious(T_WHITESPACE, $scopeStartIndex - 1, null, true);
+		if (!$prevParenthesisEndIndex || !array_key_exists('parenthesis_opener', $tokens[$prevParenthesisEndIndex])) {
+			return;
+		}
+
 		$parenthesisStartIndex = $tokens[$prevParenthesisEndIndex]['parenthesis_opener'];
 
 		$prevConditionIndex = $phpcsFile->findPrevious(T_WHITESPACE, $parenthesisStartIndex - 1, null, true);
