@@ -41,6 +41,13 @@ class DocCommentSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_DOC_COMMENT_OPEN_TAG];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -185,13 +192,6 @@ class DocCommentSniff extends AbstractSniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_DOC_COMMENT_OPEN_TAG];
 	}
 
 }

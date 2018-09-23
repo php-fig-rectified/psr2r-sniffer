@@ -16,6 +16,15 @@ class DocBlockPipeSpacingSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_DOC_COMMENT_STRING,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -55,15 +64,6 @@ class DocBlockPipeSpacingSniff extends AbstractSniff {
 				$phpcsFile->fixer->replaceToken($stackPtr, $newContent . $appendix);
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_DOC_COMMENT_STRING,
-		];
 	}
 
 }

@@ -21,6 +21,13 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_FUNCTION];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -76,13 +83,6 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 		}
 
 		$this->addReturnAnnotation($phpcsFile, $docBlockEndIndex, $returnType);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_FUNCTION];
 	}
 
 	/**

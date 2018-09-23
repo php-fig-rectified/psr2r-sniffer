@@ -17,6 +17,13 @@ class DocBlockEndingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return Tokens::$commentTokens;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -86,13 +93,6 @@ class DocBlockEndingSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($commentPointer, $content);
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return Tokens::$commentTokens;
 	}
 
 }

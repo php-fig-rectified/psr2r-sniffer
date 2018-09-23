@@ -13,6 +13,9 @@ use PSR2R\Tools\AbstractSniff;
  */
 class DocBlockTagTypesSniff extends AbstractSniff {
 
+	/**
+	 * @var array
+	 */
 	protected static $whitelistedTags = [
 		'@api',
 		'@author',
@@ -64,6 +67,9 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@noinspection',
 	];
 
+	/**
+	 * @var array
+	 */
 	protected static $blacklistedTags = [
 		'@package',
 		'@subpackage',
@@ -74,6 +80,9 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@overwrite',
 	];
 
+	/**
+	 * @var array
+	 */
 	protected static $mapping = [
 		'@type' => '@var',
 		'@overwrite' => '@override',
@@ -91,6 +100,13 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	 * @var string
 	 */
 	public $whitelist = '';
+
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_CLASS, T_FUNCTION];
+	}
 
 	/**
 	 * @inheritDoc
@@ -150,13 +166,6 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_CLASS, T_FUNCTION];
 	}
 
 	/**
