@@ -71,10 +71,13 @@ class UnneededElseSniff extends AbstractSniff {
 			return;
 		}
 
+		if (empty($tokens[$stackPtr]['scope_opener']) || empty($tokens[$stackPtr]['scope_closer'])) {
+			return;
+		}
+
 		$phpcsFile->fixer->beginChangeset();
 
 		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
-		//$indentationLevel = $tokens[$prevIndex]['column'] - 1;
 		$line = $tokens[$prevIndex]['line'];
 
 		for ($i = $prevIndex + 1; $i < $stackPtr; $i++) {
@@ -102,12 +105,10 @@ class UnneededElseSniff extends AbstractSniff {
 		}
 
 		// Fix indentation
-		//$currentLine = $line;
 		for ($i = $nextScopeStartIndex + 1; $i < $prevEndIndex; $i++) {
 			if ($tokens[$i]['line'] === $line || $tokens[$i]['type'] !== 'T_WHITESPACE') {
 				continue;
 			}
-			//$currentLine = $tokens[$i]['line'];
 			$this->outdent($phpcsFile, $i);
 		}
 
