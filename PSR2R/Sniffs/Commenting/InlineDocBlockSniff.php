@@ -165,7 +165,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 	 * @param array $tokens
 	 * @param int $from
 	 * @param int $to
-	 * @param int $tagType
+	 * @param string $tagType
 	 *
 	 * @return int|null
 	 */

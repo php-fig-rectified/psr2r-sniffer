@@ -18,7 +18,7 @@ abstract class AbstractSniff implements Sniff {
 	 * Checks if the given token scope contains a single or multiple token codes/types.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param string|array $search
+	 * @param string|int|array $search
 	 * @param int $start
 	 * @param int $end
 	 * @param bool $skipNested

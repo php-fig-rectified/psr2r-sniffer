@@ -185,7 +185,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	/**
 	 * @param array $token
 	 *
-	 * @return int
+	 * @return string
 	 */
 	protected function getComparisonValue(array $token) {
 		$comparisonIndexValue = $token['content'];
@@ -200,7 +200,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 			$comparisonIndexValue = $mapping[$token['code']];
 		}
 
-		return (int)$comparisonIndexValue;
+		return $comparisonIndexValue;
 	}
 
 }

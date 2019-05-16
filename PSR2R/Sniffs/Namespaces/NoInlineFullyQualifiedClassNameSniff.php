@@ -374,7 +374,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 			$alias = $shortName;
 
 			/** @noinspection PhpParamsInspection */
-			if (count($pieces) - 1 < $count && !in_array($pieces, 'Php', true)) {
+			if (count($pieces) - 1 < $count && !in_array('Php', $pieces, true)) {
 				$pieces[] = 'Php';
 			}
 			if (count($pieces) - 1 < $count) {

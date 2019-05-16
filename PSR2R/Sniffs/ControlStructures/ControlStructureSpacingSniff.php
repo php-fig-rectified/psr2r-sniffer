@@ -101,7 +101,7 @@ class ControlStructureSpacingSniff implements Sniff {
 				$spaceBeforeClose = strlen(ltrim($tokens[$parenCloser - 1]['content'], $phpcsFile->eolChar));
 			}
 
-			$phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', $spaceBeforeClose);
+			$phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', (string)$spaceBeforeClose);
 
 			if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
 				$error = 'Expected %s spaces before closing bracket; %s found';
