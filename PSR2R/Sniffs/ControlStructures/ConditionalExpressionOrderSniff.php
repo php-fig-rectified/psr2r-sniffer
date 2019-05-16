@@ -144,7 +144,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $index
 	 * @param int $leftIndexStart
-	 * @param int int $leftIndexEnd
+	 * @param int $leftIndexEnd
 	 * @param int $rightIndexStart
 	 * @param int $rightIndexEnd
 	 *
@@ -198,11 +198,9 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 				T_IS_SMALLER_OR_EQUAL => '>=',
 			];
 			$comparisonIndexValue = $mapping[$token['code']];
-
-			return $comparisonIndexValue;
 		}
 
-		return $comparisonIndexValue;
+		return (int)$comparisonIndexValue;
 	}
 
 }

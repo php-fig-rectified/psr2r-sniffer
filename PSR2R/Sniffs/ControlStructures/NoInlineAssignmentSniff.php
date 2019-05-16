@@ -92,7 +92,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $startIndex
 	 * @param int $endIndex
-	 * @param int &$indexEqualSign
+	 * @param int $indexEqualSign
 	 *
 	 * @return bool
 	 */

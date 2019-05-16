@@ -111,7 +111,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $classNameIndex
-	 * @param array &$classNames
+	 * @param string[] $classNames
 	 *
 	 * @return array
 	 */
@@ -122,9 +122,9 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			if (strpos($className, '\\') !== false) {
 				continue;
 			}
-			$arrayOfObject = false;
-			if (substr($className, -2) === '[]') {
-				$arrayOfObject = true;
+			$arrayOfObject = 0;
+			while (substr($className, -2) === '[]') {
+				$arrayOfObject++;
 				$className = substr($className, 0, -2);
 			}
 			if (in_array($className, static::$whitelistedTypes)) {
@@ -139,8 +139,8 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 				$phpCsFile->addError(sprintf($message, $className), $classNameIndex, 'ClassNameInvalid');
 				continue;
 			}
-			$classNames[$key] = $useStatement . ($arrayOfObject ? '[]' : '');
-			$result[$className . ($arrayOfObject ? '[]' : '')] = $classNames[$key];
+			$classNames[$key] = $useStatement . ($arrayOfObject ? str_repeat('[]', $arrayOfObject) : '');
+			$result[$className . ($arrayOfObject ? str_repeat('[]', $arrayOfObject) : '')] = $classNames[$key];
 		}
 
 		return $result;

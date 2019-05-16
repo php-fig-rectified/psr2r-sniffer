@@ -33,11 +33,13 @@
 	"scripts": {
 		"docs": "php docs/generate.php",
 		"docs-listing": "phpcs -e --standard=PSR2R/ruleset.xml",
-		"cs-check": "phpcs --standard=PSR2R/ruleset.xml -vs --ignore=psr2r-sniffer/vendor/,tests/files/,*.inc,*.fixed ./",
-		"cs-fix": "phpcbf --standard=PSR2R/ruleset.xml -v --ignore=psr2r-sniffer/vendor/,tests/files/,*.inc,*.fixed ./",
+		"cs-check": "phpcs --standard=PSR2R/ruleset.xml -p -s --ignore=psr2r-sniffer/vendor/,tests/files/,*.inc,*.fixed ./",
+		"cs-fix": "phpcbf --standard=PSR2R/ruleset.xml --ignore=psr2r-sniffer/vendor/,tests/files/,*.inc,*.fixed ./",
 		"test": "php phpunit.phar",
 		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-5.7.phar && mv phpunit-5.7.phar phpunit.phar || true",
 		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-5.7.phar && mv phpunit-5.7.phar phpunit.phar || true",
-		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml"
+		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
+		"phpstan": "phpstan analyse -c tests/phpstan.neon -l 4 PSR2R/",
+		"phpstan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan-shim:^0.11 && mv composer.backup composer.json"
 	}
 }

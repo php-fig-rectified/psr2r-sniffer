@@ -75,12 +75,10 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 		}
 	}
 
-	/** @noinspection MoreThanThreeArgumentsInspection */
-
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $classNameIndex
-	 * @param array $parts
+	 * @param string[] $parts
 	 * @param string $appendix
 	 *
 	 * @return void
