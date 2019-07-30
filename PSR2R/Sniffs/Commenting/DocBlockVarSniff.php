@@ -95,6 +95,10 @@ class DocBlockVarSniff extends AbstractSniff {
 		if (in_array($defaultValueType, $parts, true)) {
 			return;
 		}
+		if ($defaultValueType === 'bool' && (in_array('true', $parts, true) || in_array('false', $parts, true))) {
+			return;
+		}
+
 		if ($defaultValueType === 'array' && strpos($content, '[]') !== false) {
 			return;
 		}
