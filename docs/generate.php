@@ -1,8 +1,9 @@
 #!/usr/bin/env php
 <?php
+$phar = file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'composer.phar');
+$command = ($phar ? 'php composer.phar' : 'composer') . ' docs-listing';
 
-$root = dirname(__DIR__) . DIRECTORY_SEPARATOR;
-exec($root . 'vendor/bin/phpcs --standard=PSR2R/ruleset.xml -e', $output, $ret);
+exec($command, $output, $ret);
 if ($ret !== 0) {
 	exit('Invalid execution. Run from ROOT after composer install etc as `php docs/generate.php`.');
 }

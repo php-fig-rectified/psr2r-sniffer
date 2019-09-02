@@ -22,6 +22,15 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -109,15 +118,6 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
 	}
 
 }

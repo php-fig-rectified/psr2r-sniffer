@@ -11,8 +11,6 @@ use PHP_CodeSniffer\Runner;
 
 class Tokenizer {
 
-	const STANDARD = 'PSR2R/ruleset.xml';
-
 	/**
 	 * @var string
 	 */
@@ -48,14 +46,6 @@ class Tokenizer {
 	 * @return void
 	 */
 	public function tokenize() {
-		$_SERVER['argv'] = [];
-		$_SERVER['argv'][] = '--encoding=utf8';
-
-		$standard = $this->root . static::STANDARD;
-		$_SERVER['argv'][] = '--standard=' . $standard;
-
-		$_SERVER['argv'][] = $this->path;
-		$_SERVER['argc'] = count($_SERVER['argv']);
 		$res = [];
 		$tokens = $this->_getTokens($this->path);
 

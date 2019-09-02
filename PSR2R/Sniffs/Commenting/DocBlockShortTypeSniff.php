@@ -16,6 +16,19 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+			T_TRAIT,
+			T_FUNCTION,
+			T_VARIABLE,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -57,19 +70,6 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 			$parts = explode('|', $content);
 			$this->fixParts($phpCsFile, $classNameIndex, $parts, $appendix);
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-			T_TRAIT,
-			T_FUNCTION,
-			T_VARIABLE,
-		];
 	}
 
 	/** @noinspection MoreThanThreeArgumentsInspection */

@@ -16,6 +16,15 @@ class DocBlockParamNoOpSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -59,15 +68,6 @@ class DocBlockParamNoOpSniff extends AbstractSniff {
 				'` as only param type does not seem right. Makes this a no-op.';
 			$phpCsFile->addWarning($error, $i, 'ParamNoOp');
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
 	}
 
 }

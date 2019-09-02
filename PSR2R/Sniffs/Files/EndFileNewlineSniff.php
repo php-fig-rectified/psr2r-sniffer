@@ -68,7 +68,7 @@ class EndFileNewlineSniff implements Sniff {
 
 		$lastCodeLine = $tokens[$lastCode]['line'];
 		$blankLines = ($lastLine - $lastCodeLine + 1);
-		$phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', $blankLines);
+		$phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', (string)$blankLines);
 
 		if ($blankLines > 1) {
 			$error = 'Expected 1 blank line at end of file; %s found';

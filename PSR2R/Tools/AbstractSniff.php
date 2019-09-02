@@ -8,6 +8,11 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 abstract class AbstractSniff implements Sniff {
 
 	/**
+	 * @var array These markers must remain as inline comments
+	 */
+	protected static $phpStormMarkers = ['@noinspection'];
+
+	/**
 	 * Checks if the given token is of this token code/type.
 	 *
 	 * @param int|string $search
@@ -29,7 +34,7 @@ abstract class AbstractSniff implements Sniff {
 	 * Checks if the given token scope contains a single or multiple token codes/types.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param string|array $search
+	 * @param string|int|array $search
 	 * @param int $start
 	 * @param int $end
 	 * @param bool $skipNested
@@ -299,6 +304,7 @@ abstract class AbstractSniff implements Sniff {
 			$endIndex = $phpcsFile->findNext(T_SEMICOLON, $startIndex + 1);
 		}
 
+		/** @noinspection IsEmptyFunctionUsageInspection */
 		if (empty($startIndex) || empty($endIndex)) {
 			return [];
 		}
@@ -326,6 +332,29 @@ abstract class AbstractSniff implements Sniff {
 		}
 
 		return trim($namespace);
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param int $stackPtr
+	 * @return bool
+	 */
+	protected function isPhpStormMarker(File $phpCsFile, $stackPtr) {
+		$tokens = $phpCsFile->getTokens();
+		$line = $tokens[$stackPtr]['line'];
+		if ($tokens[$stackPtr]['type'] !== 'T_DOC_COMMENT_OPEN_TAG') {
+			return false;
+		}
+		$end = $tokens[$stackPtr]['comment_closer'] - 1;
+		if ($line !== $tokens[$end]['line']) {
+			return false; // Not an inline comment
+		}
+		foreach (static::$phpStormMarkers as $marker) {
+			if ($phpCsFile->findNext(T_DOC_COMMENT_TAG, $stackPtr + 1, $end, false, $marker) !== false) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

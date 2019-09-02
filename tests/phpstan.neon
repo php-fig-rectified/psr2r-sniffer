@@ -1,0 +1,5 @@
+parameters:
+    autoload_files:
+        - %rootDir%/../../../tests/phpstan_bootstrap.php
+    ignoreErrors:
+        - '#Empty array passed to foreach.#'

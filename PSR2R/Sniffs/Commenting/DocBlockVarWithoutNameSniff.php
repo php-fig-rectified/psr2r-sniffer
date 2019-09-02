@@ -28,6 +28,13 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_DOC_COMMENT_OPEN_TAG];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$docBlockStartIndex = $stackPtr;
@@ -35,8 +42,8 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 
 		$indentationLevel = $this->getIndentationLevel($phpcsFile, $stackPtr);
 
-		// Skip for inline comments
-		if ($indentationLevel > 1) {
+		// Skip for inline comments or other non class constructs.
+		if ($indentationLevel !== 1) {
 			return;
 		}
 
@@ -57,7 +64,7 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 			$content = $tokens[$nextIndex]['content'];
 			preg_match_all('/ \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $content, $matches);
 
-			if (isset($matches[0][0])) {
+			if (isset($matches[0][0]) && trim($matches[0][0]) !== '$this') {
 				$fix = $phpcsFile->addFixableError('@var annotations should not contain the variable name.', $i,
 					'RemoveVarName');
 				if ($fix) {
@@ -65,13 +72,6 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_DOC_COMMENT_OPEN_TAG];
 	}
 
 }

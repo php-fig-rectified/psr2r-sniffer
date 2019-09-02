@@ -13,6 +13,13 @@ class NoControlStructureEndCommentSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_COMMENT];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -29,16 +36,9 @@ class NoControlStructureEndCommentSniff implements Sniff {
 		$error = 'The unnecessary end comment must be removed';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'Unnecessary');
 		if ($fix === true) {
-			/* @noinspection NotOptimalRegularExpressionsInspection */
+			/** @noinspection NotOptimalRegularExpressionsInspection */
 			$phpcsFile->fixer->replaceToken($stackPtr, preg_replace('/[^\s]/', '', $content));
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_COMMENT];
 	}
 
 }

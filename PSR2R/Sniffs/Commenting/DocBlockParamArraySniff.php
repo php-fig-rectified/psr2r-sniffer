@@ -20,6 +20,15 @@ class DocBlockParamArraySniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -84,15 +93,6 @@ class DocBlockParamArraySniff extends AbstractSniff {
 			$phpCsFile->fixer->replaceToken($classNameIndex, $content . $appendix);
 			$phpCsFile->fixer->endChangeset();
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
 	}
 
 }

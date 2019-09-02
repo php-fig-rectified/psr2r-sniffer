@@ -21,6 +21,15 @@ class DocBlockParamSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -66,7 +75,7 @@ class DocBlockParamSniff extends AbstractSniff {
 				$content = substr($content, 0, $spacePos);
 			}
 
-			/* @noinspection NotOptimalRegularExpressionsInspection */
+			/** @noinspection NotOptimalRegularExpressionsInspection */
 			preg_match('/\$[^\s]+/', $appendix, $matches);
 			$variable = $matches ? $matches[0] : '';
 
@@ -113,15 +122,6 @@ class DocBlockParamSniff extends AbstractSniff {
 			}
 			*/
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
 	}
 
 	/**

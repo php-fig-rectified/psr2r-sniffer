@@ -17,6 +17,13 @@ class DocBlockEndingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return Tokens::$commentTokens;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -65,7 +72,7 @@ class DocBlockEndingSniff implements Sniff {
 		foreach ($comments as $commentPointer) {
 			// Check the spacing after each asterisk.
 			$content = $tokens[$commentPointer]['content'];
-			/* @noinspection SubStrUsedAsArrayAccessInspection */
+			/** @noinspection SubStrUsedAsArrayAccessInspection */
 			$firstChar = substr($content, 0, 1);
 			$lastChar = substr($content, -1);
 			if ($firstChar === '/' || $lastChar !== '/') {
@@ -86,13 +93,6 @@ class DocBlockEndingSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($commentPointer, $content);
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return Tokens::$commentTokens;
 	}
 
 }

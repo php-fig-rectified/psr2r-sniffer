@@ -21,6 +21,15 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_FUNCTION,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -70,15 +79,6 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 
 			$phpCsFile->addError('"null" as only param type does not make sense', $classNameIndex, 'NotJustNull');
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_FUNCTION,
-		];
 	}
 
 }

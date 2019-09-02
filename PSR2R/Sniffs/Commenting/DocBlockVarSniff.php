@@ -17,6 +17,15 @@ class DocBlockVarSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_VARIABLE,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -86,6 +95,10 @@ class DocBlockVarSniff extends AbstractSniff {
 		if (in_array($defaultValueType, $parts, true)) {
 			return;
 		}
+		if ($defaultValueType === 'bool' && (in_array('true', $parts, true) || in_array('false', $parts, true))) {
+			return;
+		}
+
 		if ($defaultValueType === 'array' && strpos($content, '[]') !== false) {
 			return;
 		}
@@ -106,15 +119,6 @@ class DocBlockVarSniff extends AbstractSniff {
 		if ($fix) {
 			$phpCsFile->fixer->replaceToken($classNameIndex, $defaultValueType . $appendix);
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_VARIABLE,
-		];
 	}
 
 	/**
