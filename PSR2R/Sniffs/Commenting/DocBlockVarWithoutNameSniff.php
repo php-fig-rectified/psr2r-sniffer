@@ -51,7 +51,7 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@var'])) {
+			if (!in_array($tokens[$i]['content'], ['@var'], true)) {
 				continue;
 			}
 
@@ -65,7 +65,7 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 			preg_match_all('/ \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $content, $matches);
 
 			if (isset($matches[0][0])) {
-				$fix = $phpcsFile->addFixableError('@var annotations should not contain the variable name.', $i);
+				$fix = $phpcsFile->addFixableError('@var annotations should not contain the variable name.', $i, 'Superfluous');
 				if ($fix) {
 					$phpcsFile->fixer->replaceToken($nextIndex, str_replace($matches[0][0], '', $content));
 				}

@@ -51,6 +51,8 @@
 			"php phpunit.phar --coverage-clover=clover.xml",
 			"@reset-ruleset"
 		],
+		"phpstan": "phpstan analyse -c tests/phpstan.neon -l 4 PSR2R/",
+		"phpstan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan && mv composer.backup composer.json",
 		"cs-check": "phpcs --colors -p --extensions=php --standard=PSR2R --ignore=/tests/files/ PSR2R/ tests/",
 		"cs-fix": "phpcbf --colors --extensions=php --standard=PSR2R --ignore=/tests/files/ PSR2R/ tests/"
 	}

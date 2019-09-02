@@ -96,7 +96,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $classNameIndex
-	 * @param array $classNames
+	 * @param string[] $classNames
 	 * @param string $appendix
 	 * @param bool $strict
 	 *
@@ -124,7 +124,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $classNameIndex
-	 * @param array &$classNames
+	 * @param string[] $classNames
 	 * @param bool $strict
 	 *
 	 * @return array
