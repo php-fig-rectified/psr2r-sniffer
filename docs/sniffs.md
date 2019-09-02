@@ -1,9 +1,9 @@
 # PSR2R Code Sniffer
 
 
-The PSR2R standard contains 103 sniffs
+The PSR2R standard contains 108 sniffs
 
-Generic (13 sniffs)
+Generic (14 sniffs)
 -------------------
 - Generic.Arrays.DisallowLongArraySyntax
 - Generic.CodeAnalysis.ForLoopShouldBeWhileLoop
@@ -14,6 +14,7 @@ Generic (13 sniffs)
 - Generic.ControlStructures.InlineControlStructure
 - Generic.Files.LineEndings
 - Generic.Formatting.DisallowMultipleStatements
+- Generic.Formatting.NoSpaceAfterCast
 - Generic.PHP.DeprecatedFunctions
 - Generic.PHP.ForbiddenFunctions
 - Generic.PHP.LowerCaseConstant
@@ -25,13 +26,20 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
+PSR12 (4 sniffs)
+----------------
+- PSR12.Classes.ClassInstantiation
+- PSR12.Keywords.ShortFormTypeKeywords
+- PSR12.Namespaces.CompoundNamespaceDepth
+- PSR12.Operators.OperatorSpacing
+
 PSR2 (3 sniffs)
 ---------------
 - PSR2.ControlStructures.ElseIfDeclaration
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (66 sniffs)
+PSR2R (65 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
@@ -86,7 +94,6 @@ PSR2R (66 sniffs)
 - PSR2R.PHP.ShortCast
 - PSR2R.PHP.SingleQuote
 - PSR2R.WhiteSpace.ArraySpacing
-- PSR2R.WhiteSpace.CastSpacing
 - PSR2R.WhiteSpace.CommaSpacing
 - PSR2R.WhiteSpace.ConcatenationSpacing
 - PSR2R.WhiteSpace.DocBlockAlignment
@@ -100,7 +107,7 @@ PSR2R (66 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-Squiz (17 sniffs)
+Squiz (18 sniffs)
 -----------------
 - Squiz.Arrays.ArrayBracketSpacing
 - Squiz.Classes.LowercaseClassKeywords
@@ -115,6 +122,7 @@ Squiz (17 sniffs)
 - Squiz.Scope.MethodScope
 - Squiz.Scope.StaticThisUsage
 - Squiz.WhiteSpace.CastSpacing
+- Squiz.WhiteSpace.LanguageConstructSpacing
 - Squiz.WhiteSpace.LogicalOperatorSpacing
 - Squiz.WhiteSpace.MemberVarSpacing
 - Squiz.WhiteSpace.SemicolonSpacing
