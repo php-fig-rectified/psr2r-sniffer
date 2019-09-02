@@ -11,6 +11,8 @@ use PHP_CodeSniffer\Runner;
 
 class Tokenizer {
 
+	const STANDARD = 'PSR2R/ruleset.xml';
+
 	/**
 	 * @var string
 	 */
