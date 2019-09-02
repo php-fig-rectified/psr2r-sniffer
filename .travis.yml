@@ -5,6 +5,10 @@ php:
   - 7.3
   - 7.4snapshot
 
+env:
+  global:
+    - DEFAULT=1
+
 matrix:
   include:
     - php: 7.2
@@ -16,9 +20,8 @@ before_script:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - if [[ $DEFAULT == 1 ]]; then vendor/bin/phpunit; fi
+  - if [[ $DEFAULT == 1 ]]; then composer phpstan-setup && composer phpstan ; fi
 
-  - if [[ $CHECKS == 1 ]]; then composer phpstan-setup && composer phpstan ; fi
   - if [[ $CHECKS == 1 ]]; then composer cs-check ; fi
 
 notifications:
