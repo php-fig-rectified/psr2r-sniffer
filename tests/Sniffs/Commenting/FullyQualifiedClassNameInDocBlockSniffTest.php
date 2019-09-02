@@ -2,11 +2,10 @@
 
 namespace PSR2R\Tests\Commenting;
 
+use PHPUnit\Framework\TestCase;
 use PSR2R\Sniffs\Commenting\FullyQualifiedClassNameInDocBlockSniff;
 
-/**
- */
-class FullyQualifiedClassNameInDocBlockSniffTest extends \PHPUnit_Framework_TestCase {
+class FullyQualifiedClassNameInDocBlockSniffTest extends TestCase {
 
 	/**
 	 * @return void

@@ -4,8 +4,6 @@ namespace PSR2R\Test\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-/**
- */
 class FullyQualifiedClassNameInDocBlockUnitTest extends AbstractSniffUnitTest {
 
 	/**

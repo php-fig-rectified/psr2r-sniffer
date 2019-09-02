@@ -47,7 +47,7 @@ class AllTests extends PHP_CodeSniffer_AllTests {
 		$GLOBALS['PHP_CODESNIFFER_SNIFF_CODES'] = [];
 		$GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = [];
 
-		$suite = new PHPUnit_Framework_TestSuite('PHP PSR2R Standards');
+		$suite = new TestSuite('PHP PSR2R Standards');
 		$toolFile = $GLOBALS['finder']->findFile(AbstractSniff::class);
 		$standardDir = dirname(dirname(realpath($toolFile)));
 		$testsDir = __DIR__ . DIRECTORY_SEPARATOR . 'PSR2R' . DIRECTORY_SEPARATOR . 'Tests' . DIRECTORY_SEPARATOR;
