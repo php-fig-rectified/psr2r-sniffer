@@ -11,8 +11,7 @@ class FullyQualifiedClassNameInDocBlockUnitTest extends AbstractSniffUnitTest {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getErrorList()
-	{
+	public function getErrorList() {
 		return [
 			//9 => 1,
 		];
@@ -20,8 +19,7 @@ class FullyQualifiedClassNameInDocBlockUnitTest extends AbstractSniffUnitTest {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getWarningList()
-	{
+	public function getWarningList() {
 		return [
 		];
 	}

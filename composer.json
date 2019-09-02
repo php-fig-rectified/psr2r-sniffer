@@ -12,8 +12,10 @@
 		}
 	],
 	"require": {
-		"php": ">=5.4.16",
-		"squizlabs/php_codesniffer": "^3.0@dev"
+		"php": ">=5.6",
+		"squizlabs/php_codesniffer": "^3.4.2"
+	},
+	"require-dev": {
 	},
 	"autoload": {
 		"psr-4": {
@@ -49,7 +51,7 @@
 			"php phpunit.phar --coverage-clover=clover.xml",
 			"@reset-ruleset"
 		],
-		"cs-check": "phpcs --colors -p --extensions=php --standard=PSR2R --ignore=/psr2r-sniffer/vendor/,/tests/ .",
-		"cs-fix": "phpcbf --colors --extensions=php --standard=PSR2R --ignore=/psr2r-sniffer/vendor/,/tests/ ."
+		"cs-check": "phpcs --colors -p --extensions=php --standard=PSR2R --ignore=/tests/files/ PSR2R/ tests/",
+		"cs-fix": "phpcbf --colors --extensions=php --standard=PSR2R --ignore=/tests/files/ PSR2R/ tests/"
 	}
 }
