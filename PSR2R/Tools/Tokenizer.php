@@ -9,6 +9,11 @@ use PHP_CodeSniffer\Reporter;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Runner;
 
+$manualAutoload = getcwd() . '/vendor/squizlabs/php_codesniffer/autoload.php';
+if (!class_exists(Config::class) && file_exists($manualAutoload)) {
+	require $manualAutoload;
+}
+
 class Tokenizer {
 
 	const STANDARD = 'PSR2R/ruleset.xml';
