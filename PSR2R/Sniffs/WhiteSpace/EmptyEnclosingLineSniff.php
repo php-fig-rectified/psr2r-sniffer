@@ -106,10 +106,8 @@ class EmptyEnclosingLineSniff implements Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($lastContentIndex === $curlyBraceStartIndex) {
-			// Single new line for empty classes
-			if ($tokens[$curlyBraceEndIndex]['line'] === $tokens[$curlyBraceStartIndex]['line'] + 1) {
-				return;
-			}
+			// End part takes care of this already
+			return;
 		}
 
 		$firstContentIndex = $phpcsFile->findNext(T_WHITESPACE, $curlyBraceStartIndex + 1, $lastContentIndex, true);
