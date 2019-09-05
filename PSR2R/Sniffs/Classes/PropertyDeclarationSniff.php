@@ -18,6 +18,7 @@ use PHP_CodeSniffer\Util\Tokens;
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PropertyDeclarationSniff extends AbstractVariableSniff {
+
 	/**
 	 * @inheritDoc
 	 */
