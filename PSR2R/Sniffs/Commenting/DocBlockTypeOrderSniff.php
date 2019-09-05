@@ -55,10 +55,6 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 		$tokens = $phpCsFile->getTokens();
 		$docBlockStartIndex = $tokens[$docBlockEndIndex]['comment_opener'];
 
-		if ($this->hasInheritDoc($phpCsFile, $docBlockStartIndex, $docBlockEndIndex)) {
-			return;
-		}
-
 		$docBlockParams = $this->getDocBlockParams($tokens, $docBlockStartIndex, $docBlockEndIndex);
 
 		$this->assertOrder($phpCsFile, $docBlockParams);

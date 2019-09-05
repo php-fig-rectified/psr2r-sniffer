@@ -40,10 +40,6 @@ class DocBlockParamArraySniff extends AbstractSniff {
 
 		$docBlockStartIndex = $tokens[$docBlockEndIndex]['comment_opener'];
 
-		if ($this->hasInheritDoc($phpCsFile, $docBlockStartIndex, $docBlockEndIndex)) {
-			return;
-		}
-
 		for ($i = $docBlockStartIndex + 1; $i < $docBlockEndIndex; $i++) {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
