@@ -17,6 +17,13 @@ class NoIsNullSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_STRING];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW, T_DOUBLE_COLON];
 
@@ -125,13 +132,6 @@ class NoIsNullSniff extends AbstractSniff {
 
 			$phpcsFile->fixer->endChangeset();
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_STRING];
 	}
 
 	/**

@@ -16,6 +16,13 @@ class UnaryOperatorSpacingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_INC, T_DEC, T_MINUS, T_PLUS, T_NONE, T_ASPERAND, T_BITWISE_AND];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -78,13 +85,6 @@ class UnaryOperatorSpacingSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_INC, T_DEC, T_MINUS, T_PLUS, T_NONE, T_ASPERAND, T_BITWISE_AND];
 	}
 
 	/**

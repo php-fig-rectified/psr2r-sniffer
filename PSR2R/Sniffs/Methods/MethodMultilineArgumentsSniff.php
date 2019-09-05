@@ -16,6 +16,13 @@ class MethodMultilineArgumentsSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_FUNCTION];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -70,13 +77,6 @@ class MethodMultilineArgumentsSniff extends AbstractSniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_FUNCTION];
 	}
 
 }

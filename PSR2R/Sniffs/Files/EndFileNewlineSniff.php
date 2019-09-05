@@ -36,6 +36,13 @@ class EndFileNewlineSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_OPEN_TAG];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		if ($phpcsFile->findNext(T_INLINE_HTML, $stackPtr + 1) !== false) {
 			return $phpcsFile->numTokens + 1;
@@ -89,13 +96,6 @@ class EndFileNewlineSniff implements Sniff {
 
 		// Skip the rest of the file.
 		return $phpcsFile->numTokens + 1;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_OPEN_TAG];
 	}
 
 }

@@ -19,6 +19,13 @@ class UnusedUseStatementSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_USE];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -96,13 +103,6 @@ class UnusedUseStatementSniff extends AbstractSniff {
 		}
 
 		$phpcsFile->fixer->endChangeset();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_USE];
 	}
 
 }

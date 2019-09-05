@@ -17,19 +17,19 @@ class ArraySpacingSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_OPEN_SHORT_ARRAY];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
 		$endIndex = $tokens[$stackPtr]['bracket_closer'];
 		$this->checkBeginning($phpcsFile, $stackPtr);
 		$this->checkEnding($phpcsFile, $endIndex);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_OPEN_SHORT_ARRAY];
 	}
 
 	/**

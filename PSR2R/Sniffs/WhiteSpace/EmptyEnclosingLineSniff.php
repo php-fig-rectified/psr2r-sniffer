@@ -16,6 +16,17 @@ class EmptyEnclosingLineSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+			T_TRAIT,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$errorData = [strtolower($tokens[$stackPtr]['content'])];
@@ -67,17 +78,6 @@ class EmptyEnclosingLineSniff implements Sniff {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-			T_TRAIT,
-		];
 	}
 
 }

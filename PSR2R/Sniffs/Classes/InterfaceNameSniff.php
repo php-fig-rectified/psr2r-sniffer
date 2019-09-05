@@ -13,6 +13,13 @@ class InterfaceNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_INTERFACE];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -24,13 +31,6 @@ class InterfaceNameSniff extends AbstractSniff {
 
 		$warn = 'Interface names should always have the suffix "Interface"';
 		$phpcsFile->addWarning($warn, $nameIndex, 'MissingSuffix');
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_INTERFACE];
 	}
 
 }

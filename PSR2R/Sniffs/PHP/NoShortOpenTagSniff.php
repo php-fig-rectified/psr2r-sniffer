@@ -30,6 +30,16 @@ class NoShortOpenTagSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_OPEN_TAG,
+			T_INLINE_HTML,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$openTag = $tokens[$stackPtr];
@@ -40,16 +50,6 @@ class NoShortOpenTagSniff implements Sniff {
 			$data = [$content];
 			$phpcsFile->addError($error, $stackPtr, 'Found', $data);
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_OPEN_TAG,
-			T_INLINE_HTML,
-		];
 	}
 
 }

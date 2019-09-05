@@ -36,6 +36,16 @@ class ClassFileNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [
+			T_CLASS,
+			T_INTERFACE,
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$fullPath = basename($phpcsFile->getFilename());
 		$fileName = substr($fullPath, 0, strrpos($fullPath, '.'));
@@ -63,16 +73,6 @@ class ClassFileNameSniff extends AbstractSniff {
 			];
 			$phpcsFile->addError($error, $stackPtr, 'NoMatch', $data);
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_CLASS,
-			T_INTERFACE,
-		];
 	}
 
 }

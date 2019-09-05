@@ -13,6 +13,13 @@ class TraitNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_TRAIT];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -24,13 +31,6 @@ class TraitNameSniff extends AbstractSniff {
 
 		$warn = 'Trait names should always have the suffix "Trait"';
 		$phpcsFile->addWarning($warn, $nameIndex, 'MissingSuffix');
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_TRAIT];
 	}
 
 }

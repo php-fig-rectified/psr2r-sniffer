@@ -17,6 +17,13 @@ class PreferStaticOverSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_DOUBLE_COLON];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -34,13 +41,6 @@ class PreferStaticOverSelfSniff extends AbstractSniff {
 		}
 
 		$phpcsFile->fixer->replaceToken($index, 'static');
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_DOUBLE_COLON];
 	}
 
 }

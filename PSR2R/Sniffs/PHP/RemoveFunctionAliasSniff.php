@@ -37,6 +37,13 @@ class RemoveFunctionAliasSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_STRING, T_EXIT];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -63,13 +70,6 @@ class RemoveFunctionAliasSniff implements Sniff {
 		if ($fix) {
 			$phpcsFile->fixer->replaceToken($stackPtr, static::$matching[$key]);
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_STRING, T_EXIT];
 	}
 
 }

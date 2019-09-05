@@ -31,6 +31,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class SwitchDeclarationSniff implements Sniff {
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_SWITCH];
+	}
+
+	/**
 	 * The number of spaces code should be indented.
 	 *
 	 * @var int
@@ -188,13 +195,6 @@ class SwitchDeclarationSniff implements Sniff {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_SWITCH];
 	}
 
 	/**

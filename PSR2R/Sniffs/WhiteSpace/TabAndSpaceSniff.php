@@ -40,6 +40,13 @@ class TabAndSpaceSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_WHITESPACE];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -69,13 +76,6 @@ class TabAndSpaceSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($stackPtr, ' ');
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_WHITESPACE];
 	}
 
 }

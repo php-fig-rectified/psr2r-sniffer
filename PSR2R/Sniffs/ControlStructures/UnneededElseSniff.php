@@ -16,6 +16,13 @@ class UnneededElseSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_ELSE, T_ELSEIF];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -113,13 +120,6 @@ class UnneededElseSniff extends AbstractSniff {
 		}
 
 		$phpcsFile->fixer->endChangeset();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_ELSE, T_ELSEIF];
 	}
 
 	/**

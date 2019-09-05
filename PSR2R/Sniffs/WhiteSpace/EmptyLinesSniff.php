@@ -5,11 +5,12 @@ namespace PSR2R\Sniffs\WhiteSpace;
 use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
+/**
+ * Removes multi newlines in favor of single newlines.
+ */
 class EmptyLinesSniff extends AbstractSniff {
 
 	/**
-	 * A list of tokenizers this sniff supports.
-	 *
 	 * @var array
 	 */
 	public $supportedTokenizers = [

@@ -29,6 +29,13 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_DOC_COMMENT_OPEN_TAG];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		// We skip for comments in the middle of code
 		if ($this->findFirstNonWhitespaceInLine($phpcsFile, $stackPtr)) {
@@ -137,13 +144,6 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_DOC_COMMENT_OPEN_TAG];
 	}
 
 	/**

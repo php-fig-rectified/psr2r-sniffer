@@ -57,18 +57,14 @@ class PropertyDeclarationSniff extends AbstractVariableSniff {
 	 * @inheritDoc
 	 */
 	protected function processVariable(File $phpcsFile, $stackPtr) {
-		/*
-            We don't care about normal variables.
-        */
+		// We don't care about normal variables.
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	protected function processVariableInString(File $phpcsFile, $stackPtr) {
-		/*
-            We don't care about normal variables.
-        */
+		// We don't care about normal variables.
 	}
 
 }

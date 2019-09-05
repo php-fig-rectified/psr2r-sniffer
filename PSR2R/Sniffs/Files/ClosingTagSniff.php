@@ -36,6 +36,13 @@ class ClosingTagSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_OPEN_TAG];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -70,13 +77,6 @@ class ClosingTagSniff implements Sniff {
 
 		// Ignore the rest of the file.
 		return $phpcsFile->numTokens;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_OPEN_TAG];
 	}
 
 }

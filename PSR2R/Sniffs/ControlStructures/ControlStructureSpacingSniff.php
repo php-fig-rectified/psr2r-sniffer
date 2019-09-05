@@ -41,6 +41,24 @@ class ControlStructureSpacingSniff implements Sniff {
 	public $requiredSpacesAfterOpen = 0;
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [
+			T_IF,
+			T_WHILE,
+			T_FOREACH,
+			T_FOR,
+			T_SWITCH,
+			T_DO,
+			T_ELSE,
+			T_ELSEIF,
+			T_TRY,
+			T_CATCH,
+		];
+	}
+
+	/**
 	 * How many spaces should precede the closing bracket.
 	 *
 	 * @var int
@@ -121,24 +139,6 @@ class ControlStructureSpacingSniff implements Sniff {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [
-			T_IF,
-			T_WHILE,
-			T_FOREACH,
-			T_FOR,
-			T_SWITCH,
-			T_DO,
-			T_ELSE,
-			T_ELSEIF,
-			T_TRY,
-			T_CATCH,
-		];
 	}
 
 }

@@ -29,6 +29,13 @@ use PHP_CodeSniffer\Util\Tokens;
 class UseInAlphabeticalOrderSniff implements Sniff {
 
 	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_USE];
+	}
+
+	/**
 	 * Processed files
 	 *
 	 * @var array
@@ -101,13 +108,6 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_USE];
 	}
 
 	/**

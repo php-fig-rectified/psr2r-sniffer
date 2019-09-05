@@ -17,6 +17,13 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return Tokens::$comparisonTokens;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpCsFile, $stackPointer) {
 		$tokens = $phpCsFile->getTokens();
 
@@ -82,13 +89,6 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 			$this->applyFix($phpCsFile, $stackPointer, $leftIndexStart, $leftIndexEnd, $rightIndexStart,
 				$rightIndexEnd);
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return Tokens::$comparisonTokens;
 	}
 
 	/**

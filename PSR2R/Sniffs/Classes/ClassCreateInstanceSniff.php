@@ -11,6 +11,13 @@ class ClassCreateInstanceSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_NEW];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -55,13 +62,6 @@ class ClassCreateInstanceSniff extends AbstractSniff {
 		if ($fix) {
 			$phpcsFile->fixer->addContent($constructorIndex, '()');
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_NEW];
 	}
 
 }

@@ -27,6 +27,17 @@ class OperatorSpacingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		$comparison = Tokens::$comparisonTokens;
+		$operators = Tokens::$operators;
+		$assignment = Tokens::$assignmentTokens;
+
+		return array_unique(array_merge($comparison, $operators, $assignment));
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -130,17 +141,6 @@ class OperatorSpacingSniff implements Sniff {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		$comparison = Tokens::$comparisonTokens;
-		$operators = Tokens::$operators;
-		$assignment = Tokens::$assignmentTokens;
-
-		return array_unique(array_merge($comparison, $operators, $assignment));
 	}
 
 }

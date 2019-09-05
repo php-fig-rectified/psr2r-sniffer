@@ -16,6 +16,13 @@ class ObjectAttributeSpacingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_OBJECT_OPERATOR, T_DOUBLE_COLON];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -40,13 +47,6 @@ class ObjectAttributeSpacingSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_OBJECT_OPERATOR, T_DOUBLE_COLON];
 	}
 
 }

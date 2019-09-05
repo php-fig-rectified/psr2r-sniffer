@@ -18,6 +18,13 @@ class PhpSapiConstantSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_STRING];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -51,13 +58,6 @@ class PhpSapiConstantSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($i, '');
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_STRING];
 	}
 
 }

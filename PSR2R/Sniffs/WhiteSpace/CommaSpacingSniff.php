@@ -16,6 +16,13 @@ class CommaSpacingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
+	public function register() {
+		return [T_COMMA];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
@@ -35,13 +42,6 @@ class CommaSpacingSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($previous + 1, '');
 			}
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_COMMA];
 	}
 
 	/**

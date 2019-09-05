@@ -49,6 +49,13 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
+	 */
+	public function register() {
+		return [T_NEW, T_FUNCTION, T_DOUBLE_COLON, T_CLASS];
+	}
+
+	/**
+	 * @inheritDoc
 	 * @throws \RuntimeException
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
@@ -77,13 +84,6 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 			$this->checkUseForReturnTypeHint($phpcsFile, $stackPtr);
 		}
 		$this->insertUseWhenSentinel($phpcsFile, $stackPtr);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function register() {
-		return [T_NEW, T_FUNCTION, T_DOUBLE_COLON, T_CLASS];
 	}
 
 	/**
