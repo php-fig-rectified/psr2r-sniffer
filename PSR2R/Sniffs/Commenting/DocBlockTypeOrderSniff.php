@@ -86,15 +86,16 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 			if ($expectedOrder === $docBlockParamTypes) {
 				continue;
 			}
+			$expectedTypes = implode('|', $expectedOrder);
 
-			$fix = $phpCsFile->addFixableError('`null` and falsey values should be the last element', $docBlockParam['index'], 'WrongOrder');
+			$fix = $phpCsFile->addFixableError('Nullish/falsely value should be the last element, expected `' . $expectedTypes . '`', $docBlockParam['index'], 'WrongOrder');
 			if (!$fix) {
 				continue;
 			}
 
 			$phpCsFile->fixer->beginChangeset();
 
-			$content = implode('|', $expectedOrder) . $docBlockParam['appendix'];
+			$content = $expectedTypes . $docBlockParam['appendix'];
 			$phpCsFile->fixer->replaceToken($docBlockParam['index'], $content);
 
 			$phpCsFile->fixer->endChangeset();
