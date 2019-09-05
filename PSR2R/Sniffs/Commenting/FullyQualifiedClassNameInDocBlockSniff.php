@@ -14,7 +14,7 @@ use PSR2R\Tools\AbstractSniff;
 class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 
 	/**
-	 * @var array
+	 * @var string[]
 	 */
 	public static $whitelistedTypes = [
 		'string', 'int', 'integer', 'float', 'bool', 'boolean', 'resource', 'null', 'void', 'callable',
@@ -53,7 +53,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@return', '@param', '@throws', '@var', '@method', '@property'])) {
+			if (!in_array($tokens[$i]['content'], ['@return', '@param', '@throws', '@var', '@method', '@property'], true)) {
 				continue;
 			}
 
@@ -127,7 +127,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 				$arrayOfObject++;
 				$className = substr($className, 0, -2);
 			}
-			if (in_array($className, static::$whitelistedTypes)) {
+			if (in_array($className, static::$whitelistedTypes, true)) {
 				continue;
 			}
 			$useStatement = $this->findUseStatementForClassName($phpCsFile, $className);

@@ -30,7 +30,11 @@ class DocBlockVarSniff extends AbstractSniff {
 		$tokens = $phpCsFile->getTokens();
 
 		$previousIndex = $phpCsFile->findPrevious(Tokens::$emptyTokens, $stackPointer - 1, null, true);
-		if (!$this->isGivenKind([T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC], $tokens[$previousIndex])) {
+		if ($previousIndex && $tokens[$previousIndex]['code'] === T_STATIC) {
+			$previousIndex = $phpCsFile->findPrevious(Tokens::$emptyTokens, $previousIndex - 1, null, true);
+		}
+
+		if (!$this->isGivenKind([T_PUBLIC, T_PROTECTED, T_PRIVATE], $tokens[$previousIndex])) {
 			return;
 		}
 

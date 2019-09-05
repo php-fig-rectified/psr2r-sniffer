@@ -156,7 +156,7 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if (!in_array($tokens[$i]['content'], ['@param', '@return'])) {
+			if (!in_array($tokens[$i]['content'], ['@param', '@return'], true)) {
 				continue;
 			}
 
