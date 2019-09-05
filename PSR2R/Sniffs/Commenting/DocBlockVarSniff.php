@@ -144,7 +144,7 @@ class DocBlockVarSniff extends AbstractSniff {
 
 	/**
 	 * @param array $token
-	 * @return null|string
+	 * @return string|null
 	 */
 	protected function detectType(array $token) {
 		if ($this->isGivenKind(T_OPEN_SHORT_ARRAY, $token)) {
