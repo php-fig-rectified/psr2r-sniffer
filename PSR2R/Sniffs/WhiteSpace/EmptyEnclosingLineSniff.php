@@ -41,7 +41,7 @@ class EmptyEnclosingLineSniff implements Sniff {
 		$curlyBraceEndIndex = $tokens[$stackPtr]['scope_closer'];
 
 		$lastContentIndex = $phpcsFile->findPrevious(T_WHITESPACE, $curlyBraceEndIndex - 1, $stackPtr, true);
-		$this->checkBeginning($phpcsFile, $stackPtr, $curlyBraceStartIndex, $lastContentIndex);
+		$this->checkBeginning($phpcsFile, $stackPtr, $curlyBraceStartIndex, $curlyBraceEndIndex, $lastContentIndex);
 		$this->checkEnd($phpcsFile, $stackPtr, $curlyBraceStartIndex, $curlyBraceEndIndex, $lastContentIndex);
 	}
 
@@ -98,11 +98,19 @@ class EmptyEnclosingLineSniff implements Sniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @param int $curlyBraceStartIndex
+	 * @param int $curlyBraceEndIndex
 	 * @param int $lastContentIndex
 	 * @return void
 	 */
-	public function checkBeginning(File $phpcsFile, $stackPtr, $curlyBraceStartIndex, $lastContentIndex) {
+	public function checkBeginning(File $phpcsFile, $stackPtr, $curlyBraceStartIndex, $curlyBraceEndIndex, $lastContentIndex) {
 		$tokens = $phpcsFile->getTokens();
+
+		if ($lastContentIndex === $curlyBraceStartIndex) {
+			// Single new line for empty classes
+			if ($tokens[$curlyBraceEndIndex]['line'] === $tokens[$curlyBraceStartIndex]['line'] + 1) {
+				return;
+			}
+		}
 
 		$firstContentIndex = $phpcsFile->findNext(T_WHITESPACE, $curlyBraceStartIndex + 1, $lastContentIndex, true);
 
