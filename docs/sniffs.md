@@ -1,7 +1,7 @@
 # PSR2R Code Sniffer
 
 
-The PSR2R standard contains 106 sniffs
+The PSR2R standard contains 108 sniffs
 
 Generic (14 sniffs)
 -------------------
@@ -39,7 +39,7 @@ PSR2 (3 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (63 sniffs)
+PSR2R (65 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
@@ -62,7 +62,9 @@ PSR2R (63 sniffs)
 - PSR2R.Commenting.DocBlockShortType
 - PSR2R.Commenting.DocBlockTagTypes
 - PSR2R.Commenting.DocBlockVar
+- PSR2R.Commenting.DocBlockVarNotJustNull
 - PSR2R.Commenting.DocBlockVarWithoutName
+- PSR2R.Commenting.DocBlockVariableNullHintLast
 - PSR2R.Commenting.DocComment
 - PSR2R.Commenting.FullyQualifiedClassNameInDocBlock
 - PSR2R.Commenting.InlineDocBlock
