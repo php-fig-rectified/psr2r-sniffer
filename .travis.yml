@@ -21,11 +21,9 @@ matrix:
 before_script:
   - composer install --prefer-dist --no-interaction
 
-  - if [[ $CHECKS != 1 ]]; then composer require --dev phpunit/phpunit:"^5.0|^6.0"; fi
-
 script:
   - if [[ $CHECKS == 1 ]]; then composer phpstan-setup && composer phpstan ; fi
-  - if [[ $CHECKS == 1 ]]; then composer cs-check ; fi
+  - composer cs-check
 
 notifications:
   email: false

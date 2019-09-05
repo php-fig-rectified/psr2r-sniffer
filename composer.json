@@ -36,7 +36,7 @@
 		"docs": "php docs/generate.php",
 		"docs-listing": "phpcs -e --standard=PSR2R/ruleset.xml",
 		"cs-check": "phpcs --standard=PSR2R/ruleset.xml -p -s --ignore=/tests/files/,*.inc,*.fixed PSR2R/",
-		"cs-fix": "phpcbf --standard=PSR2R/ruleset.xml --ignore=/tests/files/,*.inc,*.fixed PSR2R/",
+		"cs-fix": "phpcbf --standard=PSR2R/ruleset.xml -p --ignore=/tests/files/,*.inc,*.fixed PSR2R/",
 		"test": "php phpunit.phar",
 		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-6.5.13.phar && mv phpunit-6.5.13.phar phpunit.phar || true",
 		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-6.5.13.phar && mv phpunit-6.5.13.phar phpunit.phar || true",

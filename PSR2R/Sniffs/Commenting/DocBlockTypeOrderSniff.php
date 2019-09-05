@@ -35,6 +35,11 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 	];
 
 	/**
+	 * @var string[]
+	 */
+	protected $sortOrder;
+
+	/**
 	 * @inheritDoc
 	 */
 	public function register() {
@@ -88,7 +93,7 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 			}
 			$expectedTypes = implode('|', $expectedOrder);
 
-			$fix = $phpCsFile->addFixableError('Nullish/falsely value should be the last element, expected `' . $expectedTypes . '`', $docBlockParam['index'], 'WrongOrder');
+			$fix = $phpCsFile->addFixableError('Nullish/falsely value in `' . $docBlockParam['type'] . '` should be the last element, expected `' . $expectedTypes . '`', $docBlockParam['index'], 'WrongOrder');
 			if (!$fix) {
 				continue;
 			}
@@ -110,12 +115,74 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 	 * @return string[]
 	 */
 	protected function getExpectedOrder(array $elements) {
-		global $sortOrder;
+		if (version_compare(PHP_VERSION, '7.0') < 0) {
+			return $this->getExpectedOrderLegacy($elements);
+		}
 
 		$sortOrder = array_reverse($this->sortMap);
+		$this->sortOrder = $sortOrder;
+
 		usort($elements, [$this, 'compare']);
 
 		return $elements;
+	}
+
+	/**
+	 * For PHP 5 we need a custom fallback sort.
+	 *
+	 * @param string[] $elements
+	 *
+	 * @return string[]
+	 */
+	protected function getExpectedOrderLegacy(array $elements) {
+		$sortOrder = array_reverse($this->sortMap);
+		$sortOrder = array_flip($sortOrder);
+		foreach ($elements as $element) {
+			if (!isset($sortOrder[$element])) {
+				$sortOrder[$element] = -1;
+			}
+		}
+
+		$array = [];
+		foreach ($elements as $element) {
+			$array[$element] = $sortOrder[$element];
+		}
+
+		static::asort($array);
+
+		$elements = array_keys($array);
+
+		return $elements;
+	}
+
+	/**
+	 * asort() but with a/b of same value to keep existing order.
+	 *
+	 * Required for PHP5, as the order can be inverse here.
+	 *
+	 * @param array $array
+	 * @param int $sortFlags
+	 *
+	 * @return bool
+	 */
+	protected static function asort(array &$array, $sortFlags = SORT_REGULAR) {
+		$index = 0;
+		foreach ($array as &$item) {
+			$item = [$index++, $item];
+		}
+		$result = uasort($array, function($a, $b) use($sortFlags) {
+			if ($a[1] == $b[1]) {
+				return $a[0] - $b[0];
+			}
+			$set = [-1 => $a[1], 1 => $b[1]];
+			asort($set, $sortFlags);
+			reset($set);
+			return key($set);
+		});
+		foreach ($array as &$item) {
+			$item = $item[1];
+		}
+		return $result;
 	}
 
 	/**
@@ -125,14 +192,13 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 	 * @return int
 	 */
 	protected function compare($a, $b) {
-		global $sortOrder;
+		$sortOrder = $this->sortOrder;
 
 		$aIndex = array_search($a, $sortOrder, true);
 		$bIndex = array_search($b, $sortOrder, true);
 		if ($aIndex === false) {
 			return -1;
 		}
-
 		if ($bIndex === false) {
 			return 1;
 		}
