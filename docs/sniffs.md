@@ -1,9 +1,9 @@
 # PSR2R Code Sniffer
 
 
-The PSR2R standard contains 109 sniffs
+The PSR2R standard contains 123 sniffs
 
-Generic (14 sniffs)
+Generic (20 sniffs)
 -------------------
 - Generic.Arrays.DisallowLongArraySyntax
 - Generic.CodeAnalysis.ForLoopShouldBeWhileLoop
@@ -12,13 +12,19 @@ Generic (14 sniffs)
 - Generic.CodeAnalysis.UnconditionalIfStatement
 - Generic.CodeAnalysis.UnnecessaryFinalModifier
 - Generic.ControlStructures.InlineControlStructure
+- Generic.Files.ByteOrderMark
 - Generic.Files.LineEndings
 - Generic.Formatting.DisallowMultipleStatements
 - Generic.Formatting.NoSpaceAfterCast
+- Generic.NamingConventions.UpperCaseConstantName
 - Generic.PHP.DeprecatedFunctions
+- Generic.PHP.DisallowShortOpenTag
 - Generic.PHP.ForbiddenFunctions
 - Generic.PHP.LowerCaseConstant
+- Generic.PHP.LowerCaseKeyword
+- Generic.PHP.LowerCaseType
 - Generic.PHP.NoSilencedErrors
+- Generic.WhiteSpace.IncrementDecrementSpacing
 
 PEAR (3 sniffs)
 ---------------
@@ -26,16 +32,24 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
-PSR12 (4 sniffs)
+PSR1 (3 sniffs)
+---------------
+- PSR1.Classes.ClassDeclaration
+- PSR1.Files.SideEffects
+- PSR1.Methods.CamelCapsMethodName
+
+PSR12 (5 sniffs)
 ----------------
 - PSR12.Classes.ClassInstantiation
+- PSR12.Functions.NullableTypeDeclaration
 - PSR12.Keywords.ShortFormTypeKeywords
 - PSR12.Namespaces.CompoundNamespaceDepth
 - PSR12.Operators.OperatorSpacing
 
-PSR2 (3 sniffs)
+PSR2 (4 sniffs)
 ---------------
 - PSR2.ControlStructures.ElseIfDeclaration
+- PSR2.Files.EndFileNewline
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
@@ -108,14 +122,16 @@ PSR2R (66 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-Squiz (18 sniffs)
+Squiz (21 sniffs)
 -----------------
 - Squiz.Arrays.ArrayBracketSpacing
 - Squiz.Classes.LowercaseClassKeywords
+- Squiz.Classes.ValidClassName
 - Squiz.ControlStructures.ForEachLoopDeclaration
 - Squiz.ControlStructures.LowercaseDeclaration
 - Squiz.Functions.FunctionDeclaration
 - Squiz.Functions.FunctionDeclarationArgumentSpacing
+- Squiz.Functions.LowercaseFunctionKeywords
 - Squiz.Operators.ValidLogicalOperators
 - Squiz.PHP.Eval
 - Squiz.PHP.NonExecutableCode
@@ -126,6 +142,7 @@ Squiz (18 sniffs)
 - Squiz.WhiteSpace.LanguageConstructSpacing
 - Squiz.WhiteSpace.LogicalOperatorSpacing
 - Squiz.WhiteSpace.MemberVarSpacing
+- Squiz.WhiteSpace.ScopeKeywordSpacing
 - Squiz.WhiteSpace.SemicolonSpacing
 - Squiz.WhiteSpace.SuperfluousWhitespace
 

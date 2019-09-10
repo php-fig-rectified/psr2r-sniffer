@@ -35,6 +35,12 @@
 
 	<rule ref="Zend.Files.ClosingTag"/>
 	<rule ref="Generic.Files.LineEndings"/>
+	<rule ref="Generic.Files.ByteOrderMark"/>
+	<rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+	<rule ref="Generic.PHP.DisallowShortOpenTag"/>
+	<rule ref="Generic.PHP.LowerCaseKeyword"/>
+	<rule ref="Generic.PHP.LowerCaseType"/>
+	<rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
 
 	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
 
@@ -43,8 +49,15 @@
 	<rule ref="Squiz.Functions.FunctionDeclaration"/>
 	<rule ref="PEAR.Functions.ValidDefaultValue"/>
 
+	<rule ref="PSR1"/>
+	<rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+		<severity>0</severity>
+	</rule>
+
 	<rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
 	<rule ref="PSR2.Namespaces.UseDeclaration"/>
+
+	<rule ref="PSR2.Files.EndFileNewline"/>
 
 	<!--
 	<rule ref="PSR2.ControlStructures.ControlStructureSpacing"/>
@@ -57,6 +70,10 @@
 	<rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
 	<rule ref="PSR12.Namespaces.CompoundNamespaceDepth"/>
 	<rule ref="PSR12.Operators.OperatorSpacing"/>
+	<rule ref="PSR12.Functions.NullableTypeDeclaration"/>
+
+	<rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+	<rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
 
 	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
 		<properties>
