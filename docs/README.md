@@ -10,7 +10,7 @@ Runs on all OS, tested on Unix and Windows.
 The following sniffers are bundles together with `PSR-2-R` already, but you can
 also use them standalone/separately in any way you like.
 
-**Currently PSR2R ships with over 100 sniffs.**
+**Currently PSR2R ships with over 120 sniffs.**
 
 [List of included sniffs](sniffs.md)
 
