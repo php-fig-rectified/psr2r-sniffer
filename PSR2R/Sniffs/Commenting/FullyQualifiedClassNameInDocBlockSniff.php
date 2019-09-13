@@ -18,7 +18,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	 */
 	public static $whitelistedTypes = [
 		'string', 'int', 'integer', 'float', 'bool', 'boolean', 'resource', 'null', 'void', 'callable',
-		'array', 'mixed', 'object', 'false', 'true', 'self', 'static', '$this',
+		'array', 'iterable', 'mixed', 'object', 'false', 'true', 'self', 'static', '$this',
 	];
 
 	/**
@@ -76,15 +76,16 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 				continue;
 			}
 
-			$classNames = explode('|', $content);
-			$this->fixClassNames($phpCsFile, $classNameIndex, $classNames, $appendix);
+			$types = $this->parseTypes($content);
+
+			$this->fixClassNames($phpCsFile, $classNameIndex, $types, $appendix);
 		}
 	}
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $classNameIndex
-	 * @param array $classNames
+	 * @param string[] $classNames
 	 * @param string $appendix
 	 *
 	 * @return void
@@ -113,20 +114,35 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	 * @param int $classNameIndex
 	 * @param string[] $classNames
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	protected function generateClassNameMap(File $phpCsFile, $classNameIndex, array &$classNames) {
 		$result = [];
 
 		foreach ($classNames as $key => $className) {
-			if (strpos($className, '\\') !== false) {
-				continue;
-			}
 			$arrayOfObject = 0;
 			while (substr($className, -2) === '[]') {
 				$arrayOfObject++;
 				$className = substr($className, 0, -2);
 			}
+
+			if (preg_match('#^\((.+)\)#', $className, $matches)) {
+				$subClassNames = explode('|', $matches[1]);
+				$newClassName = '(' . $this->generateClassNameMapForUnionType($phpCsFile, $classNameIndex, $className, $subClassNames) . ')';
+				if ($newClassName === $className) {
+					continue;
+				}
+
+				$classNames[$key] = $newClassName . ($arrayOfObject ? str_repeat('[]', $arrayOfObject) : '');
+				$result[$className . ($arrayOfObject ? str_repeat('[]', $arrayOfObject) : '')] = $classNames[$key];
+
+				continue;
+			}
+
+			if (strpos($className, '\\') !== false) {
+				continue;
+			}
+
 			if (in_array($className, static::$whitelistedTypes, true)) {
 				continue;
 			}
@@ -226,30 +242,8 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
-	 * @param int $stackPointer
 	 *
-	 * @return int|null Stackpointer value of docblock end tag, or null if cannot be found
-	 */
-	protected function findRelatedDocBlock(File $phpCsFile, $stackPointer) {
-		$tokens = $phpCsFile->getTokens();
-
-		$line = $tokens[$stackPointer]['line'];
-		$beginningOfLine = $stackPointer;
-		while (!empty($tokens[$beginningOfLine - 1]) && $tokens[$beginningOfLine - 1]['line'] === $line) {
-			$beginningOfLine--;
-		}
-
-		if (!empty($tokens[$beginningOfLine - 2]) && $tokens[$beginningOfLine - 2]['type'] === 'T_DOC_COMMENT_CLOSE_TAG') {
-			return $beginningOfLine - 2;
-		}
-
-		return null;
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
-	 *
-	 * @return array
+	 * @return string[]
 	 */
 	protected function parseUseStatements(File $phpCsFile) {
 		$useStatements = [];
@@ -284,6 +278,63 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 		}
 
 		return $useStatements;
+	}
+
+	/**
+	 * @param string $content
+	 *
+	 * @return string[]
+	 */
+	protected function parseTypes($content) {
+		preg_match_all('#\(.+\)#', $content, $matches);
+		if (!$matches[0]) {
+			return explode('|', $content);
+		}
+		$unionTypes = $matches[0];
+		$map = [];
+		foreach ($unionTypes as $i => $unionType) {
+			$content = str_replace($unionType, '{{t' . $i . '}}', $content);
+			$map['{{t' . $i . '}}'] = $unionType;
+		}
+
+		$types = explode('|', $content);
+		foreach ($types as $k => $type) {
+			$types[$k] = str_replace(array_keys($map), array_values($map), $type);
+		}
+
+		return $types;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param int $classNameIndex
+	 * @param string $className
+	 * @param string[] $subClassNames
+	 *
+	 * @return string
+	 */
+	protected function generateClassNameMapForUnionType(File $phpCsFile, $classNameIndex, $className, array $subClassNames) {
+		foreach ($subClassNames as $i => $subClassName) {
+			if (strpos($subClassName, '\\') !== false) {
+				continue;
+			}
+
+			if (in_array($subClassName, static::$whitelistedTypes, true)) {
+				continue;
+			}
+			$useStatement = $this->findUseStatementForClassName($phpCsFile, $subClassName);
+			if (!$useStatement) {
+				$message = 'Invalid typehint `%s`';
+				if (substr($subClassName, 0, 1) === '$') {
+					$message = 'The typehint seems to be missing for `%s`';
+				}
+				$phpCsFile->addError(sprintf($message, $subClassName), $classNameIndex, 'ClassNameInvalid');
+				continue;
+			}
+			$subClassNames[$i] = $useStatement;
+		}
+
+		return implode('|', $subClassNames);
 	}
 
 }
