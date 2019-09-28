@@ -8,7 +8,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 abstract class AbstractSniff implements Sniff {
 
 	/**
-	 * @var array These markers must remain as inline comments
+	 * @var string[] These markers must remain as inline comments
 	 */
 	protected static $phpStormMarkers = ['@noinspection'];
 

@@ -6,7 +6,7 @@ use PHP_CodeSniffer\Files\File;
 use PSR2R\Tools\AbstractSniff;
 
 /**
- * No empty phpdoc tags and no empty @ tag.
+ * No empty phpdoc blocks and no empty @ tag.
  */
 class DocBlockNoEmptySniff extends AbstractSniff {
 
