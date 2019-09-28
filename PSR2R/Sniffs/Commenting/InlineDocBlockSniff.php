@@ -3,6 +3,7 @@
 namespace PSR2R\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 use PSR2R\Tools\AbstractSniff;
 
 /**
@@ -192,7 +193,11 @@ class InlineDocBlockSniff extends AbstractSniff {
 
 		preg_match('|^(.+?)(\s+)(.+?)\s*$|', $comment, $contentMatches);
 		if (!$contentMatches || !$contentMatches[1] || !$contentMatches[3]) {
-			$phpCsFile->addError('Invalid Inline Doc Block content', $contentIndex, 'ContentInvalid');
+			if ($this->hasReturnAsFollowingToken($phpCsFile, $contentIndex)) {
+				return [];
+			}
+
+			$phpCsFile->addError('Invalid Inline Doc Block content, expected `{Type} ${var}` style', $contentIndex, 'ContentInvalid');
 			return [];
 		}
 
@@ -207,6 +212,23 @@ class InlineDocBlockSniff extends AbstractSniff {
 		}
 
 		return $errors;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param int $contentIndex
+	 *
+	 * @return bool
+	 */
+	protected function hasReturnAsFollowingToken(File $phpCsFile, $contentIndex) {
+		$nextIndex = $phpCsFile->findNext(Tokens::$emptyTokens, $contentIndex + 1, null, true);
+		if (!$nextIndex) {
+			return false;
+		}
+
+		$tokens = $phpCsFile->getTokens();
+
+		return $tokens[$nextIndex]['code'] === T_RETURN;
 	}
 
 }
