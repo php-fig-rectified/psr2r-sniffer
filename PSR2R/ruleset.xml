@@ -71,6 +71,7 @@
 	<rule ref="PSR12.Namespaces.CompoundNamespaceDepth"/>
 	<rule ref="PSR12.Operators.OperatorSpacing"/>
 	<rule ref="PSR12.Functions.NullableTypeDeclaration"/>
+	<rule ref="PSR12.Functions.ReturnTypeDeclaration"/>
 
 	<rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
 	<rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
