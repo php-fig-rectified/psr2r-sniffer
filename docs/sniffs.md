@@ -1,9 +1,9 @@
 # PSR2R Code Sniffer
 
 
-The PSR2R standard contains 124 sniffs
+The PSR2R standard contains 126 sniffs
 
-Generic (20 sniffs)
+Generic (21 sniffs)
 -------------------
 - Generic.Arrays.DisallowLongArraySyntax
 - Generic.CodeAnalysis.ForLoopShouldBeWhileLoop
@@ -18,6 +18,7 @@ Generic (20 sniffs)
 - Generic.Formatting.NoSpaceAfterCast
 - Generic.NamingConventions.UpperCaseConstantName
 - Generic.PHP.DeprecatedFunctions
+- Generic.PHP.DisallowAlternativePHPTags
 - Generic.PHP.DisallowShortOpenTag
 - Generic.PHP.ForbiddenFunctions
 - Generic.PHP.LowerCaseConstant
@@ -38,10 +39,11 @@ PSR1 (3 sniffs)
 - PSR1.Files.SideEffects
 - PSR1.Methods.CamelCapsMethodName
 
-PSR12 (5 sniffs)
+PSR12 (6 sniffs)
 ----------------
 - PSR12.Classes.ClassInstantiation
 - PSR12.Functions.NullableTypeDeclaration
+- PSR12.Functions.ReturnTypeDeclaration
 - PSR12.Keywords.ShortFormTypeKeywords
 - PSR12.Namespaces.CompoundNamespaceDepth
 - PSR12.Operators.OperatorSpacing
