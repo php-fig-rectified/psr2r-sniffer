@@ -312,7 +312,7 @@ abstract class AbstractSniff implements Sniff {
 		return [
 			'start' => $startIndex,
 			'namespace' => $this->getNamespaceAsString($phpcsFile, $startIndex + 1, $endIndex - 1),
-			'end' => $endIndex
+			'end' => $endIndex,
 		];
 	}
 
