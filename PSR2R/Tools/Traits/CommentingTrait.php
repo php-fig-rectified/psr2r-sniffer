@@ -1,4 +1,5 @@
 <?php
+
 namespace PSR2R\Tools\Traits;
 
 use PHP_CodeSniffer\Files\File;
