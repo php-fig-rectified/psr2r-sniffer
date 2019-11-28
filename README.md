@@ -10,13 +10,20 @@ For details on PSR-2-R see [fig-rectified-standards](https://github.com/php-fig-
 
 Documentation @ [/docs/](docs).
 
-## PHP-CS Sniffs
+## Included sniffs
+The following sniffers are bundles together as `PSR2R` already, but you can
+also use them standalone/separately in any way you like.
 
-This uses [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/).
+**Currently PSR2R ships with over 128 sniffs.**
+
+* [List of included sniffs](docs/sniffs.md)
+
+This library uses [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/).
 It can detect all issues and fix some of them automatically and is ideal for CI integration
 (travis, jenkins, circlci etc).
 
 ### Usage
+
 #### How to use for your project
 Most likely you are using composer. As such, put it into the require-dev dependencies:
 ```

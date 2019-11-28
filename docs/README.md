@@ -4,22 +4,9 @@ For details on PSR-2-R see [fig-rectified-standards](https://github.com/php-fig-
 ## Documentation on the sniffer itself
 This uses and extends [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/).
 
-Runs on all OS, tested on Unix and Windows.
-
-## Included sniffs
-The following sniffers are bundles together with `PSR-2-R` already, but you can
-also use them standalone/separately in any way you like.
-
-**Currently PSR2R ships with over 120 sniffs.**
-
-[List of included sniffs](sniffs.md)
-
 Most of the sniffs also provide auto-fixing using `-f` option where it is possible.
 
-## Open Tasks
-* It would be nice if some of these sniffers find their way into the contrib section of the original sniffer repo.
-If anyone wants to contribute and add those there, that would be awesome.
-* More tests
+Runs on all OS, tested on Unix and Windows.
 
 ## Using the original phpcs and phpcbf command tools
 Of course you can also use the original cli commands:
@@ -170,3 +157,8 @@ Run
 ```
 composer docs
 ```
+
+## Open Tasks
+* It would be nice if some of these sniffers find their way into the contrib section of the original sniffer repo.
+If anyone wants to contribute and add those there, that would be awesome.
+* More tests
