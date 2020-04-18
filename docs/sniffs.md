@@ -1,7 +1,6 @@
 # PSR2R Code Sniffer
 
-
-The PSR2R standard contains 128 sniffs
+The PSR2R standard contains 153 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -126,6 +125,34 @@ PSR2R (69 sniffs)
 - PSR2R.WhiteSpace.TabAndSpace
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
+
+SlevomatCodingStandard (25 sniffs)
+----------------------------------
+- SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
+- SlevomatCodingStandard.Arrays.TrailingArrayComma
+- SlevomatCodingStandard.Classes.ClassConstantVisibility
+- SlevomatCodingStandard.Classes.ModernClassNameReference
+- SlevomatCodingStandard.Classes.UnusedPrivateElements
+- SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment
+- SlevomatCodingStandard.Commenting.EmptyComment
+- SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch
+- SlevomatCodingStandard.ControlStructures.DisallowYodaComparison
+- SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing
+- SlevomatCodingStandard.ControlStructures.NewWithParentheses
+- SlevomatCodingStandard.Exceptions.DeadCatch
+- SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses
+- SlevomatCodingStandard.Namespaces.UnusedUses
+- SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash
+- SlevomatCodingStandard.Namespaces.UseFromSameNamespace
+- SlevomatCodingStandard.Namespaces.UseSpacing
+- SlevomatCodingStandard.PHP.ShortList
+- SlevomatCodingStandard.PHP.TypeCast
+- SlevomatCodingStandard.PHP.UselessSemicolon
+- SlevomatCodingStandard.TypeHints.LongTypeHints
+- SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue
+- SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing
+- SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing
+- SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 
 Squiz (21 sniffs)
 -----------------

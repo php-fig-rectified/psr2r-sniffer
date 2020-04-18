@@ -6,7 +6,7 @@ use PHP_CodeSniffer\Runner;
 
 class Sniffer {
 
-	const STANDARD = 'PSR2R/ruleset.xml';
+	public const STANDARD = 'PSR2R/ruleset.xml';
 
 	/**
 	 * @var bool
@@ -38,6 +38,7 @@ class Sniffer {
 			if ($v === '-f') {
 				$fix = true;
 				unset($argv[$k]);
+
 				break;
 			}
 		}

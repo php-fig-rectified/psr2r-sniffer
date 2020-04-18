@@ -19,7 +19,7 @@ before_script:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - if [[ $CHECKS == 1 ]]; then composer stan-setup && composer stan ; fi
+  - if [[ $CHECKS == 1 ]]; then composer stan ; fi
   - composer cs-check
 
 notifications:

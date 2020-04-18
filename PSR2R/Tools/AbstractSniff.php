@@ -27,6 +27,7 @@ abstract class AbstractSniff implements Sniff {
 		if (in_array($token['type'], $search, true)) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -46,14 +47,17 @@ abstract class AbstractSniff implements Sniff {
 		for ($i = $start; $i <= $end; $i++) {
 			if ($skipNested && $tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
 				$i = $tokens[$i]['parenthesis_closer'];
+
 				continue;
 			}
 			if ($skipNested && $tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
 				$i = $tokens[$i]['bracket_closer'];
+
 				continue;
 			}
 			if ($skipNested && $tokens[$i]['code'] === T_OPEN_CURLY_BRACKET) {
 				$i = $tokens[$i]['bracket_closer'];
+
 				continue;
 			}
 
@@ -93,6 +97,7 @@ abstract class AbstractSniff implements Sniff {
 		for ($i = $openingBraceIndex + 1; $i < $closingBraceIndex; $i++) {
 			if ($tokens[$i]['type'] === 'T_OPEN_PARENTHESIS') {
 				$i = $tokens[$i]['parenthesis_closer'];
+
 				continue;
 			}
 			if (in_array($tokens[$i]['code'], $whitelistedCodes)) {
@@ -253,6 +258,7 @@ abstract class AbstractSniff implements Sniff {
 		if ($tokens[$nextIndex]['line'] !== $tokens[$index]['line']) {
 			return 0;
 		}
+
 		return $tokens[$nextIndex]['column'] - 1;
 	}
 
@@ -289,6 +295,7 @@ abstract class AbstractSniff implements Sniff {
 		if (!$namespacePosition) {
 			return null;
 		}
+
 		return $namespacePosition;
 	}
 
@@ -354,6 +361,7 @@ abstract class AbstractSniff implements Sniff {
 				return true;
 			}
 		}
+
 		return false;
 	}
 

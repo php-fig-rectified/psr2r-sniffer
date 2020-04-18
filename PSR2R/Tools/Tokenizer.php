@@ -16,7 +16,7 @@ if (!class_exists(Config::class) && file_exists($manualAutoload)) {
 
 class Tokenizer {
 
-	const STANDARD = 'PSR2R/ruleset.xml';
+	public const STANDARD = 'PSR2R/ruleset.xml';
 
 	/**
 	 * @var string
@@ -138,6 +138,7 @@ class Tokenizer {
 		if ($this->verbose) {
 			return $pieces;
 		}
+
 		return [implode(' ', $pieces)];
 	}
 
