@@ -63,6 +63,7 @@ class DocBlockParamSniff extends AbstractSniff {
 
 			if ($tokens[$classNameIndex]['type'] !== 'T_DOC_COMMENT_STRING') {
 				$phpCsFile->addError('Missing type in param doc block', $i, 'MissingParamType');
+
 				continue;
 			}
 
@@ -89,6 +90,7 @@ class DocBlockParamSniff extends AbstractSniff {
 
 		if (count($docBlockParams) !== count($methodSignature)) {
 			$phpCsFile->addError('Doc Block params do not match method signature', $stackPointer, 'ParamTypeMismatch');
+
 			return;
 		}
 

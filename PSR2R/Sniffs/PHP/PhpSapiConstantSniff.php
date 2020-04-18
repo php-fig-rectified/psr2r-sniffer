@@ -13,7 +13,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  */
 class PhpSapiConstantSniff implements Sniff {
 
-	const PHP_SAPI = 'PHP_SAPI';
+	public const PHP_SAPI = 'PHP_SAPI';
 
 	/**
 	 * @inheritDoc

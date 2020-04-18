@@ -107,6 +107,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 							$this->outdent($phpcsFile, $i);
 						}
 						$phpcsFile->fixer->endChangeset();
+
 						return;
 					}
 

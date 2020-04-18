@@ -125,6 +125,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 
 			if ($typeTag === null || $contentTag === null) {
 				$phpCsFile->addError('Invalid Inline Doc Block', $startIndex, 'DocBlockInvalid');
+
 				return;
 			}
 
@@ -198,6 +199,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 			}
 
 			$phpCsFile->addError('Invalid Inline Doc Block content, expected `{Type} ${var}` style', $contentIndex, 'ContentInvalid');
+
 			return [];
 		}
 

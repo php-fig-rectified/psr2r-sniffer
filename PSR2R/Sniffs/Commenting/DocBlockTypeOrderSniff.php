@@ -85,6 +85,7 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 			$unique = array_unique($docBlockParamTypes);
 			if (count($docBlockParamTypes) !== count($unique)) {
 				$phpCsFile->addError('Duplicate type in `' . $docBlockParam['type'] . '`', $docBlockParam['index'], 'Duplicate');
+
 				continue;
 			}
 			$expectedOrder = $this->getExpectedOrder($docBlockParamTypes);
@@ -177,11 +178,13 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 			$set = [-1 => $a[1], 1 => $b[1]];
 			asort($set, $sortFlags);
 			reset($set);
+
 			return key($set);
 		});
 		foreach ($array as &$item) {
 			$item = $item[1];
 		}
+
 		return $result;
 	}
 

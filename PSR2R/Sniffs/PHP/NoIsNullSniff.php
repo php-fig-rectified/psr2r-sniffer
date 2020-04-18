@@ -59,6 +59,7 @@ class NoIsNullSniff extends AbstractSniff {
 				$phpcsFile->findPrevious(Tokens::$emptyTokens, $possibleCastIndex - 1, null, true);
 			if ($tokens[$anotherPossibleCastIndex]['code'] === T_BOOLEAN_NOT) {
 				$phpcsFile->addError($error, $stackPtr, 'CastDoubleNot');
+
 				return;
 			}
 		}
@@ -66,6 +67,7 @@ class NoIsNullSniff extends AbstractSniff {
 		// We don't want to fix stuff with bad inline assignment
 		if ($this->contains($phpcsFile, 'T_EQUAL', $openingBraceIndex + 1, $closingBraceIndex - 1)) {
 			$phpcsFile->addError($error, $stackPtr, 'InlineAssignment');
+
 			return;
 		}
 
@@ -141,6 +143,7 @@ class NoIsNullSniff extends AbstractSniff {
 	 */
 	protected function hasLeadingComparison(File $phpcsFile, $stackPtr) {
 		$previous = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);
+
 		return $this->isComparison($phpcsFile, $previous);
 	}
 
@@ -176,6 +179,7 @@ class NoIsNullSniff extends AbstractSniff {
 	 */
 	protected function hasTrailingComparison(File $phpcsFile, $stackPtr) {
 		$next = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
+
 		return $this->isComparison($phpcsFile, $next);
 	}
 

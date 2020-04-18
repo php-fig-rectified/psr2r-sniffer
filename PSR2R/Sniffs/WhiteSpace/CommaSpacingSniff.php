@@ -60,6 +60,7 @@ class CommaSpacingSniff implements Sniff {
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr, '');
 			}
+
 			return;
 		}
 

@@ -42,6 +42,7 @@ class DocBlockVarSniff extends AbstractSniff {
 
 		if (!$docBlockEndIndex) {
 			$phpCsFile->addError('Doc Block for variable missing', $stackPointer, 'DocVarMissing');
+
 			return;
 		}
 
@@ -63,6 +64,7 @@ class DocBlockVarSniff extends AbstractSniff {
 
 		if (!$varIndex) {
 			$this->handleMissingVar($phpCsFile, $docBlockEndIndex, $docBlockStartIndex, $defaultValueType);
+
 			return;
 		}
 
@@ -70,6 +72,7 @@ class DocBlockVarSniff extends AbstractSniff {
 
 		if ($tokens[$classNameIndex]['type'] !== 'T_DOC_COMMENT_STRING') {
 			$this->handleMissingVarType($phpCsFile, $varIndex, $defaultValueType);
+
 			return;
 		}
 
@@ -88,6 +91,7 @@ class DocBlockVarSniff extends AbstractSniff {
 				$error .= ', type `' . $defaultValueType . '` detected';
 			}
 			$phpCsFile->addError($error, $stackPointer, 'VarTypeEmpty');
+
 			return;
 		}
 
@@ -115,6 +119,7 @@ class DocBlockVarSniff extends AbstractSniff {
 				$phpCsFile->fixer->replaceToken($classNameIndex,
 					implode('|', $parts) . '|' . $defaultValueType . $appendix);
 			}
+
 			return;
 		}
 
@@ -187,6 +192,7 @@ class DocBlockVarSniff extends AbstractSniff {
 		$error = 'Doc Block annotation @var for variable missing';
 		if ($defaultValueType === null) {
 			$phpCsFile->addError($error, $docBlockEndIndex, 'VarMissing');
+
 			return;
 		}
 
@@ -217,6 +223,7 @@ class DocBlockVarSniff extends AbstractSniff {
 		$error = 'Doc Block type for annotation @var for variable missing';
 		if ($defaultValueType === null) {
 			$phpCsFile->addError($error, $varIndex, 'VarTypeMissing');
+
 			return;
 		}
 

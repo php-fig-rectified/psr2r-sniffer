@@ -43,12 +43,14 @@ class UnaryOperatorSpacingSniff implements Sniff {
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}
+
 			return;
 		}
 
 		if ($tokens[$stackPtr]['code'] === T_DEC || $tokens[$stackPtr]['code'] === T_INC) {
 			$this->checkBefore($phpcsFile, $stackPtr);
 			$this->checkAfter($phpcsFile, $stackPtr);
+
 			return;
 		}
 

@@ -283,6 +283,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 					'statement' => $this->extractUseStatementsAsString($tokens, $start, $i - 1),
 				];
 				$start = null;
+
 				continue;
 			}
 
@@ -919,6 +920,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 */
 	protected function isBlacklistedFile(File $phpcsFile) {
 		$file = $phpcsFile->getFilename();
+
 		return strpos($file, DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR) !== false;
 	}
 

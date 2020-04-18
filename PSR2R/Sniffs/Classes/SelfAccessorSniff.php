@@ -31,6 +31,7 @@ class SelfAccessorSniff extends AbstractSniff {
 
 		if ($tokens[$stackPtr]['code'] === T_SELF) {
 			$this->checkSelf($phpcsFile, $stackPtr);
+
 			return;
 		}
 
@@ -50,11 +51,13 @@ class SelfAccessorSniff extends AbstractSniff {
 		for ($i = $startIndex + 1; $i < $endIndex; $i++) {
 			if ($tokens[$i]['code'] === T_NEW) {
 				$this->checkNew($phpcsFile, $i, $name);
+
 				continue;
 			}
 
 			if ($tokens[$i]['code'] === T_DOUBLE_COLON) {
 				$this->checkDoubleColon($phpcsFile, $i, $name);
+
 				continue;
 			}
 		}

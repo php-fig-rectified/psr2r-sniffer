@@ -214,6 +214,7 @@ class SwitchDeclarationSniff implements Sniff {
 			// Skip nested SWITCH statements; they are handled on their own.
 			if ($tokens[$stackPtr]['code'] === T_SWITCH) {
 				$stackPtr = $tokens[$stackPtr]['scope_closer'];
+
 				continue;
 			}
 

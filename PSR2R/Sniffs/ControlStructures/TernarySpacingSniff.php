@@ -40,6 +40,7 @@ class TernarySpacingSniff extends AbstractSniff {
 		$previous = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 		if ($stackPtr - $previous > 1) {
 			$this->assertSingleSpaceBeforeIfNotMultiline($phpcsFile, $stackPtr, $previous);
+
 			return;
 		}
 
@@ -129,6 +130,7 @@ class TernarySpacingSniff extends AbstractSniff {
 		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 		if ($nextIndex - $stackPtr > 1) {
 			$this->assertSingleSpaceAfterIfNotMultiline($phpcsFile, $stackPtr, $nextIndex);
+
 			return;
 		}
 

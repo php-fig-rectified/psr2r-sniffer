@@ -81,6 +81,7 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 			foreach ($defined as $i => $name) {
 				if ($name !== $sorted[$i]) {
 					$wrongName = $name;
+
 					break;
 				}
 			}

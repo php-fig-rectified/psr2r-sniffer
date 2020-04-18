@@ -75,6 +75,7 @@ class UnneededElseSniff extends AbstractSniff {
 
 		if ($tokens[$stackPtr]['code'] === T_ELSEIF) {
 			$this->fixElseIfToIf($phpcsFile, $stackPtr);
+
 			return;
 		}
 

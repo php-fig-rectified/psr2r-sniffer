@@ -12,8 +12,9 @@
 		}
 	],
 	"require": {
-		"php": ">=5.6",
-		"squizlabs/php_codesniffer": "^3.5.0"
+		"php": ">=7.2",
+		"spryker/code-sniffer": "^0.15.1",
+		"slevomat/coding-standard": "^6.2.0"
 	},
 	"require-dev": {
 	},
@@ -38,10 +39,10 @@
 		"cs-check": "phpcs --standard=PSR2R/ruleset.xml -p -s --ignore=/tests/files/,*.inc,*.fixed PSR2R/",
 		"cs-fix": "phpcbf --standard=PSR2R/ruleset.xml -p --ignore=/tests/files/,*.inc,*.fixed PSR2R/",
 		"test": "php phpunit.phar",
-		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-6.5.13.phar && mv phpunit-6.5.13.phar phpunit.phar || true",
-		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-6.5.13.phar && mv phpunit-6.5.13.phar phpunit.phar || true",
+		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-8.5.1.phar && mv phpunit-8.5.1.phar phpunit.phar || true",
+		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-8.5.1.phar && mv phpunit-8.5.1.phar phpunit.phar || true",
 		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
-		"phpstan": "phpstan analyse -c tests/phpstan.neon -l 5 PSR2R/",
-		"phpstan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan-shim:^0.11 && mv composer.backup composer.json"
+		"stan": "phpstan analyse -c tests/phpstan.neon -l 5 PSR2R/",
+		"stan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan:^0.12 && mv composer.backup composer.json"
 	}
 }

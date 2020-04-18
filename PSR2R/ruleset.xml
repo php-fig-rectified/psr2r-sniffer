@@ -10,6 +10,56 @@
 	</description>
 
 	<exclude-pattern>\.git</exclude-pattern>
+	<exclude-pattern>\.xml</exclude-pattern>
+	<exclude-pattern>\.css</exclude-pattern>
+	<exclude-pattern>\.js</exclude-pattern>
+	<exclude-pattern>\.yml</exclude-pattern>
+	<exclude-pattern>\.txt</exclude-pattern>
+	<exclude-pattern>\.json</exclude-pattern>
+
+	<config name="installed_paths" value="../../slevomat/coding-standard"/>
+	<!--
+	<config name="installed_paths" value="../../spryker/code-sniffer"/>
+	-->
+
+	<rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UseSpacing"/>
+
+	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
+
+	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
+		<properties>
+			<property name="fixable" type="bool" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
+
+	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
+
+	<rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>
+
+	<rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
+	<rule ref="SlevomatCodingStandard.PHP.ShortList"/>
+
+	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+	<rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
+
+	<rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
+
+	<rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
+	<rule ref="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment"/>
+
+	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
 
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
@@ -37,9 +87,12 @@
 	<rule ref="Generic.Files.LineEndings"/>
 	<rule ref="Generic.Files.ByteOrderMark"/>
 	<rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+
 	<rule ref="Generic.PHP.DisallowShortOpenTag"/>
 	<rule ref="Generic.PHP.LowerCaseKeyword"/>
+	<rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
 	<rule ref="Generic.PHP.LowerCaseType"/>
+
 	<rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
 
 	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
@@ -99,7 +152,15 @@
 
 	<rule ref="Squiz.Operators.ValidLogicalOperators"/>
 
-	<rule ref="Generic.PHP.DeprecatedFunctions"/>
+	<rule ref="Generic.PHP.DeprecatedFunctions">
+		<properties>
+			<property name="forbiddenFunctions" type="array">
+				<element key="delete" value="unset"/>
+				<element key="create_function" value="null"/>
+				<element key="each" value="null"/>
+			</property>
+		</properties>
+	</rule>
 
 	<rule ref="Squiz.PHP.Eval"/>
 	<rule ref="Generic.PHP.ForbiddenFunctions"/>

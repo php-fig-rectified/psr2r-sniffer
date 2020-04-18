@@ -33,6 +33,7 @@ class DocBlockSniff extends AbstractSniff {
 		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		if ($tokens[$nextIndex]['content'] === '__construct' || $tokens[$nextIndex]['content'] === '__destruct') {
 			$this->checkConstructorAndDestructor($phpcsFile, $nextIndex);
+
 			return;
 		}
 
@@ -51,6 +52,7 @@ class DocBlockSniff extends AbstractSniff {
 		$returnType = $this->detectReturnTypeVoid($phpcsFile, $stackPtr);
 		if ($returnType === null) {
 			$phpcsFile->addError('Method does not have a doc block: ' . $tokens[$nextIndex]['content'] . '()', $nextIndex, 'DocBlockMissing');
+
 			return;
 		}
 
@@ -155,6 +157,7 @@ class DocBlockSniff extends AbstractSniff {
 			if ($this->isGivenKind([T_FUNCTION], $tokens[$i])) {
 				$endIndex = $tokens[$i]['scope_closer'];
 				$i = $endIndex;
+
 				continue;
 			}
 

@@ -34,6 +34,7 @@ class ClassCreateInstanceSniff extends AbstractSniff {
 		// We can only invoke the fixer if we know this is a static constructor function call.
 		if ($tokens[$constructorIndex]['code'] !== T_STRING && $tokens[$constructorIndex]['code'] !== T_NS_SEPARATOR) {
 			$phpcsFile->addError($error, $stackPtr, 'ParenthesisMissing');
+
 			return;
 		}
 

@@ -69,6 +69,7 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 			// '@return' is separate token from return value
 			if (strpos($currentComment, '@return') !== false) {
 				$commentWithReturn = $i;
+
 				break;
 			}
 		}
@@ -87,11 +88,13 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 		if (!$commentWithReturn && !$haveInheritDoc) {
 			$error = 'Missing @return tag in function comment';
 			$phpcsFile->addError($error, $stackPtr, 'Missing');
+
 			return;
 		}
 		if ($commentWithReturn && $haveInheritDoc) {
 			$error = 'Should not have both @inheritDoc and @return in function comment';
 			$phpcsFile->addError($error, $stackPtr, 'RedundantReturn');
+
 			return;
 		}
 
@@ -102,6 +105,7 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 			if ($phpcsFile->fixer->enabled === true) {
 				$phpcsFile->fixer->replaceToken($commentWithReturn, '');
 			}
+
 			return;
 		}
 	}

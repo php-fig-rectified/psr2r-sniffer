@@ -52,6 +52,7 @@ class TabIndentSniff implements Sniff {
 					$this->fixSpace($phpcsFile, $i, $tokens);
 				}
 			}
+
 			return;
 		}
 

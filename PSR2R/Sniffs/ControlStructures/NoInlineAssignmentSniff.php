@@ -26,6 +26,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['code'] === T_OBJECT_OPERATOR || $tokens[$stackPtr]['code'] === T_DOUBLE_COLON) {
 			$this->checkMethodCalls($phpcsFile, $stackPtr);
+
 			return;
 		}
 
@@ -106,18 +107,21 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 			// We need to skip for complex assignments
 			if ($this->isGivenKind(Tokens::$booleanOperators, $tokens[$currentToken])) {
 				$hasInlineAssignment = false;
+
 				break;
 			}
 
 			// Negations we also cannot handle just yet
 			if ($tokens[$currentToken]['code'] === T_BOOLEAN_NOT) {
 				$hasInlineAssignment = false;
+
 				break;
 			}
 
 			// Comparison inside is also more complex
 			if ($this->isGivenKind(Tokens::$comparisonTokens, $tokens[$currentToken])) {
 				$hasInlineAssignment = false;
+
 				break;
 			}
 
