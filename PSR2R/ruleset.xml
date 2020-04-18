@@ -26,12 +26,19 @@
 	<rule ref="SlevomatCodingStandard.Namespaces.UseSpacing"/>
 
 	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+	<rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
+	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
 
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
 
+	<!-- already covered
+	<rule ref="SlevomatCodingStandard.Operators.NegationOperatorSpacingSniff"/>
+	-->
+
+	<rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>
 	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
 		<properties>
 			<property name="fixable" type="bool" value="true"/>
@@ -45,6 +52,7 @@
 
 	<rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
 	<rule ref="SlevomatCodingStandard.PHP.ShortList"/>
+	<rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>
 
 	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
 	<rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>

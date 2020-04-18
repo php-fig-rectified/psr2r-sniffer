@@ -1,7 +1,5 @@
 <?php
 /**
- * PHP Version 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -9,9 +7,9 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @since         CakePHP CodeSniffer 0.1.10
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @since CakePHP CodeSniffer 0.1.10
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 namespace PSR2R\Sniffs\Namespaces;
