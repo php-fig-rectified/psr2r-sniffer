@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 153 sniffs
+The PSR2R standard contains 174 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -54,7 +54,7 @@ PSR2 (4 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (69 sniffs)
+PSR2R (60 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
@@ -100,28 +100,19 @@ PSR2R (69 sniffs)
 - PSR2R.Namespaces.NoInlineFullyQualifiedClassName
 - PSR2R.Namespaces.UnusedUseStatement
 - PSR2R.Namespaces.UseInAlphabeticalOrder
-- PSR2R.PHP.CommaAfterArrayItem
 - PSR2R.PHP.DuplicateSemicolon
 - PSR2R.PHP.ListComma
-- PSR2R.PHP.NoIsNull
 - PSR2R.PHP.NoShortOpenTag
-- PSR2R.PHP.PhpSapiConstant
-- PSR2R.PHP.PreferCastOverFunction
 - PSR2R.PHP.PreferStaticOverSelf
-- PSR2R.PHP.RemoveFunctionAlias
-- PSR2R.PHP.ShortCast
 - PSR2R.PHP.SingleQuote
 - PSR2R.WhiteSpace.ArraySpacing
 - PSR2R.WhiteSpace.CommaSpacing
-- PSR2R.WhiteSpace.ConcatenationSpacing
 - PSR2R.WhiteSpace.DocBlockAlignment
 - PSR2R.WhiteSpace.EmptyEnclosingLine
 - PSR2R.WhiteSpace.EmptyLines
 - PSR2R.WhiteSpace.LanguageConstructSpacing
 - PSR2R.WhiteSpace.MethodSpacing
 - PSR2R.WhiteSpace.NamespaceSpacing
-- PSR2R.WhiteSpace.ObjectAttributeSpacing
-- PSR2R.WhiteSpace.OperatorSpacing
 - PSR2R.WhiteSpace.TabAndSpace
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
@@ -153,6 +144,39 @@ SlevomatCodingStandard (25 sniffs)
 - SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing
 - SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
+
+Spryker (30 sniffs)
+-------------------
+- Spryker.Classes.MethodArgumentDefaultValue
+- Spryker.Classes.MethodTypeHint
+- Spryker.Classes.PropertyDefaultValue
+- Spryker.Classes.ReturnTypeHint
+- Spryker.Commenting.DocBlockConstructor
+- Spryker.Commenting.DocBlockNoInlineAlignment
+- Spryker.Commenting.DocBlockPipeSpacing
+- Spryker.Commenting.DocBlockReturnTag
+- Spryker.Commenting.DocBlockReturnVoid
+- Spryker.Commenting.DocBlockTagGrouping
+- Spryker.Commenting.DocBlockTagOrder
+- Spryker.Commenting.DocBlockTypeOrder
+- Spryker.Commenting.DocBlockVar
+- Spryker.Commenting.DocBlockVarNotJustNull
+- Spryker.Commenting.DocBlockVariableNullHintLast
+- Spryker.Commenting.InlineDocBlock
+- Spryker.ControlStructures.ConditionalExpressionOrder
+- Spryker.ControlStructures.NoInlineAssignment
+- Spryker.Formatting.ArrayDeclaration
+- Spryker.PHP.NoIsNull
+- Spryker.PHP.NotEqual
+- Spryker.PHP.PhpSapiConstant
+- Spryker.PHP.PreferCastOverFunction
+- Spryker.PHP.RemoveFunctionAlias
+- Spryker.PHP.ShortCast
+- Spryker.WhiteSpace.CommaSpacing
+- Spryker.WhiteSpace.ConcatenationSpacing
+- Spryker.WhiteSpace.ImplicitCastSpacing
+- Spryker.WhiteSpace.ObjectAttributeSpacing
+- Spryker.WhiteSpace.OperatorSpacing
 
 Squiz (21 sniffs)
 -----------------
