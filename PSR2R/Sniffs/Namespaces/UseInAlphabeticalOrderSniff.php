@@ -23,7 +23,7 @@ use PHP_CodeSniffer\Util\Tokens;
 /**
  * Ensures all the use are in alphabetical order.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class UseInAlphabeticalOrderSniff implements Sniff {
@@ -116,6 +116,7 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file to check.
 	 * @param int $stackPtr The index of the first use token.
+*
 	 * @return void
 	 */
 	protected function checkUseToken(File $phpcsFile, $stackPtr) {
@@ -149,6 +150,7 @@ class UseInAlphabeticalOrderSniff implements Sniff {
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+*
 	 * @return bool
 	 */
 	protected function isClosure(File $phpcsFile, $stackPtr) {

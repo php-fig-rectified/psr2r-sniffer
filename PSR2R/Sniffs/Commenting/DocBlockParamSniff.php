@@ -131,6 +131,7 @@ class DocBlockParamSniff extends AbstractSniff {
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPtr
+*
 	 * @return array
 	 */
 	private function getMethodSignature(File $phpCsFile, $stackPtr) {

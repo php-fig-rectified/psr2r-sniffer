@@ -133,6 +133,7 @@ class DocBlockVarSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPointer
+*
 	 * @return string|null
 	 */
 	protected function findDefaultValueType(File $phpCsFile, $stackPointer) {
@@ -153,6 +154,7 @@ class DocBlockVarSniff extends AbstractSniff {
 
 	/**
 	 * @param array $token
+*
 	 * @return string|null
 	 */
 	protected function detectType(array $token) {
@@ -186,6 +188,7 @@ class DocBlockVarSniff extends AbstractSniff {
 	 * @param int $docBlockEndIndex
 	 * @param int $docBlockStartIndex
 	 * @param string|null $defaultValueType
+*
 	 * @return void
 	 */
 	protected function handleMissingVar(File $phpCsFile, $docBlockEndIndex, $docBlockStartIndex, $defaultValueType) {
@@ -217,6 +220,7 @@ class DocBlockVarSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $varIndex
 	 * @param string|null $defaultValueType
+*
 	 * @return void
 	 */
 	protected function handleMissingVarType(File $phpCsFile, $varIndex, $defaultValueType) {

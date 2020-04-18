@@ -9,7 +9,7 @@ use PHP_CodeSniffer\Util\Tokens;
 /**
  * Makes sure there is no duplicate semicolon.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DuplicateSemicolonSniff implements Sniff {

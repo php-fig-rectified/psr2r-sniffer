@@ -23,11 +23,11 @@ use PHP_CodeSniffer\Util\Tokens;
  *
  * Checks that the method declaration is correct.
  *
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version Release: @package_version@
+ * @link http://pear.php.net/package/PHP_CodeSniffer
  */
 class MethodDeclarationSniff extends AbstractScopeSniff {
 
@@ -41,6 +41,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+*
 	 * @return void
 	 */
 	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr) {
@@ -48,6 +49,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 
 	/**
 	 * @inheritDoc
+*
 	 * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
 	 */
 	protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope) {

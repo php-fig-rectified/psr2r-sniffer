@@ -35,6 +35,7 @@ class Tokenizer {
 
 	/**
 	 * @param array $argv
+*
 	 * @throws \Exception
 	 */
 	public function __construct($argv) {
@@ -75,6 +76,7 @@ class Tokenizer {
 
 	/**
 	 * @param string $path Path
+*
 	 * @return array Tokens
 	 */
 	protected function _getTokens($path) {
@@ -100,6 +102,7 @@ class Tokenizer {
 	/**
 	 * @param int $row Current row
 	 * @param array $tokens Tokens array
+*
 	 * @return array
 	 */
 	protected function _tokenize($row, $tokens) {

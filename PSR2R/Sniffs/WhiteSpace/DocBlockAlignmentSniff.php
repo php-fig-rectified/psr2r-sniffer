@@ -150,6 +150,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
+*
 	 * @return int|null
 	 */
 	protected function findFirstNonWhitespaceInLine(File $phpcsFile, $index) {

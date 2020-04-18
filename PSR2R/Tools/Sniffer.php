@@ -15,6 +15,7 @@ class Sniffer {
 
 	/**
 	 * @param array $argv
+*
 	 * @throws \Exception
 	 */
 	public function __construct($argv) {

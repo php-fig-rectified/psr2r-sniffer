@@ -17,10 +17,7 @@
 	<exclude-pattern>\.txt</exclude-pattern>
 	<exclude-pattern>\.json</exclude-pattern>
 
-	<config name="installed_paths" value="../../slevomat/coding-standard"/>
-	<!--
-	<config name="installed_paths" value="../../spryker/code-sniffer"/>
-	-->
+	<config name="installed_paths" value="../../slevomat/coding-standard,../../spryker/code-sniffer"/>
 
 	<rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
 	<rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
@@ -60,6 +57,44 @@
 	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
+
+
+	<rule ref="Spryker.Classes.ReturnTypeHint"/>
+	<rule ref="Spryker.Classes.PropertyDefaultValue"/>
+	<rule ref="Spryker.Classes.MethodTypeHint"/>
+	<rule ref="Spryker.Classes.MethodArgumentDefaultValue"/>
+
+	<rule ref="Spryker.Commenting.DocBlockConstructor"/>
+	<rule ref="Spryker.Commenting.DocBlockNoInlineAlignment"/>
+	<rule ref="Spryker.Commenting.DocBlockPipeSpacing"/>
+	<rule ref="Spryker.Commenting.DocBlockReturnTag"/>
+	<rule ref="Spryker.Commenting.DocBlockReturnVoid"/>
+	<rule ref="Spryker.Commenting.DocBlockTagGrouping"/>
+	<rule ref="Spryker.Commenting.DocBlockTagOrder"/>
+	<rule ref="Spryker.Commenting.DocBlockTypeOrder"/>
+	<rule ref="Spryker.Commenting.DocBlockVariableNullHintLast"/>
+	<rule ref="Spryker.Commenting.DocBlockVarNotJustNull"/>
+	<rule ref="Spryker.Commenting.DocBlockVar"/>
+	<rule ref="Spryker.Commenting.InlineDocBlock"/>
+
+	<rule ref="Spryker.ControlStructures.NoInlineAssignment"/>
+	<rule ref="Spryker.ControlStructures.ConditionalExpressionOrder"/>
+
+	<rule ref="Spryker.Formatting.ArrayDeclaration"/>
+
+	<rule ref="Spryker.PHP.NoIsNull"/>
+	<rule ref="Spryker.PHP.NotEqual"/>
+	<rule ref="Spryker.PHP.ShortCast"/>
+	<rule ref="Spryker.PHP.RemoveFunctionAlias"/>
+	<rule ref="Spryker.PHP.PhpSapiConstant"/>
+	<rule ref="Spryker.PHP.PreferCastOverFunction"/>
+
+	<rule ref="Spryker.WhiteSpace.OperatorSpacing"/>
+	<rule ref="Spryker.WhiteSpace.ConcatenationSpacing"/>
+	<rule ref="Spryker.WhiteSpace.ObjectAttributeSpacing"/>
+	<rule ref="Spryker.WhiteSpace.CommaSpacing"/>
+	<rule ref="Spryker.WhiteSpace.ImplicitCastSpacing"/>
+
 
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>

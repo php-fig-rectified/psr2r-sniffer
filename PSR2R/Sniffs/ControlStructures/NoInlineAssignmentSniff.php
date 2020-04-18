@@ -36,6 +36,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+*
 	 * @return void
 	 */
 	protected function checkMethodCalls(File $phpcsFile, $stackPtr) {
@@ -62,6 +63,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+*
 	 * @return void
 	 */
 	protected function checkConditions($phpcsFile, $stackPtr) {

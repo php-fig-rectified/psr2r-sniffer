@@ -40,6 +40,7 @@ trait CommentingTrait {
 	 * Allow \Foo\Bar[] to pass as array.
 	 *
 	 * @param array $docBlockTypes
+*
 	 * @return bool
 	 */
 	protected function containsTypeArray($docBlockTypes) {
