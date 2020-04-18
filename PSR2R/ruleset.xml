@@ -77,7 +77,6 @@
 	<rule ref="Spryker.Commenting.DocBlockPipeSpacing"/>
 	<rule ref="Spryker.Commenting.DocBlockReturnTag"/>
 	<rule ref="Spryker.Commenting.DocBlockReturnVoid"/>
-	<rule ref="Spryker.Commenting.DocBlockTagGrouping"/>
 	<rule ref="Spryker.Commenting.DocBlockTagOrder"/>
 	<rule ref="Spryker.Commenting.DocBlockTypeOrder"/>
 	<rule ref="Spryker.Commenting.DocBlockVariableNullHintLast"/>
@@ -162,6 +161,7 @@
 
 	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
 
+	<rule ref="PSR12.Files.ImportStatement"/>
 	<rule ref="PSR12.Classes.ClassInstantiation"/>
 	<rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
 	<rule ref="PSR12.Namespaces.CompoundNamespaceDepth"/>
