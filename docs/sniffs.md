@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 178 sniffs
+The PSR2R standard contains 177 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -38,9 +38,10 @@ PSR1 (3 sniffs)
 - PSR1.Files.SideEffects
 - PSR1.Methods.CamelCapsMethodName
 
-PSR12 (6 sniffs)
+PSR12 (7 sniffs)
 ----------------
 - PSR12.Classes.ClassInstantiation
+- PSR12.Files.ImportStatement
 - PSR12.Functions.NullableTypeDeclaration
 - PSR12.Functions.ReturnTypeDeclaration
 - PSR12.Keywords.ShortFormTypeKeywords
@@ -54,7 +55,7 @@ PSR2 (4 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (60 sniffs)
+PSR2R (59 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
@@ -99,7 +100,6 @@ PSR2R (60 sniffs)
 - PSR2R.Methods.MethodMultilineArguments
 - PSR2R.Namespaces.NoInlineFullyQualifiedClassName
 - PSR2R.Namespaces.UnusedUseStatement
-- PSR2R.Namespaces.UseInAlphabeticalOrder
 - PSR2R.PHP.DuplicateSemicolon
 - PSR2R.PHP.ListComma
 - PSR2R.PHP.NoShortOpenTag
@@ -149,7 +149,7 @@ SlevomatCodingStandard (29 sniffs)
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Spryker (30 sniffs)
+Spryker (29 sniffs)
 -------------------
 - Spryker.Classes.MethodArgumentDefaultValue
 - Spryker.Classes.MethodTypeHint
@@ -160,7 +160,6 @@ Spryker (30 sniffs)
 - Spryker.Commenting.DocBlockPipeSpacing
 - Spryker.Commenting.DocBlockReturnTag
 - Spryker.Commenting.DocBlockReturnVoid
-- Spryker.Commenting.DocBlockTagGrouping
 - Spryker.Commenting.DocBlockTagOrder
 - Spryker.Commenting.DocBlockTypeOrder
 - Spryker.Commenting.DocBlockVar
