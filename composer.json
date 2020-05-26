@@ -13,8 +13,8 @@
 	],
 	"require": {
 		"php": ">=7.2",
-		"spryker/code-sniffer": "^0.15.1",
-		"slevomat/coding-standard": "^6.2.0"
+		"spryker/code-sniffer": "^0.15.3",
+		"slevomat/coding-standard": "^6.3.1"
 	},
 	"require-dev": {
 		"phpstan/phpstan": "^0.12"
