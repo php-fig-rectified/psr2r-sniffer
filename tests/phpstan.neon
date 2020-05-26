@@ -3,5 +3,3 @@ parameters:
         - %rootDir%/../../../tests/phpstan_bootstrap.php
     ignoreErrors:
         - '#Empty array passed to foreach.#'
-        - '#Access to an undefined property .+Config::\$standards.#'
-
