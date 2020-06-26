@@ -14,7 +14,7 @@ Documentation @ [/docs/](docs).
 The following sniffers are bundles together as `PSR2R` already, but you can
 also use them standalone/separately in any way you like.
 
-**Currently PSR2R ships with over 128 sniffs.**
+**Currently PSR2R ships with over 177 sniffs.**
 
 * [List of included sniffs](docs/sniffs.md)
 
