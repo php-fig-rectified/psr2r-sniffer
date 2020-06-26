@@ -43,12 +43,14 @@ class UnaryOperatorSpacingSniff implements Sniff {
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}
+
 			return;
 		}
 
 		if ($tokens[$stackPtr]['code'] === T_DEC || $tokens[$stackPtr]['code'] === T_INC) {
 			$this->checkBefore($phpcsFile, $stackPtr);
 			$this->checkAfter($phpcsFile, $stackPtr);
+
 			return;
 		}
 
@@ -90,6 +92,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+*
 	 * @return void
 	 */
 	protected function checkBefore(File $phpcsFile, $stackPtr) {
@@ -112,6 +115,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+*
 	 * @return void
 	 */
 	protected function checkAfter(File $phpcsFile, $stackPtr) {

@@ -7,10 +7,10 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://pear.php.net/package/PHP_CodeSniffer_CakePHP
- * @since         CakePHP CodeSniffer 1.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://pear.php.net/package/PHP_CodeSniffer_CakePHP
+ * @since CakePHP CodeSniffer 1.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 namespace PSR2R\Sniffs\WhiteSpace;
@@ -107,6 +107,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 							$this->outdent($phpcsFile, $i);
 						}
 						$phpcsFile->fixer->endChangeset();
+
 						return;
 					}
 
@@ -149,6 +150,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
+*
 	 * @return int|null
 	 */
 	protected function findFirstNonWhitespaceInLine(File $phpcsFile, $index) {

@@ -2,14 +2,11 @@
 /**
  * PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff.
  *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @package PHP_CodeSniffer
+ * @author Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @link http://pear.php.net/package/PHP_CodeSniffer
  */
 
 namespace PSR2R\Sniffs\ControlStructures;
@@ -22,11 +19,11 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  *
  * Ensures all switch statements are defined correctly.
  *
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version Release: @package_version@
+ * @link http://pear.php.net/package/PHP_CodeSniffer
  */
 class SwitchDeclarationSniff implements Sniff {
 
@@ -214,6 +211,7 @@ class SwitchDeclarationSniff implements Sniff {
 			// Skip nested SWITCH statements; they are handled on their own.
 			if ($tokens[$stackPtr]['code'] === T_SWITCH) {
 				$stackPtr = $tokens[$stackPtr]['scope_closer'];
+
 				continue;
 			}
 

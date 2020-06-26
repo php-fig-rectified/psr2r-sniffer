@@ -17,6 +17,7 @@ abstract class AbstractSniff implements Sniff {
 	 *
 	 * @param int|string|array $search
 	 * @param array $token
+*
 	 * @return bool
 	 */
 	protected function isGivenKind($search, array $token) {
@@ -27,6 +28,7 @@ abstract class AbstractSniff implements Sniff {
 		if (in_array($token['type'], $search, true)) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -38,6 +40,7 @@ abstract class AbstractSniff implements Sniff {
 	 * @param int $start
 	 * @param int $end
 	 * @param bool $skipNested
+*
 	 * @return bool
 	 */
 	protected function contains(File $phpcsFile, $search, $start, $end, $skipNested = true) {
@@ -46,14 +49,17 @@ abstract class AbstractSniff implements Sniff {
 		for ($i = $start; $i <= $end; $i++) {
 			if ($skipNested && $tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
 				$i = $tokens[$i]['parenthesis_closer'];
+
 				continue;
 			}
 			if ($skipNested && $tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
 				$i = $tokens[$i]['bracket_closer'];
+
 				continue;
 			}
 			if ($skipNested && $tokens[$i]['code'] === T_OPEN_CURLY_BRACKET) {
 				$i = $tokens[$i]['bracket_closer'];
+
 				continue;
 			}
 
@@ -71,6 +77,7 @@ abstract class AbstractSniff implements Sniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $openingBraceIndex
 	 * @param int $closingBraceIndex
+*
 	 * @return bool
 	 */
 	protected function needsBrackets(File $phpcsFile, $openingBraceIndex, $closingBraceIndex) {
@@ -93,6 +100,7 @@ abstract class AbstractSniff implements Sniff {
 		for ($i = $openingBraceIndex + 1; $i < $closingBraceIndex; $i++) {
 			if ($tokens[$i]['type'] === 'T_OPEN_PARENTHESIS') {
 				$i = $tokens[$i]['parenthesis_closer'];
+
 				continue;
 			}
 			if (in_array($tokens[$i]['code'], $whitelistedCodes)) {
@@ -131,6 +139,7 @@ abstract class AbstractSniff implements Sniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
 	 * @param int $count
+*
 	 * @return void
 	 */
 	protected function outdent(File $phpcsFile, $index, $count = 1) {
@@ -148,6 +157,7 @@ abstract class AbstractSniff implements Sniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
 	 * @param int $count
+*
 	 * @return void
 	 */
 	protected function indent(File $phpcsFile, $index, $count = 1) {
@@ -162,6 +172,7 @@ abstract class AbstractSniff implements Sniff {
 	 * @param string $search
 	 * @param string $replace
 	 * @param string $subject
+*
 	 * @return string
 	 */
 	protected function strReplaceOnce($search, $replace, $subject) {
@@ -178,6 +189,7 @@ abstract class AbstractSniff implements Sniff {
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
+*
 	 * @return int
 	 */
 	protected function getIndentationLevel(File $phpcsFile, $index) {
@@ -198,6 +210,7 @@ abstract class AbstractSniff implements Sniff {
 	/**
 	 * @param string $content
 	 * @param bool $correctLength
+*
 	 * @return string
 	 */
 	protected function getIndentationCharacter($content, $correctLength = false) {
@@ -225,6 +238,7 @@ abstract class AbstractSniff implements Sniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
+*
 	 * @return string
 	 */
 	protected function getIndentationWhitespace(File $phpcsFile, $index) {
@@ -242,6 +256,7 @@ abstract class AbstractSniff implements Sniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
+*
 	 * @return int
 	 */
 	protected function getIndentationColumn(File $phpcsFile, $index) {
@@ -253,12 +268,14 @@ abstract class AbstractSniff implements Sniff {
 		if ($tokens[$nextIndex]['line'] !== $tokens[$index]['line']) {
 			return 0;
 		}
+
 		return $tokens[$nextIndex]['column'] - 1;
 	}
 
 	/**
 	 * @param array $tokens
 	 * @param int $index
+*
 	 * @return int
 	 */
 	protected function getFirstTokenOfLine(array $tokens, $index) {
@@ -274,6 +291,7 @@ abstract class AbstractSniff implements Sniff {
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+*
 	 * @return bool
 	 */
 	protected function hasNamespace(File $phpCsFile) {
@@ -282,6 +300,7 @@ abstract class AbstractSniff implements Sniff {
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+*
 	 * @return int|null
 	 */
 	protected function findNamespaceIndex(File $phpCsFile) {
@@ -289,11 +308,13 @@ abstract class AbstractSniff implements Sniff {
 		if (!$namespacePosition) {
 			return null;
 		}
+
 		return $namespacePosition;
 	}
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+*
 	 * @return array
 	 */
 	protected function getNamespaceInfo(File $phpcsFile) {
@@ -337,6 +358,7 @@ abstract class AbstractSniff implements Sniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPtr
+*
 	 * @return bool
 	 */
 	protected function isPhpStormMarker(File $phpCsFile, $stackPtr) {
@@ -354,6 +376,7 @@ abstract class AbstractSniff implements Sniff {
 				return true;
 			}
 		}
+
 		return false;
 	}
 

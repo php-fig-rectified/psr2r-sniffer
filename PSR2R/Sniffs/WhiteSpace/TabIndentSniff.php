@@ -8,7 +8,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Check for any line starting with 4 spaces - which would indicate space indenting.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class TabIndentSniff implements Sniff {
@@ -52,6 +52,7 @@ class TabIndentSniff implements Sniff {
 					$this->fixSpace($phpcsFile, $i, $tokens);
 				}
 			}
+
 			return;
 		}
 
@@ -67,6 +68,7 @@ class TabIndentSniff implements Sniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @param array $tokens
+*
 	 * @return void
 	 */
 	protected function fixTab(File $phpcsFile, $stackPtr, $tokens) {
@@ -90,6 +92,7 @@ class TabIndentSniff implements Sniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @param array $tokens
+*
 	 * @return void
 	 */
 	protected function fixSpace(File $phpcsFile, $stackPtr, $tokens) {

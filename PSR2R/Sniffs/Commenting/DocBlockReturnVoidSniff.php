@@ -34,6 +34,7 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
 		if ($tokens[$nextIndex]['content'] === '__construct' || $tokens[$nextIndex]['content'] === '__destruct') {
 			$this->checkConstructorAndDestructor($phpcsFile, $nextIndex);
+
 			return;
 		}
 
@@ -60,6 +61,7 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 				$phpcsFile->addError('Method does not have a return statement in doc block: ' .
 					$tokens[$nextIndex]['content'], $nextIndex, 'NoReturnDoc1');
 			}
+
 			return;
 		}
 
@@ -73,6 +75,7 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 		if ($returnType === null) {
 			$phpcsFile->addError('Method does not have a return statement in doc block: ' .
 				$tokens[$nextIndex]['content'], $nextIndex, 'NoReturnDoc2');
+
 			return;
 		}
 
@@ -88,6 +91,7 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
+*
 	 * @return void
 	 */
 	protected function checkConstructorAndDestructor(File $phpcsFile, $index) {
@@ -162,6 +166,7 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 			if ($this->isGivenKind([T_FUNCTION], $tokens[$i])) {
 				$endIndex = $tokens[$i]['scope_closer'];
 				$i = $endIndex;
+
 				continue;
 			}
 

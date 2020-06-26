@@ -55,6 +55,7 @@ class MethodSpacingSniff extends AbstractSniff {
 		$nextContentIndex = $phpcsFile->findNext(T_WHITESPACE, $braceStartIndex + 1, null, true);
 		if ($nextContentIndex === $braceEndIndex) {
 			$this->assertNoAdditionalNewlinesForEmptyBody($phpcsFile, $braceStartIndex, $braceEndIndex);
+
 			return;
 		}
 

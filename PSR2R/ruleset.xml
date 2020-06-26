@@ -10,6 +10,98 @@
 	</description>
 
 	<exclude-pattern>\.git</exclude-pattern>
+	<exclude-pattern>\.xml</exclude-pattern>
+	<exclude-pattern>\.css</exclude-pattern>
+	<exclude-pattern>\.js</exclude-pattern>
+	<exclude-pattern>\.yml</exclude-pattern>
+	<exclude-pattern>\.txt</exclude-pattern>
+	<exclude-pattern>\.json</exclude-pattern>
+
+	<config name="installed_paths" value="../../slevomat/coding-standard,../../spryker/code-sniffer"/>
+
+	<rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UseSpacing"/>
+
+	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+	<rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
+	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
+
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
+
+	<!-- already covered
+	<rule ref="SlevomatCodingStandard.Operators.NegationOperatorSpacingSniff"/>
+	-->
+
+	<rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>
+	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
+		<properties>
+			<property name="fixable" type="bool" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
+
+	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
+
+	<rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>
+
+	<rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
+	<rule ref="SlevomatCodingStandard.PHP.ShortList"/>
+	<rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>
+
+	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+	<rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
+
+	<rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
+
+	<rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
+	<rule ref="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment"/>
+
+	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
+
+
+	<rule ref="Spryker.Classes.ReturnTypeHint"/>
+	<rule ref="Spryker.Classes.PropertyDefaultValue"/>
+	<rule ref="Spryker.Classes.MethodTypeHint"/>
+	<rule ref="Spryker.Classes.MethodArgumentDefaultValue"/>
+
+	<rule ref="Spryker.Commenting.DocBlockConstructor"/>
+	<rule ref="Spryker.Commenting.DocBlockNoInlineAlignment"/>
+	<rule ref="Spryker.Commenting.DocBlockPipeSpacing"/>
+	<rule ref="Spryker.Commenting.DocBlockReturnTag"/>
+	<rule ref="Spryker.Commenting.DocBlockReturnVoid"/>
+	<rule ref="Spryker.Commenting.DocBlockTagOrder"/>
+	<rule ref="Spryker.Commenting.DocBlockTypeOrder"/>
+	<rule ref="Spryker.Commenting.DocBlockVariableNullHintLast"/>
+	<rule ref="Spryker.Commenting.DocBlockVarNotJustNull"/>
+	<rule ref="Spryker.Commenting.DocBlockVar"/>
+	<rule ref="Spryker.Commenting.InlineDocBlock"/>
+
+	<rule ref="Spryker.ControlStructures.NoInlineAssignment"/>
+	<rule ref="Spryker.ControlStructures.ConditionalExpressionOrder"/>
+
+	<rule ref="Spryker.Formatting.ArrayDeclaration"/>
+
+	<rule ref="Spryker.PHP.NoIsNull"/>
+	<rule ref="Spryker.PHP.NotEqual"/>
+	<rule ref="Spryker.PHP.ShortCast"/>
+	<rule ref="Spryker.PHP.RemoveFunctionAlias"/>
+	<rule ref="Spryker.PHP.PhpSapiConstant"/>
+	<rule ref="Spryker.PHP.PreferCastOverFunction"/>
+
+	<rule ref="Spryker.WhiteSpace.OperatorSpacing"/>
+	<rule ref="Spryker.WhiteSpace.ConcatenationSpacing"/>
+	<rule ref="Spryker.WhiteSpace.ObjectAttributeSpacing"/>
+	<rule ref="Spryker.WhiteSpace.CommaSpacing"/>
+	<rule ref="Spryker.WhiteSpace.ImplicitCastSpacing"/>
+
 
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
@@ -37,9 +129,12 @@
 	<rule ref="Generic.Files.LineEndings"/>
 	<rule ref="Generic.Files.ByteOrderMark"/>
 	<rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+
 	<rule ref="Generic.PHP.DisallowShortOpenTag"/>
 	<rule ref="Generic.PHP.LowerCaseKeyword"/>
+	<rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
 	<rule ref="Generic.PHP.LowerCaseType"/>
+
 	<rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
 
 	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
@@ -66,6 +161,7 @@
 
 	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
 
+	<rule ref="PSR12.Files.ImportStatement"/>
 	<rule ref="PSR12.Classes.ClassInstantiation"/>
 	<rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
 	<rule ref="PSR12.Namespaces.CompoundNamespaceDepth"/>
@@ -99,7 +195,15 @@
 
 	<rule ref="Squiz.Operators.ValidLogicalOperators"/>
 
-	<rule ref="Generic.PHP.DeprecatedFunctions"/>
+	<rule ref="Generic.PHP.DeprecatedFunctions">
+		<properties>
+			<property name="forbiddenFunctions" type="array">
+				<element key="delete" value="unset"/>
+				<element key="create_function" value="null"/>
+				<element key="each" value="null"/>
+			</property>
+		</properties>
+	</rule>
 
 	<rule ref="Squiz.PHP.Eval"/>
 	<rule ref="Generic.PHP.ForbiddenFunctions"/>

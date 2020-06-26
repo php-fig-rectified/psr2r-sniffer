@@ -2,14 +2,11 @@
 /**
  * Ensures doc blocks follow basic formatting.
  *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @package PHP_CodeSniffer
+ * @author Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @link http://pear.php.net/package/PHP_CodeSniffer
  */
 
 namespace PSR2R\Sniffs\Commenting;
@@ -20,11 +17,11 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Ensures doc blocks follow basic formatting.
  *
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version Release: @package_version@
+ * @link http://pear.php.net/package/PHP_CodeSniffer
  */
 class DocCommentSniff extends AbstractSniff {
 

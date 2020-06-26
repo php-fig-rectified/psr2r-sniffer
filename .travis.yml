@@ -1,11 +1,8 @@
 language: php
 
-sudo: false
-
 php:
-  - 5.6
-  - 7.3
-  - 7.4snapshot
+  - 7.2
+  - 7.4
 
 env:
   global:
@@ -13,7 +10,7 @@ env:
 
 matrix:
   include:
-    - php: 7.2
+    - php: 7.3
       env: CHECKS=1 DEFAULT=0
 
   fast_finish: true
@@ -22,7 +19,7 @@ before_script:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - if [[ $CHECKS == 1 ]]; then composer phpstan-setup && composer phpstan ; fi
+  - if [[ $CHECKS == 1 ]]; then composer stan ; fi
   - composer cs-check
 
 notifications:

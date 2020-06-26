@@ -63,6 +63,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		) {
 			// Not fixable
 			$phpCsFile->addError($error, $stackPointer, 'YodaConditions');
+
 			return;
 		}
 
@@ -124,6 +125,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 			if ($this->isGivenKind(T_OPEN_PARENTHESIS, $tokens[$nextIndex])) {
 				$nextIndex = $tokens[$nextIndex]['parenthesis_closer'];
 				$rightEndIndex = $nextIndex;
+
 				continue;
 			}
 

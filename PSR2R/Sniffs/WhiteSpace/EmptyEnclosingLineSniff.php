@@ -34,6 +34,7 @@ class EmptyEnclosingLineSniff implements Sniff {
 			$error = 'Possible parse error: %s missing opening or closing brace';
 			$errorData = [strtolower($tokens[$stackPtr]['content'])];
 			$phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $errorData);
+
 			return;
 		}
 
@@ -51,6 +52,7 @@ class EmptyEnclosingLineSniff implements Sniff {
 	 * @param int $curlyBraceStartIndex
 	 * @param int $curlyBraceEndIndex
 	 * @param int $lastContentIndex
+*
 	 * @return void
 	 */
 	protected function checkEnd(File $phpcsFile, $stackPtr, $curlyBraceStartIndex, $curlyBraceEndIndex, $lastContentIndex) {
@@ -73,6 +75,7 @@ class EmptyEnclosingLineSniff implements Sniff {
 					$phpcsFile->fixer->addNewline($curlyBraceStartIndex + 1);
 				}
 			}
+
 			return;
 		}
 
@@ -100,6 +103,7 @@ class EmptyEnclosingLineSniff implements Sniff {
 	 * @param int $curlyBraceStartIndex
 	 * @param int $curlyBraceEndIndex
 	 * @param int $lastContentIndex
+*
 	 * @return void
 	 */
 	public function checkBeginning(File $phpcsFile, $stackPtr, $curlyBraceStartIndex, $curlyBraceEndIndex, $lastContentIndex) {

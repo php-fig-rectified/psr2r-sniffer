@@ -48,6 +48,7 @@ class CommaSpacingSniff implements Sniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @param int $next
+*
 	 * @return void
 	 */
 	public function checkNext(File $phpcsFile, $stackPtr, $next) {
@@ -60,6 +61,7 @@ class CommaSpacingSniff implements Sniff {
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr, '');
 			}
+
 			return;
 		}
 

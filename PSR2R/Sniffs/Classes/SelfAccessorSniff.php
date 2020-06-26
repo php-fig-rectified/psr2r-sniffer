@@ -31,6 +31,7 @@ class SelfAccessorSniff extends AbstractSniff {
 
 		if ($tokens[$stackPtr]['code'] === T_SELF) {
 			$this->checkSelf($phpcsFile, $stackPtr);
+
 			return;
 		}
 
@@ -50,11 +51,13 @@ class SelfAccessorSniff extends AbstractSniff {
 		for ($i = $startIndex + 1; $i < $endIndex; $i++) {
 			if ($tokens[$i]['code'] === T_NEW) {
 				$this->checkNew($phpcsFile, $i, $name);
+
 				continue;
 			}
 
 			if ($tokens[$i]['code'] === T_DOUBLE_COLON) {
 				$this->checkDoubleColon($phpcsFile, $i, $name);
+
 				continue;
 			}
 		}
@@ -63,6 +66,7 @@ class SelfAccessorSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
+*
 	 * @return void
 	 */
 	protected function checkSelf(File $phpcsFile, $stackPtr) {
@@ -83,6 +87,7 @@ class SelfAccessorSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $i
 	 * @param string $name
+*
 	 * @return void
 	 */
 	protected function checkNew(File $phpcsFile, $i, $name) {
@@ -104,6 +109,7 @@ class SelfAccessorSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
 	 * @param string $name
+*
 	 * @return void
 	 */
 	protected function fixNameToSelf(File $phpcsFile, $index, $name) {
@@ -125,6 +131,7 @@ class SelfAccessorSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $i
 	 * @param string $name
+*
 	 * @return void
 	 */
 	protected function checkDoubleColon(File $phpcsFile, $i, $name) {

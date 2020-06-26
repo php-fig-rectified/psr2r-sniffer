@@ -8,7 +8,7 @@ use PSR2R\Tools\AbstractSniff;
 /**
  * Verifies that only whitelisted `@...` tags are being used.
  *
- * @author  Mark Scherer
+ * @author Mark Scherer
  * @license MIT
  */
 class DocBlockTagTypesSniff extends AbstractSniff {
@@ -135,6 +135,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 			$error = 'Unexpected tag type `' . $tokens[$i]['content'] . '` in doc block';
 			if (!array_key_exists($content, static::$mapping) && !in_array($content, static::$blacklistedTags, true)) {
 				$phpcsFile->addWarning($error, $i, 'Unknown');
+
 				continue;
 			}
 
@@ -149,6 +150,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 				$phpcsFile->findNext([T_DOC_COMMENT_STAR, T_DOC_COMMENT_CLOSE_TAG], $i + 1, $docBlockEndIndex + 1);
 			if (!$prevAsterix || !$nextAsterix) {
 				$phpcsFile->addError($error, $i, 'Invalid');
+
 				continue;
 			}
 
@@ -156,6 +158,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 			if ($phpcsFile->fixer->enabled) {
 				if ($mappingTag) {
 					$phpcsFile->fixer->replaceToken($i, $mappingTag);
+
 					continue;
 				}
 
