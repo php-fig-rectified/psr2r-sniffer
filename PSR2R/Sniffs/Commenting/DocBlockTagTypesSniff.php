@@ -65,6 +65,13 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@SuppressWarnings(PHPMD)',
 		// PhpStorm
 		'@noinspection',
+		// Stan
+		'@phpstan-param',
+		'@phpstan-return',
+		'@phpstan-var',
+		'@psalm-param',
+		'@psalm-return',
+		'@psalm-var',
 	];
 
 	/**
