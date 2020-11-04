@@ -1,6 +1,6 @@
 parameters:
-    autoload_files:
-        - %rootDir%/../../../tests/phpstan_bootstrap.php
-    ignoreErrors:
-        - '#Unreachable statement - code above always terminates.#'
-
+	bootstrapFiles:
+		- %rootDir%/../../../tests/phpstan_bootstrap.php
+	ignoreErrors:
+		- '#Unreachable statement - code above always terminates.#'
+	checkMissingIterableValueType: false

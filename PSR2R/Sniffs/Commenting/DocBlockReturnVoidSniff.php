@@ -66,7 +66,7 @@ class DocBlockReturnVoidSniff extends AbstractSniff {
 		}
 
 		// If inheritdoc is present assume the parent contains it
-		if ($docBlockReturnIndex || (!$docBlockReturnIndex && $hasInheritDoc)) {
+		if ($docBlockReturnIndex !== null || ($docBlockReturnIndex === null && $hasInheritDoc)) {
 			return;
 		}
 
