@@ -221,5 +221,10 @@
 	<rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
 	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+	
+	<!-- conflicting -->
+	<rule ref="Squiz.WhiteSpace.MemberVarSpacing.FirstIncorrect">
+		<severity>0</severity>
+	</rule>
 
 </ruleset>
