@@ -55,7 +55,6 @@
 	<rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>
 
 	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
-	<rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
 
 	<rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
 
