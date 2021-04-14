@@ -111,37 +111,35 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 						return;
 					}
 
-					if ($isNotIndented) {
-						// + means too much indentation (we need to outdent), - means not enough indentation (needs indenting)
-						if ($tokens[$stackPtr]['column'] < $expectedColumnAdjusted) {
-							$diff = $tokens[$stackPtr]['column'] - $expectedColumn;
-						} else {
-							$diff = ($tokens[$stackPtr]['column'] - $expectedColumnAdjusted) / 4;
-						}
-
-						$phpcsFile->fixer->beginChangeset();
-
-						$prevIndex = $stackPtr - 1;
-						if ($diff < 0 && $tokens[$prevIndex]['line'] !== $tokens[$stackPtr]['line']) {
-							$phpcsFile->fixer->addContentBefore($stackPtr, str_repeat("\t", -$diff));
-						} else {
-							$this->outdent($phpcsFile, $prevIndex);
-						}
-
-						for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
-							if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
-								$tokens[$i]['column'] !== 1
-							) {
-								continue;
-							}
-							if ($diff < 0) {
-								$this->indent($phpcsFile, $i, -$diff);
-							} else {
-								$this->outdent($phpcsFile, $i, $diff);
-							}
-						}
-						$phpcsFile->fixer->endChangeset();
+					// + means too much indentation (we need to outdent), - means not enough indentation (needs indenting)
+					if ($tokens[$stackPtr]['column'] < $expectedColumnAdjusted) {
+						$diff = $tokens[$stackPtr]['column'] - $expectedColumn;
+					} else {
+						$diff = ($tokens[$stackPtr]['column'] - $expectedColumnAdjusted) / 4;
 					}
+
+					$phpcsFile->fixer->beginChangeset();
+
+					$prevIndex = $stackPtr - 1;
+					if ($diff < 0 && $tokens[$prevIndex]['line'] !== $tokens[$stackPtr]['line']) {
+						$phpcsFile->fixer->addContentBefore($stackPtr, str_repeat("\t", -$diff));
+					} else {
+						$this->outdent($phpcsFile, $prevIndex);
+					}
+
+					for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
+						if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
+							$tokens[$i]['column'] !== 1
+						) {
+							continue;
+						}
+						if ($diff < 0) {
+							$this->indent($phpcsFile, $i, -$diff);
+						} else {
+							$this->outdent($phpcsFile, $i, $diff);
+						}
+					}
+					$phpcsFile->fixer->endChangeset();
 				}
 			}
 		}
