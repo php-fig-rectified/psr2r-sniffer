@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 177 sniffs
+The PSR2R standard contains 176 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -117,7 +117,7 @@ PSR2R (59 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-SlevomatCodingStandard (29 sniffs)
+SlevomatCodingStandard (28 sniffs)
 ----------------------------------
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
@@ -126,7 +126,6 @@ SlevomatCodingStandard (29 sniffs)
 - SlevomatCodingStandard.Classes.ClassConstantVisibility
 - SlevomatCodingStandard.Classes.ModernClassNameReference
 - SlevomatCodingStandard.Classes.PropertySpacing
-- SlevomatCodingStandard.Classes.UnusedPrivateElements
 - SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment
 - SlevomatCodingStandard.Commenting.EmptyComment
 - SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch
