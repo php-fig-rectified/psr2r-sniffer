@@ -54,7 +54,11 @@
 	<rule ref="SlevomatCodingStandard.PHP.ShortList"/>
 	<rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>
 
-	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
+		<properties>
+			<property name="enableOnObjects" value="false"/>
+		</properties>
+	</rule>
 
 	<rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
 
@@ -220,7 +224,7 @@
 	<rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
 	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
-	
+
 	<!-- conflicting -->
 	<rule ref="Squiz.WhiteSpace.MemberVarSpacing.FirstIncorrect">
 		<severity>0</severity>
