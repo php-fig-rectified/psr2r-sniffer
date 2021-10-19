@@ -32,6 +32,7 @@
 	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
 
 	<rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction"/>
+	<rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
 
 	<rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
