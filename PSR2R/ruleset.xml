@@ -124,7 +124,6 @@
 	<rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
 	<rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
 
-
 	<!--
 	<rule ref="Squiz.Commenting.DocCommentAlignment"/>
 	-->
@@ -188,19 +187,7 @@
 		</properties>
 	</rule>
 
-	<!-- needs https://github.com/squizlabs/PHP_CodeSniffer/issues/900 to be fixed first -->
-	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
-		<severity>0</severity>
-	</rule>
-
 	<rule ref="PEAR.Functions.ValidDefaultValue"/>
-
-	<!--
-	<rule ref="PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">
-		<severity>0</severity>
-	</rule>
-	-->
-
 	<rule ref="PEAR.NamingConventions.ValidClassName"/>
 
 	<rule ref="Squiz.Operators.ValidLogicalOperators"/>
