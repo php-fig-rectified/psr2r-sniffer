@@ -29,6 +29,7 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 	 * @return void
 	 */
 	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr) {
+		// Nothing to do here.
 	}
 
 	/**
@@ -106,8 +107,6 @@ class DocBlockReturnTagSniff extends AbstractScopeSniff {
 			if ($phpcsFile->fixer->enabled === true) {
 				$phpcsFile->fixer->replaceToken($commentWithReturn, '');
 			}
-
-			return;
 		}
 	}
 
