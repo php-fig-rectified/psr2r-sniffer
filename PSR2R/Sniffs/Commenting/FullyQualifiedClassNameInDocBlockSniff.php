@@ -138,7 +138,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 
 		foreach ($classNames as $key => $className) {
 			foreach (static::$whitelistedStartsWithTypes as $whitelistedStartsWithType) {
-				if (strpos($className, $whitelistedStartsWithType) === 0) {
+				if (strpos($className, $whitelistedStartsWithType) === 0 || strpos($className, '|' . $whitelistedStartsWithType) !== false) {
 					// We skip for now
 					continue 2;
 				}
@@ -307,7 +307,7 @@ class FullyQualifiedClassNameInDocBlockSniff extends AbstractSniff {
 	}
 
 	/**
-	 * Parses types respecting|union and () grouping.
+	 * Parses types respecting | union and () grouping.
 	 *
 	 * E.g.: `(string|int)[]|\ArrayObject` is parsed as `(string|int)[]` and `\ArrayObject`.
 	 *
