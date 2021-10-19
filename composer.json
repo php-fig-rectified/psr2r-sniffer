@@ -40,9 +40,9 @@
 		"cs-check": "phpcs",
 		"cs-fix": "phpcbf",
 		"test": "php phpunit.phar",
-		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-8.5.1.phar && mv phpunit-8.5.1.phar phpunit.phar || true",
-		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-8.5.1.phar && mv phpunit-8.5.1.phar phpunit.phar || true",
+		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-8.5.10.phar && mv phpunit-8.5.10.phar phpunit.phar || true",
+		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-8.5.10.phar && mv phpunit-8.5.10.phar phpunit.phar || true",
 		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
-		"stan": "phpstan analyse -c tests/phpstan.neon -l 6 PSR2R/"
+		"stan": "phpstan analyse"
 	}
 }

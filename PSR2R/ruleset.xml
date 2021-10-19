@@ -33,10 +33,7 @@
 
 	<rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction"/>
 
-	<!-- TODO
 	<rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
-	-->
-
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>

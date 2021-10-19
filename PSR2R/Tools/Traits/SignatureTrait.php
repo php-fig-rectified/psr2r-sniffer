@@ -13,9 +13,9 @@ trait SignatureTrait {
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $stackPtr
 	 *
-	 * @return array
+	 * @return array<array>
 	 */
-	protected function getMethodSignature(File $phpCsFile, $stackPtr) {
+	protected function getMethodSignature(File $phpCsFile, int $stackPtr): array {
 		$tokens = $phpCsFile->getTokens();
 
 		$startIndex = $phpCsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);
