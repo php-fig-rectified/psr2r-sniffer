@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="code-sniffer">
+    <config name="installed_paths" value="../../fig-r/psr2r-sniffer"/>
+
+    <arg value="nps"/>
+
+    <file>PSR2R/</file>
+    <file>docs/</file>
+    <file>bin/</file>
+
+    <rule ref="PSR2R"/>
+
+    <exclude-pattern>/tests/files/,*.inc,*.fixed</exclude-pattern>
+
+</ruleset>
