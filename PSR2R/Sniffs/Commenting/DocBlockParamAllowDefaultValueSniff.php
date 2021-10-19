@@ -22,7 +22,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [
 			T_FUNCTION,
 		];
@@ -31,7 +31,7 @@ class DocBlockParamAllowDefaultValueSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer): void {
 		$tokens = $phpCsFile->getTokens();
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);

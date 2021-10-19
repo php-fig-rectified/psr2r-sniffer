@@ -22,7 +22,7 @@ class DocBlockVarNotJustNullSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [
 			T_VARIABLE,
 		];
@@ -31,7 +31,7 @@ class DocBlockVarNotJustNullSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer): void {
 		$tokens = $phpCsFile->getTokens();
 
 		$previousIndex = $phpCsFile->findPrevious(Tokens::$emptyTokens, $stackPointer - 1, null, true);

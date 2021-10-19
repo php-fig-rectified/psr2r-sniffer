@@ -26,7 +26,7 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 	/**
 	 * Highest/First element will be last in list of param or return tag.
 	 *
-	 * @var string[]
+	 * @var array
 	 */
 	protected $sortMap = [
 		'void',
@@ -35,14 +35,14 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 	];
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected $sortOrder;
 
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [
 			T_FUNCTION,
 		];
@@ -51,7 +51,7 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer): void {
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
 		if (!$docBlockEndIndex) {
 			return;
@@ -111,9 +111,9 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 	/**
 	 * @uses DocBlockTypeOrderSniff::compare()
 	 *
-	 * @param string[] $elements
+	 * @param array<string> $elements
 	 *
-	 * @return string[]
+	 * @return array<string>
 	 */
 	protected function getExpectedOrder(array $elements) {
 		if (version_compare(PHP_VERSION, '7.0') < 0) {
@@ -131,9 +131,9 @@ class DocBlockTypeOrderSniff extends AbstractSniff {
 	/**
 	 * For PHP 5 we need a custom fallback sort.
 	 *
-	 * @param string[] $elements
+	 * @param array<string> $elements
 	 *
-	 * @return string[]
+	 * @return array<string>
 	 */
 	protected function getExpectedOrderLegacy(array $elements) {
 		$sortOrder = array_reverse($this->sortMap);

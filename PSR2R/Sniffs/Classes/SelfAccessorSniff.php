@@ -19,7 +19,7 @@ class SelfAccessorSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_SELF, T_CLASS, T_INTERFACE, T_TRAIT];
 	}
 

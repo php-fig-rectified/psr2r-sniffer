@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 176 sniffs
+The PSR2R standard contains 179 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -55,7 +55,7 @@ PSR2 (4 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (59 sniffs)
+PSR2R (58 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
@@ -75,7 +75,6 @@ PSR2R (59 sniffs)
 - PSR2R.Commenting.DocBlockPipeSpacing
 - PSR2R.Commenting.DocBlockReturnSelf
 - PSR2R.Commenting.DocBlockReturnTag
-- PSR2R.Commenting.DocBlockReturnVoid
 - PSR2R.Commenting.DocBlockShortType
 - PSR2R.Commenting.DocBlockTagTypes
 - PSR2R.Commenting.DocBlockTypeOrder
@@ -117,13 +116,14 @@ PSR2R (59 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-SlevomatCodingStandard (28 sniffs)
+SlevomatCodingStandard (32 sniffs)
 ----------------------------------
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
 - SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace
 - SlevomatCodingStandard.Arrays.TrailingArrayComma
 - SlevomatCodingStandard.Classes.ClassConstantVisibility
+- SlevomatCodingStandard.Classes.ConstantSpacing
 - SlevomatCodingStandard.Classes.ModernClassNameReference
 - SlevomatCodingStandard.Classes.PropertySpacing
 - SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment
@@ -133,11 +133,14 @@ SlevomatCodingStandard (28 sniffs)
 - SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing
 - SlevomatCodingStandard.ControlStructures.NewWithParentheses
 - SlevomatCodingStandard.Exceptions.DeadCatch
+- SlevomatCodingStandard.Functions.DisallowEmptyFunction
 - SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses
+- SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile
 - SlevomatCodingStandard.Namespaces.UnusedUses
 - SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash
 - SlevomatCodingStandard.Namespaces.UseFromSameNamespace
 - SlevomatCodingStandard.Namespaces.UseSpacing
+- SlevomatCodingStandard.Namespaces.UselessAlias
 - SlevomatCodingStandard.PHP.ShortList
 - SlevomatCodingStandard.PHP.TypeCast
 - SlevomatCodingStandard.PHP.UselessSemicolon

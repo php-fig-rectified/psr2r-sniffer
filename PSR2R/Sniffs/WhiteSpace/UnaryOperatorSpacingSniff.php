@@ -16,7 +16,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_INC, T_DEC, T_MINUS, T_PLUS, T_NONE, T_ASPERAND, T_BITWISE_AND];
 	}
 

@@ -14,7 +14,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [
 			T_FUNCTION,
 		];
@@ -23,7 +23,7 @@ class InlineDocBlockSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer): void {
 		$tokens = $phpCsFile->getTokens();
 		$startIndex = $phpCsFile->findNext(T_OPEN_CURLY_BRACKET, $stackPointer + 1);
 		if (empty($tokens[$startIndex]['bracket_closer'])) {

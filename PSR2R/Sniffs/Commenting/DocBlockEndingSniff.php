@@ -17,7 +17,7 @@ class DocBlockEndingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return Tokens::$commentTokens;
 	}
 

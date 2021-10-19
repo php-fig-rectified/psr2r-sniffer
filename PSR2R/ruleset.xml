@@ -24,10 +24,18 @@
 	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
 	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
 	<rule ref="SlevomatCodingStandard.Namespaces.UseSpacing"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
 
 	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
 	<rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
 	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
+
+	<rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction"/>
+
+	<!-- TODO
+	<rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
+	-->
 
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
@@ -38,6 +46,7 @@
 	<rule ref="SlevomatCodingStandard.Operators.NegationOperatorSpacingSniff"/>
 	-->
 
+	<rule ref="SlevomatCodingStandard.Classes.ConstantSpacing"/>
 	<rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>
 	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
 		<properties>
@@ -76,6 +85,7 @@
 	<rule ref="Spryker.Classes.MethodArgumentDefaultValue"/>
 
 	<rule ref="Spryker.Commenting.DocBlockConstructor"/>
+	<rule ref="Spryker.Commenting.DocBlockReturnVoid"/>
 	<rule ref="Spryker.Commenting.DocBlockNoInlineAlignment"/>
 	<rule ref="Spryker.Commenting.DocBlockPipeSpacing"/>
 	<rule ref="Spryker.Commenting.DocBlockReturnTag"/>

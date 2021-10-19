@@ -50,7 +50,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_NEW, T_FUNCTION, T_DOUBLE_COLON, T_CLASS];
 	}
 

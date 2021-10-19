@@ -22,7 +22,7 @@ class EmptyLinesSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_WHITESPACE];
 	}
 
