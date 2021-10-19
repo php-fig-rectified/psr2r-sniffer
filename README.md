@@ -18,6 +18,10 @@ also use them standalone/separately in any way you like.
 
 * [List of included sniffs](docs/sniffs.md)
 
+Furthermore, the following ones are recommended to add:
+- Spryker.Commenting.DocBlockThrows
+- Spryker.Commenting.DocBlockTagGrouping
+
 This library uses [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/).
 It can detect all issues and fix some of them automatically and is ideal for CI integration
 (travis, jenkins, circlci etc).
@@ -51,6 +55,37 @@ But with this bin tool the path needs to always come first (it does not work oth
 ```
 vendor/bin/sniff /path/to/files [optional params]
 ```
+
+### Customizing
+You can always customize on project level using your own `phpcs.xml` file there, e.g.:
+
+```xml
+<?xml version="1.0"?>
+<ruleset name="app">
+
+	<arg value="nps"/>
+
+	<file>src/</file>
+	<file>tests/</file>
+
+	<exclude-pattern>/config/Migrations/</exclude-pattern>
+
+	<!-- Add main ruleset -->
+	<rule ref="vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml"/>
+
+	<!-- Silence certain sniffs/rules -->
+	<rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+		<severity>0</severity>
+	</rule>
+	<rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+		<severity>0</severity>
+	</rule>
+
+	<!-- Define your own sniffs here -->
+
+</ruleset>
+```
+
 
 #### Useful commands
 Verbose output with `-v` is always useful. With `-vv` or even `-vvv` you get even more debug output.

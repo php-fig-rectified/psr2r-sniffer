@@ -76,12 +76,13 @@
 	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
 
-
-	<rule ref="Spryker.Classes.ReturnTypeHint"/>
-	<rule ref="Spryker.Classes.PropertyDefaultValue"/>
-	<rule ref="Spryker.Classes.MethodTypeHint"/>
+	<rule ref="Spryker.Classes.MethodDeclaration"/>
 	<rule ref="Spryker.Classes.MethodArgumentDefaultValue"/>
+	<rule ref="Spryker.Classes.MethodTypeHint"/>
+	<rule ref="Spryker.Classes.PropertyDefaultValue"/>
+	<rule ref="Spryker.Classes.ReturnTypeHint"/>
 
+	<rule ref="Spryker.Commenting.DocBlockConst"/>
 	<rule ref="Spryker.Commenting.DocBlockConstructor"/>
 	<rule ref="Spryker.Commenting.DocBlockReturnVoid"/>
 	<rule ref="Spryker.Commenting.DocBlockNoInlineAlignment"/>
@@ -93,6 +94,8 @@
 	<rule ref="Spryker.Commenting.DocBlockVariableNullHintLast"/>
 	<rule ref="Spryker.Commenting.DocBlockVarNotJustNull"/>
 	<rule ref="Spryker.Commenting.DocBlockVar"/>
+	<rule ref="Spryker.Commenting.DocBlockStructure"/>
+	<rule ref="Spryker.Commenting.DocBlockReturnNullableType"/>
 	<rule ref="Spryker.Commenting.InlineDocBlock"/>
 
 	<rule ref="Spryker.ControlStructures.NoInlineAssignment"/>

@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 181 sniffs
+The PSR2R standard contains 177 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -55,7 +55,7 @@ PSR2 (4 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (58 sniffs)
+PSR2R (51 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
@@ -72,19 +72,12 @@ PSR2R (58 sniffs)
 - PSR2R.Commenting.DocBlockParamArray
 - PSR2R.Commenting.DocBlockParamNoOp
 - PSR2R.Commenting.DocBlockParamNotJustNull
-- PSR2R.Commenting.DocBlockPipeSpacing
 - PSR2R.Commenting.DocBlockReturnSelf
-- PSR2R.Commenting.DocBlockReturnTag
 - PSR2R.Commenting.DocBlockShortType
 - PSR2R.Commenting.DocBlockTagTypes
-- PSR2R.Commenting.DocBlockTypeOrder
-- PSR2R.Commenting.DocBlockVar
-- PSR2R.Commenting.DocBlockVarNotJustNull
 - PSR2R.Commenting.DocBlockVarWithoutName
-- PSR2R.Commenting.DocBlockVariableNullHintLast
 - PSR2R.Commenting.DocComment
 - PSR2R.Commenting.FullyQualifiedClassNameInDocBlock
-- PSR2R.Commenting.InlineDocBlock
 - PSR2R.Commenting.NoControlStructureEndComment
 - PSR2R.ControlStructures.ConditionalExpressionOrder
 - PSR2R.ControlStructures.ControlStructureSpacing
@@ -153,17 +146,20 @@ SlevomatCodingStandard (34 sniffs)
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Spryker (29 sniffs)
+Spryker (32 sniffs)
 -------------------
 - Spryker.Classes.MethodArgumentDefaultValue
 - Spryker.Classes.MethodTypeHint
 - Spryker.Classes.PropertyDefaultValue
 - Spryker.Classes.ReturnTypeHint
+- Spryker.Commenting.DocBlockConst
 - Spryker.Commenting.DocBlockConstructor
 - Spryker.Commenting.DocBlockNoInlineAlignment
 - Spryker.Commenting.DocBlockPipeSpacing
+- Spryker.Commenting.DocBlockReturnNullableType
 - Spryker.Commenting.DocBlockReturnTag
 - Spryker.Commenting.DocBlockReturnVoid
+- Spryker.Commenting.DocBlockStructure
 - Spryker.Commenting.DocBlockTagOrder
 - Spryker.Commenting.DocBlockTypeOrder
 - Spryker.Commenting.DocBlockVar

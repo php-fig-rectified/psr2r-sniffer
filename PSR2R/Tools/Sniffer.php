@@ -6,6 +6,9 @@ use PHP_CodeSniffer\Runner;
 
 class Sniffer {
 
+	/**
+	 * @var string
+	 */
 	public const STANDARD = 'PSR2R/ruleset.xml';
 
 	/**

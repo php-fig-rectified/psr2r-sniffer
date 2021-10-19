@@ -16,6 +16,9 @@ if (!class_exists(Config::class) && file_exists($manualAutoload)) {
 
 class Tokenizer {
 
+	/**
+	 * @var string
+	 */
 	public const STANDARD = 'PSR2R/ruleset.xml';
 
 	/**
