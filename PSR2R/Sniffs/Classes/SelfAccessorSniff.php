@@ -120,6 +120,9 @@ class SelfAccessorSniff extends AbstractSniff {
 		if (strtolower($content) !== strtolower($name)) {
 			return;
 		}
+		if (!empty($tokens[$index]['conditions']) && in_array('PHPCS_T_ANON_CLASS', $tokens[$index]['conditions'], true)) {
+			return;
+		}
 
 		$fix = $phpcsFile->addFixableError('Expected `self::`, got `' . $content . '::`', $index, 'ExpectedSelf2');
 		if ($fix) {
