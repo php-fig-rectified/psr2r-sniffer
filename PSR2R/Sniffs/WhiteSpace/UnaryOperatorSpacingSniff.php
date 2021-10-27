@@ -61,7 +61,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 			$tokens[$stackPtr]['column'] * -1,
 			true,
 			null,
-			true
+			true,
 		);
 		$operatorSuffixAllowed = in_array(
 			$tokens[$lastSyntaxItem]['code'],
@@ -75,7 +75,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 				T_VARIABLE,
 				T_STRING,
 			],
-			false
+			false,
 		);
 
 		if ($operatorSuffixAllowed === false

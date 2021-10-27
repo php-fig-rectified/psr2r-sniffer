@@ -43,7 +43,7 @@ class ListCommaSniff extends AbstractSniff {
 				$this->clearRange(
 					$phpcsFile,
 					$markIndex,
-					$closeIndex - 1
+					$closeIndex - 1,
 				);
 			}
 		}

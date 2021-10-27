@@ -12,8 +12,8 @@
 		}
 	],
 	"require": {
-		"php": ">=7.2",
-		"spryker/code-sniffer": "^0.16.4",
+		"php": ">=7.3",
+		"spryker/code-sniffer": "dev-master as 0.16.6",
 		"slevomat/coding-standard": "^7.0.1"
 	},
 	"require-dev": {
@@ -43,6 +43,8 @@
 		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-8.5.10.phar && mv phpunit-8.5.10.phar phpunit.phar || true",
 		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-8.5.10.phar && mv phpunit-8.5.10.phar phpunit.phar || true",
 		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
+		"lowest": "validate-prefer-lowest",
+		"lowest-setup": "composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction && cp composer.json composer.backup && composer require --dev dereuromark/composer-prefer-lowest && mv composer.backup composer.json",
 		"stan": "phpstan analyse"
 	}
 }

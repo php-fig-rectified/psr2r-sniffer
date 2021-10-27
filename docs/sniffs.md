@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 177 sniffs
+The PSR2R standard contains 181 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -55,14 +55,12 @@ PSR2 (4 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (51 sniffs)
+PSR2R (49 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
-- PSR2R.Classes.ClassFileName
 - PSR2R.Classes.InterfaceName
 - PSR2R.Classes.PropertyDeclaration
-- PSR2R.Classes.SelfAccessor
 - PSR2R.Classes.TraitName
 - PSR2R.Commenting.DocBlock
 - PSR2R.Commenting.DocBlockEnding
@@ -109,7 +107,7 @@ PSR2R (51 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-SlevomatCodingStandard (34 sniffs)
+SlevomatCodingStandard (36 sniffs)
 ----------------------------------
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
@@ -128,7 +126,9 @@ SlevomatCodingStandard (34 sniffs)
 - SlevomatCodingStandard.Exceptions.DeadCatch
 - SlevomatCodingStandard.Functions.ArrowFunctionDeclaration
 - SlevomatCodingStandard.Functions.DisallowEmptyFunction
+- SlevomatCodingStandard.Functions.RequireTrailingCommaInCall
 - SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses
+- SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
 - SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile
 - SlevomatCodingStandard.Namespaces.UnusedUses
 - SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash
@@ -146,12 +146,16 @@ SlevomatCodingStandard (34 sniffs)
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Spryker (32 sniffs)
+Spryker (36 sniffs)
 -------------------
+- Spryker.Classes.ClassFileName
 - Spryker.Classes.MethodArgumentDefaultValue
+- Spryker.Classes.MethodDeclaration
 - Spryker.Classes.MethodTypeHint
 - Spryker.Classes.PropertyDefaultValue
 - Spryker.Classes.ReturnTypeHint
+- Spryker.Classes.SelfAccessor
+- Spryker.Commenting.Attributes
 - Spryker.Commenting.DocBlockConst
 - Spryker.Commenting.DocBlockConstructor
 - Spryker.Commenting.DocBlockNoInlineAlignment
