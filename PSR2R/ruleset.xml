@@ -40,6 +40,7 @@
 	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
 	<rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
 	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
+	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
 
 	<rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction"/>
 	<rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
