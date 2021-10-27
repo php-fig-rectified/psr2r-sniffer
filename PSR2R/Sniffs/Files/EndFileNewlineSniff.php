@@ -32,7 +32,7 @@ class EndFileNewlineSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_OPEN_TAG];
 	}
 

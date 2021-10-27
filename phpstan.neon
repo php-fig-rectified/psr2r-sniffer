@@ -1,4 +1,7 @@
 parameters:
+	level: 6
+	paths:
+		- PSR2R/
 	bootstrapFiles:
 		- %rootDir%/../../../tests/phpstan_bootstrap.php
 	ignoreErrors:

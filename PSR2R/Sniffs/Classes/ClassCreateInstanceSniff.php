@@ -11,7 +11,7 @@ class ClassCreateInstanceSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_NEW];
 	}
 
@@ -47,7 +47,7 @@ class ClassCreateInstanceSniff extends AbstractSniff {
 				null,
 				true,
 				null,
-				true
+				true,
 			);
 			if ($nextConstructorPart === false
 				|| ($tokens[$nextConstructorPart]['code'] !== T_STRING &&

@@ -27,7 +27,7 @@ class SingleQuoteSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_CONSTANT_ENCAPSED_STRING];
 	}
 

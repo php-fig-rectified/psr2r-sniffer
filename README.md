@@ -1,7 +1,7 @@
 # PSR-2-R Sniffer
 [![CI](https://github.com/php-fig-rectified/psr2r-sniffer/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/php-fig-rectified/psr2r-sniffer/actions/workflows/ci.yml)
 [![Latest Stable Version](https://poser.pugx.org/fig-r/psr2r-sniffer/v/stable.svg)](https://packagist.org/packages/fig-r/psr2r-sniffer)
-[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/fig-r/psr2r-sniffer/license.svg)](https://packagist.org/packages/fig-r/psr2r-sniffer)
 [![Total Downloads](https://poser.pugx.org/fig-r/psr2r-sniffer/d/total.svg)](https://packagist.org/packages/fig-r/psr2r-sniffer)
 [![Coding Standards](https://img.shields.io/badge/cs-PSR--2--R-yellow.svg)](https://github.com/php-fig-rectified/fig-rectified-standards)
@@ -14,13 +14,17 @@ Documentation @ [/docs/](docs).
 The following sniffers are bundles together as `PSR2R` already, but you can
 also use them standalone/separately in any way you like.
 
-**Currently PSR2R ships with over 176 sniffs.**
+**Currently PSR2R ships with over 180 sniffs.**
 
 * [List of included sniffs](docs/sniffs.md)
 
+Furthermore, the following ones are recommended to add:
+- Spryker.Commenting.DocBlockThrows
+- Spryker.Commenting.DocBlockTagGrouping
+
 This library uses [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/).
 It can detect all issues and fix some of them automatically and is ideal for CI integration
-(travis, jenkins, circlci etc).
+(travis, jenkins, circleci etc).
 
 ### Usage
 
@@ -51,6 +55,37 @@ But with this bin tool the path needs to always come first (it does not work oth
 ```
 vendor/bin/sniff /path/to/files [optional params]
 ```
+
+### Customizing
+You can always customize on project level using your own `phpcs.xml` file there, e.g.:
+
+```xml
+<?xml version="1.0"?>
+<ruleset name="app">
+
+	<arg value="nps"/>
+
+	<file>src/</file>
+	<file>tests/</file>
+
+	<exclude-pattern>/config/Migrations/</exclude-pattern>
+
+	<!-- Add main ruleset -->
+	<rule ref="vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml"/>
+
+	<!-- Silence certain sniffs/rules -->
+	<rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+		<severity>0</severity>
+	</rule>
+	<rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+		<severity>0</severity>
+	</rule>
+
+	<!-- Define your own sniffs here -->
+
+</ruleset>
+```
+
 
 #### Useful commands
 Verbose output with `-v` is always useful. With `-vv` or even `-vvv` you get even more debug output.

@@ -17,7 +17,7 @@ class ArraySpacingSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_OPEN_SHORT_ARRAY];
 	}
 

@@ -17,7 +17,7 @@ class PreferStaticOverSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_DOUBLE_COLON];
 	}
 

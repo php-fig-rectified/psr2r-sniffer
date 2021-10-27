@@ -18,7 +18,7 @@ class ListCommaSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_LIST];
 	}
 
@@ -43,7 +43,7 @@ class ListCommaSniff extends AbstractSniff {
 				$this->clearRange(
 					$phpcsFile,
 					$markIndex,
-					$closeIndex - 1
+					$closeIndex - 1,
 				);
 			}
 		}

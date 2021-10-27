@@ -16,7 +16,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_INC, T_DEC, T_MINUS, T_PLUS, T_NONE, T_ASPERAND, T_BITWISE_AND];
 	}
 
@@ -61,7 +61,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 			$tokens[$stackPtr]['column'] * -1,
 			true,
 			null,
-			true
+			true,
 		);
 		$operatorSuffixAllowed = in_array(
 			$tokens[$lastSyntaxItem]['code'],
@@ -75,7 +75,7 @@ class UnaryOperatorSpacingSniff implements Sniff {
 				T_VARIABLE,
 				T_STRING,
 			],
-			false
+			false,
 		);
 
 		if ($operatorSuffixAllowed === false

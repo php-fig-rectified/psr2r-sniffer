@@ -28,7 +28,7 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_DOC_COMMENT_OPEN_TAG];
 	}
 

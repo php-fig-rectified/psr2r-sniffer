@@ -19,7 +19,7 @@ class UnusedUseStatementSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_USE];
 	}
 
@@ -42,7 +42,7 @@ class UnusedUseStatementSniff extends AbstractSniff {
 			Tokens::$emptyTokens,
 			$semicolonIndex - 1,
 			null,
-			true
+			true,
 		);
 
 		// Seek along the statement to get the last part, which is the class/interface name.
@@ -64,7 +64,7 @@ class UnusedUseStatementSniff extends AbstractSniff {
 				Tokens::$emptyTokens,
 				$classUsed - 1,
 				null,
-				true
+				true,
 			);
 			// If a backslash is used before the class name then this is some other
 			// use statement.

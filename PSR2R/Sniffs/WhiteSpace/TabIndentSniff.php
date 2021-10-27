@@ -27,7 +27,7 @@ class TabIndentSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_WHITESPACE, T_DOC_COMMENT_OPEN_TAG];
 	}
 

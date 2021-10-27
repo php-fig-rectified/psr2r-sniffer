@@ -16,7 +16,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [
 			T_CLASS,
 			T_INTERFACE,
@@ -29,7 +29,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer) {
+	public function process(File $phpCsFile, $stackPointer): void {
 		$tokens = $phpCsFile->getTokens();
 		if (($stackPointer > 1) && ($tokens[$stackPointer - 2]['type'] === 'T_STATIC')) {
 			return; // Skip static function declarations
@@ -78,7 +78,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $classNameIndex
-	 * @param string[] $parts
+	 * @param array<string> $parts
 	 * @param string $appendix
 	 *
 	 * @return void

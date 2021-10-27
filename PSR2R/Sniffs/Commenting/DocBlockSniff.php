@@ -20,19 +20,24 @@ class DocBlockSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		return [T_FUNCTION];
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
+
+		if ($nextIndex === false) {
+			return;
+		}
+
 		if ($tokens[$nextIndex]['content'] === '__construct' || $tokens[$nextIndex]['content'] === '__destruct') {
-			$this->checkConstructorAndDestructor($phpcsFile, $nextIndex);
+			$this->checkConstructorAndDestructor($phpcsFile, $stackPtr);
 
 			return;
 		}
@@ -56,7 +61,7 @@ class DocBlockSniff extends AbstractSniff {
 			return;
 		}
 
-		$fix = $phpcsFile->addFixableError('Method does not have a return void statement in doc block: ' . $tokens[$nextIndex]['content'], $nextIndex, 'ReturnVoidMissing');
+		$fix = $phpcsFile->addFixableError('Method does not have a docblock with return void statement: ' . $tokens[$nextIndex]['content'], $nextIndex, 'ReturnVoidMissing');
 		if (!$fix) {
 			return;
 		}
@@ -71,10 +76,20 @@ class DocBlockSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function addDocBlock(File $phpcsFile, $index, $returnType) {
+	protected function addDocBlock(File $phpcsFile, int $index, string $returnType): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$firstTokenOfLine = $this->getFirstTokenOfLine($tokens, $index);
+
+		$prevContentIndex = $phpcsFile->findPrevious(T_WHITESPACE, $firstTokenOfLine - 1, null, true);
+
+		if ($prevContentIndex === false) {
+			return;
+		}
+
+		if ($tokens[$prevContentIndex]['type'] === 'T_ATTRIBUTE_END') {
+			$firstTokenOfLine = $this->getFirstTokenOfLine($tokens, $prevContentIndex);
+		}
 
 		$indentation = $this->getIndentationWhitespace($phpcsFile, $index);
 
@@ -90,23 +105,23 @@ class DocBlockSniff extends AbstractSniff {
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param int $index
+	 * @param int $stackPtr
 	 *
 	 * @return void
 	 */
-	protected function checkConstructorAndDestructor(File $phpcsFile, $index) {
-		$docBlockEndIndex = $this->findRelatedDocBlock($phpcsFile, $index);
+	protected function checkConstructorAndDestructor(File $phpcsFile, int $stackPtr): void {
+		$docBlockEndIndex = $this->findRelatedDocBlock($phpcsFile, $stackPtr);
 		if ($docBlockEndIndex) {
 			return;
 		}
 
-		$methodSignature = $this->getMethodSignature($phpcsFile, $index);
+		$methodSignature = $this->getMethodSignature($phpcsFile, $stackPtr);
 		$arguments = count($methodSignature);
 		if (!$arguments) {
 			return;
 		}
 
-		$phpcsFile->addError('Missing doc block for method', $index, 'ConstructDesctructMissingDocBlock');
+		$phpcsFile->addError('Missing doc block for method', $stackPtr, 'ConstructDesctructMissingDocBlock');
 	}
 
 	/**
@@ -116,7 +131,7 @@ class DocBlockSniff extends AbstractSniff {
 	 *
 	 * @return int|null
 	 */
-	protected function findDocBlockReturn(File $phpcsFile, $docBlockStartIndex, $docBlockEndIndex) {
+	protected function findDocBlockReturn(File $phpcsFile, int $docBlockStartIndex, int $docBlockEndIndex): ?int {
 		$tokens = $phpcsFile->getTokens();
 
 		for ($i = $docBlockStartIndex + 1; $i < $docBlockEndIndex; $i++) {
@@ -141,7 +156,7 @@ class DocBlockSniff extends AbstractSniff {
 	 *
 	 * @return string|null
 	 */
-	protected function detectReturnTypeVoid(File $phpcsFile, $index) {
+	protected function detectReturnTypeVoid(File $phpcsFile, int $index): ?string {
 		$tokens = $phpcsFile->getTokens();
 
 		$type = 'void';
@@ -154,8 +169,11 @@ class DocBlockSniff extends AbstractSniff {
 		$methodEndIndex = $tokens[$index]['scope_closer'];
 
 		for ($i = $methodStartIndex + 1; $i < $methodEndIndex; ++$i) {
-			if ($this->isGivenKind([T_FUNCTION], $tokens[$i])) {
+			if ($this->isGivenKind([T_FUNCTION, T_CLOSURE], $tokens[$i])) {
 				$endIndex = $tokens[$i]['scope_closer'];
+				if (!empty($tokens[$i]['nested_parenthesis'])) {
+					$endIndex = array_pop($tokens[$i]['nested_parenthesis']);
+				}
 				$i = $endIndex;
 
 				continue;

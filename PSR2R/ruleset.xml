@@ -24,11 +24,29 @@
 	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
 	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
 	<rule ref="SlevomatCodingStandard.Namespaces.UseSpacing"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
+
+	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+		<properties>
+			<property name="allowFallbackGlobalFunctions" type="boolean" value="true"/>
+			<property name="allowFallbackGlobalConstants" type="boolean" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName">
+		<severity>0</severity>
+	</rule>
 
 	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
 	<rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
 	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
+	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
 
+	<rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction"/>
+	<rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
+
+	<rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
@@ -38,6 +56,7 @@
 	<rule ref="SlevomatCodingStandard.Operators.NegationOperatorSpacingSniff"/>
 	-->
 
+	<rule ref="SlevomatCodingStandard.Classes.ConstantSpacing"/>
 	<rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>
 	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
 		<properties>
@@ -64,18 +83,23 @@
 
 	<rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
 	<rule ref="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment"/>
+	<rule ref="SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration"/>
 
 	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
 
-
-	<rule ref="Spryker.Classes.ReturnTypeHint"/>
-	<rule ref="Spryker.Classes.PropertyDefaultValue"/>
-	<rule ref="Spryker.Classes.MethodTypeHint"/>
+	<rule ref="Spryker.Classes.MethodDeclaration"/>
 	<rule ref="Spryker.Classes.MethodArgumentDefaultValue"/>
+	<rule ref="Spryker.Classes.MethodTypeHint"/>
+	<rule ref="Spryker.Classes.PropertyDefaultValue"/>
+	<rule ref="Spryker.Classes.ReturnTypeHint"/>
+	<rule ref="Spryker.Classes.SelfAccessor"/>
+	<rule ref="Spryker.Classes.ClassFileName"/>
 
+	<rule ref="Spryker.Commenting.DocBlockConst"/>
 	<rule ref="Spryker.Commenting.DocBlockConstructor"/>
+	<rule ref="Spryker.Commenting.DocBlockReturnVoid"/>
 	<rule ref="Spryker.Commenting.DocBlockNoInlineAlignment"/>
 	<rule ref="Spryker.Commenting.DocBlockPipeSpacing"/>
 	<rule ref="Spryker.Commenting.DocBlockReturnTag"/>
@@ -85,7 +109,10 @@
 	<rule ref="Spryker.Commenting.DocBlockVariableNullHintLast"/>
 	<rule ref="Spryker.Commenting.DocBlockVarNotJustNull"/>
 	<rule ref="Spryker.Commenting.DocBlockVar"/>
+	<rule ref="Spryker.Commenting.DocBlockStructure"/>
+	<rule ref="Spryker.Commenting.DocBlockReturnNullableType"/>
 	<rule ref="Spryker.Commenting.InlineDocBlock"/>
+	<rule ref="Spryker.Commenting.Attributes"/>
 
 	<rule ref="Spryker.ControlStructures.NoInlineAssignment"/>
 	<rule ref="Spryker.ControlStructures.ConditionalExpressionOrder"/>
@@ -116,7 +143,6 @@
 	<rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
 	<rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
 	<rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
-
 
 	<!--
 	<rule ref="Squiz.Commenting.DocCommentAlignment"/>
@@ -181,19 +207,7 @@
 		</properties>
 	</rule>
 
-	<!-- needs https://github.com/squizlabs/PHP_CodeSniffer/issues/900 to be fixed first -->
-	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
-		<severity>0</severity>
-	</rule>
-
 	<rule ref="PEAR.Functions.ValidDefaultValue"/>
-
-	<!--
-	<rule ref="PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">
-		<severity>0</severity>
-	</rule>
-	-->
-
 	<rule ref="PEAR.NamingConventions.ValidClassName"/>
 
 	<rule ref="Squiz.Operators.ValidLogicalOperators"/>

@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 176 sniffs
+The PSR2R standard contains 182 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -55,14 +55,12 @@ PSR2 (4 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (59 sniffs)
+PSR2R (49 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
-- PSR2R.Classes.ClassFileName
 - PSR2R.Classes.InterfaceName
 - PSR2R.Classes.PropertyDeclaration
-- PSR2R.Classes.SelfAccessor
 - PSR2R.Classes.TraitName
 - PSR2R.Commenting.DocBlock
 - PSR2R.Commenting.DocBlockEnding
@@ -72,20 +70,12 @@ PSR2R (59 sniffs)
 - PSR2R.Commenting.DocBlockParamArray
 - PSR2R.Commenting.DocBlockParamNoOp
 - PSR2R.Commenting.DocBlockParamNotJustNull
-- PSR2R.Commenting.DocBlockPipeSpacing
 - PSR2R.Commenting.DocBlockReturnSelf
-- PSR2R.Commenting.DocBlockReturnTag
-- PSR2R.Commenting.DocBlockReturnVoid
 - PSR2R.Commenting.DocBlockShortType
 - PSR2R.Commenting.DocBlockTagTypes
-- PSR2R.Commenting.DocBlockTypeOrder
-- PSR2R.Commenting.DocBlockVar
-- PSR2R.Commenting.DocBlockVarNotJustNull
 - PSR2R.Commenting.DocBlockVarWithoutName
-- PSR2R.Commenting.DocBlockVariableNullHintLast
 - PSR2R.Commenting.DocComment
 - PSR2R.Commenting.FullyQualifiedClassNameInDocBlock
-- PSR2R.Commenting.InlineDocBlock
 - PSR2R.Commenting.NoControlStructureEndComment
 - PSR2R.ControlStructures.ConditionalExpressionOrder
 - PSR2R.ControlStructures.ControlStructureSpacing
@@ -117,15 +107,17 @@ PSR2R (59 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-SlevomatCodingStandard (28 sniffs)
+SlevomatCodingStandard (37 sniffs)
 ----------------------------------
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
 - SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace
 - SlevomatCodingStandard.Arrays.TrailingArrayComma
 - SlevomatCodingStandard.Classes.ClassConstantVisibility
+- SlevomatCodingStandard.Classes.ConstantSpacing
 - SlevomatCodingStandard.Classes.ModernClassNameReference
 - SlevomatCodingStandard.Classes.PropertySpacing
+- SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration
 - SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment
 - SlevomatCodingStandard.Commenting.EmptyComment
 - SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch
@@ -133,14 +125,21 @@ SlevomatCodingStandard (28 sniffs)
 - SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing
 - SlevomatCodingStandard.ControlStructures.NewWithParentheses
 - SlevomatCodingStandard.Exceptions.DeadCatch
+- SlevomatCodingStandard.Functions.ArrowFunctionDeclaration
+- SlevomatCodingStandard.Functions.DisallowEmptyFunction
+- SlevomatCodingStandard.Functions.RequireTrailingCommaInCall
 - SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses
+- SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
+- SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile
 - SlevomatCodingStandard.Namespaces.UnusedUses
 - SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash
 - SlevomatCodingStandard.Namespaces.UseFromSameNamespace
 - SlevomatCodingStandard.Namespaces.UseSpacing
+- SlevomatCodingStandard.Namespaces.UselessAlias
 - SlevomatCodingStandard.PHP.ShortList
 - SlevomatCodingStandard.PHP.TypeCast
 - SlevomatCodingStandard.PHP.UselessSemicolon
+- SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax
 - SlevomatCodingStandard.TypeHints.LongTypeHints
 - SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue
 - SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing
@@ -148,17 +147,24 @@ SlevomatCodingStandard (28 sniffs)
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Spryker (29 sniffs)
+Spryker (36 sniffs)
 -------------------
+- Spryker.Classes.ClassFileName
 - Spryker.Classes.MethodArgumentDefaultValue
+- Spryker.Classes.MethodDeclaration
 - Spryker.Classes.MethodTypeHint
 - Spryker.Classes.PropertyDefaultValue
 - Spryker.Classes.ReturnTypeHint
+- Spryker.Classes.SelfAccessor
+- Spryker.Commenting.Attributes
+- Spryker.Commenting.DocBlockConst
 - Spryker.Commenting.DocBlockConstructor
 - Spryker.Commenting.DocBlockNoInlineAlignment
 - Spryker.Commenting.DocBlockPipeSpacing
+- Spryker.Commenting.DocBlockReturnNullableType
 - Spryker.Commenting.DocBlockReturnTag
 - Spryker.Commenting.DocBlockReturnVoid
+- Spryker.Commenting.DocBlockStructure
 - Spryker.Commenting.DocBlockTagOrder
 - Spryker.Commenting.DocBlockTypeOrder
 - Spryker.Commenting.DocBlockVar

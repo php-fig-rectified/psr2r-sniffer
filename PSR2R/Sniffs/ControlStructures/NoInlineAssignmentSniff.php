@@ -14,7 +14,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function register() {
+	public function register(): array {
 		// We skip T_FOR, T_WHILE for now as they can have valid inline assignment
 		return [T_FOREACH, T_IF, T_SWITCH, T_OBJECT_OPERATOR, T_DOUBLE_COLON];
 	}
