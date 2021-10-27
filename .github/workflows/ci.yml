@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.3', '8.0']
+        php-version: ['7.3', '8.0', '8.1']
         prefer-lowest: ['']
         include:
           - php-version: '7.3'
