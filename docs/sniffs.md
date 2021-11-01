@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 181 sniffs
+The PSR2R standard contains 184 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -107,7 +107,7 @@ PSR2R (49 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-SlevomatCodingStandard (36 sniffs)
+SlevomatCodingStandard (40 sniffs)
 ----------------------------------
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
@@ -124,6 +124,8 @@ SlevomatCodingStandard (36 sniffs)
 - SlevomatCodingStandard.ControlStructures.DisallowYodaComparison
 - SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing
 - SlevomatCodingStandard.ControlStructures.NewWithParentheses
+- SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator
+- SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator
 - SlevomatCodingStandard.Exceptions.DeadCatch
 - SlevomatCodingStandard.Functions.ArrowFunctionDeclaration
 - SlevomatCodingStandard.Functions.RequireTrailingCommaInCall
@@ -135,6 +137,7 @@ SlevomatCodingStandard (36 sniffs)
 - SlevomatCodingStandard.Namespaces.UseFromSameNamespace
 - SlevomatCodingStandard.Namespaces.UseSpacing
 - SlevomatCodingStandard.Namespaces.UselessAlias
+- SlevomatCodingStandard.Operators.SpreadOperatorSpacing
 - SlevomatCodingStandard.PHP.ShortList
 - SlevomatCodingStandard.PHP.TypeCast
 - SlevomatCodingStandard.PHP.UselessSemicolon
@@ -143,10 +146,11 @@ SlevomatCodingStandard (36 sniffs)
 - SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue
 - SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing
 - SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing
+- SlevomatCodingStandard.TypeHints.UnionTypeHintFormat
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Spryker (36 sniffs)
+Spryker (35 sniffs)
 -------------------
 - Spryker.Classes.ClassFileName
 - Spryker.Classes.MethodArgumentDefaultValue
@@ -183,7 +187,6 @@ Spryker (36 sniffs)
 - Spryker.WhiteSpace.ConcatenationSpacing
 - Spryker.WhiteSpace.ImplicitCastSpacing
 - Spryker.WhiteSpace.ObjectAttributeSpacing
-- Spryker.WhiteSpace.OperatorSpacing
 
 Squiz (21 sniffs)
 -----------------

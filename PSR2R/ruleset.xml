@@ -63,6 +63,8 @@
 		</properties>
 	</rule>
 	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
 
 	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
 
@@ -125,12 +127,12 @@
 	<rule ref="Spryker.PHP.PhpSapiConstant"/>
 	<rule ref="Spryker.PHP.PreferCastOverFunction"/>
 
-	<rule ref="Spryker.WhiteSpace.OperatorSpacing"/>
 	<rule ref="Spryker.WhiteSpace.ConcatenationSpacing"/>
 	<rule ref="Spryker.WhiteSpace.ObjectAttributeSpacing"/>
 	<rule ref="Spryker.WhiteSpace.CommaSpacing"/>
 	<rule ref="Spryker.WhiteSpace.ImplicitCastSpacing"/>
 
+	<rule ref="SlevomatCodingStandard.Operators.SpreadOperatorSpacing"/>
 
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
@@ -237,6 +239,13 @@
 	<rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
 	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+
+	<!-- PHP 8 specific, only relevant for those PHP 8.0+ -->
+	<rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
+		<properties>
+			<property name="withSpaces" value="no"/>
+		</properties>
+	</rule>
 
 	<!-- conflicting -->
 	<rule ref="Squiz.WhiteSpace.MemberVarSpacing.FirstIncorrect">
