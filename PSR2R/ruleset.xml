@@ -45,7 +45,8 @@
 	<rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
 	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
 
-	<rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
+	<rule ref="Spryker.Commenting.DisallowArrayTypeHintSyntax"/>
+	<rule ref="Spryker.Commenting.TypeHint"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>

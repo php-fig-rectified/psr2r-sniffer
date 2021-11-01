@@ -15,7 +15,7 @@ abstract class AbstractSniff implements Sniff {
 	/**
 	 * Checks if the given token is of this token code/type.
 	 *
-	 * @param int|string|array $search
+	 * @param array|string|int $search
 	 * @param array $token
 *
 	 * @return bool
@@ -36,7 +36,7 @@ abstract class AbstractSniff implements Sniff {
 	 * Checks if the given token scope contains a single or multiple token codes/types.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param string|int|array $search
+	 * @param array|string|int $search
 	 * @param int $start
 	 * @param int $end
 	 * @param bool $skipNested

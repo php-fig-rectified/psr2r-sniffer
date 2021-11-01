@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 184 sniffs
+The PSR2R standard contains 185 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -107,7 +107,7 @@ PSR2R (49 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-SlevomatCodingStandard (40 sniffs)
+SlevomatCodingStandard (39 sniffs)
 ----------------------------------
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
@@ -141,7 +141,6 @@ SlevomatCodingStandard (40 sniffs)
 - SlevomatCodingStandard.PHP.ShortList
 - SlevomatCodingStandard.PHP.TypeCast
 - SlevomatCodingStandard.PHP.UselessSemicolon
-- SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax
 - SlevomatCodingStandard.TypeHints.LongTypeHints
 - SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue
 - SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing
@@ -150,7 +149,7 @@ SlevomatCodingStandard (40 sniffs)
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Spryker (35 sniffs)
+Spryker (37 sniffs)
 -------------------
 - Spryker.Classes.ClassFileName
 - Spryker.Classes.MethodArgumentDefaultValue
@@ -160,6 +159,7 @@ Spryker (35 sniffs)
 - Spryker.Classes.ReturnTypeHint
 - Spryker.Classes.SelfAccessor
 - Spryker.Commenting.Attributes
+- Spryker.Commenting.DisallowArrayTypeHintSyntax
 - Spryker.Commenting.DocBlockConst
 - Spryker.Commenting.DocBlockConstructor
 - Spryker.Commenting.DocBlockNoInlineAlignment
@@ -174,6 +174,7 @@ Spryker (35 sniffs)
 - Spryker.Commenting.DocBlockVarNotJustNull
 - Spryker.Commenting.DocBlockVariableNullHintLast
 - Spryker.Commenting.InlineDocBlock
+- Spryker.Commenting.TypeHint
 - Spryker.ControlStructures.ConditionalExpressionOrder
 - Spryker.ControlStructures.NoInlineAssignment
 - Spryker.Formatting.ArrayDeclaration
