@@ -55,8 +55,11 @@ class UnneededElseSniff extends AbstractSniff {
 			return;
 		}
 
-		$returnEarlyIndex = $phpcsFile->findPrevious([T_RETURN, T_CONTINUE, T_BREAK], $prevScopeLastTokenIndex - 1,
-			$scopeStartIndex + 1);
+		$returnEarlyIndex = $phpcsFile->findPrevious(
+			[T_RETURN, T_CONTINUE, T_BREAK],
+			$prevScopeLastTokenIndex - 1,
+			$scopeStartIndex + 1,
+		);
 		if (!$returnEarlyIndex) {
 			return;
 		}
@@ -67,8 +70,11 @@ class UnneededElseSniff extends AbstractSniff {
 			}
 		}
 
-		$fix = $phpcsFile->addFixableError('Unneeded ' . $tokens[$stackPtr]['type'] . ' detected.', $stackPtr,
-			'UnneededElse');
+		$fix = $phpcsFile->addFixableError(
+			'Unneeded ' . $tokens[$stackPtr]['type'] . ' detected.',
+			$stackPtr,
+			'UnneededElse',
+		);
 		if (!$fix) {
 			return;
 		}

@@ -50,8 +50,11 @@ class SingleQuoteSniff extends AbstractSniff {
 			// regex: odd number of backslashes, not followed by double quote or dollar
 			&& !preg_match('/(?<!\\\\)(?:\\\\{2})*\\\\(?!["$\\\\])/', $content)
 		) {
-			$fix = $phpcsFile->addFixableError('Use single instead of double quotes for simple strings.', $stackPtr,
-				'UseSingleQuote');
+			$fix = $phpcsFile->addFixableError(
+				'Use single instead of double quotes for simple strings.',
+				$stackPtr,
+				'UseSingleQuote',
+			);
 			if ($fix) {
 				$content = substr($content, 1, -1);
 				$content = str_replace(['\\"', '\\$'], ['"', '$'], $content);

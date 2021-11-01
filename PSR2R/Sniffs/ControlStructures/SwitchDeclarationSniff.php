@@ -173,10 +173,12 @@ class SwitchDeclarationSniff implements Sniff {
 				continue;
 			}
 
-			$nextCode = $phpcsFile->findNext(T_WHITESPACE,
+			$nextCode = $phpcsFile->findNext(
+				T_WHITESPACE,
 				$tokens[$nextCase]['scope_opener'] + 1,
 				$nextCloser,
-				true);
+				true,
+			);
 
 			if ($tokens[$nextCode]['code'] !== T_CASE && $tokens[$nextCode]['code'] !== T_DEFAULT) {
 				// This case statement has content. If the next case or default comes

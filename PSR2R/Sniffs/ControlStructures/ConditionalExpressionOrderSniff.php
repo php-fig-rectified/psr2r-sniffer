@@ -28,9 +28,10 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		$tokens = $phpCsFile->getTokens();
 
 		$prevIndex = $phpCsFile->findPrevious(Tokens::$emptyTokens, $stackPointer - 1, null, true);
-		if (!$this->isGivenKind([T_CLOSE_SHORT_ARRAY, T_TRUE, T_FALSE, T_NULL, T_LNUMBER, T_CONSTANT_ENCAPSED_STRING],
-			$tokens[$prevIndex])
-		) {
+		if (!$this->isGivenKind(
+			[T_CLOSE_SHORT_ARRAY, T_TRUE, T_FALSE, T_NULL, T_LNUMBER, T_CONSTANT_ENCAPSED_STRING],
+			$tokens[$prevIndex],
+		)) {
 			return;
 		}
 
@@ -71,8 +72,12 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 
 		if ($this->isGivenKind(T_OPEN_PARENTHESIS, $tokens[$prevIndex])) {
 			$rightIndexEnd =
-				$phpCsFile->findPrevious(Tokens::$emptyTokens, $tokens[$prevIndex]['parenthesis_closer'] - 1, null,
-					true);
+				$phpCsFile->findPrevious(
+				Tokens::$emptyTokens,
+				$tokens[$prevIndex]['parenthesis_closer'] - 1,
+				null,
+				true,
+			);
 		} else {
 			$previousParenthesisOpenerIndex = $phpCsFile->findPrevious(T_OPEN_PARENTHESIS, $prevIndex - 1);
 			$limit = null;
@@ -87,8 +92,14 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 
 		$fix = $phpCsFile->addFixableError($error, $stackPointer, 'RightEnd');
 		if ($fix) {
-			$this->applyFix($phpCsFile, $stackPointer, $leftIndexStart, $leftIndexEnd, $rightIndexStart,
-				$rightIndexEnd);
+			$this->applyFix(
+				$phpCsFile,
+				$stackPointer,
+				$leftIndexStart,
+				$leftIndexEnd,
+				$rightIndexStart,
+				$rightIndexEnd,
+			);
 		}
 	}
 
