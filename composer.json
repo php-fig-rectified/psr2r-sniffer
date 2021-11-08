@@ -13,7 +13,7 @@
 	],
 	"require": {
 		"php": ">=7.3",
-		"spryker/code-sniffer": "^0.17.0",
+		"spryker/code-sniffer": "^0.17.1",
 		"slevomat/coding-standard": "^7.0.1"
 	},
 	"require-dev": {
