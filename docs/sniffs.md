@@ -1,8 +1,8 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 186 sniffs
+The PSR2R standard contains 187 sniffs
 
-Generic (21 sniffs)
+Generic (22 sniffs)
 -------------------
 - Generic.Arrays.DisallowLongArraySyntax
 - Generic.CodeAnalysis.ForLoopShouldBeWhileLoop
@@ -25,6 +25,7 @@ Generic (21 sniffs)
 - Generic.PHP.LowerCaseType
 - Generic.PHP.NoSilencedErrors
 - Generic.WhiteSpace.IncrementDecrementSpacing
+- Generic.WhiteSpace.ScopeIndent
 
 PEAR (3 sniffs)
 ---------------
@@ -48,14 +49,16 @@ PSR12 (7 sniffs)
 - PSR12.Namespaces.CompoundNamespaceDepth
 - PSR12.Operators.OperatorSpacing
 
-PSR2 (4 sniffs)
+PSR2 (6 sniffs)
 ---------------
 - PSR2.ControlStructures.ElseIfDeclaration
+- PSR2.ControlStructures.SwitchDeclaration
 - PSR2.Files.EndFileNewline
+- PSR2.Methods.FunctionCallSignature
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (49 sniffs)
+PSR2R (47 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.ClassCreateInstance
@@ -81,7 +84,6 @@ PSR2R (49 sniffs)
 - PSR2R.ControlStructures.ControlStructureSpacing
 - PSR2R.ControlStructures.ElseIfDeclaration
 - PSR2R.ControlStructures.NoInlineAssignment
-- PSR2R.ControlStructures.SwitchDeclaration
 - PSR2R.ControlStructures.TernarySpacing
 - PSR2R.ControlStructures.UnneededElse
 - PSR2R.Files.ClosingTag
@@ -104,7 +106,6 @@ PSR2R (49 sniffs)
 - PSR2R.WhiteSpace.MethodSpacing
 - PSR2R.WhiteSpace.NamespaceSpacing
 - PSR2R.WhiteSpace.TabAndSpace
-- PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
 SlevomatCodingStandard (40 sniffs)

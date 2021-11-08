@@ -71,8 +71,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		$rightIndexStart = $phpCsFile->findNext(Tokens::$emptyTokens, $stackPointer + 1, null, true);
 
 		if ($this->isGivenKind(T_OPEN_PARENTHESIS, $tokens[$prevIndex])) {
-			$rightIndexEnd =
-				$phpCsFile->findPrevious(
+			$rightIndexEnd = $phpCsFile->findPrevious(
 				Tokens::$emptyTokens,
 				$tokens[$prevIndex]['parenthesis_closer'] - 1,
 				null,

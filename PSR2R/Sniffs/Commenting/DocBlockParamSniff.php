@@ -156,8 +156,11 @@ class DocBlockParamSniff extends AbstractSniff {
 			$possibleEqualIndex = $phpCsFile->findNext([T_EQUAL], $nextVariableIndex + 1, $nextVariableIndex + 2);
 			if ($possibleEqualIndex) {
 				$possibleDefaultValue =
-					$phpCsFile->findNext([T_STRING, T_TRUE, T_FALSE, T_NULL, T_ARRAY], $possibleEqualIndex + 1,
-						$possibleEqualIndex + 2);
+					$phpCsFile->findNext(
+                        [T_STRING, T_TRUE, T_FALSE, T_NULL, T_ARRAY],
+                        $possibleEqualIndex + 1,
+                        $possibleEqualIndex + 2,
+                    );
 				if ($possibleDefaultValue) {
 					$default = $possibleDefaultValue;
 				}

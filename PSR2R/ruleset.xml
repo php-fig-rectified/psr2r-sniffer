@@ -19,6 +19,8 @@
 
 	<config name="installed_paths" value="../../slevomat/coding-standard,../../spryker/code-sniffer"/>
 
+	<arg name="tab-width" value="4"/>
+
 	<rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
 	<rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
 	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
@@ -191,7 +193,10 @@
 	<rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
 	-->
 
+	<rule ref="PSR2.Methods.FunctionCallSignature"/>
+
 	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+	<rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
 
 	<rule ref="PSR12.Files.ImportStatement"/>
 	<rule ref="PSR12.Classes.ClassInstantiation"/>
@@ -230,6 +235,12 @@
 	<rule ref="Squiz.PHP.NonExecutableCode"/>
 	<rule ref="Generic.PHP.NoSilencedErrors"/>
 	<rule ref="Generic.PHP.LowerCaseConstant"/>
+
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="tabIndent" value="true" />
+		</properties>
+	</rule>
 
 	<rule ref="Squiz.Scope.MemberVarScope"/>
 	<rule ref="Squiz.Scope.MethodScope"/>
