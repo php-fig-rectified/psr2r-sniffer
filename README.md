@@ -22,6 +22,7 @@ Furthermore, the following ones are recommended to add:
 - Spryker.Commenting.DocBlockThrows
 - Spryker.Commenting.DocBlockTagGrouping
 - SlevomatCodingStandard.Functions.DisallowEmptyFunction
+- SlevomatCodingStandard.PHP.UselessParentheses
 
 This library uses [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/).
 It can detect all issues and fix some of them automatically and is ideal for CI integration

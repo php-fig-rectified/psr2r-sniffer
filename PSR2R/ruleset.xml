@@ -66,6 +66,7 @@
 	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
 
 	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
 
@@ -108,11 +109,11 @@
 	<rule ref="Spryker.Commenting.DocBlockReturnVoid"/>
 	<rule ref="Spryker.Commenting.DocBlockTagOrder"/>
 	<rule ref="Spryker.Commenting.DocBlockTypeOrder"/>
-	<rule ref="Spryker.Commenting.DocBlockVariableNullHintLast"/>
 	<rule ref="Spryker.Commenting.DocBlockVarNotJustNull"/>
 	<rule ref="Spryker.Commenting.DocBlockVar"/>
 	<rule ref="Spryker.Commenting.DocBlockStructure"/>
 	<rule ref="Spryker.Commenting.DocBlockReturnNullableType"/>
+	<rule ref="Spryker.Commenting.DocBlockReturnNull"/>
 	<rule ref="Spryker.Commenting.InlineDocBlock"/>
 	<rule ref="Spryker.Commenting.Attributes"/>
 

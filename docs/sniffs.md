@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 185 sniffs
+The PSR2R standard contains 186 sniffs
 
 Generic (21 sniffs)
 -------------------
@@ -107,7 +107,7 @@ PSR2R (49 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-SlevomatCodingStandard (39 sniffs)
+SlevomatCodingStandard (40 sniffs)
 ----------------------------------
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
@@ -120,6 +120,7 @@ SlevomatCodingStandard (39 sniffs)
 - SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration
 - SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment
 - SlevomatCodingStandard.Commenting.EmptyComment
+- SlevomatCodingStandard.ControlStructures.AssignmentInCondition
 - SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch
 - SlevomatCodingStandard.ControlStructures.DisallowYodaComparison
 - SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing
@@ -164,6 +165,7 @@ Spryker (37 sniffs)
 - Spryker.Commenting.DocBlockConstructor
 - Spryker.Commenting.DocBlockNoInlineAlignment
 - Spryker.Commenting.DocBlockPipeSpacing
+- Spryker.Commenting.DocBlockReturnNull
 - Spryker.Commenting.DocBlockReturnNullableType
 - Spryker.Commenting.DocBlockReturnTag
 - Spryker.Commenting.DocBlockReturnVoid
@@ -172,7 +174,6 @@ Spryker (37 sniffs)
 - Spryker.Commenting.DocBlockTypeOrder
 - Spryker.Commenting.DocBlockVar
 - Spryker.Commenting.DocBlockVarNotJustNull
-- Spryker.Commenting.DocBlockVariableNullHintLast
 - Spryker.Commenting.InlineDocBlock
 - Spryker.Commenting.TypeHint
 - Spryker.ControlStructures.ConditionalExpressionOrder
