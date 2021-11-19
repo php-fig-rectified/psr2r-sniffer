@@ -116,6 +116,7 @@
 	<rule ref="Spryker.Commenting.DocBlockStructure"/>
 	<rule ref="Spryker.Commenting.DocBlockReturnNullableType"/>
 	<rule ref="Spryker.Commenting.DocBlockReturnNull"/>
+	<rule ref="Spryker.Commenting.DocBlockParamAllowDefaultValue"/>
 	<rule ref="Spryker.Commenting.InlineDocBlock"/>
 	<rule ref="Spryker.Commenting.Attributes"/>
 
