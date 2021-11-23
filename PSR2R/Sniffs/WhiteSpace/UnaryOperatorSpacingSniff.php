@@ -105,10 +105,10 @@ class UnaryOperatorSpacingSniff implements Sniff {
 			}
 
 			$fix = $phpcsFile->addFixableError(
-                'No whitespace should be between variable and incrementer.',
-                $stackPtr,
-                'WhitespaceIncrementer',
-            );
+				'No whitespace should be between variable and incrementer.',
+				$stackPtr,
+				'WhitespaceIncrementer',
+			);
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr - 1, '');
 			}
@@ -131,10 +131,10 @@ class UnaryOperatorSpacingSniff implements Sniff {
 			}
 
 			$fix = $phpcsFile->addFixableError(
-                'No whitespace should be between incrementer and variable.',
-                $stackPtr,
-                'WhitespaceVariable',
-            );
+				'No whitespace should be between incrementer and variable.',
+				$stackPtr,
+				'WhitespaceVariable',
+			);
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}

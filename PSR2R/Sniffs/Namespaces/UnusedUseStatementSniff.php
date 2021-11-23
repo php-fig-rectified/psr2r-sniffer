@@ -57,12 +57,12 @@ class UnusedUseStatementSniff extends AbstractSniff {
 		}
 
 		$classUsed = $phpcsFile->findNext(
-            [T_STRING, T_RETURN_TYPE],
-            $classNameIndex + 1,
-            null,
-            false,
-            $tokens[$classNameIndex]['content'],
-        );
+			[T_STRING, T_RETURN_TYPE],
+			$classNameIndex + 1,
+			null,
+			false,
+			$tokens[$classNameIndex]['content'],
+		);
 
 		while ($classUsed !== false) {
 			$beforeUsage = $phpcsFile->findPrevious(
@@ -83,12 +83,12 @@ class UnusedUseStatementSniff extends AbstractSniff {
 			}
 
 			$classUsed = $phpcsFile->findNext(
-                [T_STRING, T_RETURN_TYPE],
-                $classUsed + 1,
-                null,
-                false,
-                $tokens[$classNameIndex]['content'],
-            );
+				[T_STRING, T_RETURN_TYPE],
+				$classUsed + 1,
+				null,
+				false,
+				$tokens[$classNameIndex]['content'],
+			);
 		}
 
 		$warning = 'Unused use statement';

@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 185 sniffs
+The PSR2R standard contains 186 sniffs
 
 Generic (22 sniffs)
 -------------------
@@ -58,7 +58,7 @@ PSR2 (6 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (44 sniffs)
+PSR2R (45 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.InterfaceName
@@ -103,6 +103,7 @@ PSR2R (44 sniffs)
 - PSR2R.WhiteSpace.MethodSpacing
 - PSR2R.WhiteSpace.NamespaceSpacing
 - PSR2R.WhiteSpace.TabAndSpace
+- PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
 SlevomatCodingStandard (40 sniffs)
