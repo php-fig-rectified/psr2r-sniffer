@@ -31,8 +31,12 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	 */
 	public function process(File $phpCsFile, $stackPointer): void {
 		$tokens = $phpCsFile->getTokens();
-		if (($stackPointer > 1) && ($tokens[$stackPointer - 2]['type'] === 'T_STATIC')) {
+		if (($stackPointer > 1) && ($tokens[$stackPointer - 2]['code'] === T_STATIC)) {
 			return; // Skip static function declarations
+		}
+
+		if ($tokens[$stackPointer]['code'] === T_FUNCTION && $this->isNonChainable($tokens, $stackPointer)) {
+			return;
 		}
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
@@ -70,9 +74,37 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 				continue;
 			}
 
+			if (strpos($content, '|') !== false) {
+				return;
+			}
+
 			$parts = explode('|', $content);
 			$this->fixParts($phpCsFile, $classNameIndex, $parts, $appendix);
 		}
+	}
+
+	/**
+	 * @param array<array<string, mixed>> $tokens
+	 * @param int $stackPointer
+	 *
+	 * @return bool
+	 */
+	protected function isNonChainable(array $tokens, int $stackPointer): bool {
+		if (empty($tokens[$stackPointer]['scope_opener'])) {
+			return false;
+		}
+
+		$startIndex = $tokens[$stackPointer]['scope_opener'];
+		$endIndex = $tokens[$stackPointer]['scope_closer'];
+		$i = $startIndex + 1;
+		while ($i < $endIndex) {
+			if ($tokens[$i]['code'] === T_NEW) {
+				return true;
+			}
+			$i++;
+		}
+
+		return false;
 	}
 
 	/**
