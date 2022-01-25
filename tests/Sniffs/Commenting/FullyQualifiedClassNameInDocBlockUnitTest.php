@@ -7,19 +7,17 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 class FullyQualifiedClassNameInDocBlockUnitTest extends AbstractSniffUnitTest {
 
 	/**
-	 * {@inheritDoc}
+	 * @inheritDoc
 	 */
-	public function getErrorList()
-	{
+	public function getErrorList() {
 		return [
 			//9 => 1,
 		];
 	}
 	/**
-	 * {@inheritDoc}
+	 * @inheritDoc
 	 */
-	public function getWarningList()
-	{
+	public function getWarningList() {
 		return [
 		];
 	}

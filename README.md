@@ -36,30 +36,28 @@ Most likely you are using composer. As such, put it into the require-dev depende
 composer require --dev fig-r/psr2r-sniffer
 ```
 
+Set up a `phpcs.xml` in the root of your library.
+Define here the standard to use as well as the project paths, usually
+```xml
+<rule ref="vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml"/>
+
+<file>src/</file>
+<file>tests/</file>
+```
+
 You can then use it like this:
 ```
 // Sniffs only
-vendor/bin/sniff /path/to/your/files
+vendor/bin/phpcs {path/file}
 
 // Sniffs and fixes
-vendor/bin/sniff /path/to/your/files -f
+vendor/bin/phpcbf {path/file}
 ```
-The path is optional if you want to run it on your complete project root dir. It will in this case automatically skip the `vendor/` dir.
-
-#### Examples
-If you want to run the sniffer over your root `src/` folder, run:
-```
-vendor/bin/sniff src/
-```
-
-Use `-h` to list all available options.
-But with this bin tool the path needs to always come first (it does not work otherwise):
-```
-vendor/bin/sniff /path/to/files [optional params]
-```
+The path is optional if you want to run it on a specific subset of your defined paths.
+Otherwise, it defaults to the paths defined in your XML file.
 
 ### Customizing
-You can always customize on project level using your own `phpcs.xml` file there, e.g.:
+You can always customize your `phpcs.xml` further, e.g.:
 
 ```xml
 <?xml version="1.0"?>
@@ -83,7 +81,7 @@ You can always customize on project level using your own `phpcs.xml` file there,
 		<severity>0</severity>
 	</rule>
 
-	<!-- Define your own sniffs here -->
+	<!-- Define your own additional sniffs here -->
 
 </ruleset>
 ```
@@ -94,24 +92,24 @@ Verbose output with `-v` is always useful. With `-vv` or even `-vvv` you get eve
 
 If you want a list of all sniffs in this standard, use `-e`:
 ```
-vendor/bin/sniff -e
+vendor/bin/phpcs -e
 ```
 It will list them all grouped by their standard name and sniff type.
 
-To just run a single sniff, use `--sniffs=...` and a comma separated list of sniffs, .e.g.:
+To just run a single sniff, use `--sniffs=...` and a comma separated list of sniffs, e.g.:
 ```
-vendor/bin/sniff --sniffs=PSR2R.Files.EndFileNewline
+vendor/bin/phpcs --sniffs=PSR2R.Files.EndFileNewline
 ```
 
 Usually, if you run it over your complete repository, you would want to exclude dirs like `tests/test_files/`:
 ```
-vendor/bin/sniff --ignore=tests/test_files/
+vendor/bin/phpcs --ignore=/tests/test_files/
 ```
 
 #### Windows usage
 For Win OS you should be using `\` as separator:
 ```
-vendor\bin\sniff -v
+vendor\bin\phpcs
 ```
 
 #### Include it in your IDE via hotkey
