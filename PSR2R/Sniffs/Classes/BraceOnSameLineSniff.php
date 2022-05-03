@@ -57,6 +57,16 @@ class BraceOnSameLineSniff implements Sniff {
 
 			return;
 		}
+
+		if ($lastContent === $curlyBrace - 1) {
+			$error = 'Opening brace of a %s must have one whitespace after closing parentheses';
+			$fix = $phpcsFile->addFixableError($error, $curlyBrace, 'OpenBraceWhitespace', $errorData);
+			if ($fix === true) {
+				$phpcsFile->fixer->beginChangeset();
+				$phpcsFile->fixer->addContent($lastContent, ' ');
+				$phpcsFile->fixer->endChangeset();
+			}
+		}
 	}
 
 }
