@@ -45,12 +45,14 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 		$tokens = $phpcsFile->getTokens();
 		$leftWall = [
 			T_CLASS,
+			T_ENUM,
 			T_NAMESPACE,
 			T_INTERFACE,
 			T_TRAIT,
 			T_USE,
 		];
 		$oneIndentation = [
+			T_ENUM_CASE,
 			T_FUNCTION,
 			T_VARIABLE,
 			T_CONST,

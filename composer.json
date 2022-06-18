@@ -14,7 +14,8 @@
 	"require": {
 		"php": ">=7.3",
 		"spryker/code-sniffer": "^0.17.1",
-		"slevomat/coding-standard": "^7.0.1"
+		"slevomat/coding-standard": "^7.0.1",
+		"squizlabs/php_codesniffer": "^3.7.0"
 	},
 	"require-dev": {
 		"phpstan/phpstan": "^1.0.0"
