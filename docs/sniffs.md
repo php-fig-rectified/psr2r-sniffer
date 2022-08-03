@@ -58,7 +58,7 @@ PSR2 (6 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (45 sniffs)
+PSR2R (44 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.InterfaceName
@@ -76,7 +76,6 @@ PSR2R (45 sniffs)
 - PSR2R.Commenting.DocBlockTagTypes
 - PSR2R.Commenting.DocBlockVarWithoutName
 - PSR2R.Commenting.DocComment
-- PSR2R.Commenting.FullyQualifiedClassNameInDocBlock
 - PSR2R.Commenting.NoControlStructureEndComment
 - PSR2R.ControlStructures.ConditionalExpressionOrder
 - PSR2R.ControlStructures.ControlStructureSpacing
@@ -149,7 +148,7 @@ SlevomatCodingStandard (40 sniffs)
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Spryker (38 sniffs)
+Spryker (39 sniffs)
 -------------------
 - Spryker.Classes.ClassFileName
 - Spryker.Classes.MethodArgumentDefaultValue
@@ -174,6 +173,7 @@ Spryker (38 sniffs)
 - Spryker.Commenting.DocBlockTypeOrder
 - Spryker.Commenting.DocBlockVar
 - Spryker.Commenting.DocBlockVarNotJustNull
+- Spryker.Commenting.FullyQualifiedClassNameInDocBlock
 - Spryker.Commenting.InlineDocBlock
 - Spryker.Commenting.TypeHint
 - Spryker.ControlStructures.ConditionalExpressionOrder

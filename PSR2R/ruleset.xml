@@ -119,6 +119,7 @@
 	<rule ref="Spryker.Commenting.DocBlockParamAllowDefaultValue"/>
 	<rule ref="Spryker.Commenting.InlineDocBlock"/>
 	<rule ref="Spryker.Commenting.Attributes"/>
+	<rule ref="Spryker.Commenting.FullyQualifiedClassNameInDocBlock"/>
 
 	<rule ref="Spryker.ControlStructures.NoInlineAssignment"/>
 	<rule ref="Spryker.ControlStructures.ConditionalExpressionOrder"/>
