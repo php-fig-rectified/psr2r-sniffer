@@ -35,9 +35,6 @@
 			<property name="allowFallbackGlobalConstants" type="boolean" value="true"/>
 		</properties>
 	</rule>
-	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName">
-		<severity>0</severity>
-	</rule>
 
 	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
 	<rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>

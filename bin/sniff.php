@@ -1,6 +1,8 @@
 #!/usr/bin/php -q
 <?php
 
+use PSR2R\Tools\Sniffer;
+
 $options = [
 	__DIR__ . '/../vendor/autoload.php',
 	__DIR__ . '/vendor/autoload.php',
@@ -18,7 +20,7 @@ foreach ($options as $file) {
 }
 require SNIFFER_COMPOSER_INSTALL;
 
-$sniffer = new \PSR2R\Tools\Sniffer($argv);
+$sniffer = new Sniffer($argv);
 
 $sniffer->sniff();
 echo 0;
