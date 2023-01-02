@@ -8,6 +8,8 @@
 
 For details on PSR-2-R see [fig-rectified-standards](https://github.com/php-fig-rectified/fig-rectified-standards).
 
+For PHP version compatibility see [version map](https://github.com/php-fig-rectified/psr2r-sniffer/wiki).
+
 Documentation @ [/docs/](docs).
 
 This branch is for use with **PHP 8.1+** repos.
