@@ -167,7 +167,8 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		$leftIndexStart,
 		$leftIndexEnd,
 		$rightIndexStart,
-		$rightIndexEnd) {
+		$rightIndexEnd,
+	) {
 		$tokens = $phpCsFile->getTokens();
 
 		$token = $tokens[$index];

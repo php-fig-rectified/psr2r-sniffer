@@ -43,9 +43,19 @@
 
 	<rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
 	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
-	<rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration"/>
-	<rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInClosureUse"/>
 	<rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall">
+		<properties>
+			<property name="onlySingleLine" type="boolean" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
+	<rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration">
+		<properties>
+			<property name="onlySingleLine" type="boolean" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
+	<rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInClosureUse">
 		<properties>
 			<property name="onlySingleLine" type="boolean" value="true"/>
 		</properties>
