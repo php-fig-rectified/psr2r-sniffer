@@ -98,6 +98,10 @@
 		</properties>
 	</rule>
 
+	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName">
+		<severity>0</severity>
+	</rule>
+
 	<rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
 
 	<rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
