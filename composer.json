@@ -13,8 +13,8 @@
 	],
 	"require": {
 		"php": ">=7.3",
-		"spryker/code-sniffer": "^0.17.1",
-		"slevomat/coding-standard": "^7.2.0 || ^8.3.0",
+		"php-collective/code-sniffer": "dev-master",
+		"slevomat/coding-standard": "^8.3.0",
 		"squizlabs/php_codesniffer": "^3.7.0"
 	},
 	"require-dev": {
@@ -31,6 +31,7 @@
 			"PSR2R\\Tests\\": "tests/PSR2R/Tests/"
 		}
 	},
+	"minimum-stability": "stable",
 	"bin": [
 		"bin/tokenize",
 		"bin/sniff"
@@ -41,8 +42,8 @@
 		"cs-check": "phpcs",
 		"cs-fix": "phpcbf",
 		"test": "php phpunit.phar",
-		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-8.5.10.phar && mv phpunit-8.5.10.phar phpunit.phar || true",
-		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-8.5.10.phar && mv phpunit-8.5.10.phar phpunit.phar || true",
+		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-9.5.10.phar && mv phpunit-9.5.10.phar phpunit.phar || true",
+		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-9.5.10.phar && mv phpunit-9.5.10.phar phpunit.phar || true",
 		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
 		"lowest": "validate-prefer-lowest",
 		"lowest-setup": "composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction && cp composer.json composer.backup && composer require --dev dereuromark/composer-prefer-lowest && mv composer.backup composer.json",
