@@ -18,6 +18,7 @@
 		"squizlabs/php_codesniffer": "^3.7.0"
 	},
 	"require-dev": {
+		"phpunit/phpunit": "^9.5",
 		"phpstan/phpstan": "^1.0.0"
 	},
 	"autoload": {
@@ -27,10 +28,10 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"PSR2R\\Base\\": "tests/PSR2R/Base/",
-			"PSR2R\\Tests\\": "tests/PSR2R/Tests/"
+			"PSR2R\\Test\\": "tests/"
 		}
 	},
+	"prefer-stable": true,
 	"minimum-stability": "stable",
 	"bin": [
 		"bin/tokenize",
@@ -41,10 +42,8 @@
 		"docs-listing": "phpcs -e --standard=PSR2R/ruleset.xml",
 		"cs-check": "phpcs",
 		"cs-fix": "phpcbf",
-		"test": "php phpunit.phar",
-		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-9.5.10.phar && mv phpunit-9.5.10.phar phpunit.phar || true",
-		"test-setup-mac": "[ ! -f phpunit.phar ] && curl -OL https://phar.phpunit.de/phpunit-9.5.10.phar && mv phpunit-9.5.10.phar phpunit.phar || true",
-		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
+		"test": "phpunit",
+		"test-coverage": "phpunit --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
 		"lowest": "validate-prefer-lowest",
 		"lowest-setup": "composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction && cp composer.json composer.backup && composer require --dev dereuromark/composer-prefer-lowest && mv composer.backup composer.json",
 		"stan": "phpstan analyse"
