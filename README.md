@@ -18,19 +18,19 @@ This branch is for use with **PHP 8.1+** repos.
 The following sniffers are bundles together as `PSR2R` already, but you can
 also use them standalone/separately in any way you like.
 
-**Currently PSR2R ships with over 190 sniffs.**
+**Currently, PSR2R ships with over 190 sniffs.**
 
 * [List of included sniffs](docs/sniffs.md)
 
 Furthermore, the following ones are recommended to add:
-- Spryker.Commenting.DocBlockThrows
-- Spryker.Commenting.DocBlockTagGrouping
+- PhpCollective.Commenting.DocBlockThrows
+- PhpCollective.Commenting.DocBlockTagGrouping
 - SlevomatCodingStandard.Functions.DisallowEmptyFunction
 - SlevomatCodingStandard.PHP.UselessParentheses
 
 This library uses [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/).
 It can detect all issues and fix some of them automatically and is ideal for CI integration
-(travis, jenkins, circleci etc).
+(travis, jenkins, circleci, GA etc).
 
 ### Usage
 
