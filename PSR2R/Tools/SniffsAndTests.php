@@ -17,7 +17,7 @@ class SniffsAndTests {
 	/**
 	 * @var array<string>
 	 */
-	protected static $orgs = [
+	protected static array $orgs = [
 		'PSR2R',
 	];
 

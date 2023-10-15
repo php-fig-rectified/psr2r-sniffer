@@ -34,10 +34,10 @@ class TernarySpacingSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @return void
 	 */
-	protected function assertSpaceBefore(File $phpcsFile, $stackPtr) {
+	protected function assertSpaceBefore(File $phpcsFile, int $stackPtr): void {
 		$previous = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 		if ($stackPtr - $previous > 1) {
 			$this->assertSingleSpaceBeforeIfNotMultiline($phpcsFile, $stackPtr, $previous);
@@ -58,10 +58,10 @@ class TernarySpacingSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @param int $previous
-*
+	 *
 	 * @return void
 	 */
-	protected function assertSingleSpaceBeforeIfNotMultiline(File $phpcsFile, $stackPtr, $previous) {
+	protected function assertSingleSpaceBeforeIfNotMultiline(File $phpcsFile, int $stackPtr, int $previous): void {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['line'] !== $tokens[$previous]['line']) {
@@ -81,10 +81,10 @@ class TernarySpacingSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $thenIndex
-*
+	 *
 	 * @return void
 	 */
-	protected function checkAfter(File $phpcsFile, $thenIndex) {
+	protected function checkAfter(File $phpcsFile, int $thenIndex): void {
 		$elseIndex = $phpcsFile->findNext(T_INLINE_ELSE, $thenIndex + 1);
 		if (!$elseIndex) {
 			return;
@@ -106,10 +106,10 @@ class TernarySpacingSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $thenIndex
 	 * @param int $elseIndex
-*
+	 *
 	 * @return void
 	 */
-	protected function assertNoSpaceBetween(File $phpcsFile, $thenIndex, $elseIndex) {
+	protected function assertNoSpaceBetween(File $phpcsFile, int $thenIndex, int $elseIndex): void {
 		if ($elseIndex - $thenIndex === 1) {
 			return;
 		}
@@ -128,10 +128,10 @@ class TernarySpacingSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @return void
 	 */
-	protected function assertSpaceAfter(File $phpcsFile, $stackPtr) {
+	protected function assertSpaceAfter(File $phpcsFile, int $stackPtr): void {
 		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 		if ($nextIndex - $stackPtr > 1) {
 			$this->assertSingleSpaceAfterIfNotMultiline($phpcsFile, $stackPtr, $nextIndex);
@@ -152,10 +152,10 @@ class TernarySpacingSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 * @param int $next
-*
+	 *
 	 * @return void
 	 */
-	protected function assertSingleSpaceAfterIfNotMultiline(File $phpcsFile, $stackPtr, $next) {
+	protected function assertSingleSpaceAfterIfNotMultiline(File $phpcsFile, int $stackPtr, int $next): void {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($tokens[$stackPtr]['line'] !== $tokens[$next]['line']) {

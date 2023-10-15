@@ -52,10 +52,10 @@ class EmptyEnclosingLineSniff implements Sniff {
 	 * @param int $curlyBraceStartIndex
 	 * @param int $curlyBraceEndIndex
 	 * @param int $lastContentIndex
-*
+	 *
 	 * @return void
 	 */
-	protected function checkEnd(File $phpcsFile, $stackPtr, $curlyBraceStartIndex, $curlyBraceEndIndex, $lastContentIndex) {
+	protected function checkEnd(File $phpcsFile, int $stackPtr, int $curlyBraceStartIndex, int $curlyBraceEndIndex, int $lastContentIndex): void {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($lastContentIndex === $curlyBraceStartIndex) {
@@ -103,10 +103,10 @@ class EmptyEnclosingLineSniff implements Sniff {
 	 * @param int $curlyBraceStartIndex
 	 * @param int $curlyBraceEndIndex
 	 * @param int $lastContentIndex
-*
+	 *
 	 * @return void
 	 */
-	public function checkBeginning(File $phpcsFile, $stackPtr, $curlyBraceStartIndex, $curlyBraceEndIndex, $lastContentIndex) {
+	public function checkBeginning(File $phpcsFile, int $stackPtr, int $curlyBraceStartIndex, int $curlyBraceEndIndex, int $lastContentIndex): void {
 		$tokens = $phpcsFile->getTokens();
 
 		if ($lastContentIndex === $curlyBraceStartIndex) {

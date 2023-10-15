@@ -105,11 +105,11 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
 	 * @param int $index
-	 * @param int $limit
+	 * @param int|null $limit
 	 *
 	 * @return int|null
 	 */
-	protected function detectRightEnd(File $phpCsFile, $index, $limit = 0) {
+	protected function detectRightEnd(File $phpCsFile, int $index, ?int $limit = 0): ?int {
 		$tokens = $phpCsFile->getTokens();
 
 		$rightEndIndex = $index;
@@ -163,12 +163,12 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	 * @return void
 	 */
 	protected function applyFix(File $phpCsFile,
-		$index,
-		$leftIndexStart,
-		$leftIndexEnd,
-		$rightIndexStart,
-		$rightIndexEnd,
-	) {
+		int $index,
+		int $leftIndexStart,
+		int $leftIndexEnd,
+		int $rightIndexStart,
+		int $rightIndexEnd,
+	): void {
 		$tokens = $phpCsFile->getTokens();
 
 		$token = $tokens[$index];
@@ -200,7 +200,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	 *
 	 * @return string
 	 */
-	protected function getComparisonValue(array $token) {
+	protected function getComparisonValue(array $token): string {
 		$comparisonIndexValue = $token['content'];
 		$operatorsToMap = [T_GREATER_THAN, T_LESS_THAN, T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL];
 		if (in_array($token['code'], $operatorsToMap, true)) {

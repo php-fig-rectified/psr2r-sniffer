@@ -29,7 +29,7 @@ class TabAndSpaceSniff implements Sniff {
 	 *
 	 * @var array
 	 */
-	public $supportedTokenizers = [
+	public array $supportedTokenizers = [
 		'PHP',
 		'JS',
 		'CSS',

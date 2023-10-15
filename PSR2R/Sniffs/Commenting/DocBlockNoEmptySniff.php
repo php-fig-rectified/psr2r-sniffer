@@ -42,7 +42,7 @@ class DocBlockNoEmptySniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function assertNonEmptyDocBlock(File $phpcsFile, $stackPtr, $endIndex) {
+	protected function assertNonEmptyDocBlock(File $phpcsFile, int $stackPtr, int $endIndex): void {
 		$nextIndex = $phpcsFile->findNext([T_WHITESPACE, T_DOC_COMMENT_WHITESPACE, T_DOC_COMMENT_STAR], $stackPtr + 1, $endIndex - 1, true);
 		if ($nextIndex) {
 			return;
@@ -63,7 +63,7 @@ class DocBlockNoEmptySniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function assertNoEmptyTag(File $phpcsFile, $stackPtr, $endIndex) {
+	protected function assertNoEmptyTag(File $phpcsFile, int $stackPtr, int $endIndex): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$index = $stackPtr;

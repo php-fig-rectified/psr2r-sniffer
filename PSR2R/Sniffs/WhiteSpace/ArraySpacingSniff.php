@@ -35,10 +35,10 @@ class ArraySpacingSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @return void
 	 */
-	protected function checkBeginning(File $phpcsFile, $stackPtr) {
+	protected function checkBeginning(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
@@ -58,10 +58,10 @@ class ArraySpacingSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @return void
 	 */
-	protected function checkEnding(File $phpcsFile, $stackPtr) {
+	protected function checkEnding(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$previousIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);

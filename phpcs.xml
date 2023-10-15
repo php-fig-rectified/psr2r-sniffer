@@ -10,6 +10,23 @@
 
     <rule ref="PSR2R"/>
 
+	<rule ref="PhpCollectiveStrict.TypeHints.ReturnTypeHint">
+		<exclude name="PhpCollectiveStrict.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification"/>
+		<exclude name="PhpCollectiveStrict.TypeHints.ReturnTypeHint.UselessAnnotation"/>
+		<exclude name="PhpCollectiveStrict.TypeHints.ReturnTypeHint.UselessDocComment"/>
+		<properties>
+			<property name="enableStandaloneNullTrueFalseTypeHints" value="false"/>
+		</properties>
+	</rule>
+	<rule ref="PhpCollectiveStrict.TypeHints.PropertyTypeHint">
+		<exclude name="PhpCollectiveStrict.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification"/>
+		<exclude name="PhpCollectiveStrict.TypeHints.PropertyTypeHint.UselessAnnotation"/>
+		<exclude name="PhpCollectiveStrict.TypeHints.PropertyTypeHint.UselessDocComment"/>
+		<properties>
+			<property name="enableStandaloneNullTrueFalseTypeHints" value="false"/>
+		</properties>
+	</rule>
+
     <exclude-pattern>,*.inc,*.fixed</exclude-pattern>
 
 </ruleset>
