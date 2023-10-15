@@ -13,7 +13,7 @@ class EmptyLinesSniff extends AbstractSniff {
 	/**
 	 * @var array
 	 */
-	public $supportedTokenizers = [
+	public array $supportedTokenizers = [
 		'PHP',
 		'JS',
 		'CSS',
@@ -39,7 +39,7 @@ class EmptyLinesSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function assertMaximumOneEmptyLineBetweenContent(File $phpcsFile, $stackPtr) {
+	protected function assertMaximumOneEmptyLineBetweenContent(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 		if ($tokens[$stackPtr]['content'] === $phpcsFile->eolChar
 			&& isset($tokens[($stackPtr + 1)])

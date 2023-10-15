@@ -24,24 +24,24 @@ class Tokenizer {
 	/**
 	 * @var string
 	 */
-	protected $root;
+	protected string $root;
 
 	/**
 	 * @var string
 	 */
-	protected $path;
+	protected string $path;
 
 	/**
 	 * @var bool
 	 */
-	protected $verbose;
+	protected bool $verbose;
 
 	/**
 	 * @param array $argv
-*
+	 *
 	 * @throws \Exception
 	 */
-	public function __construct($argv) {
+	public function __construct(array $argv) {
 		$file = !empty($argv[1]) ? $argv[1] : null;
 		if (!$file || !file_exists($file)) {
 			throw new Exception('Please provide a valid file.');
@@ -56,7 +56,7 @@ class Tokenizer {
 	/**
 	 * @return void
 	 */
-	public function tokenize() {
+	public function tokenize(): void {
 		$res = [];
 		$tokens = $this->_getTokens($this->path);
 
@@ -79,10 +79,10 @@ class Tokenizer {
 
 	/**
 	 * @param string $path Path
-*
+	 *
 	 * @return array Tokens
 	 */
-	protected function _getTokens($path) {
+	protected function _getTokens(string $path): array {
 		$phpcs = new Runner();
 
 		define('PHP_CODESNIFFER_CBF', false);
@@ -105,10 +105,10 @@ class Tokenizer {
 	/**
 	 * @param int $row Current row
 	 * @param array $tokens Tokens array
-*
+	 *
 	 * @return array
 	 */
-	protected function _tokenize($row, $tokens) {
+	protected function _tokenize(int $row, array $tokens): array {
 		$pieces = [];
 		foreach ($tokens as $key => $token) {
 			if ($token['line'] > $row) {

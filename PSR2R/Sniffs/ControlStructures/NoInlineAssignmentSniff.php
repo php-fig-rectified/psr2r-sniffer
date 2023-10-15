@@ -36,10 +36,10 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @return void
 	 */
-	protected function checkMethodCalls(File $phpcsFile, $stackPtr) {
+	protected function checkMethodCalls(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$openingBraceIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1, $stackPtr + 4);
@@ -63,10 +63,10 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @return void
 	 */
-	protected function checkConditions($phpcsFile, $stackPtr) {
+	protected function checkConditions(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$openingBraceIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
@@ -99,7 +99,7 @@ class NoInlineAssignmentSniff extends AbstractSniff {
 	 *
 	 * @return bool
 	 */
-	protected function isFixableInlineAssignment(File $phpcsFile, $startIndex, $endIndex, &$indexEqualSign) {
+	protected function isFixableInlineAssignment(File $phpcsFile, int $startIndex, int $endIndex, int &$indexEqualSign): bool {
 		$tokens = $phpcsFile->getTokens();
 
 		$hasInlineAssignment = false;
