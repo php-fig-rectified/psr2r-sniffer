@@ -7,7 +7,6 @@
     <file>PSR2R/</file>
     <file>docs/</file>
     <file>bin/</file>
-	<file>tests/Sniffs/</file>
 
     <rule ref="PSR2R"/>
 
