@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php">
+	<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="tests/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+
 	<php>
 		<ini name="memory_limit" value="-1"/>
 		<ini name="apc.enable_cli" value="1"/>
 	</php>
 
-	<!-- Add any additional test suites you want to run here -->
 	<testsuites>
 		<testsuite name="psr2r">
-			<directory>tests/Sniffs/</directory>
+			<directory>tests/PSR2R/</directory>
 		</testsuite>
-		<testsuite name="Extension of PHP_CodeSniffer Test Suite">
-			<file>tests/AllTests.php</file>
-		</testsuite>
-		<!-- Add plugin test suites here. -->
 	</testsuites>
 
-	<filter>
-		<whitelist processUncoveredFilesFromWhitelist="true">
+	<coverage processUncoveredFiles="true">
+		<include>
 			<directory>PSR2R/</directory>
-		</whitelist>
-	</filter>
-
+		</include>
+	</coverage>
 </phpunit>

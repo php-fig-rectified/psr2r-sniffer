@@ -18,7 +18,7 @@ class TabIndentSniff implements Sniff {
 	 *
 	 * @var array
 	 */
-	public $supportedTokenizers = [
+	public array $supportedTokenizers = [
 		'PHP',
 		'JS',
 		'CSS',
@@ -71,7 +71,7 @@ class TabIndentSniff implements Sniff {
 	 *
 	 * @return void
 	 */
-	protected function fixTab(File $phpcsFile, $stackPtr, $tokens) {
+	protected function fixTab(File $phpcsFile, int $stackPtr, array $tokens): void {
 		$content = $tokens[$stackPtr]['orig_content'] ?? $tokens[$stackPtr]['content'];
 		$tabs = 0;
 		while (strpos($content, '    ') === 0) {
@@ -95,7 +95,7 @@ class TabIndentSniff implements Sniff {
 	 *
 	 * @return void
 	 */
-	protected function fixSpace(File $phpcsFile, $stackPtr, $tokens) {
+	protected function fixSpace(File $phpcsFile, int $stackPtr, array $tokens): void {
 		$content = $tokens[$stackPtr]['content'];
 
 		$newContent = str_replace("\t", '    ', $content);

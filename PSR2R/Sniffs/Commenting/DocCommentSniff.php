@@ -30,7 +30,7 @@ class DocCommentSniff extends AbstractSniff {
 	 *
 	 * @var array
 	 */
-	public $supportedTokenizers = [
+	public array $supportedTokenizers = [
 		'PHP',
 		'JS',
 	];

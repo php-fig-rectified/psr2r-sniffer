@@ -115,7 +115,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function fixParts(File $phpCsFile, $classNameIndex, array $parts, $appendix) {
+	protected function fixParts(File $phpCsFile, int $classNameIndex, array $parts, string $appendix): void {
 		$result = [];
 		foreach ($parts as $key => $part) {
 			if ($part !== 'self') {

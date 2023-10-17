@@ -1,7 +1,7 @@
 # PSR-2-R Sniffer
 [![CI](https://github.com/php-fig-rectified/psr2r-sniffer/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/php-fig-rectified/psr2r-sniffer/actions/workflows/ci.yml)
 [![Latest Stable Version](https://poser.pugx.org/fig-r/psr2r-sniffer/v/stable.svg)](https://packagist.org/packages/fig-r/psr2r-sniffer)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/fig-r/psr2r-sniffer/license.svg)](https://packagist.org/packages/fig-r/psr2r-sniffer)
 [![Total Downloads](https://poser.pugx.org/fig-r/psr2r-sniffer/d/total.svg)](https://packagist.org/packages/fig-r/psr2r-sniffer)
 [![Coding Standards](https://img.shields.io/badge/cs-PSR--2--R-yellow.svg)](https://github.com/php-fig-rectified/fig-rectified-standards)
@@ -12,23 +12,25 @@ For PHP version compatibility see [version map](https://github.com/php-fig-recti
 
 Documentation @ [/docs/](docs).
 
+This branch is for use with **PHP 8.1+** repos.
+
 ## Included sniffs
 The following sniffers are bundles together as `PSR2R` already, but you can
 also use them standalone/separately in any way you like.
 
-**Currently PSR2R ships with over 180 sniffs.**
+**Currently, PSR2R ships with over 190 sniffs.**
 
 * [List of included sniffs](docs/sniffs.md)
 
 Furthermore, the following ones are recommended to add:
-- Spryker.Commenting.DocBlockThrows
-- Spryker.Commenting.DocBlockTagGrouping
+- PhpCollective.Commenting.DocBlockThrows
+- PhpCollective.Commenting.DocBlockTagGrouping
 - SlevomatCodingStandard.Functions.DisallowEmptyFunction
 - SlevomatCodingStandard.PHP.UselessParentheses
 
 This library uses [squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/).
 It can detect all issues and fix some of them automatically and is ideal for CI integration
-(travis, jenkins, circleci etc).
+(travis, jenkins, circleci, GA etc).
 
 ### Usage
 

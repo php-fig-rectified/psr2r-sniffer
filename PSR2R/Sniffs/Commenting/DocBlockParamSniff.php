@@ -134,7 +134,7 @@ class DocBlockParamSniff extends AbstractSniff {
 *
 	 * @return array
 	 */
-	private function getMethodSignature(File $phpCsFile, $stackPtr) {
+	private function getMethodSignature(File $phpCsFile, int $stackPtr): array {
 		$tokens = $phpCsFile->getTokens();
 
 		$startIndex = $phpCsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);

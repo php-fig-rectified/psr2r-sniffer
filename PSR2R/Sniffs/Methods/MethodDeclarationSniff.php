@@ -36,18 +36,15 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param int $stackPtr
-*
-	 * @return void
+	 * @inheritDoc
 	 */
-	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr) {
+	protected function processTokenOutsideScope(File $phpcsFile, $stackPtr): void {
 		// Nothing to do here.
 	}
 
 	/**
 	 * @inheritDoc
-*
+	 *
 	 * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
 	 */
 	protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope) {

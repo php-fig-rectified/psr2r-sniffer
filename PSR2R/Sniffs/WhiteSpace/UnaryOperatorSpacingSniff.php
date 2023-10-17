@@ -92,10 +92,10 @@ class UnaryOperatorSpacingSniff implements Sniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @return void
 	 */
-	protected function checkBefore(File $phpcsFile, $stackPtr) {
+	protected function checkBefore(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
@@ -118,10 +118,10 @@ class UnaryOperatorSpacingSniff implements Sniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @return void
 	 */
-	protected function checkAfter(File $phpcsFile, $stackPtr) {
+	protected function checkAfter(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);

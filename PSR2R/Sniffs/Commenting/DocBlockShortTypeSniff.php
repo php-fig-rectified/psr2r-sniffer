@@ -82,7 +82,7 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function fixParts(File $phpCsFile, $classNameIndex, array $parts, $appendix) {
+	protected function fixParts(File $phpCsFile, int $classNameIndex, array $parts, string $appendix): void {
 		$mapping = [
 			'boolean' => 'bool',
 			'integer' => 'int',

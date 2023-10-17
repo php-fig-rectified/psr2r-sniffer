@@ -1,33 +1,23 @@
 <?php
-/**
- * The PHP_CodeSniffer has its own autoloading system, which we
- * need to hook into
- *
- * @author Ed Barnard
- * @license MIT
- */
 
-//defined('PHP_CODESNIFFER_VERBOSITY') or define('PHP_CODESNIFFER_VERBOSITY', 2);
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-/** @noinspection UsingInclusionOnceReturnValueInspection */
-$autoloader = require_once dirname(__DIR__) . DIRECTORY_SEPARATOR .
-	'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+$phpcsAutoload = dirname(__DIR__) . '/vendor/squizlabs/php_codesniffer/autoload.php';
+if (!class_exists(PHP_CodeSniffer\Config::class) && is_file($phpcsAutoload)) {
+    require_once $phpcsAutoload;
+    unset($phpcsAutoload);
+}
 
-// The code sniffer autoloader
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR .
-	'vendor' . DIRECTORY_SEPARATOR .
-	'squizlabs' . DIRECTORY_SEPARATOR .
-	'php_codesniffer' . DIRECTORY_SEPARATOR .
-	'autoload.php';
+PHP_CodeSniffer\Autoload::load(PHP_CodeSniffer\Util\Tokens::class);
 
-// The test wrapper
-require_once dirname(__DIR__) . DIRECTORY_SEPARATOR .
-	'vendor' . DIRECTORY_SEPARATOR .
-	'squizlabs' . DIRECTORY_SEPARATOR .
-	'php_codesniffer' . DIRECTORY_SEPARATOR .
-	'tests' . DIRECTORY_SEPARATOR .
-	'AllTests.php';
+if (!defined('PHP_CODESNIFFER_CBF')) {
+    define('PHP_CODESNIFFER_CBF', false);
+}
 
-if (is_object($autoloader)) {
-	$GLOBALS['finder'] = $autoloader;
+if (!defined('DS')) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
+
+if (!defined('TMP')) {
+    define('TMP', __DIR__ . DS . 'tmp' . DS);
 }

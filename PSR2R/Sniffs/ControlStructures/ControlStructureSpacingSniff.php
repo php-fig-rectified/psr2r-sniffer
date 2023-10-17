@@ -32,9 +32,8 @@ class ControlStructureSpacingSniff implements Sniff {
 	/**
 	 * How many spaces should follow the opening bracket.
 	 *
-	 * @var int
 	 */
-	public $requiredSpacesAfterOpen = 0;
+	public int $requiredSpacesAfterOpen = 0;
 
 	/**
 	 * @inheritDoc
@@ -57,9 +56,8 @@ class ControlStructureSpacingSniff implements Sniff {
 	/**
 	 * How many spaces should precede the closing bracket.
 	 *
-	 * @var int
 	 */
-	public $requiredSpacesBeforeClose = 0;
+	public int $requiredSpacesBeforeClose = 0;
 
 	/**
 	 * @inheritDoc

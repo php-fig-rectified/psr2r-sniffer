@@ -18,34 +18,34 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	use NamespaceTrait;
 
 	/**
-	 * @var array
+	 * @var array|null
 	 */
-	protected $existingStatements;
+	protected ?array $existingStatements = null;
 
 	/**
 	 * @var array
 	 */
-	protected $newStatements = [];
+	protected array $newStatements = [];
 
 	/**
 	 * @var array
 	 */
-	protected $allStatements;
+	protected array $allStatements;
 
 	/**
 	 * @var array
 	 */
-	protected $useStatements;
+	protected array $useStatements;
 
 	/**
 	 * @var int Last token we will process
 	 */
-	protected $sentinelPtr;
+	protected int $sentinelPtr;
 
 	/**
-	 * @var \PHP_CodeSniffer\Files\File
+	 * @var \PHP_CodeSniffer\Files\File|null
 	 */
-	protected $sentinelFile;
+	protected ?\PHP_CodeSniffer\Files\File $sentinelFile = null;
 
 	/**
 	 * @inheritDoc
@@ -56,7 +56,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @inheritDoc
-*
+	 *
 	 * @throws \RuntimeException
 	 */
 	public function process(File $phpcsFile, $stackPtr) {
@@ -92,7 +92,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function loadStatements(File $phpcsFile) {
+	protected function loadStatements(File $phpcsFile): void {
 		if ($this->existingStatements !== null) {
 			return;
 		}
@@ -105,10 +105,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-*
+	 *
 	 * @return array
 	 */
-	protected function getUseStatements(File $phpcsFile) {
+	protected function getUseStatements(File $phpcsFile): array {
 		$tokens = $phpcsFile->getTokens();
 
 		$statements = [];
@@ -177,16 +177,16 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return bool
 	 */
-	protected function isMultipleUseStatement($statementContent) {
+	protected function isMultipleUseStatement(string $statementContent): bool {
 		return strpos($statementContent, ',') !== false;
 	}
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-*
+	 *
 	 * @return void
 	 */
-	protected function findSentinel(File $phpcsFile) {
+	protected function findSentinel(File $phpcsFile): void {
 		if ($this->sentinelFile !== $phpcsFile) {
 			$tokens = $phpcsFile->getTokens();
 			$last = count($tokens) - 1;
@@ -201,12 +201,12 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @throws \RuntimeException
-*
+	 *
 	 * @return void
 	 */
-	protected function checkUseForClass(File $phpcsFile, $stackPtr) {
+	protected function checkUseForClass(File $phpcsFile, int $stackPtr): void {
 		$nextIndex = $phpcsFile->findNext(T_EXTENDS, $stackPtr + 1);
 		if ($nextIndex) {
 			$this->checkUseForExtends($phpcsFile, $nextIndex);
@@ -221,12 +221,12 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $nextIndex
-*
+	 *
 	 * @throws \RuntimeException
-*
+	 *
 	 * @return void
 	 */
-	protected function checkUseForExtends(File $phpcsFile, $nextIndex) {
+	protected function checkUseForExtends(File $phpcsFile, int $nextIndex): void {
 		$endIndex = $phpcsFile->findNext([T_IMPLEMENTS, T_CURLY_OPEN, T_OPEN_CURLY_BRACKET], $nextIndex + 1);
 
 		$startIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $nextIndex + 1, null, true);
@@ -271,10 +271,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $startIndex
 	 * @param int $endIndex
-*
+	 *
 	 * @return array
 	 */
-	protected function extractUseStatements(File $phpcsFile, $startIndex, $endIndex) {
+	protected function extractUseStatements(File $phpcsFile, int $startIndex, int $endIndex): array {
 		$tokens = $phpcsFile->getTokens();
 
 		$result = [];
@@ -313,10 +313,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @param array $tokens
 	 * @param int $start
 	 * @param int $end
-*
+	 *
 	 * @return string
 	 */
-	protected function extractUseStatementsAsString(array $tokens, $start, $end) {
+	protected function extractUseStatementsAsString(array $tokens, int $start, int $end): string {
 		$string = '';
 		for ($i = $start; $i <= $end; ++$i) {
 			$string .= $tokens[$i]['content'];
@@ -329,10 +329,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @param string $useStatement
-*
+	 *
 	 * @return string
 	 */
-	protected function extractClassNameFromUseStatementAsString($useStatement) {
+	protected function extractClassNameFromUseStatementAsString(string $useStatement): string {
 		$lastSeparator = strrpos($useStatement, '\\');
 		if ($lastSeparator === false) {
 			return $useStatement;
@@ -346,10 +346,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @param string $fullName
 	 *
 	 * @throws \RuntimeException
-*
+	 *
 	 * @return array
 	 */
-	protected function addUseStatement($shortName, $fullName) {
+	protected function addUseStatement(string $shortName, string $fullName): array {
 		foreach ($this->allStatements as $useStatement) {
 			if ($useStatement['fullName'] === $fullName) {
 				return $useStatement;
@@ -380,7 +380,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return string|null
 	 */
-	protected function generateUniqueAlias($shortName, $fullName) {
+	protected function generateUniqueAlias(string $shortName, string $fullName): ?string {
 		$alias = $shortName;
 		$count = 0;
 		$pieces = explode('\\', $fullName);
@@ -414,22 +414,22 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 	/**
 	 * @param array $useStatement
-*
+	 *
 	 * @return void
 	 */
-	protected function insertUseStatement(array $useStatement) {
+	protected function insertUseStatement(array $useStatement): void {
 		$this->useStatements[] = $useStatement;
 	}
 
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $nextIndex
-*
+	 *
 	 * @throws \RuntimeException
-*
+	 *
 	 * @return void
 	 */
-	protected function checkUseForImplements(File $phpcsFile, $nextIndex) {
+	protected function checkUseForImplements(File $phpcsFile, int $nextIndex): void {
 		$endIndex = $phpcsFile->findNext([T_OPEN_CURLY_BRACKET], $nextIndex + 1);
 
 		$startIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $nextIndex + 1, null, true);
@@ -470,12 +470,12 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @throws \RuntimeException
-*
+	 *
 	 * @return void
 	 */
-	protected function checkUseForNew(File $phpcsFile, $stackPtr) {
+	protected function checkUseForNew(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
@@ -538,12 +538,12 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @throws \RuntimeException
-*
+	 *
 	 * @return void
 	 */
-	protected function checkUseForStatic(File $phpcsFile, $stackPtr) {
+	protected function checkUseForStatic(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);
@@ -605,7 +605,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function checkUseForInstanceOf(File $phpcsFile, $stackPtr) {
+	protected function checkUseForInstanceOf(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$classNameIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
@@ -670,7 +670,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	public function checkUseForCatchOrCallable(File $phpcsFile, $stackPtr) {
+	public function checkUseForCatchOrCallable(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$openParenthesisIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);
@@ -740,7 +740,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function checkUseForReturnTypeHint(File $phpcsFile, $stackPtr) {
+	protected function checkUseForReturnTypeHint(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$openParenthesisIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);
@@ -814,12 +814,12 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @throws \RuntimeException
-*
+	 *
 	 * @return void
 	 */
-	protected function checkUseForSignature(File $phpcsFile, $stackPtr) {
+	protected function checkUseForSignature(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$openParenthesisIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);
@@ -888,10 +888,10 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-*
+	 *
 	 * @return void
 	 */
-	protected function insertUseWhenSentinel(File $phpcsFile, $stackPtr) {
+	protected function insertUseWhenSentinel(File $phpcsFile, int $stackPtr): void {
 		if (($stackPtr === $this->sentinelPtr) && count($this->useStatements)) {
 			$existingStatements = $this->existingStatements;
 			$haveExistingStatements = $existingStatements;
@@ -925,7 +925,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return string
 	 */
-	protected function generateUseStatement(array $useStatement) {
+	protected function generateUseStatement(array $useStatement): string {
 		$alias = '';
 		if (!empty($useStatement['alias'])) {
 			$alias = ' as ' . $useStatement['alias'];
@@ -939,7 +939,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @return bool
 	 */
-	protected function isBlacklistedFile(File $phpcsFile) {
+	protected function isBlacklistedFile(File $phpcsFile): bool {
 		$file = $phpcsFile->getFilename();
 
 		return strpos($file, DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR) !== false;

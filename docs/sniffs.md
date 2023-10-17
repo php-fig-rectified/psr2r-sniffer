@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 189 sniffs
+The PSR2R standard contains 190 sniffs
 
 Generic (22 sniffs)
 -------------------
@@ -105,7 +105,48 @@ PSR2R (44 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-SlevomatCodingStandard (43 sniffs)
+PhpCollective (38 sniffs)
+-------------------------
+- PhpCollective.Classes.ClassFileName
+- PhpCollective.Classes.MethodArgumentDefaultValue
+- PhpCollective.Classes.MethodDeclaration
+- PhpCollective.Classes.MethodTypeHint
+- PhpCollective.Classes.PropertyDefaultValue
+- PhpCollective.Classes.ReturnTypeHint
+- PhpCollective.Classes.SelfAccessor
+- PhpCollective.Commenting.Attributes
+- PhpCollective.Commenting.DocBlockConst
+- PhpCollective.Commenting.DocBlockConstructor
+- PhpCollective.Commenting.DocBlockNoInlineAlignment
+- PhpCollective.Commenting.DocBlockParamAllowDefaultValue
+- PhpCollective.Commenting.DocBlockPipeSpacing
+- PhpCollective.Commenting.DocBlockReturnNull
+- PhpCollective.Commenting.DocBlockReturnNullableType
+- PhpCollective.Commenting.DocBlockReturnTag
+- PhpCollective.Commenting.DocBlockReturnVoid
+- PhpCollective.Commenting.DocBlockStructure
+- PhpCollective.Commenting.DocBlockTagOrder
+- PhpCollective.Commenting.DocBlockTypeOrder
+- PhpCollective.Commenting.DocBlockVar
+- PhpCollective.Commenting.DocBlockVarNotJustNull
+- PhpCollective.Commenting.FullyQualifiedClassNameInDocBlock
+- PhpCollective.Commenting.InlineDocBlock
+- PhpCollective.Commenting.TypeHint
+- PhpCollective.ControlStructures.ConditionalExpressionOrder
+- PhpCollective.ControlStructures.NoInlineAssignment
+- PhpCollective.Formatting.ArrayDeclaration
+- PhpCollective.PHP.NoIsNull
+- PhpCollective.PHP.NotEqual
+- PhpCollective.PHP.PhpSapiConstant
+- PhpCollective.PHP.PreferCastOverFunction
+- PhpCollective.PHP.RemoveFunctionAlias
+- PhpCollective.PHP.ShortCast
+- PhpCollective.WhiteSpace.CommaSpacing
+- PhpCollective.WhiteSpace.ConcatenationSpacing
+- PhpCollective.WhiteSpace.ImplicitCastSpacing
+- PhpCollective.WhiteSpace.ObjectAttributeSpacing
+
+SlevomatCodingStandard (45 sniffs)
 ----------------------------------
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
@@ -131,6 +172,8 @@ SlevomatCodingStandard (43 sniffs)
 - SlevomatCodingStandard.Functions.DisallowTrailingCommaInClosureUse
 - SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration
 - SlevomatCodingStandard.Functions.RequireTrailingCommaInCall
+- SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse
+- SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration
 - SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses
 - SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
 - SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile
@@ -150,48 +193,6 @@ SlevomatCodingStandard (43 sniffs)
 - SlevomatCodingStandard.TypeHints.UnionTypeHintFormat
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
-
-Spryker (39 sniffs)
--------------------
-- Spryker.Classes.ClassFileName
-- Spryker.Classes.MethodArgumentDefaultValue
-- Spryker.Classes.MethodDeclaration
-- Spryker.Classes.MethodTypeHint
-- Spryker.Classes.PropertyDefaultValue
-- Spryker.Classes.ReturnTypeHint
-- Spryker.Classes.SelfAccessor
-- Spryker.Commenting.Attributes
-- Spryker.Commenting.DisallowArrayTypeHintSyntax
-- Spryker.Commenting.DocBlockConst
-- Spryker.Commenting.DocBlockConstructor
-- Spryker.Commenting.DocBlockNoInlineAlignment
-- Spryker.Commenting.DocBlockParamAllowDefaultValue
-- Spryker.Commenting.DocBlockPipeSpacing
-- Spryker.Commenting.DocBlockReturnNull
-- Spryker.Commenting.DocBlockReturnNullableType
-- Spryker.Commenting.DocBlockReturnTag
-- Spryker.Commenting.DocBlockReturnVoid
-- Spryker.Commenting.DocBlockStructure
-- Spryker.Commenting.DocBlockTagOrder
-- Spryker.Commenting.DocBlockTypeOrder
-- Spryker.Commenting.DocBlockVar
-- Spryker.Commenting.DocBlockVarNotJustNull
-- Spryker.Commenting.FullyQualifiedClassNameInDocBlock
-- Spryker.Commenting.InlineDocBlock
-- Spryker.Commenting.TypeHint
-- Spryker.ControlStructures.ConditionalExpressionOrder
-- Spryker.ControlStructures.NoInlineAssignment
-- Spryker.Formatting.ArrayDeclaration
-- Spryker.PHP.NoIsNull
-- Spryker.PHP.NotEqual
-- Spryker.PHP.PhpSapiConstant
-- Spryker.PHP.PreferCastOverFunction
-- Spryker.PHP.RemoveFunctionAlias
-- Spryker.PHP.ShortCast
-- Spryker.WhiteSpace.CommaSpacing
-- Spryker.WhiteSpace.ConcatenationSpacing
-- Spryker.WhiteSpace.ImplicitCastSpacing
-- Spryker.WhiteSpace.ObjectAttributeSpacing
 
 Squiz (21 sniffs)
 -----------------

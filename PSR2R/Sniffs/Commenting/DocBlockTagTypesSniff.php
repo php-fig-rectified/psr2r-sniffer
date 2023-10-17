@@ -16,7 +16,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	/**
 	 * @var array
 	 */
-	protected static $whitelistedTags = [
+	protected static array $whitelistedTags = [
 		'@api',
 		'@author',
 		'@copyright',
@@ -92,7 +92,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	/**
 	 * @var array
 	 */
-	protected static $blacklistedTags = [
+	protected static array $blacklistedTags = [
 		'@package',
 		'@subpackage',
 		'@global',
@@ -105,7 +105,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	/**
 	 * @var array
 	 */
-	protected static $mapping = [
+	protected static array $mapping = [
 		'@type' => '@var',
 		'@overwrite' => '@override',
 		'@inheritdoc' => '@inheritDoc',
@@ -121,7 +121,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	 *
 	 * @var string
 	 */
-	public $whitelist = '';
+	public string $whitelist = '';
 
 	/**
 	 * @inheritDoc
@@ -196,7 +196,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	/**
 	 * @return void
 	 */
-	protected function prepareWhitelist() {
+	protected function prepareWhitelist(): void {
 		if (!empty($this->whitelist)) {
 			$whitelist = explode(',', $this->whitelist);
 			foreach ($whitelist as $tag) {
