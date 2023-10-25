@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 190 sniffs
+The PSR2R standard contains 191 sniffs
 
 Generic (22 sniffs)
 -------------------
@@ -105,7 +105,7 @@ PSR2R (44 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-PhpCollective (38 sniffs)
+PhpCollective (39 sniffs)
 -------------------------
 - PhpCollective.Classes.ClassFileName
 - PhpCollective.Classes.MethodArgumentDefaultValue
@@ -135,6 +135,7 @@ PhpCollective (38 sniffs)
 - PhpCollective.ControlStructures.ConditionalExpressionOrder
 - PhpCollective.ControlStructures.NoInlineAssignment
 - PhpCollective.Formatting.ArrayDeclaration
+- PhpCollective.PHP.DeclareStrictTypes
 - PhpCollective.PHP.NoIsNull
 - PhpCollective.PHP.NotEqual
 - PhpCollective.PHP.PhpSapiConstant

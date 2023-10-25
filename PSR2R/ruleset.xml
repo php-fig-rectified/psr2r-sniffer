@@ -153,6 +153,13 @@
 	<rule ref="PhpCollective.PHP.PhpSapiConstant"/>
 	<rule ref="PhpCollective.PHP.PreferCastOverFunction"/>
 
+	<rule ref="PhpCollective.PHP.DeclareStrictTypes">
+		<properties>
+			<property name="declareOnFirstLine" value="yes"/>
+			<property name="spacesCountAroundEqualsSign" value="1"/>
+		</properties>
+	</rule>
+
 	<rule ref="PhpCollective.WhiteSpace.ConcatenationSpacing"/>
 	<rule ref="PhpCollective.WhiteSpace.ObjectAttributeSpacing"/>
 	<rule ref="PhpCollective.WhiteSpace.CommaSpacing"/>
