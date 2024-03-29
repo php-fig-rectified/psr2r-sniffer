@@ -114,6 +114,7 @@
 	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
 
+	<rule ref="PhpCollective.Classes.Psr4"/>
 	<rule ref="PhpCollective.Classes.MethodDeclaration"/>
 	<rule ref="PhpCollective.Classes.MethodArgumentDefaultValue"/>
 	<rule ref="PhpCollective.Classes.MethodTypeHint"/>

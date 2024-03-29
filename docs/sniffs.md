@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 190 sniffs
+The PSR2R standard contains 191 sniffs
 
 Generic (22 sniffs)
 -------------------
@@ -33,13 +33,14 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
-PhpCollective (38 sniffs)
+PhpCollective (39 sniffs)
 -------------------------
 - PhpCollective.Classes.ClassFileName
 - PhpCollective.Classes.MethodArgumentDefaultValue
 - PhpCollective.Classes.MethodDeclaration
 - PhpCollective.Classes.MethodTypeHint
 - PhpCollective.Classes.PropertyDefaultValue
+- PhpCollective.Classes.Psr4
 - PhpCollective.Classes.ReturnTypeHint
 - PhpCollective.Classes.SelfAccessor
 - PhpCollective.Commenting.Attributes
