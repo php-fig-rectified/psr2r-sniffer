@@ -33,21 +33,52 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
+PhpCollective (38 sniffs)
+-------------------------
+- PhpCollective.Classes.ClassFileName
+- PhpCollective.Classes.MethodArgumentDefaultValue
+- PhpCollective.Classes.MethodDeclaration
+- PhpCollective.Classes.MethodTypeHint
+- PhpCollective.Classes.PropertyDefaultValue
+- PhpCollective.Classes.ReturnTypeHint
+- PhpCollective.Classes.SelfAccessor
+- PhpCollective.Commenting.Attributes
+- PhpCollective.Commenting.DocBlockConst
+- PhpCollective.Commenting.DocBlockConstructor
+- PhpCollective.Commenting.DocBlockNoInlineAlignment
+- PhpCollective.Commenting.DocBlockParamAllowDefaultValue
+- PhpCollective.Commenting.DocBlockPipeSpacing
+- PhpCollective.Commenting.DocBlockReturnNull
+- PhpCollective.Commenting.DocBlockReturnNullableType
+- PhpCollective.Commenting.DocBlockReturnTag
+- PhpCollective.Commenting.DocBlockReturnVoid
+- PhpCollective.Commenting.DocBlockStructure
+- PhpCollective.Commenting.DocBlockTagOrder
+- PhpCollective.Commenting.DocBlockTypeOrder
+- PhpCollective.Commenting.DocBlockVar
+- PhpCollective.Commenting.DocBlockVarNotJustNull
+- PhpCollective.Commenting.FullyQualifiedClassNameInDocBlock
+- PhpCollective.Commenting.InlineDocBlock
+- PhpCollective.Commenting.TypeHint
+- PhpCollective.ControlStructures.ConditionalExpressionOrder
+- PhpCollective.ControlStructures.NoInlineAssignment
+- PhpCollective.Formatting.ArrayDeclaration
+- PhpCollective.PHP.NoIsNull
+- PhpCollective.PHP.NotEqual
+- PhpCollective.PHP.PhpSapiConstant
+- PhpCollective.PHP.PreferCastOverFunction
+- PhpCollective.PHP.RemoveFunctionAlias
+- PhpCollective.PHP.ShortCast
+- PhpCollective.WhiteSpace.CommaSpacing
+- PhpCollective.WhiteSpace.ConcatenationSpacing
+- PhpCollective.WhiteSpace.ImplicitCastSpacing
+- PhpCollective.WhiteSpace.ObjectAttributeSpacing
+
 PSR1 (3 sniffs)
 ---------------
 - PSR1.Classes.ClassDeclaration
 - PSR1.Files.SideEffects
 - PSR1.Methods.CamelCapsMethodName
-
-PSR12 (7 sniffs)
-----------------
-- PSR12.Classes.ClassInstantiation
-- PSR12.Files.ImportStatement
-- PSR12.Functions.NullableTypeDeclaration
-- PSR12.Functions.ReturnTypeDeclaration
-- PSR12.Keywords.ShortFormTypeKeywords
-- PSR12.Namespaces.CompoundNamespaceDepth
-- PSR12.Operators.OperatorSpacing
 
 PSR2 (6 sniffs)
 ---------------
@@ -105,46 +136,15 @@ PSR2R (44 sniffs)
 - PSR2R.WhiteSpace.TabIndent
 - PSR2R.WhiteSpace.UnaryOperatorSpacing
 
-PhpCollective (38 sniffs)
--------------------------
-- PhpCollective.Classes.ClassFileName
-- PhpCollective.Classes.MethodArgumentDefaultValue
-- PhpCollective.Classes.MethodDeclaration
-- PhpCollective.Classes.MethodTypeHint
-- PhpCollective.Classes.PropertyDefaultValue
-- PhpCollective.Classes.ReturnTypeHint
-- PhpCollective.Classes.SelfAccessor
-- PhpCollective.Commenting.Attributes
-- PhpCollective.Commenting.DocBlockConst
-- PhpCollective.Commenting.DocBlockConstructor
-- PhpCollective.Commenting.DocBlockNoInlineAlignment
-- PhpCollective.Commenting.DocBlockParamAllowDefaultValue
-- PhpCollective.Commenting.DocBlockPipeSpacing
-- PhpCollective.Commenting.DocBlockReturnNull
-- PhpCollective.Commenting.DocBlockReturnNullableType
-- PhpCollective.Commenting.DocBlockReturnTag
-- PhpCollective.Commenting.DocBlockReturnVoid
-- PhpCollective.Commenting.DocBlockStructure
-- PhpCollective.Commenting.DocBlockTagOrder
-- PhpCollective.Commenting.DocBlockTypeOrder
-- PhpCollective.Commenting.DocBlockVar
-- PhpCollective.Commenting.DocBlockVarNotJustNull
-- PhpCollective.Commenting.FullyQualifiedClassNameInDocBlock
-- PhpCollective.Commenting.InlineDocBlock
-- PhpCollective.Commenting.TypeHint
-- PhpCollective.ControlStructures.ConditionalExpressionOrder
-- PhpCollective.ControlStructures.NoInlineAssignment
-- PhpCollective.Formatting.ArrayDeclaration
-- PhpCollective.PHP.NoIsNull
-- PhpCollective.PHP.NotEqual
-- PhpCollective.PHP.PhpSapiConstant
-- PhpCollective.PHP.PreferCastOverFunction
-- PhpCollective.PHP.RemoveFunctionAlias
-- PhpCollective.PHP.ShortCast
-- PhpCollective.WhiteSpace.CommaSpacing
-- PhpCollective.WhiteSpace.ConcatenationSpacing
-- PhpCollective.WhiteSpace.ImplicitCastSpacing
-- PhpCollective.WhiteSpace.ObjectAttributeSpacing
+PSR12 (7 sniffs)
+----------------
+- PSR12.Classes.ClassInstantiation
+- PSR12.Files.ImportStatement
+- PSR12.Functions.NullableTypeDeclaration
+- PSR12.Functions.ReturnTypeDeclaration
+- PSR12.Keywords.ShortFormTypeKeywords
+- PSR12.Namespaces.CompoundNamespaceDepth
+- PSR12.Operators.OperatorSpacing
 
 SlevomatCodingStandard (45 sniffs)
 ----------------------------------
@@ -180,8 +180,8 @@ SlevomatCodingStandard (45 sniffs)
 - SlevomatCodingStandard.Namespaces.UnusedUses
 - SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash
 - SlevomatCodingStandard.Namespaces.UseFromSameNamespace
-- SlevomatCodingStandard.Namespaces.UseSpacing
 - SlevomatCodingStandard.Namespaces.UselessAlias
+- SlevomatCodingStandard.Namespaces.UseSpacing
 - SlevomatCodingStandard.Operators.SpreadOperatorSpacing
 - SlevomatCodingStandard.PHP.ShortList
 - SlevomatCodingStandard.PHP.TypeCast
@@ -219,5 +219,5 @@ Squiz (21 sniffs)
 - Squiz.WhiteSpace.SuperfluousWhitespace
 
 Zend (1 sniff)
----------------
+--------------
 - Zend.Files.ClosingTag
