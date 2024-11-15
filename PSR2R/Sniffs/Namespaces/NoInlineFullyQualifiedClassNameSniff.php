@@ -546,6 +546,13 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	protected function checkUseForStatic(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
+		if (!empty($tokens[$stackPtr]['attribute_opener'])) {
+			$token = $tokens[$tokens[$stackPtr]['attribute_opener']];
+			if ($token['code'] === T_ATTRIBUTE) {
+				return;
+			}
+		}
+
 		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);
 
 		$lastIndex = null;
