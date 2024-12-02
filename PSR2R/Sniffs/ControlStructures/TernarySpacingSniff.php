@@ -10,7 +10,6 @@ use PSR2R\Tools\AbstractSniff;
  * Asserts single space between ternary operator parts (? and :) and surroundings.
  * Also asserts no whitespace between short ternary operator (?:), which was introduced in PHP 5.3.
  *
- * @see https://github.com/dereuromark/codesniffer-standards/blob/master/MyCakePHP/Sniffs/WhiteSpace/TernarySpacingSniff.php
  * @author Mark Scherer
  * @license MIT
  */
@@ -39,6 +38,10 @@ class TernarySpacingSniff extends AbstractSniff {
 	 */
 	protected function assertSpaceBefore(File $phpcsFile, int $stackPtr): void {
 		$previous = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+		if (!$previous) {
+			return;
+		}
+
 		if ($stackPtr - $previous > 1) {
 			$this->assertSingleSpaceBeforeIfNotMultiline($phpcsFile, $stackPtr, $previous);
 
@@ -46,6 +49,10 @@ class TernarySpacingSniff extends AbstractSniff {
 		}
 
 		$tokens = $phpcsFile->getTokens();
+		if ($tokens[$previous]['code'] === 'PHPCS_T_INLINE_THEN') {
+			return;
+		}
+
 		$content = $tokens[$stackPtr]['content'];
 		$error = 'There must be a single space before ternary operator part `' . $content . '`';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeInlineThen');
@@ -133,6 +140,10 @@ class TernarySpacingSniff extends AbstractSniff {
 	 */
 	protected function assertSpaceAfter(File $phpcsFile, int $stackPtr): void {
 		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
+		if (!$nextIndex) {
+			return;
+		}
+
 		if ($nextIndex - $stackPtr > 1) {
 			$this->assertSingleSpaceAfterIfNotMultiline($phpcsFile, $stackPtr, $nextIndex);
 
