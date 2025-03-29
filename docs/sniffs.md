@@ -186,11 +186,11 @@ SlevomatCodingStandard (45 sniffs)
 - SlevomatCodingStandard.PHP.ShortList
 - SlevomatCodingStandard.PHP.TypeCast
 - SlevomatCodingStandard.PHP.UselessSemicolon
+- SlevomatCodingStandard.TypeHints.DNFTypeHintFormat
 - SlevomatCodingStandard.TypeHints.LongTypeHints
 - SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue
 - SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing
 - SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing
-- SlevomatCodingStandard.TypeHints.UnionTypeHintFormat
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 

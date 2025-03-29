@@ -277,9 +277,10 @@
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
 
 	<!-- PHP 8 specific, only relevant for those PHP 8.0+ -->
-	<rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
+	<rule ref="SlevomatCodingStandard.TypeHints.DNFTypeHintFormat">
 		<properties>
-			<property name="withSpaces" value="no"/>
+			<property name="withSpacesAroundOperators" value="no"/>
+			<property name="withSpacesInsideParentheses" value="no"/>
 		</properties>
 	</rule>
 
