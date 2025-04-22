@@ -40,6 +40,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@see',
 		'@since',
 		'@source',
+		'@template',	
 		'@throws',
 		'@todo',
 		'@triggers',
