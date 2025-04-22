@@ -22,6 +22,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		'@copyright',
 		'@deprecated',
 		'@example',
+		'@extends',
 		'@filesource',
 		'@ignore',
 		'@inheritDoc',
