@@ -2,7 +2,7 @@
 
 The PSR2R standard contains 190 sniffs
 
-Generic (22 sniffs)
+Generic (23 sniffs)
 -------------------
 - Generic.Arrays.DisallowLongArraySyntax
 - Generic.CodeAnalysis.ForLoopShouldBeWhileLoop
@@ -14,7 +14,7 @@ Generic (22 sniffs)
 - Generic.Files.ByteOrderMark
 - Generic.Files.LineEndings
 - Generic.Formatting.DisallowMultipleStatements
-- Generic.Formatting.NoSpaceAfterCast
+- Generic.Formatting.SpaceAfterCast
 - Generic.NamingConventions.UpperCaseConstantName
 - Generic.PHP.DeprecatedFunctions
 - Generic.PHP.DisallowAlternativePHPTags
@@ -25,6 +25,7 @@ Generic (22 sniffs)
 - Generic.PHP.LowerCaseType
 - Generic.PHP.NoSilencedErrors
 - Generic.WhiteSpace.IncrementDecrementSpacing
+- Generic.WhiteSpace.LanguageConstructSpacing
 - Generic.WhiteSpace.ScopeIndent
 
 PEAR (3 sniffs)
@@ -194,7 +195,7 @@ SlevomatCodingStandard (45 sniffs)
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Squiz (21 sniffs)
+Squiz (20 sniffs)
 -----------------
 - Squiz.Arrays.ArrayBracketSpacing
 - Squiz.Classes.LowercaseClassKeywords
@@ -211,7 +212,6 @@ Squiz (21 sniffs)
 - Squiz.Scope.MethodScope
 - Squiz.Scope.StaticThisUsage
 - Squiz.WhiteSpace.CastSpacing
-- Squiz.WhiteSpace.LanguageConstructSpacing
 - Squiz.WhiteSpace.LogicalOperatorSpacing
 - Squiz.WhiteSpace.MemberVarSpacing
 - Squiz.WhiteSpace.ScopeKeywordSpacing
