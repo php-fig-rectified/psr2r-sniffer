@@ -64,8 +64,8 @@ class DocBlockParamNoOpSniff extends AbstractSniff {
 				continue;
 			}
 
-			$error = 'Possible doc block error: `' . $content .
-				'` as only param type does not seem right. Makes this a no-op.';
+			$error = 'Possible doc block error: `' . $content
+				. '` as only param type does not seem right. Makes this a no-op.';
 			$phpCsFile->addWarning($error, $i, 'ParamNoOp');
 		}
 	}

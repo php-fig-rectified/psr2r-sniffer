@@ -38,8 +38,8 @@ class UnaryOperatorSpacingSniff implements Sniff {
 				return;
 			}
 
-			$fix = $phpcsFile->addFixableError('No whitespace should be between ' . $tokens[$stackPtr]['content'] .
-				' operator and variable.', $stackPtr, 'NoWhitespace');
+			$fix = $phpcsFile->addFixableError('No whitespace should be between ' . $tokens[$stackPtr]['content']
+				. ' operator and variable.', $stackPtr, 'NoWhitespace');
 			if ($fix) {
 				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 			}
