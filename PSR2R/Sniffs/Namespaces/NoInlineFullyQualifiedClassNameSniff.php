@@ -243,8 +243,8 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 			}
 
 			$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement['statement']);
-			$error = 'Use statement ' . $extractedUseStatement['statement'] . ' for ' . $className .
-				' should be in use block.';
+			$error = 'Use statement ' . $extractedUseStatement['statement'] . ' for ' . $className
+				. ' should be in use block.';
 			$fix = $phpcsFile->addFixableError($error, $extractedUseStatement['start'], 'Extends');
 			if (!$fix) {
 				return;
@@ -442,8 +442,8 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 			}
 
 			$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement['statement']);
-			$error = 'Use statement ' . $extractedUseStatement['statement'] . ' for ' . $className .
-				' should be in use block.';
+			$error = 'Use statement ' . $extractedUseStatement['statement'] . ' for ' . $className
+				. ' should be in use block.';
 			$fix = $phpcsFile->addFixableError($error, $extractedUseStatement['start'], 'Implements');
 			if (!$fix) {
 				continue;

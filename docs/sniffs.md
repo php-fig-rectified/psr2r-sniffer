@@ -1,9 +1,10 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 190 sniffs
+The PSR2R standard contains 198 sniffs
 
-Generic (23 sniffs)
+Generic (24 sniffs)
 -------------------
+- Generic.Arrays.ArrayIndent
 - Generic.Arrays.DisallowLongArraySyntax
 - Generic.CodeAnalysis.ForLoopShouldBeWhileLoop
 - Generic.CodeAnalysis.ForLoopWithTestFunctionCall
@@ -27,6 +28,14 @@ Generic (23 sniffs)
 - Generic.WhiteSpace.IncrementDecrementSpacing
 - Generic.WhiteSpace.LanguageConstructSpacing
 - Generic.WhiteSpace.ScopeIndent
+
+Modernize (1 sniff)
+-------------------
+- Modernize.FunctionCalls.Dirname
+
+NormalizedArrays (1 sniff)
+--------------------------
+- NormalizedArrays.Arrays.ArrayBraceSpacing
 
 PEAR (3 sniffs)
 ---------------
@@ -217,6 +226,14 @@ Squiz (20 sniffs)
 - Squiz.WhiteSpace.ScopeKeywordSpacing
 - Squiz.WhiteSpace.SemicolonSpacing
 - Squiz.WhiteSpace.SuperfluousWhitespace
+
+Universal (5 sniffs)
+--------------------
+- Universal.Constants.LowercaseClassResolutionKeyword
+- Universal.Constants.UppercaseMagicConstants
+- Universal.Operators.ConcatPosition
+- Universal.UseStatements.NoUselessAliases
+- Universal.WhiteSpace.PrecisionAlignment
 
 Zend (1 sniff)
 --------------
