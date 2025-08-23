@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 198 sniffs
+The PSR2R standard contains 203 sniffs
 
 Generic (24 sniffs)
 -------------------
@@ -43,9 +43,10 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
-PhpCollective (39 sniffs)
+PhpCollective (45 sniffs)
 -------------------------
 - PhpCollective.Classes.ClassFileName
+- PhpCollective.Classes.EnumCaseCasing
 - PhpCollective.Classes.MethodArgumentDefaultValue
 - PhpCollective.Classes.MethodDeclaration
 - PhpCollective.Classes.MethodTypeHint
@@ -64,6 +65,7 @@ PhpCollective (39 sniffs)
 - PhpCollective.Commenting.DocBlockReturnTag
 - PhpCollective.Commenting.DocBlockReturnVoid
 - PhpCollective.Commenting.DocBlockStructure
+- PhpCollective.Commenting.DocBlockTagIterable
 - PhpCollective.Commenting.DocBlockTagOrder
 - PhpCollective.Commenting.DocBlockTypeOrder
 - PhpCollective.Commenting.DocBlockVar
@@ -74,12 +76,16 @@ PhpCollective (39 sniffs)
 - PhpCollective.ControlStructures.ConditionalExpressionOrder
 - PhpCollective.ControlStructures.NoInlineAssignment
 - PhpCollective.Formatting.ArrayDeclaration
+- PhpCollective.PHP.DisallowTrailingCommaInSingleLine
 - PhpCollective.PHP.NoIsNull
 - PhpCollective.PHP.NotEqual
 - PhpCollective.PHP.PhpSapiConstant
 - PhpCollective.PHP.PreferCastOverFunction
 - PhpCollective.PHP.RemoveFunctionAlias
 - PhpCollective.PHP.ShortCast
+- PhpCollective.PHP.SingleQuote
+- PhpCollective.Testing.AssertPrimitives
+- PhpCollective.Testing.Mock
 - PhpCollective.WhiteSpace.CommaSpacing
 - PhpCollective.WhiteSpace.ConcatenationSpacing
 - PhpCollective.WhiteSpace.ImplicitCastSpacing
@@ -100,7 +106,7 @@ PSR2 (6 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (43 sniffs)
+PSR2R (42 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.InterfaceName
@@ -134,7 +140,6 @@ PSR2R (43 sniffs)
 - PSR2R.PHP.ListComma
 - PSR2R.PHP.NoShortOpenTag
 - PSR2R.PHP.PreferStaticOverSelf
-- PSR2R.PHP.SingleQuote
 - PSR2R.WhiteSpace.ArraySpacing
 - PSR2R.WhiteSpace.DocBlockAlignment
 - PSR2R.WhiteSpace.EmptyEnclosingLine

@@ -64,6 +64,7 @@
 	<!-- silenced due to issue
 	<rule ref="SlevomatCodingStandard.Commenting.DisallowArrayTypeHintSyntax"/>
 	-->
+	<rule ref="PhpCollective.Commenting.DocBlockTagIterable"/>
 	<rule ref="PhpCollective.Commenting.TypeHint"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
@@ -122,6 +123,7 @@
 	<rule ref="PhpCollective.Classes.ReturnTypeHint"/>
 	<rule ref="PhpCollective.Classes.SelfAccessor"/>
 	<rule ref="PhpCollective.Classes.ClassFileName"/>
+	<rule ref="PhpCollective.Classes.EnumCaseCasing"/>
 
 	<rule ref="PhpCollective.Commenting.DocBlockConst"/>
 	<rule ref="PhpCollective.Commenting.DocBlockConstructor"/>
@@ -159,6 +161,9 @@
 	<rule ref="PhpCollective.WhiteSpace.CommaSpacing"/>
 	<rule ref="PhpCollective.WhiteSpace.ImplicitCastSpacing"/>
 
+	<rule ref="PhpCollective.Testing.AssertPrimitives"/>
+	<rule ref="PhpCollective.Testing.Mock"/>
+
 	<rule ref="SlevomatCodingStandard.Operators.SpreadOperatorSpacing"/>
 
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
@@ -191,6 +196,8 @@
 	<rule ref="Generic.PHP.LowerCaseKeyword"/>
 	<rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
 	<rule ref="Generic.PHP.LowerCaseType"/>
+	<rule ref="PhpCollective.PHP.DisallowTrailingCommaInSingleLine"/>
+	<rule ref="PhpCollective.PHP.SingleQuote"/>
 
 	<rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
 
@@ -287,7 +294,11 @@
 	<rule ref="Universal.Operators.ConcatPosition"/>
 	<rule ref="Universal.UseStatements.NoUselessAliases"/>
 	<rule ref="Modernize.FunctionCalls.Dirname"/>
-	<rule ref="NormalizedArrays.Arrays.ArrayBraceSpacing"/>
+	<rule ref="NormalizedArrays.Arrays.ArrayBraceSpacing">
+		<properties>
+			<property name="spacesMultiLine" value="false"/>
+		</properties>
+	</rule>
 
 	<!-- PHP 8 specific, only relevant for those PHP 8.0+ -->
 	<rule ref="SlevomatCodingStandard.TypeHints.DNFTypeHintFormat">
