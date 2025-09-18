@@ -51,7 +51,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$methodName = $phpcsFile->getDeclarationName($stackPtr);
-		if ($methodName === null) {
+		if (!$methodName) {
 			// Ignore closures.
 			return;
 		}

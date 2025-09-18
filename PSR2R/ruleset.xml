@@ -18,6 +18,7 @@
 	<exclude-pattern>\.json</exclude-pattern>
 
 	<config name="installed_paths" value="../../slevomat/coding-standard,../../php-collective/code-sniffer,../../phpcsstandards/phpcsextra"/>
+	<config name="php_version" value="80100"/>
 
 	<arg name="tab-width" value="4"/>
 
