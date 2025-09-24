@@ -751,6 +751,9 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$openParenthesisIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);
+		if (empty($tokens[$openParenthesisIndex]['parenthesis_closer'])) {
+			return;
+		}
 		$closeParenthesisIndex = $tokens[$openParenthesisIndex]['parenthesis_closer'];
 
 		$colonIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $closeParenthesisIndex + 1, null, true);
