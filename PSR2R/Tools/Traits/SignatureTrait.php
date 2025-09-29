@@ -25,7 +25,7 @@ trait SignatureTrait {
 		$i = $startIndex;
 		while ($nextVariableIndex = $phpCsFile->findNext(T_VARIABLE, $i + 1, $endIndex)) {
 			$typehintIndex = $defaultIndex = $default = null;
-			$possibleTypeHint = $phpCsFile->findPrevious([T_ARRAY_HINT, T_CALLABLE], $nextVariableIndex - 1, $nextVariableIndex - 3);
+			$possibleTypeHint = $phpCsFile->findPrevious([T_ARRAY, T_CALLABLE], $nextVariableIndex - 1, $nextVariableIndex - 3);
 			if ($possibleTypeHint) {
 				$typehintIndex = $possibleTypeHint;
 			}

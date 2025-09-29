@@ -775,7 +775,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		$extractedUseStatement = '';
 		$lastSeparatorIndex = null;
 		while (true) {
-			if (!$this->isGivenKind([T_NS_SEPARATOR, T_STRING, T_RETURN_TYPE], $tokens[$j])) {
+			if (!$this->isGivenKind([T_NS_SEPARATOR, T_STRING], $tokens[$j])) {
 				break;
 			}
 
