@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 204 sniffs
+The PSR2R standard contains 205 sniffs
 
 Generic (24 sniffs)
 -------------------
@@ -210,11 +210,12 @@ SlevomatCodingStandard (45 sniffs)
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Squiz (20 sniffs)
+Squiz (21 sniffs)
 -----------------
 - Squiz.Arrays.ArrayBracketSpacing
 - Squiz.Classes.LowercaseClassKeywords
 - Squiz.Classes.ValidClassName
+- Squiz.ControlStructures.ControlSignature
 - Squiz.ControlStructures.ForEachLoopDeclaration
 - Squiz.ControlStructures.LowercaseDeclaration
 - Squiz.Functions.FunctionDeclaration

@@ -184,6 +184,7 @@
 	-->
 
 	<rule ref="PEAR.ControlStructures.ControlSignature"/>
+	<rule ref="Squiz.ControlStructures.ControlSignature"/>
 
 	<rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
