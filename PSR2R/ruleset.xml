@@ -147,6 +147,7 @@
 
 	<rule ref="PhpCollective.ControlStructures.NoInlineAssignment"/>
 	<rule ref="PhpCollective.ControlStructures.ConditionalExpressionOrder"/>
+	<rule ref="PhpCollective.ControlStructures.ControlStructureEmptyStatement"/>
 
 	<rule ref="PhpCollective.Arrays.ArrayBracketSpacing"/>
 	<rule ref="PhpCollective.Formatting.ArrayDeclaration"/>
