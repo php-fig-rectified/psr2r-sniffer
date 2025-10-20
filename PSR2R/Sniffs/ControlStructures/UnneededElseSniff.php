@@ -41,8 +41,7 @@ class UnneededElseSniff extends AbstractSniff {
 		$parenthesisStartIndex = $tokens[$prevParenthesisEndIndex]['parenthesis_opener'];
 
 		$prevConditionIndex = $phpcsFile->findPrevious(T_WHITESPACE, $parenthesisStartIndex - 1, null, true);
-		// We only do trivial fixes right now
-		if ($tokens[$prevConditionIndex]['code'] !== T_IF) {
+		if (!in_array($tokens[$prevConditionIndex]['code'], [T_IF, T_ELSEIF], true)) {
 			return;
 		}
 
