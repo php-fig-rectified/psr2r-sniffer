@@ -145,7 +145,7 @@ class UnneededElseSniff extends AbstractSniff {
 
 		$nextScopeEndIndex = $tokens[$stackPtr]['scope_closer'];
 
-		$nextConditionStartIndex = $phpcsFile->findNext(T_WHITESPACE, $nextScopeEndIndex - 1, null, true);
+		$nextConditionStartIndex = $phpcsFile->findNext(T_WHITESPACE, $nextScopeEndIndex + 1, null, true);
 
 		if (in_array($tokens[$nextConditionStartIndex]['code'], [T_ELSEIF, T_ELSE], true)) {
 			return true;
