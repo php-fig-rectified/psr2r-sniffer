@@ -26,10 +26,6 @@ class UnneededElseSniff extends AbstractSniff {
 	public function process(File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 
-		if ($tokens[$stackPtr]['code'] === T_ELSEIF && $this->isNotLastCondition($phpcsFile, $stackPtr)) {
-			return;
-		}
-
 		$prevScopeEndIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 		if (!$prevScopeEndIndex || empty($tokens[$prevScopeEndIndex]['scope_opener'])) {
 			return;
@@ -132,31 +128,6 @@ class UnneededElseSniff extends AbstractSniff {
 	/**
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
-	 *
-	 * @return bool
-	 */
-	protected function isNotLastCondition(File $phpcsFile, int $stackPtr): bool {
-		$tokens = $phpcsFile->getTokens();
-
-		// Abort if not known
-		if (empty($tokens[$stackPtr]['scope_closer'])) {
-			return true;
-		}
-
-		$nextScopeEndIndex = $tokens[$stackPtr]['scope_closer'];
-
-		$nextConditionStartIndex = $phpcsFile->findNext(T_WHITESPACE, $nextScopeEndIndex + 1, null, true);
-
-		if (in_array($tokens[$nextConditionStartIndex]['code'], [T_ELSEIF, T_ELSE], true)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param int $stackPtr
 *
 	 * @return void
 	 */
@@ -166,10 +137,7 @@ class UnneededElseSniff extends AbstractSniff {
 		$phpcsFile->fixer->beginChangeset();
 
 		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
-		$indentationLevel = $tokens[$prevIndex]['column'] - 1;
-		$indentationCharacter = $this->getIndentationCharacter($this->getIndentationWhitespace($phpcsFile, $prevIndex));
-
-		$indentation = str_repeat($indentationCharacter, $indentationLevel);
+		$indentation = $this->getIndentationWhitespace($phpcsFile, $prevIndex);
 
 		for ($i = $prevIndex + 1; $i < $stackPtr; $i++) {
 			$phpcsFile->fixer->replaceToken($i, '');
