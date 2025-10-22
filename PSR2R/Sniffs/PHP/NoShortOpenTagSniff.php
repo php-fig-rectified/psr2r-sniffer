@@ -43,11 +43,13 @@ class NoShortOpenTagSniff implements Sniff {
 		$openTag = $tokens[$stackPtr];
 
 		$content = trim($openTag['content']);
-		if ($content === '<?') {
-			$error = 'Short PHP opening tag used; expected "<?php" but found "%s"';
-			$data = [$content];
-			$phpcsFile->addError($error, $stackPtr, 'Found', $data);
+		if ($content !== '<?') {
+			return;
 		}
+
+		$error = 'Short PHP opening tag used; expected "<?php" but found "%s"';
+		$data = [$content];
+		$phpcsFile->addError($error, $stackPtr, 'Found', $data);
 	}
 
 }

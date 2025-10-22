@@ -78,15 +78,19 @@ class UnaryOperatorSpacingSniff implements Sniff {
 			false,
 		);
 
-		if ($operatorSuffixAllowed === false
-			&& $tokens[$stackPtr + 1]['code'] === T_WHITESPACE
+		if ($operatorSuffixAllowed !== false
+			|| $tokens[$stackPtr + 1]['code'] !== T_WHITESPACE
 		) {
-			$error = 'A unary operator statement must not be followed by a space';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'WrongSpace');
-			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
-			}
+			return;
 		}
+
+		$error = 'A unary operator statement must not be followed by a space';
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'WrongSpace');
+		if (!$fix) {
+			return;
+		}
+
+		$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 	}
 
 	/**
@@ -99,20 +103,24 @@ class UnaryOperatorSpacingSniff implements Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$prevIndex = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
-		if ($tokens[$prevIndex]['code'] === T_VARIABLE) {
-			if ($stackPtr - $prevIndex === 1) {
-				return;
-			}
-
-			$fix = $phpcsFile->addFixableError(
-				'No whitespace should be between variable and incrementer.',
-				$stackPtr,
-				'WhitespaceIncrementer',
-			);
-			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr - 1, '');
-			}
+		if ($tokens[$prevIndex]['code'] !== T_VARIABLE) {
+			return;
 		}
+
+		if ($stackPtr - $prevIndex === 1) {
+			return;
+		}
+
+		$fix = $phpcsFile->addFixableError(
+			'No whitespace should be between variable and incrementer.',
+			$stackPtr,
+			'WhitespaceIncrementer',
+		);
+		if (!$fix) {
+			return;
+		}
+
+		$phpcsFile->fixer->replaceToken($stackPtr - 1, '');
 	}
 
 	/**
@@ -125,20 +133,24 @@ class UnaryOperatorSpacingSniff implements Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$nextIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
-		if ($tokens[$nextIndex]['code'] === T_VARIABLE) {
-			if ($nextIndex - $stackPtr === 1) {
-				return;
-			}
-
-			$fix = $phpcsFile->addFixableError(
-				'No whitespace should be between incrementer and variable.',
-				$stackPtr,
-				'WhitespaceVariable',
-			);
-			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
-			}
+		if ($tokens[$nextIndex]['code'] !== T_VARIABLE) {
+			return;
 		}
+
+		if ($nextIndex - $stackPtr === 1) {
+			return;
+		}
+
+		$fix = $phpcsFile->addFixableError(
+			'No whitespace should be between incrementer and variable.',
+			$stackPtr,
+			'WhitespaceVariable',
+		);
+		if (!$fix) {
+			return;
+		}
+
+		$phpcsFile->fixer->replaceToken($stackPtr + 1, '');
 	}
 
 }

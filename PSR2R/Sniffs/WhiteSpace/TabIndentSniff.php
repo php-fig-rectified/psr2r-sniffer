@@ -79,13 +79,17 @@ class TabIndentSniff implements Sniff {
 			$tabs++;
 		}
 
-		if ($tabs) {
-			$error = ($tabs * 4) . ' spaces found, expected ' . $tabs . ' tabs';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpacesFound');
-			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr, str_repeat("\t", $tabs) . $content);
-			}
+		if (!$tabs) {
+			return;
 		}
+
+		$error = ($tabs * 4) . ' spaces found, expected ' . $tabs . ' tabs';
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpacesFound');
+		if (!$fix) {
+			return;
+		}
+
+		$phpcsFile->fixer->replaceToken($stackPtr, str_repeat("\t", $tabs) . $content);
 	}
 
 	/**
@@ -100,13 +104,17 @@ class TabIndentSniff implements Sniff {
 
 		$newContent = str_replace("\t", '    ', $content);
 
-		if ($newContent !== $content) {
-			$error = 'Non-indentation (inline) tabs found, expected spaces';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'TabsFound');
-			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr, $newContent);
-			}
+		if ($newContent === $content) {
+			return;
 		}
+
+		$error = 'Non-indentation (inline) tabs found, expected spaces';
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'TabsFound');
+		if (!$fix) {
+			return;
+		}
+
+		$phpcsFile->fixer->replaceToken($stackPtr, $newContent);
 	}
 
 }

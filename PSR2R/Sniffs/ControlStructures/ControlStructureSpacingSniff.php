@@ -107,31 +107,35 @@ class ControlStructureSpacingSniff implements Sniff {
 			}
 		}
 
-		if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']) {
-			$spaceBeforeClose = 0;
-			if ($tokens[$parenCloser - 1]['code'] === T_WHITESPACE) {
-				$spaceBeforeClose = strlen(ltrim($tokens[$parenCloser - 1]['content'], $phpcsFile->eolChar));
-			}
+		if ($tokens[$parenOpener]['line'] !== $tokens[$parenCloser]['line']) {
+			return;
+		}
 
-			$phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', (string)$spaceBeforeClose);
-			$x = (bool)$phpcsFile;
+		$spaceBeforeClose = 0;
+		if ($tokens[$parenCloser - 1]['code'] === T_WHITESPACE) {
+			$spaceBeforeClose = strlen(ltrim($tokens[$parenCloser - 1]['content'], $phpcsFile->eolChar));
+		}
 
-			if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
-				$error = 'Expected %s spaces before closing bracket; %s found';
-				$data = [
-					$this->requiredSpacesBeforeClose,
-					$spaceBeforeClose,
-				];
-				$fix = $phpcsFile->addFixableError($error, $parenCloser - 1, 'SpaceBeforeCloseBrace', $data);
-				if ($fix === true) {
-					$padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
-					if ($spaceBeforeClose === 0) {
-						$phpcsFile->fixer->addContentBefore($parenCloser, $padding);
-					} else {
-						$phpcsFile->fixer->replaceToken($parenCloser - 1, $padding);
-					}
-				}
-			}
+		$phpcsFile->recordMetric($stackPtr, 'Spaces before control structure close parenthesis', (string)$spaceBeforeClose);
+		if ($spaceBeforeClose === $this->requiredSpacesBeforeClose) {
+			return;
+		}
+
+		$error = 'Expected %s spaces before closing bracket; %s found';
+		$data = [
+			$this->requiredSpacesBeforeClose,
+			$spaceBeforeClose,
+		];
+		$fix = $phpcsFile->addFixableError($error, $parenCloser - 1, 'SpaceBeforeCloseBrace', $data);
+		if ($fix !== true) {
+			return;
+		}
+
+		$padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
+		if ($spaceBeforeClose === 0) {
+			$phpcsFile->fixer->addContentBefore($parenCloser, $padding);
+		} else {
+			$phpcsFile->fixer->replaceToken($parenCloser - 1, $padding);
 		}
 	}
 

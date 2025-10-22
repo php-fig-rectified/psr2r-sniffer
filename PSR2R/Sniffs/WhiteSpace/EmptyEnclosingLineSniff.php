@@ -82,18 +82,22 @@ class EmptyEnclosingLineSniff implements Sniff {
 		$contentLine = $tokens[$lastContentIndex]['line'];
 		$braceLine = $tokens[$curlyBraceEndIndex]['line'];
 
-		if ($braceLine !== $contentLine + 2) {
-			$phpcsFile->recordMetric($stackPtr, 'Class closing brace placement', 'lines');
-			$error = 'Closing brace of a %s must have a new line between itself and the last content.';
-			$errorData = [strtolower($tokens[$stackPtr]['content'])];
-			$fix = $phpcsFile->addFixableError($error, $curlyBraceEndIndex, 'CloseBraceNewLine2', $errorData);
-			if ($fix === true) {
-				if ($braceLine < $contentLine + 2) {
-					$phpcsFile->fixer->addNewlineBefore($curlyBraceEndIndex);
-				} else {
-					$phpcsFile->fixer->replaceToken($curlyBraceEndIndex - 1, '');
-				}
-			}
+		if ($braceLine === $contentLine + 2) {
+			return;
+		}
+
+		$phpcsFile->recordMetric($stackPtr, 'Class closing brace placement', 'lines');
+		$error = 'Closing brace of a %s must have a new line between itself and the last content.';
+		$errorData = [strtolower($tokens[$stackPtr]['content'])];
+		$fix = $phpcsFile->addFixableError($error, $curlyBraceEndIndex, 'CloseBraceNewLine2', $errorData);
+		if ($fix !== true) {
+			return;
+		}
+
+		if ($braceLine < $contentLine + 2) {
+			$phpcsFile->fixer->addNewlineBefore($curlyBraceEndIndex);
+		} else {
+			$phpcsFile->fixer->replaceToken($curlyBraceEndIndex - 1, '');
 		}
 	}
 
@@ -119,25 +123,29 @@ class EmptyEnclosingLineSniff implements Sniff {
 		$contentLine = $tokens[$firstContentIndex]['line'];
 		$braceLine = $tokens[$curlyBraceStartIndex]['line'];
 
-		if ($contentLine !== $braceLine + 2) {
-			$phpcsFile->recordMetric($stackPtr, 'Class opening brace placement', 'lines');
-			$error = 'Opening brace of a %s must have a new line between itself and the first content.';
-			$errorData = [strtolower($tokens[$stackPtr]['content'])];
-			$fix = $phpcsFile->addFixableError($error, $curlyBraceStartIndex, 'OpenBraceNewLine', $errorData);
-			if ($fix === true) {
-				$phpcsFile->fixer->beginChangeset();
+		if ($contentLine === $braceLine + 2) {
+			return;
+		}
 
-				if ($contentLine < $braceLine + 2) {
-					$phpcsFile->fixer->addNewline($curlyBraceStartIndex);
-				} else {
-					for ($i = $curlyBraceStartIndex + 1; $i < $firstContentIndex - 1; $i++) {
-						$phpcsFile->fixer->replaceToken($i, '');
-					}
-				}
+		$phpcsFile->recordMetric($stackPtr, 'Class opening brace placement', 'lines');
+		$error = 'Opening brace of a %s must have a new line between itself and the first content.';
+		$errorData = [strtolower($tokens[$stackPtr]['content'])];
+		$fix = $phpcsFile->addFixableError($error, $curlyBraceStartIndex, 'OpenBraceNewLine', $errorData);
+		if ($fix !== true) {
+			return;
+		}
 
-				$phpcsFile->fixer->endChangeset();
+		$phpcsFile->fixer->beginChangeset();
+
+		if ($contentLine < $braceLine + 2) {
+			$phpcsFile->fixer->addNewline($curlyBraceStartIndex);
+		} else {
+			for ($i = $curlyBraceStartIndex + 1; $i < $firstContentIndex - 1; $i++) {
+				$phpcsFile->fixer->replaceToken($i, '');
 			}
 		}
+
+		$phpcsFile->fixer->endChangeset();
 	}
 
 }

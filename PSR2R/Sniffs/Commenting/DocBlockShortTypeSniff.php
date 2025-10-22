@@ -108,10 +108,12 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 		}
 
 		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'ShortType');
-		if ($fix) {
-			$newContent = implode('|', $parts);
-			$phpCsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);
+		if (!$fix) {
+			return;
 		}
+
+		$newContent = implode('|', $parts);
+		$phpCsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);
 	}
 
 }

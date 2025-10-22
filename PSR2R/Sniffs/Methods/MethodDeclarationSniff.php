@@ -132,14 +132,16 @@ class MethodDeclarationSniff extends AbstractScopeSniff {
 		}
 
 		// Batch all the fixes together to reduce the possibility of conflicts.
-		if (empty($fixes) === false) {
-			$phpcsFile->fixer->beginChangeset();
-			foreach ($fixes as $stackPtr2 => $content) {
-				$phpcsFile->fixer->replaceToken($stackPtr2, $content);
-			}
-
-			$phpcsFile->fixer->endChangeset();
+		if (empty($fixes) !== false) {
+			return;
 		}
+
+		$phpcsFile->fixer->beginChangeset();
+		foreach ($fixes as $stackPtr2 => $content) {
+			$phpcsFile->fixer->replaceToken($stackPtr2, $content);
+		}
+
+		$phpcsFile->fixer->endChangeset();
 	}
 
 }

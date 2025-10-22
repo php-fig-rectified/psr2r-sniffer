@@ -75,76 +75,82 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 			$expectedColumnAdjusted = 2;
 		}
 
-		if ($nextIndex) {
-			$isNotWalled =
-				(in_array($tokens[$nextIndex]['code'], $leftWall, false) && $tokens[$stackPtr]['column'] !== 1);
-			$isNotIndented = false;
-			if ($isNotFlatFile) {
-				$isNotIndented = (in_array($tokens[$nextIndex]['code'], $oneIndentation, false) &&
-					$tokens[$stackPtr]['column'] !== $expectedColumn &&
-					$tokens[$stackPtr]['column'] !== $expectedColumnAdjusted);
+		if (!$nextIndex) {
+			return;
+		}
+
+		$isNotWalled =
+			(in_array($tokens[$nextIndex]['code'], $leftWall, false) && $tokens[$stackPtr]['column'] !== 1);
+		$isNotIndented = false;
+		if ($isNotFlatFile) {
+			$isNotIndented = (in_array($tokens[$nextIndex]['code'], $oneIndentation, false) &&
+				$tokens[$stackPtr]['column'] !== $expectedColumn &&
+				$tokens[$stackPtr]['column'] !== $expectedColumnAdjusted);
+		}
+		if (!$isNotWalled && !$isNotIndented) {
+			return;
+		}
+
+		$fix =
+			$phpcsFile->addFixableError('Expected docblock to be aligned with code.', $stackPtr, 'NotAllowed');
+		if (!$fix) {
+			return;
+		}
+
+		$docBlockEndIndex = $tokens[$stackPtr]['comment_closer'];
+
+		if ($isNotWalled) {
+			$prevIndex = $stackPtr - 1;
+			if ($tokens[$prevIndex]['code'] !== T_WHITESPACE) {
+				return;
 			}
-			if ($isNotWalled || $isNotIndented) {
-				$fix =
-					$phpcsFile->addFixableError('Expected docblock to be aligned with code.', $stackPtr, 'NotAllowed');
-				if ($fix) {
-					$docBlockEndIndex = $tokens[$stackPtr]['comment_closer'];
 
-					if ($isNotWalled) {
-						$prevIndex = $stackPtr - 1;
-						if ($tokens[$prevIndex]['code'] !== T_WHITESPACE) {
-							return;
-						}
+			$phpcsFile->fixer->beginChangeset();
 
-						$phpcsFile->fixer->beginChangeset();
+			$this->outdent($phpcsFile, $prevIndex);
 
-						$this->outdent($phpcsFile, $prevIndex);
-
-						for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
-							if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
-								$tokens[$i]['column'] !== 1
-							) {
-								continue;
-							}
-							$this->outdent($phpcsFile, $i);
-						}
-						$phpcsFile->fixer->endChangeset();
-
-						return;
-					}
-
-					// + means too much indentation (we need to outdent), - means not enough indentation (needs indenting)
-					if ($tokens[$stackPtr]['column'] < $expectedColumnAdjusted) {
-						$diff = $tokens[$stackPtr]['column'] - $expectedColumn;
-					} else {
-						$diff = ($tokens[$stackPtr]['column'] - $expectedColumnAdjusted) / 4;
-					}
-
-					$phpcsFile->fixer->beginChangeset();
-
-					$prevIndex = $stackPtr - 1;
-					if ($diff < 0 && $tokens[$prevIndex]['line'] !== $tokens[$stackPtr]['line']) {
-						$phpcsFile->fixer->addContentBefore($stackPtr, str_repeat("\t", -$diff));
-					} else {
-						$this->outdent($phpcsFile, $prevIndex);
-					}
-
-					for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
-						if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
-							$tokens[$i]['column'] !== 1
-						) {
-							continue;
-						}
-						if ($diff < 0) {
-							$this->indent($phpcsFile, $i, -$diff);
-						} else {
-							$this->outdent($phpcsFile, $i, $diff);
-						}
-					}
-					$phpcsFile->fixer->endChangeset();
+			for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
+				if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
+					$tokens[$i]['column'] !== 1
+				) {
+					continue;
 				}
+				$this->outdent($phpcsFile, $i);
+			}
+			$phpcsFile->fixer->endChangeset();
+
+			return;
+		}
+
+		// + means too much indentation (we need to outdent), - means not enough indentation (needs indenting)
+		if ($tokens[$stackPtr]['column'] < $expectedColumnAdjusted) {
+			$diff = $tokens[$stackPtr]['column'] - $expectedColumn;
+		} else {
+			$diff = ($tokens[$stackPtr]['column'] - $expectedColumnAdjusted) / 4;
+		}
+
+		$phpcsFile->fixer->beginChangeset();
+
+		$prevIndex = $stackPtr - 1;
+		if ($diff < 0 && $tokens[$prevIndex]['line'] !== $tokens[$stackPtr]['line']) {
+			$phpcsFile->fixer->addContentBefore($stackPtr, str_repeat("\t", -$diff));
+		} else {
+			$this->outdent($phpcsFile, $prevIndex);
+		}
+
+		for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
+			if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
+				$tokens[$i]['column'] !== 1
+			) {
+				continue;
+			}
+			if ($diff < 0) {
+				$this->indent($phpcsFile, $i, -$diff);
+			} else {
+				$this->outdent($phpcsFile, $i, $diff);
 			}
 		}
+		$phpcsFile->fixer->endChangeset();
 	}
 
 	/**

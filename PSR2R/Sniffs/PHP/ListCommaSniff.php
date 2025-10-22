@@ -37,16 +37,20 @@ class ListCommaSniff extends AbstractSniff {
 			$markIndex = $prevIndex;
 			$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $prevIndex - 1, null, true);
 		}
-		if ($markIndex !== null) {
-			$fix = $phpcsFile->addFixableError('Superfluous commas in list', $markIndex, 'ExtraCommaList');
-			if ($fix) {
-				$this->clearRange(
-					$phpcsFile,
-					$markIndex,
-					$closeIndex - 1,
-				);
-			}
+		if ($markIndex === null) {
+			return;
 		}
+
+		$fix = $phpcsFile->addFixableError('Superfluous commas in list', $markIndex, 'ExtraCommaList');
+		if (!$fix) {
+			return;
+		}
+
+		$this->clearRange(
+			$phpcsFile,
+			$markIndex,
+			$closeIndex - 1,
+		);
 	}
 
 	/**

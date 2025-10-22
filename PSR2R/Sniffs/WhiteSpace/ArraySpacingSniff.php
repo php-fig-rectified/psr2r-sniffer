@@ -50,9 +50,11 @@ class ArraySpacingSniff extends AbstractSniff {
 		}
 
 		$fix = $phpcsFile->addFixableError('No whitespace after opening bracket', $stackPtr, 'InvalidAfter');
-		if ($fix) {
-			$phpcsFile->fixer->replaceToken($nextIndex - 1, '');
+		if (!$fix) {
+			return;
 		}
+
+		$phpcsFile->fixer->replaceToken($nextIndex - 1, '');
 	}
 
 	/**
@@ -78,9 +80,11 @@ class ArraySpacingSniff extends AbstractSniff {
 		}
 
 		$fix = $phpcsFile->addFixableError('No whitespace before closing bracket', $stackPtr, 'InvalidBefore');
-		if ($fix) {
-			$phpcsFile->fixer->replaceToken($previousIndex + 1, '');
+		if (!$fix) {
+			return;
 		}
+
+		$phpcsFile->fixer->replaceToken($previousIndex + 1, '');
 	}
 
 }

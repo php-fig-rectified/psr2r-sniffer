@@ -39,18 +39,22 @@ class DuplicateSemicolonSniff implements Sniff {
 
 		$error = 'Double semicolon found';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'DoubleSemicolon');
-		if ($fix) {
-			$phpcsFile->fixer->beginChangeset();
+		if (!$fix) {
+			return;
+		}
 
-			$phpcsFile->fixer->replaceToken($stackPtr, '');
-			for ($i = $stackPtr; $i > $previousIndex; --$i) {
-				if ($tokens[$i]['code'] === T_WHITESPACE) {
-					$phpcsFile->fixer->replaceToken($i, '');
-				}
+		$phpcsFile->fixer->beginChangeset();
+
+		$phpcsFile->fixer->replaceToken($stackPtr, '');
+		for ($i = $stackPtr; $i > $previousIndex; --$i) {
+			if ($tokens[$i]['code'] !== T_WHITESPACE) {
+				continue;
 			}
 
-			$phpcsFile->fixer->endChangeset();
+			$phpcsFile->fixer->replaceToken($i, '');
 		}
+
+		$phpcsFile->fixer->endChangeset();
 	}
 
 }

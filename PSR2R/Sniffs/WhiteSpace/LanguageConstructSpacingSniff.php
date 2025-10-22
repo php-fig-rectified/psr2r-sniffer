@@ -78,10 +78,12 @@ class LanguageConstructSpacingSniff implements Sniff {
 			$replacement = ' ';
 		}
 
-		if ($phpcsFile->fixer->enabled === true) {
-			$phpcsFile->fixer->replaceToken($nextIndex, $replacement);
-			$phpcsFile->fixer->replaceToken($closingTokenIndex, '');
+		if ($phpcsFile->fixer->enabled !== true) {
+			return;
 		}
+
+		$phpcsFile->fixer->replaceToken($nextIndex, $replacement);
+		$phpcsFile->fixer->replaceToken($closingTokenIndex, '');
 	}
 
 }

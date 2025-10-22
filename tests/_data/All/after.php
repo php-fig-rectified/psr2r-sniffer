@@ -9,13 +9,16 @@ class FixMe {
 			return;
 		}
 		if ($y > $z) {
+			return;
 		}
 	}
 
 	public function tooMuchWhitespace() {
 		if ($x > $y) {
+			return;
 		}
 		if ($y > $z) {
+			return;
 		}
 	}
 

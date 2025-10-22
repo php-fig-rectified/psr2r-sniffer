@@ -59,12 +59,12 @@ class DocBlockEndingSniff implements Sniff {
 		$currentComment = $stackPtr;
 		$lastComment = $stackPtr;
 		while (($currentComment = $phpcsFile->findNext(T_DOC_COMMENT, $currentComment + 1)) !== false) {
-			if ($tokens[$lastComment]['line'] === ($tokens[$currentComment]['line'] - 1)) {
-				$comments[] = $currentComment;
-				$lastComment = $currentComment;
-			} else {
+			if ($tokens[$lastComment]['line'] !== ($tokens[$currentComment]['line'] - 1)) {
 				break;
 			}
+
+			$comments[] = $currentComment;
+			$lastComment = $currentComment;
 		}
 
 		// The $comments array now contains pointers to each token in the comment block.
@@ -87,11 +87,13 @@ class DocBlockEndingSniff implements Sniff {
 			$error = 'Expected 1 asterisk on closing line; %s found';
 			$data = [$count];
 			$fix = $phpcsFile->addFixableError($error, $commentPointer, 'SpaceBeforeTag', $data);
-			if ($fix === true && $phpcsFile->fixer->enabled === true) {
-				$pos = strpos($content, '*');
-				$content = substr($content, 0, $pos + 1) . substr($content, $pos + $count);
-				$phpcsFile->fixer->replaceToken($commentPointer, $content);
+			if ($fix !== true || $phpcsFile->fixer->enabled !== true) {
+				continue;
 			}
+
+			$pos = strpos($content, '*');
+			$content = substr($content, 0, $pos + 1) . substr($content, $pos + $count);
+			$phpcsFile->fixer->replaceToken($commentPointer, $content);
 		}
 	}
 

@@ -63,32 +63,36 @@ class PropertyDeclarationSniff extends AbstractVariableSniff {
 			$phpcsFile->addError($error, $stackPtr, 'ScopeMissing', $data);
 		}
 
-		if ($propertyInfo['scope_specified'] === true && $propertyInfo['is_static'] === true) {
-			$scopePtr = $phpcsFile->findPrevious(Tokens::$scopeModifiers, ($stackPtr - 1));
-			$staticPtr = $phpcsFile->findPrevious(T_STATIC, ($stackPtr - 1));
-			if ($scopePtr < $staticPtr) {
-				return;
-			}
-
-			$error = 'The static declaration must come after the visibility declaration';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'StaticBeforeVisibility');
-			if ($fix === true) {
-				$phpcsFile->fixer->beginChangeset();
-
-				for ($i = ($scopePtr + 1); $scopePtr < $stackPtr; $i++) {
-					if ($tokens[$i]['code'] !== T_WHITESPACE) {
-						break;
-					}
-
-					$phpcsFile->fixer->replaceToken($i, '');
-				}
-
-				$phpcsFile->fixer->replaceToken($scopePtr, '');
-				$phpcsFile->fixer->addContentBefore($staticPtr, $propertyInfo['scope'] . ' ');
-
-				$phpcsFile->fixer->endChangeset();
-			}
+		if ($propertyInfo['scope_specified'] !== true || $propertyInfo['is_static'] !== true) {
+			return;
 		}
+
+		$scopePtr = $phpcsFile->findPrevious(Tokens::$scopeModifiers, ($stackPtr - 1));
+		$staticPtr = $phpcsFile->findPrevious(T_STATIC, ($stackPtr - 1));
+		if ($scopePtr < $staticPtr) {
+			return;
+		}
+
+		$error = 'The static declaration must come after the visibility declaration';
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'StaticBeforeVisibility');
+		if ($fix !== true) {
+			return;
+		}
+
+		$phpcsFile->fixer->beginChangeset();
+
+		for ($i = ($scopePtr + 1); $scopePtr < $stackPtr; $i++) {
+			if ($tokens[$i]['code'] !== T_WHITESPACE) {
+				break;
+			}
+
+			$phpcsFile->fixer->replaceToken($i, '');
+		}
+
+		$phpcsFile->fixer->replaceToken($scopePtr, '');
+		$phpcsFile->fixer->addContentBefore($staticPtr, $propertyInfo['scope'] . ' ');
+
+		$phpcsFile->fixer->endChangeset();
 	}
 
 	/**

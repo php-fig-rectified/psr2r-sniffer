@@ -52,21 +52,25 @@ class ElseIfDeclarationSniff implements Sniff {
 		}
 
 		$next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
-		if ($tokens[$next]['code'] === T_IF) {
-			$phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'else if');
-			$error = 'Usage of ELSE IF is discouraged; use ELSEIF instead';
-			$fix = $phpcsFile->addFixableWarning($error, $stackPtr, 'NotAllowed');
-
-			if ($fix === true) {
-				$phpcsFile->fixer->beginChangeset();
-				$phpcsFile->fixer->replaceToken($stackPtr, 'elseif');
-				for ($i = ($stackPtr + 1); $i <= $next; $i++) {
-					$phpcsFile->fixer->replaceToken($i, '');
-				}
-
-				$phpcsFile->fixer->endChangeset();
-			}
+		if ($tokens[$next]['code'] !== T_IF) {
+			return;
 		}
+
+		$phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'else if');
+		$error = 'Usage of ELSE IF is discouraged; use ELSEIF instead';
+		$fix = $phpcsFile->addFixableWarning($error, $stackPtr, 'NotAllowed');
+
+		if ($fix !== true) {
+			return;
+		}
+
+		$phpcsFile->fixer->beginChangeset();
+		$phpcsFile->fixer->replaceToken($stackPtr, 'elseif');
+		for ($i = ($stackPtr + 1); $i <= $next; $i++) {
+			$phpcsFile->fixer->replaceToken($i, '');
+		}
+
+		$phpcsFile->fixer->endChangeset();
 	}
 
 }

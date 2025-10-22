@@ -72,13 +72,17 @@ class MethodSpacingSniff extends AbstractSniff {
 
 		$lastContentIndex = $phpcsFile->findPrevious(T_WHITESPACE, $braceEndIndex - 1, null, true);
 
-		if ($tokens[$braceEndIndex]['line'] - $tokens[$lastContentIndex]['line'] > 1) {
-			$error = 'There should be no extra newline at the end of a method';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'ContentBeforeClose');
-			if ($fix === true) {
-				$phpcsFile->fixer->replaceToken($lastContentIndex + 1, '');
-			}
+		if ($tokens[$braceEndIndex]['line'] - $tokens[$lastContentIndex]['line'] <= 1) {
+			return;
 		}
+
+		$error = 'There should be no extra newline at the end of a method';
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'ContentBeforeClose');
+		if ($fix !== true) {
+			return;
+		}
+
+		$phpcsFile->fixer->replaceToken($lastContentIndex + 1, '');
 	}
 
 	/**
@@ -93,12 +97,16 @@ class MethodSpacingSniff extends AbstractSniff {
 
 		$startLine = $tokens[$from]['line'];
 		$endLine = $tokens[$to]['line'];
-		if ($endLine === $startLine + 2) {
-			$error = 'There should be no extra newline in empty methods';
-			if ($phpcsFile->addFixableError($error, $from, 'ContentEmpty')) {
-				$phpcsFile->fixer->replaceToken($from + 1, '');
-			}
+		if ($endLine !== $startLine + 2) {
+			return;
 		}
+
+		$error = 'There should be no extra newline in empty methods';
+		if (!$phpcsFile->addFixableError($error, $from, 'ContentEmpty')) {
+			return;
+		}
+
+		$phpcsFile->fixer->replaceToken($from + 1, '');
 	}
 
 }

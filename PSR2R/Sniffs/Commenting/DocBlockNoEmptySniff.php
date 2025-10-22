@@ -49,10 +49,12 @@ class DocBlockNoEmptySniff extends AbstractSniff {
 		}
 
 		$fix = $phpcsFile->addFixableError('There should be no empty docblocks.', $stackPtr, 'Superfluous');
-		if ($fix) {
-			for ($i = $stackPtr; $i <= $endIndex; $i++) {
-				$phpcsFile->fixer->replaceToken($i, '');
-			}
+		if (!$fix) {
+			return;
+		}
+
+		for ($i = $stackPtr; $i <= $endIndex; $i++) {
+			$phpcsFile->fixer->replaceToken($i, '');
 		}
 	}
 

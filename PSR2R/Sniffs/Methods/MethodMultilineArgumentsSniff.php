@@ -62,20 +62,22 @@ class MethodMultilineArgumentsSniff extends AbstractSniff {
 			$error = 'Multiline method arguments must be a single one per line';
 			$fix = $phpcsFile->addFixableError($error, $i, 'ContentAfterOpen');
 
-			if ($fix === true) {
-				$indentation = $this->getIndentationCharacter($this->getIndentationWhitespace($phpcsFile, $i));
-				$indentation = str_repeat($indentation, $this->getIndentationColumn($phpcsFile, $i));
-
-				$phpcsFile->fixer->beginChangeset();
-
-				if ($i - $possibleCommaIndex > 1) {
-					$phpcsFile->fixer->replaceToken($i - 1, '');
-				}
-				$phpcsFile->fixer->addNewline($i - 1);
-				$phpcsFile->fixer->addContentBefore($i, $indentation);
-
-				$phpcsFile->fixer->endChangeset();
+			if ($fix !== true) {
+				continue;
 			}
+
+			$indentation = $this->getIndentationCharacter($this->getIndentationWhitespace($phpcsFile, $i));
+			$indentation = str_repeat($indentation, $this->getIndentationColumn($phpcsFile, $i));
+
+			$phpcsFile->fixer->beginChangeset();
+
+			if ($i - $possibleCommaIndex > 1) {
+				$phpcsFile->fixer->replaceToken($i - 1, '');
+			}
+			$phpcsFile->fixer->addNewline($i - 1);
+			$phpcsFile->fixer->addContentBefore($i, $indentation);
+
+			$phpcsFile->fixer->endChangeset();
 		}
 	}
 

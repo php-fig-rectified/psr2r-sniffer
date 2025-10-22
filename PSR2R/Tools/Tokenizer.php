@@ -64,10 +64,12 @@ class Tokenizer {
 		foreach ($array as $key => $row) {
 			$res[] = rtrim($row);
 			$tokenStrings = $this->_tokenize($key + 1, $tokens);
-			if ($tokenStrings) {
-				foreach ($tokenStrings as $string) {
-					$res[] = '// ' . $string;
-				}
+			if (!$tokenStrings) {
+				continue;
+			}
+
+			foreach ($tokenStrings as $string) {
+				$res[] = '// ' . $string;
 			}
 		}
 		$content = implode(PHP_EOL, $res);

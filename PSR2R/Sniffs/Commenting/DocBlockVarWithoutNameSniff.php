@@ -64,16 +64,20 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 			$content = $tokens[$nextIndex]['content'];
 			preg_match_all('/ \$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $content, $matches);
 
-			if (isset($matches[0][0]) && trim($matches[0][0]) !== '$this') {
-				$fix = $phpcsFile->addFixableError(
-					'@var annotations should not contain the variable name.',
-					$i,
-					'RemoveVarName',
-				);
-				if ($fix) {
-					$phpcsFile->fixer->replaceToken($nextIndex, str_replace($matches[0][0], '', $content));
-				}
+			if (!isset($matches[0][0]) || trim($matches[0][0]) === '$this') {
+				continue;
 			}
+
+			$fix = $phpcsFile->addFixableError(
+				'@var annotations should not contain the variable name.',
+				$i,
+				'RemoveVarName',
+			);
+			if (!$fix) {
+				continue;
+			}
+
+			$phpcsFile->fixer->replaceToken($nextIndex, str_replace($matches[0][0], '', $content));
 		}
 	}
 

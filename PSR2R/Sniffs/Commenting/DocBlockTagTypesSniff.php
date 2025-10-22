@@ -179,19 +179,21 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 			}
 
 			$phpcsFile->addFixableError($error, $i, 'Invalid');
-			if ($phpcsFile->fixer->enabled) {
-				if ($mappingTag) {
-					$phpcsFile->fixer->replaceToken($i, $mappingTag);
-
-					continue;
-				}
-
-				$phpcsFile->fixer->beginChangeset();
-				for ($j = $prevAsterix; $j < $nextAsterix; $j++) {
-					$phpcsFile->fixer->replaceToken($j, '');
-				}
-				$phpcsFile->fixer->endChangeset();
+			if (!$phpcsFile->fixer->enabled) {
+				continue;
 			}
+
+			if ($mappingTag) {
+				$phpcsFile->fixer->replaceToken($i, $mappingTag);
+
+				continue;
+			}
+
+			$phpcsFile->fixer->beginChangeset();
+			for ($j = $prevAsterix; $j < $nextAsterix; $j++) {
+				$phpcsFile->fixer->replaceToken($j, '');
+			}
+			$phpcsFile->fixer->endChangeset();
 		}
 	}
 
@@ -202,9 +204,11 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 		if (!empty($this->whitelist)) {
 			$whitelist = explode(',', $this->whitelist);
 			foreach ($whitelist as $tag) {
-				if (!in_array($tag, static::$whitelistedTags, true)) {
-					static::$whitelistedTags[] = $tag;
+				if (in_array($tag, static::$whitelistedTags, true)) {
+					continue;
 				}
+
+				static::$whitelistedTags[] = $tag;
 			}
 		}
 		$this->whitelist = '';

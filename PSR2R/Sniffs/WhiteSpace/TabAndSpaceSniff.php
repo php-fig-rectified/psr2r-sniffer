@@ -67,13 +67,17 @@ class TabAndSpaceSniff implements Sniff {
 				$phpcsFile->fixer->replaceToken($stackPtr, ' ');
 			}
 		}
-		if (strpos($tokens[$stackPtr]['content'], "\t ") !== false) {
-			$error = 'Tab and space found';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'TabAndSpace');
-			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr, ' ');
-			}
+		if (strpos($tokens[$stackPtr]['content'], "\t ") === false) {
+			return;
 		}
+
+		$error = 'Tab and space found';
+		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'TabAndSpace');
+		if (!$fix) {
+			return;
+		}
+
+		$phpcsFile->fixer->replaceToken($stackPtr, ' ');
 	}
 
 }

@@ -187,13 +187,15 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @return void
 	 */
 	protected function findSentinel(File $phpcsFile): void {
-		if ($this->sentinelFile !== $phpcsFile) {
-			$tokens = $phpcsFile->getTokens();
-			$last = count($tokens) - 1;
-			$this->sentinelPtr = $phpcsFile->findPrevious($this->register(), $last);
-			$this->sentinelFile = $phpcsFile;
-			$this->useStatements = [];
+		if ($this->sentinelFile === $phpcsFile) {
+			return;
 		}
+
+		$tokens = $phpcsFile->getTokens();
+		$last = count($tokens) - 1;
+		$this->sentinelPtr = $phpcsFile->findPrevious($this->register(), $last);
+		$this->sentinelFile = $phpcsFile;
+		$this->useStatements = [];
 	}
 
 	/**
@@ -213,9 +215,11 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		}
 
 		$nextIndex = $phpcsFile->findNext(T_IMPLEMENTS, $stackPtr + 1);
-		if ($nextIndex) {
-			$this->checkUseForImplements($phpcsFile, $nextIndex);
+		if (!$nextIndex) {
+			return;
 		}
+
+		$this->checkUseForImplements($phpcsFile, $nextIndex);
 	}
 
 	/**
@@ -295,9 +299,11 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 				continue;
 			}
 
-			if ($start === null) {
-				$start = $i;
+			if ($start !== null) {
+				continue;
 			}
+
+			$start = $i;
 		}
 
 		$result[] = [
@@ -902,32 +908,34 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @return void
 	 */
 	protected function insertUseWhenSentinel(File $phpcsFile, int $stackPtr): void {
-		if (($stackPtr === $this->sentinelPtr) && count($this->useStatements)) {
-			$existingStatements = $this->existingStatements;
-			$haveExistingStatements = $existingStatements;
-			if ($existingStatements) {
-				$lastOne = array_pop($existingStatements);
-
-				$lastUseStatementIndex = $lastOne['end'];
-			} else {
-				$namespaceStatement = $this->getNamespaceInfo($phpcsFile);
-
-				$lastUseStatementIndex = $namespaceStatement['end'];
-			}
-
-			$phpcsFile->fixer->beginChangeset();
-			if (!$haveExistingStatements) {
-				// Should be blank line between namespace statement and block of use statements
-				$phpcsFile->fixer->addNewline($lastUseStatementIndex);
-			}
-			foreach ($this->useStatements as $useStatement) {
-				/** @noinspection DisconnectedForeachInstructionInspection */
-				$phpcsFile->fixer->addNewline($lastUseStatementIndex);
-				$phpcsFile->fixer->addContent($lastUseStatementIndex, $this->generateUseStatement($useStatement));
-			}
-			$phpcsFile->fixer->endChangeset();
-			$this->useStatements = [];
+		if (($stackPtr !== $this->sentinelPtr) || !count($this->useStatements)) {
+			return;
 		}
+
+		$existingStatements = $this->existingStatements;
+		$haveExistingStatements = $existingStatements;
+		if ($existingStatements) {
+			$lastOne = array_pop($existingStatements);
+
+			$lastUseStatementIndex = $lastOne['end'];
+		} else {
+			$namespaceStatement = $this->getNamespaceInfo($phpcsFile);
+
+			$lastUseStatementIndex = $namespaceStatement['end'];
+		}
+
+		$phpcsFile->fixer->beginChangeset();
+		if (!$haveExistingStatements) {
+			// Should be blank line between namespace statement and block of use statements
+			$phpcsFile->fixer->addNewline($lastUseStatementIndex);
+		}
+		foreach ($this->useStatements as $useStatement) {
+			/** @noinspection DisconnectedForeachInstructionInspection */
+			$phpcsFile->fixer->addNewline($lastUseStatementIndex);
+			$phpcsFile->fixer->addContent($lastUseStatementIndex, $this->generateUseStatement($useStatement));
+		}
+		$phpcsFile->fixer->endChangeset();
+		$this->useStatements = [];
 	}
 
 	/**

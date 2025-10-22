@@ -56,9 +56,11 @@ class TernarySpacingSniff extends AbstractSniff {
 		$content = $tokens[$stackPtr]['content'];
 		$error = 'There must be a single space before ternary operator part `' . $content . '`';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeInlineThen');
-		if ($fix) {
-			$phpcsFile->fixer->addContentBefore($stackPtr, ' ');
+		if (!$fix) {
+			return;
 		}
+
+		$phpcsFile->fixer->addContentBefore($stackPtr, ' ');
 	}
 
 	/**
@@ -80,9 +82,11 @@ class TernarySpacingSniff extends AbstractSniff {
 
 		$error = 'There must be a single space instead of `' . $tokens[$stackPtr - 1]['content'] . '`';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr - 1, 'InvalidSpaceBefore');
-		if ($fix) {
-			$phpcsFile->fixer->replaceToken($stackPtr - 1, ' ');
+		if (!$fix) {
+			return;
 		}
+
+		$phpcsFile->fixer->replaceToken($stackPtr - 1, ' ');
 	}
 
 	/**
@@ -154,9 +158,11 @@ class TernarySpacingSniff extends AbstractSniff {
 		$content = $tokens[$stackPtr]['content'];
 		$error = 'There must be a single space after ternary operator part `' . $content . '`';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterInlineThen');
-		if ($fix) {
-			$phpcsFile->fixer->addContent($stackPtr, ' ');
+		if (!$fix) {
+			return;
 		}
+
+		$phpcsFile->fixer->addContent($stackPtr, ' ');
 	}
 
 	/**
@@ -178,9 +184,11 @@ class TernarySpacingSniff extends AbstractSniff {
 
 		$error = 'There must be a single space instead of `' . $tokens[$stackPtr + 1]['content'] . '`';
 		$fix = $phpcsFile->addFixableError($error, $stackPtr + 1, 'InvalidSpaceAfter');
-		if ($fix) {
-			$phpcsFile->fixer->replaceToken($stackPtr + 1, ' ');
+		if (!$fix) {
+			return;
 		}
+
+		$phpcsFile->fixer->replaceToken($stackPtr + 1, ' ');
 	}
 
 }
