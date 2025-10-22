@@ -67,6 +67,11 @@ class ControlStructureSpacingSniff implements Sniff {
 		$this->requiredSpacesBeforeClose = (int)$this->requiredSpacesBeforeClose;
 		$tokens = $phpcsFile->getTokens();
 
+		// Handle else/elseif brace positioning
+		if ($tokens[$stackPtr]['code'] === T_ELSE || $tokens[$stackPtr]['code'] === T_ELSEIF) {
+			$this->processElseSpacing($phpcsFile, $stackPtr);
+		}
+
 		if (isset($tokens[$stackPtr]['parenthesis_opener']) === false
 			|| isset($tokens[$stackPtr]['parenthesis_closer']) === false
 		) {
@@ -136,6 +141,117 @@ class ControlStructureSpacingSniff implements Sniff {
 			$phpcsFile->fixer->addContentBefore($parenCloser, $padding);
 		} else {
 			$phpcsFile->fixer->replaceToken($parenCloser - 1, $padding);
+		}
+	}
+
+	/**
+	 * Process else/elseif spacing and brace positioning.
+	 *
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $stackPtr Position of else/elseif token
+	 *
+	 * @return void
+	 */
+	protected function processElseSpacing(File $phpcsFile, int $stackPtr): void {
+		$tokens = $phpcsFile->getTokens();
+
+		// Find the previous non-whitespace token (should be closing brace)
+		$prevNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+
+		if ($prevNonWhitespace === false || $tokens[$prevNonWhitespace]['code'] !== T_CLOSE_CURLY_BRACKET) {
+			// No closing brace before else/elseif, skip
+			return;
+		}
+
+		$closingBrace = $prevNonWhitespace;
+		$elseToken = $stackPtr;
+		$keyword = $tokens[$elseToken]['code'] === T_ELSE ? 'else' : 'elseif';
+
+		// Check if closing brace and else/elseif are on the same line
+		if ($tokens[$closingBrace]['line'] !== $tokens[$elseToken]['line']) {
+			// They are on different lines - we need to fix this
+			$error = sprintf('Expected "} %s" on the same line; found closing brace and %s on different lines', $keyword, $keyword);
+			$fix = $phpcsFile->addFixableError($error, $elseToken, 'SpacingBetweenBraceAndKeyword');
+
+			if ($fix) {
+				// Fix: Remove all whitespace between closing brace and else/elseif, add single space
+				$phpcsFile->fixer->beginChangeset();
+
+				// Remove all tokens between closing brace and else/elseif
+				for ($i = $closingBrace + 1; $i < $elseToken; $i++) {
+					$phpcsFile->fixer->replaceToken($i, '');
+				}
+
+				// Add single space after closing brace
+				$phpcsFile->fixer->addContent($closingBrace, ' ');
+
+				$phpcsFile->fixer->endChangeset();
+			}
+		}
+
+		// Check opening brace position
+		$this->checkOpeningBrace($phpcsFile, $stackPtr);
+	}
+
+	/**
+	 * Check and fix the opening brace position for else/elseif.
+	 *
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $stackPtr Position of else/elseif token
+	 *
+	 * @return void
+	 */
+	protected function checkOpeningBrace(File $phpcsFile, int $stackPtr): void {
+		$tokens = $phpcsFile->getTokens();
+		$elseToken = $stackPtr;
+		$keyword = $tokens[$elseToken]['code'] === T_ELSE ? 'else' : 'elseif';
+
+		// For elseif, we need to find the closing parenthesis first
+		if ($tokens[$elseToken]['code'] === T_ELSEIF) {
+			$openParen = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $elseToken + 1, null, false, null, true);
+			if ($openParen === false || empty($tokens[$openParen]['parenthesis_closer'])) {
+				return;
+			}
+			$closeParen = $tokens[$openParen]['parenthesis_closer'];
+			$searchStart = $closeParen + 1;
+		} else {
+			// For else, search starts right after else keyword
+			$searchStart = $elseToken + 1;
+		}
+
+		// Find the opening brace
+		$openingBrace = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, $searchStart, null, false, null, true);
+		if ($openingBrace === false) {
+			return;
+		}
+
+		// Find the token right before the opening brace (should be closing paren for elseif, or else keyword)
+		$prevNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, $openingBrace - 1, null, true);
+		if ($prevNonWhitespace === false) {
+			return;
+		}
+
+		// Check if they are on the same line
+		if ($tokens[$prevNonWhitespace]['line'] !== $tokens[$openingBrace]['line']) {
+			// They are on different lines - we need to fix this
+			$expectedFormat = $tokens[$elseToken]['code'] === T_ELSEIF ? '} elseif (...) {' : '} else {';
+			$error = sprintf('Expected "%s" with opening brace on the same line; found opening brace on different line', $expectedFormat);
+			$fix = $phpcsFile->addFixableError($error, $openingBrace, 'OpeningBraceOnDifferentLine');
+
+			if ($fix) {
+				// Fix: Remove all whitespace between previous token and opening brace, add single space
+				$phpcsFile->fixer->beginChangeset();
+
+				// Remove all tokens between previous token and opening brace
+				for ($i = $prevNonWhitespace + 1; $i < $openingBrace; $i++) {
+					$phpcsFile->fixer->replaceToken($i, '');
+				}
+
+				// Add single space after previous token
+				$phpcsFile->fixer->addContent($prevNonWhitespace, ' ');
+
+				$phpcsFile->fixer->endChangeset();
+			}
 		}
 	}
 
