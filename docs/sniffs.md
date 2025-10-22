@@ -108,7 +108,7 @@ PSR2 (6 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (41 sniffs)
+PSR2R (42 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.InterfaceName
@@ -132,6 +132,7 @@ PSR2R (41 sniffs)
 - PSR2R.ControlStructures.ElseIfDeclaration
 - PSR2R.ControlStructures.NoInlineAssignment
 - PSR2R.ControlStructures.TernarySpacing
+- PSR2R.ControlStructures.UnneededElse
 - PSR2R.Files.ClosingTag
 - PSR2R.Files.EndFileNewline
 - PSR2R.Methods.MethodDeclaration
@@ -162,7 +163,7 @@ PSR12 (7 sniffs)
 - PSR12.Namespaces.CompoundNamespaceDepth
 - PSR12.Operators.OperatorSpacing
 
-SlevomatCodingStandard (46 sniffs)
+SlevomatCodingStandard (45 sniffs)
 ----------------------------------
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
@@ -178,7 +179,6 @@ SlevomatCodingStandard (46 sniffs)
 - SlevomatCodingStandard.ControlStructures.AssignmentInCondition
 - SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch
 - SlevomatCodingStandard.ControlStructures.DisallowYodaComparison
-- SlevomatCodingStandard.ControlStructures.EarlyExit
 - SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing
 - SlevomatCodingStandard.ControlStructures.NewWithParentheses
 - SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator
