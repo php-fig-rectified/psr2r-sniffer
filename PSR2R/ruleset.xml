@@ -312,6 +312,11 @@
 		</properties>
 	</rule>
 
+	<!-- buggy -->
+	<rule ref="Squiz.ControlStructures.ControlSignature">
+		<exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
+	</rule>
+
 	<!-- conflicting -->
 	<rule ref="Squiz.WhiteSpace.MemberVarSpacing.FirstIncorrect">
 		<severity>0</severity>
