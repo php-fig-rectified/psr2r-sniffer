@@ -23,8 +23,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  *
- * @version Release: @package_version@
- *
  * @link http://pear.php.net/package/PHP_CodeSniffer
  */
 class EndFileNewlineSniff implements Sniff {
@@ -50,7 +48,7 @@ class EndFileNewlineSniff implements Sniff {
 
 		// Hard-coding the expected \n in this sniff as it is PSR-2 specific and
 		// PSR-2 enforces the use of unix style newlines.
-		if (substr($tokens[$lastToken]['content'], -1) !== "\n") {
+		if (!str_ends_with($tokens[$lastToken]['content'], "\n")) {
 			$error = 'Expected 1 newline at end of file; 0 found';
 			$fix = $phpcsFile->addFixableError($error, $lastToken, 'NoneFound');
 			if ($fix === true) {

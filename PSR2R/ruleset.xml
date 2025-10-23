@@ -277,7 +277,8 @@
 
 	<rule ref="Generic.WhiteSpace.ScopeIndent">
 		<properties>
-			<property name="tabIndent" value="true" />
+			<property name="tabIndent" value="true"/>
+			<property name="exact" value="true"/>
 		</properties>
 	</rule>
 
