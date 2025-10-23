@@ -49,35 +49,32 @@ class TabAndSpaceSniff implements Sniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$line = $tokens[$stackPtr]['line'];
-		if ($stackPtr > 0 && $tokens[$stackPtr - 1]['line'] !== $line) {
+		// Only check whitespace at the start of lines (indentation)
+		if ($stackPtr > 0 && $tokens[$stackPtr - 1]['line'] === $line) {
 			return;
 		}
 
-		if (strpos($tokens[$stackPtr]['content'], '  ') !== false) {
-			$error = 'Double space found';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'DoubleSpace');
+		$content = $tokens[$stackPtr]['orig_content'] ?? $tokens[$stackPtr]['content'];
+
+		// Check for space followed by tab (wrong order)
+		if (str_contains($content, ' ' . "\t")) {
+			$error = 'Space followed by tab found in indentation; use tabs only';
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeTab');
 			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr, ' ');
+				// Replace space+tab patterns with just tabs
+				$phpcsFile->fixer->replaceToken($stackPtr, str_replace(" \t", "\t", $content));
 			}
 		}
-		if (strpos($tokens[$stackPtr]['content'], " \t") !== false) {
-			$error = 'Space and tab found';
-			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAndTab');
+
+		// Check for tab followed by space (mixed indentation)
+		if (str_contains($content, "\t ")) {
+			$error = 'Tab followed by space found in indentation; use tabs only';
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'TabAndSpace');
 			if ($fix) {
-				$phpcsFile->fixer->replaceToken($stackPtr, ' ');
+				// Remove spaces after tabs at start of line
+				$phpcsFile->fixer->replaceToken($stackPtr, preg_replace('/^(\t+) +/', '$1', $content));
 			}
 		}
-		if (strpos($tokens[$stackPtr]['content'], "\t ") === false) {
-			return;
-		}
-
-		$error = 'Tab and space found';
-		$fix = $phpcsFile->addFixableError($error, $stackPtr, 'TabAndSpace');
-		if (!$fix) {
-			return;
-		}
-
-		$phpcsFile->fixer->replaceToken($stackPtr, ' ');
 	}
 
 }
