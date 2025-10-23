@@ -71,11 +71,17 @@ class ConsistentIndentSniff implements Sniff {
 		// Get the expected indentation based on scope
 		$expectedIndent = $this->getExpectedIndent($phpcsFile, $nextToken, $tokens);
 
-		// Allow continuation lines (lines can be indented more for alignment)
-		// But check if the previous line suggests this should NOT be indented more
+		// Check if line is over-indented (more than expected for its scope)
 		if ($currentIndent > $expectedIndent) {
+			// Check if this line starts with a continuation operator
+			if ($this->startsWithContinuationOperator($nextToken, $tokens)) {
+				return; // Valid continuation line
+			}
+
 			$prevLine = $this->findPreviousContentLine($phpcsFile, $stackPtr, $tokens);
-			if ($prevLine !== null && $this->isOrphanedIndent($phpcsFile, $prevLine, $currentIndent, $expectedIndent, $tokens)) {
+
+			// Check if this is a valid continuation line or incorrectly indented
+			if ($prevLine !== null && !$this->isValidContinuation($phpcsFile, $prevLine, $tokens)) {
 				$error = 'Line indented incorrectly; expected %d tabs, found %d';
 				$data = [$expectedIndent, $currentIndent];
 				$fix = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
@@ -146,48 +152,82 @@ class ConsistentIndentSniff implements Sniff {
 	}
 
 	/**
-	 * Check if this looks like orphaned indentation (not a valid continuation).
+	 * Check if this line starts with a continuation operator.
 	 *
-	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
-	 * @param int $prevToken Previous content token
-	 * @param int $currentIndent
-	 * @param int $expectedIndent
+	 * @param int $nextToken First non-whitespace token on the line
 	 * @param array $tokens
 	 *
 	 * @return bool
 	 */
-	protected function isOrphanedIndent(File $phpcsFile, int $prevToken, int $currentIndent, int $expectedIndent, array $tokens): bool {
-		// Pattern 1: Previous line was a closing brace
-		// This catches: } \n    orphaned code
-		if ($tokens[$prevToken]['code'] === T_CLOSE_CURLY_BRACKET) {
+	protected function startsWithContinuationOperator(int $nextToken, array $tokens): bool {
+		$continuationStarters = [
+			\T_STRING_CONCAT,
+			\T_OBJECT_OPERATOR,
+			\T_NULLSAFE_OBJECT_OPERATOR,
+			\T_BOOLEAN_AND,
+			\T_BOOLEAN_OR,
+			\T_LOGICAL_AND,
+			\T_LOGICAL_OR,
+			\T_PLUS,
+			\T_MINUS,
+			\T_MULTIPLY,
+			\T_DIVIDE,
+		];
+
+		return in_array($tokens[$nextToken]['code'], $continuationStarters, true);
+	}
+
+	/**
+	 * Check if this looks like a valid continuation line (allowed to have extra indentation).
+	 *
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $prevToken Previous content token
+	 * @param array $tokens
+	 *
+	 * @return bool True if this is a valid continuation, false if it should match scope indent
+	 */
+	protected function isValidContinuation(File $phpcsFile, int $prevToken, array $tokens): bool {
+		$prevCode = $tokens[$prevToken]['code'];
+
+		// Tokens that indicate the next line is a continuation
+		$continuationTokens = [
+			\T_PLUS,
+			\T_MINUS,
+			\T_MULTIPLY,
+			\T_DIVIDE,
+			\T_MODULUS,
+			\T_STRING_CONCAT,
+			\T_COMMA,
+			\T_OPEN_PARENTHESIS,
+			\T_OPEN_SQUARE_BRACKET,
+			\T_OPEN_SHORT_ARRAY,
+			\T_DOUBLE_ARROW,
+			\T_BOOLEAN_AND,
+			\T_BOOLEAN_OR,
+			\T_LOGICAL_AND,
+			\T_LOGICAL_OR,
+			\T_INSTANCEOF,
+			\T_INLINE_THEN,
+			\T_COALESCE,
+			\T_OBJECT_OPERATOR,
+			\T_NULLSAFE_OBJECT_OPERATOR,
+			\T_EQUAL,
+			\T_PLUS_EQUAL,
+			\T_MINUS_EQUAL,
+			\T_MUL_EQUAL,
+			\T_DIV_EQUAL,
+			\T_CONCAT_EQUAL,
+			\T_MOD_EQUAL,
+		];
+
+		if (in_array($prevCode, $continuationTokens, true)) {
 			return true;
 		}
 
-		// Pattern 2: Previous line ended with }; (closure, array, etc.)
-		// This catches: }; \n    orphaned code
-		if ($tokens[$prevToken]['code'] === T_SEMICOLON) {
-			// Check if the token before semicolon is a closing brace
-			$beforeSemicolon = $phpcsFile->findPrevious(T_WHITESPACE, $prevToken - 1, null, true);
-			if ($beforeSemicolon !== false && $tokens[$beforeSemicolon]['code'] === T_CLOSE_CURLY_BRACKET) {
-				return true;
-			}
-
-			// Pattern 3: Previous line is at the same over-indented level
-			// This catches consecutive orphaned lines: } \n    line1; \n    line2;
-			// Find the start of the previous line to check its indentation
-			$prevLineStart = $prevToken;
-			while ($prevLineStart > 0 && $tokens[$prevLineStart - 1]['line'] === $tokens[$prevToken]['line']) {
-				$prevLineStart--;
-			}
-
-			// Check if previous line started with whitespace
-			if ($tokens[$prevLineStart]['code'] === T_WHITESPACE) {
-				$prevIndent = $this->getIndentLevel($tokens[$prevLineStart]);
-				// If previous line was also over-indented at the same level, this is likely orphaned too
-				if ($prevIndent === $currentIndent && $prevIndent > $expectedIndent) {
-					return true;
-				}
-			}
+		// Check string representation for bracket tokens (PHPCS sometimes uses string codes)
+		$prevContent = $tokens[$prevToken]['content'] ?? '';
+		if ($prevContent === '[' || $prevContent === '(') {
+			return true;
 		}
 
 		return false;
