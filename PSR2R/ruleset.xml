@@ -282,7 +282,6 @@
 				<element value="T_DOC_COMMENT_OPEN_TAG"/>
 			</property>
 			<property name="tabIndent" value="true"/>
-			<property name="exact" value="true"/>
 		</properties>
 	</rule>
 
