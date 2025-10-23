@@ -79,8 +79,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 			return;
 		}
 
-		$isNotWalled =
-			(in_array($tokens[$nextIndex]['code'], $leftWall, false) && $tokens[$stackPtr]['column'] !== 1);
+		$isNotWalled = (in_array($tokens[$nextIndex]['code'], $leftWall, false) && $tokens[$stackPtr]['column'] !== 1);
 		$isNotIndented = false;
 		if ($isNotFlatFile) {
 			$isNotIndented = (in_array($tokens[$nextIndex]['code'], $oneIndentation, false) &&
@@ -91,8 +90,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 			return;
 		}
 
-		$fix =
-			$phpcsFile->addFixableError('Expected docblock to be aligned with code.', $stackPtr, 'NotAllowed');
+		$fix = $phpcsFile->addFixableError('Expected docblock to be aligned with code.', $stackPtr, 'NotAllowed');
 		if (!$fix) {
 			return;
 		}

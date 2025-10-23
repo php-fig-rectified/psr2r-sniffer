@@ -163,15 +163,13 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 				continue;
 			}
 
-			$mappingTag =
-				isset(static::$mapping[$content]) ? static::$mapping[$tokens[$i]['content']] : null;
+			$mappingTag = isset(static::$mapping[$content]) ? static::$mapping[$tokens[$i]['content']] : null;
 			if ($mappingTag) {
 				$error .= ', expected `' . $mappingTag . '`';
 			}
 
 			$prevAsterix = $phpcsFile->findPrevious(T_DOC_COMMENT_STAR, $i - 1, $docBlockStartIndex);
-			$nextAsterix =
-				$phpcsFile->findNext([T_DOC_COMMENT_STAR, T_DOC_COMMENT_CLOSE_TAG], $i + 1, $docBlockEndIndex + 1);
+			$nextAsterix = $phpcsFile->findNext([T_DOC_COMMENT_STAR, T_DOC_COMMENT_CLOSE_TAG], $i + 1, $docBlockEndIndex + 1);
 			if (!$prevAsterix || !$nextAsterix) {
 				$phpcsFile->addError($error, $i, 'Invalid');
 

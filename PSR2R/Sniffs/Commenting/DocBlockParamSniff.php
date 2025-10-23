@@ -144,8 +144,7 @@ class DocBlockParamSniff extends AbstractSniff {
 		$i = $startIndex;
 		while ($nextVariableIndex = $phpcsFile->findNext(T_VARIABLE, $i + 1, $endIndex)) {
 			$typehint = $default = null;
-			$possibleTypeHint =
-				$phpcsFile->findPrevious([T_ARRAY, T_CALLABLE], $nextVariableIndex - 1, $nextVariableIndex - 3);
+			$possibleTypeHint = $phpcsFile->findPrevious([T_ARRAY, T_CALLABLE], $nextVariableIndex - 1, $nextVariableIndex - 3);
 			if ($possibleTypeHint) {
 				$typehint = $possibleTypeHint;
 			}
@@ -155,12 +154,11 @@ class DocBlockParamSniff extends AbstractSniff {
 
 			$possibleEqualIndex = $phpcsFile->findNext([T_EQUAL], $nextVariableIndex + 1, $nextVariableIndex + 2);
 			if ($possibleEqualIndex) {
-				$possibleDefaultValue =
-					$phpcsFile->findNext(
-						[T_STRING, T_TRUE, T_FALSE, T_NULL, T_ARRAY],
-						$possibleEqualIndex + 1,
-						$possibleEqualIndex + 2,
-					);
+				$possibleDefaultValue = $phpcsFile->findNext(
+					[T_STRING, T_TRUE, T_FALSE, T_NULL, T_ARRAY],
+					$possibleEqualIndex + 1,
+					$possibleEqualIndex + 2,
+				);
 				if ($possibleDefaultValue) {
 					$default = $possibleDefaultValue;
 				}
