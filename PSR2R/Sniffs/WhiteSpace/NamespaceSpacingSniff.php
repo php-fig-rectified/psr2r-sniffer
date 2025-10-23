@@ -23,7 +23,7 @@ class NamespaceSpacingSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$beforeIndex = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);

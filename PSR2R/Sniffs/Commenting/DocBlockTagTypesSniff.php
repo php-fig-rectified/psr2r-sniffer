@@ -135,7 +135,7 @@ class DocBlockTagTypesSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpcsFile, $stackPtr);

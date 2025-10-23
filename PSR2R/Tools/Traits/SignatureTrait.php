@@ -10,30 +10,30 @@ use PHP_CodeSniffer\Files\File;
 trait SignatureTrait {
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 *
 	 * @return array<array>
 	 */
-	protected function getMethodSignature(File $phpCsFile, int $stackPtr): array {
-		$tokens = $phpCsFile->getTokens();
+	protected function getMethodSignature(File $phpcsFile, int $stackPtr): array {
+		$tokens = $phpcsFile->getTokens();
 
-		$startIndex = $phpCsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);
+		$startIndex = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr + 1);
 		$endIndex = $tokens[$startIndex]['parenthesis_closer'];
 
 		$arguments = [];
 		$i = $startIndex;
-		while ($nextVariableIndex = $phpCsFile->findNext(T_VARIABLE, $i + 1, $endIndex)) {
+		while ($nextVariableIndex = $phpcsFile->findNext(T_VARIABLE, $i + 1, $endIndex)) {
 			$typehintIndex = $defaultIndex = $default = null;
-			$possibleTypeHint = $phpCsFile->findPrevious([T_ARRAY, T_CALLABLE], $nextVariableIndex - 1, $nextVariableIndex - 3);
+			$possibleTypeHint = $phpcsFile->findPrevious([T_ARRAY, T_CALLABLE], $nextVariableIndex - 1, $nextVariableIndex - 3);
 			if ($possibleTypeHint) {
 				$typehintIndex = $possibleTypeHint;
 			}
 
-			$possibleEqualIndex = $phpCsFile->findNext([T_EQUAL], $nextVariableIndex + 1, $nextVariableIndex + 3);
+			$possibleEqualIndex = $phpcsFile->findNext([T_EQUAL], $nextVariableIndex + 1, $nextVariableIndex + 3);
 			if ($possibleEqualIndex) {
 				$whitelist = [T_CONSTANT_ENCAPSED_STRING, T_TRUE, T_FALSE, T_NULL, T_OPEN_SHORT_ARRAY, T_LNUMBER, T_DNUMBER];
-				$possibleDefaultValue = $phpCsFile->findNext($whitelist, $possibleEqualIndex + 1, $possibleEqualIndex + 3);
+				$possibleDefaultValue = $phpcsFile->findNext($whitelist, $possibleEqualIndex + 1, $possibleEqualIndex + 3);
 				if ($possibleDefaultValue) {
 					$defaultIndex = $possibleDefaultValue;
 					//$default = $tokens[$defaultIndex]['content'];

@@ -12,14 +12,14 @@ trait CommentingTrait {
 	/**
 	 * Looks for either `@inheritdoc` or `{@inheritdoc}`.
 	 *
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $docBlockStartIndex
 	 * @param int $docBlockEndIndex
 	 *
 	 * @return bool
 	 */
-	protected function hasInheritDoc(File $phpCsFile, int $docBlockStartIndex, int $docBlockEndIndex): bool {
-		$tokens = $phpCsFile->getTokens();
+	protected function hasInheritDoc(File $phpcsFile, int $docBlockStartIndex, int $docBlockEndIndex): bool {
+		$tokens = $phpcsFile->getTokens();
 
 		for ($i = $docBlockStartIndex + 1; $i < $docBlockEndIndex; ++$i) {
 			if (empty($tokens[$i]['content'])) {

@@ -29,10 +29,10 @@ class DocBlockParamArraySniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer): void {
-		$tokens = $phpCsFile->getTokens();
+	public function process(File $phpcsFile, int $stackPointer): void {
+		$tokens = $phpcsFile->getTokens();
 
-		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
+		$docBlockEndIndex = $this->findRelatedDocBlock($phpcsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
 			return;
@@ -74,7 +74,7 @@ class DocBlockParamArraySniff extends AbstractSniff {
 
 			$error = 'Doc Block param type `array` not needed on top of  `...[]`';
 			// For now just report
-			$fix = $phpCsFile->addFixableError($error, $classNameIndex, 'TypeDuplicated');
+			$fix = $phpcsFile->addFixableError($error, $classNameIndex, 'TypeDuplicated');
 			if (!$fix) {
 				continue;
 			}
@@ -85,9 +85,9 @@ class DocBlockParamArraySniff extends AbstractSniff {
 			}
 			$content = implode('|', $pieces);
 
-			$phpCsFile->fixer->beginChangeset();
-			$phpCsFile->fixer->replaceToken($classNameIndex, $content . $appendix);
-			$phpCsFile->fixer->endChangeset();
+			$phpcsFile->fixer->beginChangeset();
+			$phpcsFile->fixer->replaceToken($classNameIndex, $content . $appendix);
+			$phpcsFile->fixer->endChangeset();
 		}
 	}
 

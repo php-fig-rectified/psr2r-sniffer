@@ -36,7 +36,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		// We skip for comments in the middle of code
 		if ($this->findFirstNonWhitespaceInLine($phpcsFile, $stackPtr)) {
 			return;

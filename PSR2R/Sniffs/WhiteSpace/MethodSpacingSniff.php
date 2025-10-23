@@ -23,7 +23,7 @@ class MethodSpacingSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$stringIndex = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);

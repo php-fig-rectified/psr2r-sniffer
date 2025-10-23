@@ -25,7 +25,7 @@ class ListCommaSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$openIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);

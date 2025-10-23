@@ -39,9 +39,9 @@ class EndFileNewlineSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		if ($phpcsFile->findNext(T_INLINE_HTML, $stackPtr + 1) !== false) {
-			return $phpcsFile->numTokens + 1;
+			return;
 		}
 
 		// Skip to the end of the file.
@@ -59,7 +59,7 @@ class EndFileNewlineSniff implements Sniff {
 
 			$phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', '0');
 
-			return $phpcsFile->numTokens + 1;
+			return;
 		}
 
 		// Go looking for the last non-empty line.
@@ -89,9 +89,6 @@ class EndFileNewlineSniff implements Sniff {
 				$phpcsFile->fixer->endChangeset();
 			}
 		}
-
-		// Skip the rest of the file.
-		return $phpcsFile->numTokens + 1;
 	}
 
 }

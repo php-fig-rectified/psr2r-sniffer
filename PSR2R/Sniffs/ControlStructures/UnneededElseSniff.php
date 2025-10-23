@@ -23,7 +23,7 @@ class UnneededElseSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		// Check that ALL preceding branches in the if/elseif chain have early exits

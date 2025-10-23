@@ -24,7 +24,7 @@ class PreferStaticOverSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$index = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);

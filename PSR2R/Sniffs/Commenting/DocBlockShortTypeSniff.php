@@ -29,10 +29,10 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer): void {
-		$tokens = $phpCsFile->getTokens();
+	public function process(File $phpcsFile, int $stackPointer): void {
+		$tokens = $phpcsFile->getTokens();
 
-		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
+		$docBlockEndIndex = $this->findRelatedDocBlock($phpcsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
 			return;
@@ -68,21 +68,21 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 			}
 
 			$parts = explode('|', $content);
-			$this->fixParts($phpCsFile, $classNameIndex, $parts, $appendix);
+			$this->fixParts($phpcsFile, $classNameIndex, $parts, $appendix);
 		}
 	}
 
 	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $classNameIndex
 	 * @param array $parts
 	 * @param string $appendix
 	 *
 	 * @return void
 	 */
-	protected function fixParts(File $phpCsFile, int $classNameIndex, array $parts, string $appendix): void {
+	protected function fixParts(File $phpcsFile, int $classNameIndex, array $parts, string $appendix): void {
 		$mapping = [
 			'boolean' => 'bool',
 			'integer' => 'int',
@@ -107,13 +107,13 @@ class DocBlockShortTypeSniff extends AbstractSniff {
 			$message[] = $part . ' => ' . $useStatement;
 		}
 
-		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'ShortType');
+		$fix = $phpcsFile->addFixableError(implode(', ', $message), $classNameIndex, 'ShortType');
 		if (!$fix) {
 			return;
 		}
 
 		$newContent = implode('|', $parts);
-		$phpCsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);
+		$phpcsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);
 	}
 
 }

@@ -24,7 +24,7 @@ class DocBlockEndingSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		// We are only interested in function/class/interface doc block comments.

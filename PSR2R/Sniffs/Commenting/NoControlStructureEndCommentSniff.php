@@ -20,7 +20,7 @@ class NoControlStructureEndCommentSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		$possibleCurlyBracket = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, 0, true);

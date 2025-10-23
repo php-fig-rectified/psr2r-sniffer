@@ -25,10 +25,10 @@ class DocBlockParamNoOpSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer): void {
-		$tokens = $phpCsFile->getTokens();
+	public function process(File $phpcsFile, int $stackPointer): void {
+		$tokens = $phpcsFile->getTokens();
 
-		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
+		$docBlockEndIndex = $this->findRelatedDocBlock($phpcsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
 			return;
@@ -66,7 +66,7 @@ class DocBlockParamNoOpSniff extends AbstractSniff {
 
 			$error = 'Possible doc block error: `' . $content
 				. '` as only param type does not seem right. Makes this a no-op.';
-			$phpCsFile->addWarning($error, $i, 'ParamNoOp');
+			$phpcsFile->addWarning($error, $i, 'ParamNoOp');
 		}
 	}
 

@@ -59,7 +59,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 *
 	 * @throws \RuntimeException
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		// Skip non-namespaces files for now

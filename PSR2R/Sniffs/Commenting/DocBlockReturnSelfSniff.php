@@ -29,8 +29,8 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer): void {
-		$tokens = $phpCsFile->getTokens();
+	public function process(File $phpcsFile, int $stackPointer): void {
+		$tokens = $phpcsFile->getTokens();
 		if (($stackPointer > 1) && ($tokens[$stackPointer - 2]['code'] === T_STATIC)) {
 			return; // Skip static function declarations
 		}
@@ -39,7 +39,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			return;
 		}
 
-		$docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
+		$docBlockEndIndex = $this->findRelatedDocBlock($phpcsFile, $stackPointer);
 
 		if (!$docBlockEndIndex) {
 			return;
@@ -79,7 +79,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			}
 
 			$parts = explode('|', $content);
-			$this->fixParts($phpCsFile, $classNameIndex, $parts, $appendix);
+			$this->fixParts($phpcsFile, $classNameIndex, $parts, $appendix);
 		}
 	}
 
@@ -108,14 +108,14 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $classNameIndex
 	 * @param array<string> $parts
 	 * @param string $appendix
 	 *
 	 * @return void
 	 */
-	protected function fixParts(File $phpCsFile, int $classNameIndex, array $parts, string $appendix): void {
+	protected function fixParts(File $phpcsFile, int $classNameIndex, array $parts, string $appendix): void {
 		$result = [];
 		foreach ($parts as $key => $part) {
 			if ($part !== 'self') {
@@ -135,13 +135,13 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 			$message[] = $part . ' => ' . $useStatement;
 		}
 
-		$fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex, 'ReturnSelf');
+		$fix = $phpcsFile->addFixableError(implode(', ', $message), $classNameIndex, 'ReturnSelf');
 		if (!$fix) {
 			return;
 		}
 
 		$newContent = implode('|', $parts);
-		$phpCsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);
+		$phpcsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);
 	}
 
 }

@@ -22,7 +22,7 @@ class DocBlockNoEmptySniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		if (empty($tokens[$stackPtr]['comment_closer'])) {

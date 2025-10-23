@@ -35,7 +35,7 @@ class DocBlockVarWithoutNameSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 		$docBlockStartIndex = $stackPtr;
 		$docBlockEndIndex = $tokens[$stackPtr]['comment_closer'];

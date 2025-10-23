@@ -29,7 +29,7 @@ class EmptyLinesSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$this->assertMaximumOneEmptyLineBetweenContent($phpcsFile, $stackPtr);
 	}
 

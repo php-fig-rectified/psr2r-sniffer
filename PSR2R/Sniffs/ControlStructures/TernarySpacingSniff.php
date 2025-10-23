@@ -25,7 +25,7 @@ class TernarySpacingSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$this->assertSpaceBefore($phpcsFile, $stackPtr);
 		$this->checkAfter($phpcsFile, $stackPtr);
 	}

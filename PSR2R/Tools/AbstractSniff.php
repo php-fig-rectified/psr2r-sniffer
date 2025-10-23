@@ -114,17 +114,17 @@ abstract class AbstractSniff implements Sniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPointer
 	 *
 	 * @return int|null Stackpointer value of docblock end tag, or null if cannot be found
 	 */
-	protected function findRelatedDocBlock(File $phpCsFile, int $stackPointer): ?int {
-		$tokens = $phpCsFile->getTokens();
+	protected function findRelatedDocBlock(File $phpcsFile, int $stackPointer): ?int {
+		$tokens = $phpcsFile->getTokens();
 
 		$beginningOfLine = $this->getFirstTokenOfLine($tokens, $stackPointer);
 
-		$prevContentIndex = $phpCsFile->findPrevious(T_WHITESPACE, $beginningOfLine - 1, null, true);
+		$prevContentIndex = $phpcsFile->findPrevious(T_WHITESPACE, $beginningOfLine - 1, null, true);
 		if (!$prevContentIndex) {
 			return null;
 		}
@@ -298,21 +298,21 @@ abstract class AbstractSniff implements Sniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 *
 	 * @return bool
 	 */
-	protected function hasNamespace(File $phpCsFile): bool {
-		return $this->findNamespaceIndex($phpCsFile) !== null;
+	protected function hasNamespace(File $phpcsFile): bool {
+		return $this->findNamespaceIndex($phpcsFile) !== null;
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 *
 	 * @return int|null
 	 */
-	protected function findNamespaceIndex(File $phpCsFile): ?int {
-		$namespacePosition = $phpCsFile->findNext(T_NAMESPACE, 0);
+	protected function findNamespaceIndex(File $phpcsFile): ?int {
+		$namespacePosition = $phpcsFile->findNext(T_NAMESPACE, 0);
 		if (!$namespacePosition) {
 			return null;
 		}
@@ -346,14 +346,14 @@ abstract class AbstractSniff implements Sniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $startIndex
 	 * @param int $endIndex
 	 *
 	 * @return string
 	 */
-	protected function getNamespaceAsString(File $phpCsFile, int $startIndex, int $endIndex): string {
-		$tokens = $phpCsFile->getTokens();
+	protected function getNamespaceAsString(File $phpcsFile, int $startIndex, int $endIndex): string {
+		$tokens = $phpcsFile->getTokens();
 
 		$namespace = '';
 		for ($i = $startIndex; $i <= $endIndex; $i++) {
@@ -364,13 +364,13 @@ abstract class AbstractSniff implements Sniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPtr
 	 *
 	 * @return bool
 	 */
-	protected function isPhpStormMarker(File $phpCsFile, int $stackPtr): bool {
-		$tokens = $phpCsFile->getTokens();
+	protected function isPhpStormMarker(File $phpcsFile, int $stackPtr): bool {
+		$tokens = $phpcsFile->getTokens();
 		$line = $tokens[$stackPtr]['line'];
 		if ($tokens[$stackPtr]['type'] !== 'T_DOC_COMMENT_OPEN_TAG') {
 			return false;
@@ -380,7 +380,7 @@ abstract class AbstractSniff implements Sniff {
 			return false; // Not an inline comment
 		}
 		foreach (static::$phpStormMarkers as $marker) {
-			if ($phpCsFile->findNext(T_DOC_COMMENT_TAG, $stackPtr + 1, $end, false, $marker) !== false) {
+			if ($phpcsFile->findNext(T_DOC_COMMENT_TAG, $stackPtr + 1, $end, false, $marker) !== false) {
 				return true;
 			}
 		}

@@ -24,10 +24,10 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpCsFile, $stackPointer): void {
-		$tokens = $phpCsFile->getTokens();
+	public function process(File $phpcsFile, int $stackPointer): void {
+		$tokens = $phpcsFile->getTokens();
 
-		$prevIndex = $phpCsFile->findPrevious(Tokens::$emptyTokens, $stackPointer - 1, null, true);
+		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPointer - 1, null, true);
 		if (!$this->isGivenKind(
 			[T_CLOSE_SHORT_ARRAY, T_TRUE, T_FALSE, T_NULL, T_LNUMBER, T_CONSTANT_ENCAPSED_STRING],
 			$tokens[$prevIndex],
@@ -43,7 +43,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 
 		$leftIndexStart = $prevIndex;
 
-		$prevIndex = $phpCsFile->findPrevious(Tokens::$emptyTokens, $prevIndex - 1, null, true);
+		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $prevIndex - 1, null, true);
 		if (!$prevIndex) {
 			return;
 		}
@@ -63,22 +63,22 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 			&& !$this->isGivenKind(Tokens::$booleanOperators, $tokens[$prevIndex])
 		) {
 			// Not fixable
-			$phpCsFile->addError($error, $stackPointer, 'YodaConditions');
+			$phpcsFile->addError($error, $stackPointer, 'YodaConditions');
 
 			return;
 		}
 
-		$rightIndexStart = $phpCsFile->findNext(Tokens::$emptyTokens, $stackPointer + 1, null, true);
+		$rightIndexStart = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPointer + 1, null, true);
 
 		if ($this->isGivenKind(T_OPEN_PARENTHESIS, $tokens[$prevIndex])) {
-			$rightIndexEnd = $phpCsFile->findPrevious(
+			$rightIndexEnd = $phpcsFile->findPrevious(
 				Tokens::$emptyTokens,
 				$tokens[$prevIndex]['parenthesis_closer'] - 1,
 				null,
 				true,
 			);
 		} else {
-			$previousParenthesisOpenerIndex = $phpCsFile->findPrevious(T_OPEN_PARENTHESIS, $prevIndex - 1);
+			$previousParenthesisOpenerIndex = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, $prevIndex - 1);
 			$limit = null;
 			if ($previousParenthesisOpenerIndex &&
 				$tokens[$previousParenthesisOpenerIndex]['parenthesis_closer'] > $rightIndexStart
@@ -86,16 +86,16 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 				$limit = $tokens[$previousParenthesisOpenerIndex]['parenthesis_closer'];
 			}
 
-			$rightIndexEnd = $this->detectRightEnd($phpCsFile, $rightIndexStart, $limit);
+			$rightIndexEnd = $this->detectRightEnd($phpcsFile, $rightIndexStart, $limit);
 		}
 
-		$fix = $phpCsFile->addFixableError($error, $stackPointer, 'RightEnd');
+		$fix = $phpcsFile->addFixableError($error, $stackPointer, 'RightEnd');
 		if (!$fix) {
 			return;
 		}
 
 		$this->applyFix(
-			$phpCsFile,
+			$phpcsFile,
 			$stackPointer,
 			$leftIndexStart,
 			$leftIndexEnd,
@@ -105,14 +105,14 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	}
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
 	 * @param int|null $limit
 	 *
 	 * @return int|null
 	 */
-	protected function detectRightEnd(File $phpCsFile, int $index, ?int $limit = 0): ?int {
-		$tokens = $phpCsFile->getTokens();
+	protected function detectRightEnd(File $phpcsFile, int $index, ?int $limit = 0): ?int {
+		$tokens = $phpcsFile->getTokens();
 
 		$rightEndIndex = $index;
 		$nextIndex = $index;
@@ -121,7 +121,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		}
 
 		while (true) {
-			$nextIndex = $phpCsFile->findNext(Tokens::$emptyTokens, $nextIndex + 1, null, true);
+			$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $nextIndex + 1, null, true);
 			if (!$nextIndex) {
 				return $rightEndIndex;
 			}
@@ -155,7 +155,7 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	/** @noinspection MoreThanThreeArgumentsInspection */
 
 	/**
-	 * @param \PHP_CodeSniffer\Files\File $phpCsFile
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $index
 	 * @param int $leftIndexStart
 	 * @param int $leftIndexEnd
@@ -164,37 +164,37 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 	 *
 	 * @return void
 	 */
-	protected function applyFix(File $phpCsFile,
+	protected function applyFix(File $phpcsFile,
 		int $index,
 		int $leftIndexStart,
 		int $leftIndexEnd,
 		int $rightIndexStart,
 		int $rightIndexEnd,
 	): void {
-		$tokens = $phpCsFile->getTokens();
+		$tokens = $phpcsFile->getTokens();
 
 		$token = $tokens[$index];
 		// Check if we need to inverse comparison operator
 		$comparisonValue = $this->getComparisonValue($token);
 
-		$phpCsFile->fixer->beginChangeset();
+		$phpcsFile->fixer->beginChangeset();
 
 		$leftValue = '';
 		for ($i = $leftIndexStart; $i <= $leftIndexEnd; ++$i) {
 			$leftValue .= $tokens[$i]['content'];
-			$phpCsFile->fixer->replaceToken($i, '');
+			$phpcsFile->fixer->replaceToken($i, '');
 		}
 		$rightValue = '';
 		for ($i = $rightIndexStart; $i <= $rightIndexEnd; ++$i) {
 			$rightValue .= $tokens[$i]['content'];
-			$phpCsFile->fixer->replaceToken($i, '');
+			$phpcsFile->fixer->replaceToken($i, '');
 		}
 
-		$phpCsFile->fixer->replaceToken($index, $comparisonValue);
-		$phpCsFile->fixer->replaceToken($leftIndexEnd, $rightValue);
-		$phpCsFile->fixer->replaceToken($rightIndexStart, $leftValue);
+		$phpcsFile->fixer->replaceToken($index, $comparisonValue);
+		$phpcsFile->fixer->replaceToken($leftIndexEnd, $rightValue);
+		$phpcsFile->fixer->replaceToken($rightIndexStart, $leftValue);
 
-		$phpCsFile->fixer->endChangeset();
+		$phpcsFile->fixer->endChangeset();
 	}
 
 	/**

@@ -39,7 +39,7 @@ class ClosingTagSniff implements Sniff {
 	/**
 	 * @inheritDoc
 	 */
-	public function process(File $phpcsFile, $stackPtr) {
+	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
 		// Make sure this file only contains PHP code.
@@ -48,7 +48,7 @@ class ClosingTagSniff implements Sniff {
 			if ($tokens[$i]['code'] === T_INLINE_HTML
 				&& trim($tokens[$i]['content']) !== ''
 			) {
-				return $phpcsFile->numTokens;
+				return;
 			}
 		}
 
@@ -70,9 +70,6 @@ class ClosingTagSniff implements Sniff {
 		} else {
 			$phpcsFile->recordMetric($stackPtr, 'PHP closing tag at end of PHP-only file', 'no');
 		}
-
-		// Ignore the rest of the file.
-		return $phpcsFile->numTokens;
 	}
 
 }
