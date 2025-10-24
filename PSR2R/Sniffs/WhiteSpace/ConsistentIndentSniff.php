@@ -62,14 +62,25 @@ class ConsistentIndentSniff implements Sniff {
 			return;
 		}
 
-		// Skip control flow keywords that often have blank lines before them
-		$controlFlowTokens = [T_BREAK, T_CONTINUE, T_RETURN, T_THROW, T_CASE, T_DEFAULT];
-		if (in_array($tokens[$nextToken]['code'], $controlFlowTokens, true)) {
+		// Skip case/default - they have special indentation rules in switch statements
+		if (in_array($tokens[$nextToken]['code'], [T_CASE, T_DEFAULT], true)) {
 			return;
 		}
 
 		// Get the expected indentation based on scope
 		$expectedIndent = $this->getExpectedIndent($phpcsFile, $nextToken, $tokens);
+
+		// Special handling for break/continue in switch statements
+		// They can be indented one level deeper (at case body level)
+		if (in_array($tokens[$nextToken]['code'], [T_BREAK, T_CONTINUE], true)) {
+			if ($this->isInSwitch($tokens, $nextToken)) {
+				// Allow one extra level of indentation for break/continue in switch
+				// (they're typically at the same level as case body code)
+				if ($currentIndent === $expectedIndent + 1) {
+					return;
+				}
+			}
+		}
 
 		// Check if line is over-indented (more than expected for its scope)
 		if ($currentIndent > $expectedIndent) {
@@ -149,6 +160,58 @@ class ConsistentIndentSniff implements Sniff {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Check if there's a blank line before the current line.
+	 *
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $stackPtr
+	 * @param array $tokens
+	 *
+	 * @return bool
+	 */
+	protected function hasBlankLineBefore(File $phpcsFile, int $stackPtr, array $tokens): bool {
+		$currentLine = $tokens[$stackPtr]['line'];
+
+		// Find the previous line
+		$prevLine = $currentLine - 1;
+		if ($prevLine < 1) {
+			return false;
+		}
+
+		// Check if the previous line is empty (only whitespace or completely blank)
+		for ($i = $stackPtr - 1; $i >= 0; $i--) {
+			if ($tokens[$i]['line'] < $prevLine) {
+				// We've gone past the previous line
+				break;
+			}
+
+			if ($tokens[$i]['line'] === $prevLine) {
+				// Found a token on the previous line
+				if ($tokens[$i]['code'] !== T_WHITESPACE) {
+					// Previous line has content
+					return false;
+				}
+			}
+		}
+
+		// Previous line was empty (only whitespace or no tokens)
+		return true;
+	}
+
+	/**
+	 * Check if the token is inside a switch statement.
+	 *
+	 * @param array $tokens
+	 * @param int $stackPtr
+	 *
+	 * @return bool
+	 */
+	protected function isInSwitch(array $tokens, int $stackPtr): bool {
+		$conditions = $tokens[$stackPtr]['conditions'];
+
+		return in_array(T_SWITCH, $conditions, true);
 	}
 
 	/**

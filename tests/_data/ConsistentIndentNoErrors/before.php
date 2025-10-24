@@ -135,4 +135,26 @@ class ConsistentIndentNoErrorsTest {
 		return true;
 	}
 
+	// Test 12: Array with docblock between elements (should NOT flag)
+	public function testArrayWithDocblock() {
+		$config = [
+			'Datasources' => [
+				'default' => [
+					'password' => env('DB_PASSWORD', ''),
+					'database' => env('DB_DATABASE', 'sandbox_local'), // Set in your app_local.php
+				],
+
+				/**
+				 * The test connection is used during the test suite.
+				 */
+		'test' => [
+					'password' => env('DB_PASSWORD', ''),
+					'database' => 'cakephp_test',
+				],
+			],
+		];
+
+		return $config;
+	}
+
 }
