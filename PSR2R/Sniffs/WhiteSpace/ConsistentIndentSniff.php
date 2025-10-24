@@ -57,6 +57,11 @@ class ConsistentIndentSniff implements Sniff {
 			return;
 		}
 
+		// Skip comments - they should maintain their context's indentation
+		if ($tokens[$nextToken]['code'] === T_COMMENT || $tokens[$nextToken]['code'] === T_DOC_COMMENT_OPEN_TAG) {
+			return;
+		}
+
 		// Skip closing braces - they're allowed to be dedented
 		if ($tokens[$nextToken]['code'] === T_CLOSE_CURLY_BRACKET) {
 			return;
@@ -70,11 +75,12 @@ class ConsistentIndentSniff implements Sniff {
 		// Get the expected indentation based on scope
 		$expectedIndent = $this->getExpectedIndent($phpcsFile, $nextToken, $tokens);
 
-		// Special handling for break/continue in switch statements
+		// Special handling for control flow keywords in switch statements
 		// They can be indented one level deeper (at case body level)
-		if (in_array($tokens[$nextToken]['code'], [T_BREAK, T_CONTINUE], true)) {
+		$switchControlFlowTokens = [T_BREAK, T_CONTINUE, T_RETURN, T_THROW];
+		if (in_array($tokens[$nextToken]['code'], $switchControlFlowTokens, true)) {
 			if ($this->isInSwitch($tokens, $nextToken)) {
-				// Allow one extra level of indentation for break/continue in switch
+				// Allow one extra level of indentation in switch
 				// (they're typically at the same level as case body code)
 				if ($currentIndent === $expectedIndent + 1) {
 					return;
@@ -235,6 +241,8 @@ class ConsistentIndentSniff implements Sniff {
 			\T_MINUS,
 			\T_MULTIPLY,
 			\T_DIVIDE,
+			\T_INLINE_THEN, // Ternary ?
+			\T_INLINE_ELSE, // Ternary :
 		];
 
 		return in_array($tokens[$nextToken]['code'], $continuationStarters, true);
@@ -270,7 +278,8 @@ class ConsistentIndentSniff implements Sniff {
 			\T_LOGICAL_AND,
 			\T_LOGICAL_OR,
 			\T_INSTANCEOF,
-			\T_INLINE_THEN,
+			\T_INLINE_THEN, // Ternary ?
+			\T_INLINE_ELSE, // Ternary :
 			\T_COALESCE,
 			\T_OBJECT_OPERATOR,
 			\T_NULLSAFE_OBJECT_OPERATOR,
@@ -281,6 +290,13 @@ class ConsistentIndentSniff implements Sniff {
 			\T_DIV_EQUAL,
 			\T_CONCAT_EQUAL,
 			\T_MOD_EQUAL,
+			\T_IS_EQUAL, // ==
+			\T_IS_NOT_EQUAL, // !=
+			\T_IS_IDENTICAL, // ===
+			\T_IS_NOT_IDENTICAL, // !==
+			\T_IS_SMALLER_OR_EQUAL, // <=
+			\T_IS_GREATER_OR_EQUAL, // >=
+			\T_SPACESHIP, // <=>
 		];
 
 		if (in_array($prevCode, $continuationTokens, true)) {
