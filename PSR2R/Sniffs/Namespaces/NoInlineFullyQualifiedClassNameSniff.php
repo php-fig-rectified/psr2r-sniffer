@@ -236,13 +236,18 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		$startIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $nextIndex + 1, null, true);
 		$endIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $endIndex - 1, null, true);
 
-		if (!$this->contains($phpcsFile, T_NS_SEPARATOR, $startIndex, $endIndex)) {
+		// Check for namespace separator (PHP < 8) or fully qualified name token (PHP 8+)
+		$hasNamespace = $this->contains($phpcsFile, T_NS_SEPARATOR, $startIndex, $endIndex);
+		if (!$hasNamespace && defined('T_NAME_FULLY_QUALIFIED')) {
+			$hasNamespace = $this->contains($phpcsFile, T_NAME_FULLY_QUALIFIED, $startIndex, $endIndex);
+		}
+		if (!$hasNamespace) {
 			return;
 		}
 
 		$extractedUseStatements = $this->extractUseStatements($phpcsFile, $startIndex, $endIndex);
 		foreach ($extractedUseStatements as $extractedUseStatement) {
-			if (strpos($extractedUseStatement['statement'], '\\') === false) {
+			if (!str_contains($extractedUseStatement['statement'], '\\')) {
 				continue;
 			}
 
@@ -264,6 +269,8 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 			if ($addedUseStatement['alias'] !== null) {
 				$phpcsFile->fixer->replaceToken($extractedUseStatement['end'], $addedUseStatement['alias']);
+			} else {
+				$phpcsFile->fixer->replaceToken($extractedUseStatement['end'], $addedUseStatement['shortName']);
 			}
 
 			/** @noinspection DisconnectedForeachInstructionInspection */
@@ -466,6 +473,8 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 			if ($addedUseStatement['alias'] !== null) {
 				$phpcsFile->fixer->replaceToken($extractedUseStatement['end'], $addedUseStatement['alias']);
+			} else {
+				$phpcsFile->fixer->replaceToken($extractedUseStatement['end'], $addedUseStatement['shortName']);
 			}
 
 			/** @noinspection DisconnectedForeachInstructionInspection */
