@@ -164,6 +164,7 @@
 	<rule ref="PhpCollective.WhiteSpace.CommaSpacing"/>
 	<rule ref="PhpCollective.WhiteSpace.ImplicitCastSpacing"/>
 
+
 	<rule ref="PhpCollective.Testing.AssertPrimitives"/>
 	<rule ref="PhpCollective.Testing.Mock"/>
 

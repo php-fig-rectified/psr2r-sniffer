@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 210 sniffs
+The PSR2R standard contains 209 sniffs
 
 Generic (24 sniffs)
 -------------------
@@ -108,7 +108,7 @@ PSR2 (6 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (44 sniffs)
+PSR2R (43 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.InterfaceName
@@ -144,7 +144,6 @@ PSR2R (44 sniffs)
 - PSR2R.PHP.PreferStaticOverSelf
 - PSR2R.WhiteSpace.ArrayDeclarationSpacing
 - PSR2R.WhiteSpace.ArraySpacing
-- PSR2R.WhiteSpace.ConsistentIndent
 - PSR2R.WhiteSpace.DocBlockAlignment
 - PSR2R.WhiteSpace.EmptyEnclosingLine
 - PSR2R.WhiteSpace.EmptyLines
