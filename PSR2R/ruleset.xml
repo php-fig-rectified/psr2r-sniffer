@@ -329,4 +329,9 @@
 		<severity>0</severity>
 	</rule>
 
+	<!-- PSR2R sniffs now covered by PhpCollective (excluded to avoid duplication) -->
+	<rule ref="PSR2R.ControlStructures.NoInlineAssignment">
+		<severity>0</severity>
+	</rule>
+
 </ruleset>
