@@ -4,10 +4,73 @@ namespace Test;
 
 use Some\Base\Exception;
 use Psr\Log\LoggerInterface;
+use Some\Namespace\ClassName;
+use Some\Namespace\CustomException;
 use Another\SerializableInterface;
 use Some\CountableInterface;
 
-// Anonymous class implementing interface with FQCN
+// Test 1: new statement with FQCN
+class NewStatement {
+	public function test(): void {
+		$obj = new ClassName();
+	}
+}
+
+// Test 2: static call with FQCN
+class StaticCall {
+	public function test(): void {
+		ClassName::staticMethod();
+	}
+}
+
+// Test 3: instanceof with FQCN
+class InstanceOfCheck {
+	public function test(): void {
+		$obj = new \stdClass();
+		if ($obj instanceof ClassName) {
+			// do something
+		}
+	}
+}
+
+// Test 4: catch with FQCN
+class CatchBlock {
+	public function test(): void {
+		try {
+			// something
+		} catch (CustomException $e) {
+			// handle
+		}
+	}
+}
+
+// Test 5: parameter type hint with FQCN
+class ParameterTypeHint {
+	public function test(ClassName $param): void {
+	}
+}
+
+// Test 6: return type hint with FQCN
+class ReturnTypeHint {
+	public function test(): ClassName {
+		return new ClassName();
+	}
+}
+
+// Test 7: nullable parameter type with FQCN
+class NullableParameter {
+	public function test(?ClassName $param): void {
+	}
+}
+
+// Test 8: nullable return type with FQCN
+class NullableReturn {
+	public function test(): ?ClassName {
+		return null;
+	}
+}
+
+// Test 9: Anonymous class implementing interface with FQCN
 class AnonymousClassImplements {
 	protected function test(): void {
 		$logger = new class implements LoggerInterface {

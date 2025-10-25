@@ -17,7 +17,7 @@ class NoInlineFullyQualifiedClassNameSniffTest extends TestCase
 	 */
 	public function testNoInlineFullyQualifiedClassNameSniffer(): void
 	{
-		$this->assertSnifferFindsErrors(new NoInlineFullyQualifiedClassNameSniff(), 11);
+		$this->assertSnifferFindsErrors(new NoInlineFullyQualifiedClassNameSniff(), 36);
 	}
 
 	/**

@@ -51,7 +51,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	 * @inheritDoc
 	 */
 	public function register(): array {
-		return [T_NEW, T_FUNCTION, T_DOUBLE_COLON, T_CLASS];
+		return [T_NEW, T_FUNCTION, T_DOUBLE_COLON, T_CLASS, T_INSTANCEOF, T_CATCH];
 	}
 
 	/**
@@ -494,6 +494,40 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		$tokens = $phpcsFile->getTokens();
 
 		$nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
+
+		// PHP 8+: Check if it's a single T_NAME_FULLY_QUALIFIED token
+		if (defined('T_NAME_FULLY_QUALIFIED') && $this->isGivenKind(T_NAME_FULLY_QUALIFIED, $tokens[$nextIndex])) {
+			$extractedUseStatement = ltrim($tokens[$nextIndex]['content'], '\\');
+			if (!str_contains($extractedUseStatement, '\\')) {
+				return;
+			}
+
+			$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement);
+			$error = 'Use statement ' . $extractedUseStatement . ' for ' . $className . ' should be in use block.';
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'New');
+			if (!$fix) {
+				return;
+			}
+
+			$phpcsFile->fixer->beginChangeset();
+			$addedUseStatement = $this->addUseStatement($className, $extractedUseStatement);
+
+			if ($addedUseStatement['alias'] !== null) {
+				$phpcsFile->fixer->replaceToken($nextIndex, $addedUseStatement['alias']);
+			} else {
+				$phpcsFile->fixer->replaceToken($nextIndex, $addedUseStatement['shortName']);
+			}
+
+			if ($nextIndex === $stackPtr + 1) {
+				$phpcsFile->fixer->replaceToken($stackPtr, $tokens[$stackPtr]['content'] . ' ');
+			}
+
+			$phpcsFile->fixer->endChangeset();
+
+			return;
+		}
+
+		// PHP < 8: Multi-token format (T_NS_SEPARATOR + T_STRING)
 		$lastIndex = null;
 		$i = $nextIndex;
 		$extractedUseStatement = '';
@@ -570,6 +604,35 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 		$prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $stackPtr - 1, null, true);
 
+		// PHP 8+: Check if it's a single T_NAME_FULLY_QUALIFIED token
+		if (defined('T_NAME_FULLY_QUALIFIED') && $this->isGivenKind(T_NAME_FULLY_QUALIFIED, $tokens[$prevIndex])) {
+			$extractedUseStatement = ltrim($tokens[$prevIndex]['content'], '\\');
+			if (!str_contains($extractedUseStatement, '\\')) {
+				return;
+			}
+
+			$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement);
+			$error = 'Use statement ' . $extractedUseStatement . ' for ' . $className . ' should be in use block.';
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'Static');
+			if (!$fix) {
+				return;
+			}
+
+			$phpcsFile->fixer->beginChangeset();
+			$addedUseStatement = $this->addUseStatement($className, $extractedUseStatement);
+
+			if ($addedUseStatement['alias'] !== null) {
+				$phpcsFile->fixer->replaceToken($prevIndex, $addedUseStatement['alias']);
+			} else {
+				$phpcsFile->fixer->replaceToken($prevIndex, $addedUseStatement['shortName']);
+			}
+
+			$phpcsFile->fixer->endChangeset();
+
+			return;
+		}
+
+		// PHP < 8: Multi-token format (T_NS_SEPARATOR + T_STRING)
 		$lastIndex = null;
 		$i = $prevIndex;
 		$extractedUseStatement = '';
@@ -632,6 +695,35 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 
 		$classNameIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $stackPtr + 1, null, true);
 
+		// PHP 8+: Check if it's a single T_NAME_FULLY_QUALIFIED token
+		if (defined('T_NAME_FULLY_QUALIFIED') && $this->isGivenKind(T_NAME_FULLY_QUALIFIED, $tokens[$classNameIndex])) {
+			$extractedUseStatement = ltrim($tokens[$classNameIndex]['content'], '\\');
+			if (!str_contains($extractedUseStatement, '\\')) {
+				return;
+			}
+
+			$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement);
+			$error = 'Use statement ' . $extractedUseStatement . ' for class ' . $className . ' should be in use block.';
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'InstanceOf');
+			if (!$fix) {
+				return;
+			}
+
+			$phpcsFile->fixer->beginChangeset();
+			$addedUseStatement = $this->addUseStatement($className, $extractedUseStatement);
+
+			if ($addedUseStatement['alias'] !== null) {
+				$phpcsFile->fixer->replaceToken($classNameIndex, $addedUseStatement['alias']);
+			} else {
+				$phpcsFile->fixer->replaceToken($classNameIndex, $addedUseStatement['shortName']);
+			}
+
+			$phpcsFile->fixer->endChangeset();
+
+			return;
+		}
+
+		// PHP < 8: Multi-token format (T_NS_SEPARATOR + T_STRING)
 		$lastIndex = null;
 		$i = $classNameIndex;
 		$extractedUseStatement = '';
@@ -699,6 +791,35 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		$closeParenthesisIndex = $tokens[$openParenthesisIndex]['parenthesis_closer'];
 		$classNameIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $openParenthesisIndex + 1, null, true);
 
+		// PHP 8+: Check if it's a single T_NAME_FULLY_QUALIFIED token
+		if (defined('T_NAME_FULLY_QUALIFIED') && $this->isGivenKind(T_NAME_FULLY_QUALIFIED, $tokens[$classNameIndex])) {
+			$extractedUseStatement = ltrim($tokens[$classNameIndex]['content'], '\\');
+			if (!str_contains($extractedUseStatement, '\\')) {
+				return;
+			}
+
+			$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement);
+			$error = 'Use statement ' . $extractedUseStatement . ' for class ' . $className . ' should be in use block.';
+			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'Catch');
+			if (!$fix) {
+				return;
+			}
+
+			$phpcsFile->fixer->beginChangeset();
+			$addedUseStatement = $this->addUseStatement($className, $extractedUseStatement);
+
+			if ($addedUseStatement['alias'] !== null) {
+				$phpcsFile->fixer->replaceToken($classNameIndex, $addedUseStatement['alias']);
+			} else {
+				$phpcsFile->fixer->replaceToken($classNameIndex, $addedUseStatement['shortName']);
+			}
+
+			$phpcsFile->fixer->endChangeset();
+
+			return;
+		}
+
+		// PHP < 8: Multi-token format (T_NS_SEPARATOR + T_STRING)
 		$lastIndex = null;
 		$i = $classNameIndex;
 		$extractedUseStatement = '';
@@ -785,6 +906,35 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 			$startIndex = $phpcsFile->findNext(Tokens::$emptyTokens, $startIndex + 1, $startIndex + 3, true);
 		}
 
+		// PHP 8+: Check if it's a single T_NAME_FULLY_QUALIFIED token
+		if (defined('T_NAME_FULLY_QUALIFIED') && $this->isGivenKind(T_NAME_FULLY_QUALIFIED, $tokens[$startIndex])) {
+			$extractedUseStatement = ltrim($tokens[$startIndex]['content'], '\\');
+			if (!str_contains($extractedUseStatement, '\\')) {
+				return;
+			}
+
+			$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement);
+			$error = 'Use statement ' . $extractedUseStatement . ' for class ' . $className . ' should be in use block.';
+			$fix = $phpcsFile->addFixableError($error, $colonIndex, 'ReturnSignature');
+			if (!$fix) {
+				return;
+			}
+
+			$phpcsFile->fixer->beginChangeset();
+			$addedUseStatement = $this->addUseStatement($className, $extractedUseStatement);
+
+			if ($addedUseStatement['alias'] !== null) {
+				$phpcsFile->fixer->replaceToken($startIndex, $addedUseStatement['alias']);
+			} else {
+				$phpcsFile->fixer->replaceToken($startIndex, $addedUseStatement['shortName']);
+			}
+
+			$phpcsFile->fixer->endChangeset();
+
+			return;
+		}
+
+		// PHP < 8: Multi-token format (T_NS_SEPARATOR + T_STRING)
 		$lastIndex = null;
 		$j = $startIndex;
 		$extractedUseStatement = '';
@@ -854,6 +1004,35 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 		$closeParenthesisIndex = $tokens[$openParenthesisIndex]['parenthesis_closer'];
 
 		for ($i = $openParenthesisIndex + 1; $i < $closeParenthesisIndex; $i++) {
+			// PHP 8+: Check if it's a single T_NAME_FULLY_QUALIFIED token
+			if (defined('T_NAME_FULLY_QUALIFIED') && $this->isGivenKind(T_NAME_FULLY_QUALIFIED, $tokens[$i])) {
+				$extractedUseStatement = ltrim($tokens[$i]['content'], '\\');
+				if (!str_contains($extractedUseStatement, '\\')) {
+					continue;
+				}
+
+				$className = $this->extractClassNameFromUseStatementAsString($extractedUseStatement);
+				$error = 'Use statement ' . $extractedUseStatement . ' for ' . $className . ' should be in use block.';
+				$fix = $phpcsFile->addFixableError($error, $stackPtr, 'Signature');
+				if (!$fix) {
+					return;
+				}
+
+				$phpcsFile->fixer->beginChangeset();
+				$addedUseStatement = $this->addUseStatement($className, $extractedUseStatement);
+
+				if ($addedUseStatement['alias'] !== null) {
+					$phpcsFile->fixer->replaceToken($i, $addedUseStatement['alias']);
+				} else {
+					$phpcsFile->fixer->replaceToken($i, $addedUseStatement['shortName']);
+				}
+
+				$phpcsFile->fixer->endChangeset();
+
+				continue;
+			}
+
+			// PHP < 8: Multi-token format (T_NS_SEPARATOR + T_STRING)
 			$lastIndex = null;
 			$j = $i;
 			$extractedUseStatement = '';

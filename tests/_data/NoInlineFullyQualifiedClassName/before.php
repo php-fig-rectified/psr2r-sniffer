@@ -2,7 +2,68 @@
 
 namespace Test;
 
-// Anonymous class implementing interface with FQCN
+// Test 1: new statement with FQCN
+class NewStatement {
+	public function test(): void {
+		$obj = new \Some\Namespace\ClassName();
+	}
+}
+
+// Test 2: static call with FQCN
+class StaticCall {
+	public function test(): void {
+		\Some\Namespace\ClassName::staticMethod();
+	}
+}
+
+// Test 3: instanceof with FQCN
+class InstanceOfCheck {
+	public function test(): void {
+		$obj = new \stdClass();
+		if ($obj instanceof \Some\Namespace\ClassName) {
+			// do something
+		}
+	}
+}
+
+// Test 4: catch with FQCN
+class CatchBlock {
+	public function test(): void {
+		try {
+			// something
+		} catch (\Some\Namespace\CustomException $e) {
+			// handle
+		}
+	}
+}
+
+// Test 5: parameter type hint with FQCN
+class ParameterTypeHint {
+	public function test(\Some\Namespace\ClassName $param): void {
+	}
+}
+
+// Test 6: return type hint with FQCN
+class ReturnTypeHint {
+	public function test(): \Some\Namespace\ClassName {
+		return new \Some\Namespace\ClassName();
+	}
+}
+
+// Test 7: nullable parameter type with FQCN
+class NullableParameter {
+	public function test(?\Some\Namespace\ClassName $param): void {
+	}
+}
+
+// Test 8: nullable return type with FQCN
+class NullableReturn {
+	public function test(): ?\Some\Namespace\ClassName {
+		return null;
+	}
+}
+
+// Test 9: Anonymous class implementing interface with FQCN
 class AnonymousClassImplements {
 	protected function test(): void {
 		$logger = new class implements \Psr\Log\LoggerInterface {
