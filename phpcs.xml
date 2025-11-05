@@ -12,6 +12,8 @@
 		<exclude name="PhpCollectiveStrict.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification"/>
 		<exclude name="PhpCollectiveStrict.TypeHints.ParameterTypeHint.UselessAnnotation"/>
 		<exclude name="PhpCollectiveStrict.TypeHints.ParameterTypeHint.UselessDocComment"/>
+		<!-- BUGFIX: Disable MissingNativeTypeHint fixer as it fails on large files causing "FAILED TO FIX" -->
+		<exclude name="PhpCollectiveStrict.TypeHints.ParameterTypeHint.MissingNativeTypeHint"/>
 		<properties>
 			<property name="enableStandaloneNullTrueFalseTypeHints" value="false"/>
 		</properties>
@@ -20,6 +22,8 @@
 		<exclude name="PhpCollectiveStrict.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification"/>
 		<exclude name="PhpCollectiveStrict.TypeHints.ReturnTypeHint.UselessAnnotation"/>
 		<exclude name="PhpCollectiveStrict.TypeHints.ReturnTypeHint.UselessDocComment"/>
+		<!-- BUGFIX: Disable MissingNativeTypeHint fixer as it fails on large files causing "FAILED TO FIX" -->
+		<exclude name="PhpCollectiveStrict.TypeHints.ReturnTypeHint.MissingNativeTypeHint"/>
 		<properties>
 			<property name="enableStandaloneNullTrueFalseTypeHints" value="false"/>
 		</properties>
@@ -28,9 +32,22 @@
 		<exclude name="PhpCollectiveStrict.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification"/>
 		<exclude name="PhpCollectiveStrict.TypeHints.PropertyTypeHint.UselessAnnotation"/>
 		<exclude name="PhpCollectiveStrict.TypeHints.PropertyTypeHint.UselessDocComment"/>
+		<!-- BUGFIX: Disable MissingNativeTypeHint fixer as it fails on large files causing "FAILED TO FIX" -->
+		<exclude name="PhpCollectiveStrict.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
 		<properties>
 			<property name="enableStandaloneNullTrueFalseTypeHints" value="false"/>
 		</properties>
+	</rule>
+
+	<!-- BUGFIX: Exclude Slevomat TypeHint MissingNativeTypeHint fixers that fail on large files -->
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
+		<severity>0</severity>
+	</rule>
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
+		<severity>0</severity>
+	</rule>
+	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint">
+		<severity>0</severity>
 	</rule>
 
     <exclude-pattern>,*.inc,*.fixed</exclude-pattern>
