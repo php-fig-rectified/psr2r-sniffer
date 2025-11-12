@@ -44,9 +44,10 @@ class TabIndentSniff implements Sniff {
 			}
 
 			for ($i = $stackPtr + 1; $i < $tokens[$stackPtr]['comment_closer']; $i++) {
-				if ($tokens[$i]['code'] === 'PHPCS_T_DOC_COMMENT_WHITESPACE' && $tokens[$i]['column'] === 1) {
-					$this->fixTab($phpcsFile, $i, $tokens);
-				} elseif ($tokens[$i]['code'] === 'PHPCS_T_DOC_COMMENT_WHITESPACE') {
+				// Note: We don't process PHPCS_T_DOC_COMMENT_WHITESPACE at column 1 here
+				// because DocBlockAlignmentSniff handles overall docblock positioning.
+				// Processing it here causes conflicts when docblocks need to be moved/indented.
+				if ($tokens[$i]['code'] === 'PHPCS_T_DOC_COMMENT_WHITESPACE') {
 					$this->fixSpace($phpcsFile, $i, $tokens);
 				}
 			}
