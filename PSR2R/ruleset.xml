@@ -102,10 +102,6 @@
 		</properties>
 	</rule>
 
-	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName">
-		<severity>0</severity>
-	</rule>
-
 	<rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
 
 	<rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
@@ -142,7 +138,7 @@
 	<rule ref="PhpCollective.Commenting.DocBlockReturnNull"/>
 	<rule ref="PhpCollective.Commenting.DocBlockParamAllowDefaultValue"/>
 	<rule ref="PhpCollective.Commenting.InlineDocBlock"/>
-	<rule ref="PhpCollective.Commenting.Attributes"/>
+	<rule ref="PhpCollective.Commenting.DocBlockParamTypeMismatch"/>
 	<rule ref="PhpCollective.Commenting.FullyQualifiedClassNameInDocBlock"/>
 
 	<rule ref="PhpCollective.ControlStructures.NoInlineAssignment"/>
