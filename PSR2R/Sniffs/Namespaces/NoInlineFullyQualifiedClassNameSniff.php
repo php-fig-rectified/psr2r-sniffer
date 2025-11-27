@@ -45,7 +45,7 @@ class NoInlineFullyQualifiedClassNameSniff extends AbstractSniff {
 	/**
 	 * @var \PHP_CodeSniffer\Files\File|null
 	 */
-	protected ?\PHP_CodeSniffer\Files\File $sentinelFile = null;
+	protected ?File $sentinelFile = null;
 
 	/**
 	 * @inheritDoc
