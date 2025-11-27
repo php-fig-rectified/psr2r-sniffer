@@ -55,11 +55,11 @@ PhpCollective (47 sniffs)
 - PhpCollective.Classes.Psr4
 - PhpCollective.Classes.ReturnTypeHint
 - PhpCollective.Classes.SelfAccessor
-- PhpCollective.Commenting.Attributes
 - PhpCollective.Commenting.DocBlockConst
 - PhpCollective.Commenting.DocBlockConstructor
 - PhpCollective.Commenting.DocBlockNoInlineAlignment
 - PhpCollective.Commenting.DocBlockParamAllowDefaultValue
+- PhpCollective.Commenting.DocBlockParamTypeMismatch
 - PhpCollective.Commenting.DocBlockPipeSpacing
 - PhpCollective.Commenting.DocBlockReturnNull
 - PhpCollective.Commenting.DocBlockReturnNullableType
