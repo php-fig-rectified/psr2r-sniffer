@@ -46,8 +46,8 @@ class DocCommentSniff extends AbstractSniff {
 	public function process(File $phpcsFile, int $stackPtr): void {
 		$tokens = $phpcsFile->getTokens();
 
-		// Skip for PhpStorm markers which must remain as inline comments
-		if ($this->isPhpStormMarker($phpcsFile, $stackPtr)) {
+		// Skip for inline comment markers which must remain as inline comments
+		if ($this->isInlineCommentMarker($phpcsFile, $stackPtr)) {
 			return;
 		}
 

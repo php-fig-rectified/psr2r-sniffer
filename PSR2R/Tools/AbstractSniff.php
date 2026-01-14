@@ -10,7 +10,7 @@ abstract class AbstractSniff implements Sniff {
 	/**
 	 * @var array<string> These markers must remain as inline comments
 	 */
-	protected static array $phpStormMarkers = ['@noinspection'];
+	protected static array $inlineCommentMarkers = ['@noinspection', '@link', '@see'];
 
 	/**
 	 * Checks if the given token is of this token code/type.
@@ -369,7 +369,7 @@ abstract class AbstractSniff implements Sniff {
 	 *
 	 * @return bool
 	 */
-	protected function isPhpStormMarker(File $phpcsFile, int $stackPtr): bool {
+	protected function isInlineCommentMarker(File $phpcsFile, int $stackPtr): bool {
 		$tokens = $phpcsFile->getTokens();
 		$line = $tokens[$stackPtr]['line'];
 		if ($tokens[$stackPtr]['type'] !== 'T_DOC_COMMENT_OPEN_TAG') {
@@ -379,7 +379,7 @@ abstract class AbstractSniff implements Sniff {
 		if ($line !== $tokens[$end]['line']) {
 			return false; // Not an inline comment
 		}
-		foreach (static::$phpStormMarkers as $marker) {
+		foreach (static::$inlineCommentMarkers as $marker) {
 			if ($phpcsFile->findNext(T_DOC_COMMENT_TAG, $stackPtr + 1, $end, false, $marker) !== false) {
 				return true;
 			}
