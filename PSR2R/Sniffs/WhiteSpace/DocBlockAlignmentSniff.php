@@ -42,6 +42,11 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 			return;
 		}
 
+		// Skip for inline comment markers which must remain as inline comments
+		if ($this->isInlineCommentMarker($phpcsFile, $stackPtr)) {
+			return;
+		}
+
 		$tokens = $phpcsFile->getTokens();
 		$leftWall = [
 			T_CLASS,
