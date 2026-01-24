@@ -9,7 +9,7 @@ use PSR2R\Tools\Traits\CommentingTrait;
 use PSR2R\Tools\Traits\SignatureTrait;
 
 /**
- * Methods always need doc blocks.
+ * Methods always need doc blocks if they are using non-typed params/return.
  * Constructor and destructor may not have one if they do not have arguments.
  */
 class DocBlockSniff extends AbstractSniff {
@@ -50,6 +50,10 @@ class DocBlockSniff extends AbstractSniff {
 
 		$docBlockEndIndex = $this->findRelatedDocBlock($phpcsFile, $stackPtr);
 		if ($docBlockEndIndex) {
+			return;
+		}
+
+		if ($this->isFullyTyped($phpcsFile, $stackPtr)) {
 			return;
 		}
 
@@ -115,9 +119,22 @@ class DocBlockSniff extends AbstractSniff {
 			return;
 		}
 
-		$methodSignature = $this->getMethodSignature($phpcsFile, $stackPtr);
-		$arguments = count($methodSignature);
-		if (!$arguments) {
+		$params = $phpcsFile->getMethodParameters($stackPtr);
+		if (!$params) {
+			return;
+		}
+
+		// If all parameters are fully typed (including promoted properties), no docblock is needed
+		$allTyped = true;
+		foreach ($params as $param) {
+			if (empty($param['type_hint'])) {
+				$allTyped = false;
+
+				break;
+			}
+		}
+
+		if ($allTyped) {
 			return;
 		}
 
@@ -190,6 +207,49 @@ class DocBlockSniff extends AbstractSniff {
 		}
 
 		return $type;
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $stackPtr
+	 *
+	 * @return bool
+	 */
+	protected function isFullyTyped(File $phpcsFile, int $stackPtr): bool {
+		$tokens = $phpcsFile->getTokens();
+
+		// Get the function's parameter tokens
+		$params = $phpcsFile->getMethodParameters($stackPtr);
+		// Check all parameters have a type hint
+		foreach ($params as $param) {
+			if (empty($param['type_hint'])) {
+				return false;
+			}
+		}
+
+		// Check for return type - need parenthesis_closer to find return type
+		if (!isset($tokens[$stackPtr]['parenthesis_closer'])) {
+			return false;
+		}
+
+		// For abstract methods or interface methods, there's no scope_opener
+		// In that case, search until semicolon or end of statement
+		$searchEnd = $tokens[$stackPtr]['scope_opener'] ?? null;
+		if ($searchEnd === null) {
+			// Find the semicolon that ends the method declaration
+			$searchEnd = $phpcsFile->findNext(T_SEMICOLON, $tokens[$stackPtr]['parenthesis_closer']);
+			if ($searchEnd === false) {
+				return false;
+			}
+		}
+
+		$colonPtr = $phpcsFile->findNext(T_COLON, $tokens[$stackPtr]['parenthesis_closer'], $searchEnd);
+
+		if ($colonPtr === false) {
+			return false; // No return type
+		}
+
+		return true;
 	}
 
 }

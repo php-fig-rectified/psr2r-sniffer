@@ -88,6 +88,14 @@ class DocBlockParamSniff extends AbstractSniff {
 			];
 		}
 
+		// If no @param annotations found, check if all parameters are fully typed
+		// Only skip validation if all parameters have type declarations
+		if (count($docBlockParams) === 0) {
+			if ($this->areAllParametersFullyTyped($methodSignature, $phpcsFile)) {
+				return;
+			}
+		}
+
 		if (count($docBlockParams) !== count($methodSignature)) {
 			$phpcsFile->addError('Doc Block params do not match method signature', $stackPointer, 'ParamTypeMismatch');
 
@@ -174,6 +182,32 @@ class DocBlockParamSniff extends AbstractSniff {
 		}
 
 		return $arguments;
+	}
+
+	/**
+	 * Check if all method parameters are fully typed.
+	 *
+	 * @param array<int, array<string, mixed>> $methodSignature
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 *
+	 * @return bool
+	 */
+	protected function areAllParametersFullyTyped(array $methodSignature, File $phpcsFile): bool {
+		foreach ($methodSignature as $param) {
+			$variableIndex = $param['variable'];
+			// Look for any type token before the variable (within reason)
+			$typeHintIndex = $phpcsFile->findPrevious(
+				[T_STRING, T_CALLABLE, T_SELF, T_PARENT, T_STATIC, T_FALSE, T_TRUE, T_NULL, T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED, T_NAME_RELATIVE, T_TYPE_UNION, T_TYPE_INTERSECTION, T_TYPE_OPEN_PARENTHESIS, T_TYPE_CLOSE_PARENTHESIS],
+				$variableIndex - 1,
+				$variableIndex - 15,
+			);
+
+			if ($typeHintIndex === false) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }
