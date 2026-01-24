@@ -18,11 +18,7 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	 */
 	public function register(): array {
 		return [
-			T_CLASS,
-			T_INTERFACE,
-			T_TRAIT,
 			T_FUNCTION,
-			T_VARIABLE,
 		];
 	}
 
@@ -31,11 +27,9 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 	 */
 	public function process(File $phpcsFile, int $stackPointer): void {
 		$tokens = $phpcsFile->getTokens();
-		if (($stackPointer > 1) && ($tokens[$stackPointer - 2]['code'] === T_STATIC)) {
-			return; // Skip static function declarations
-		}
 
-		if ($tokens[$stackPointer]['code'] === T_FUNCTION && $this->isNonChainable($tokens, $stackPointer)) {
+		// Skip static methods - they cannot return $this
+		if ($this->isStaticMethod($phpcsFile, $stackPointer)) {
 			return;
 		}
 
@@ -74,37 +68,21 @@ class DocBlockReturnSelfSniff extends AbstractSniff {
 				continue;
 			}
 
-			if (strpos($content, '|') !== false) {
-				return;
-			}
-
 			$parts = explode('|', $content);
 			$this->fixParts($phpcsFile, $classNameIndex, $parts, $appendix);
 		}
 	}
 
 	/**
-	 * @param array<array<string, mixed>> $tokens
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
 	 * @param int $stackPointer
 	 *
 	 * @return bool
 	 */
-	protected function isNonChainable(array $tokens, int $stackPointer): bool {
-		if (empty($tokens[$stackPointer]['scope_opener'])) {
-			return false;
-		}
+	protected function isStaticMethod(File $phpcsFile, int $stackPointer): bool {
+		$methodProperties = $phpcsFile->getMethodProperties($stackPointer);
 
-		$startIndex = $tokens[$stackPointer]['scope_opener'];
-		$endIndex = $tokens[$stackPointer]['scope_closer'];
-		$i = $startIndex + 1;
-		while ($i < $endIndex) {
-			if ($tokens[$i]['code'] === T_NEW) {
-				return true;
-			}
-			$i++;
-		}
-
-		return false;
+		return $methodProperties['is_static'];
 	}
 
 	/**

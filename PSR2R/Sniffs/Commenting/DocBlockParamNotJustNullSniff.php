@@ -51,7 +51,7 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 			if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
 				continue;
 			}
-			if ($tokens[$i]['content'] !== '@param') {
+			if (!in_array($tokens[$i]['content'], ['@param'], true)) {
 				continue;
 			}
 
@@ -68,12 +68,24 @@ class DocBlockParamNotJustNullSniff extends AbstractSniff {
 			}
 
 			$content = $tokens[$classNameIndex]['content'];
-
-			$spaceIndex = strpos($content, ' ');
-			if ($spaceIndex) {
-				$content = substr($content, 0, $spaceIndex);
+			if (!$content) {
+				continue;
 			}
-			if (empty($content) || $content !== 'null') {
+
+			// Find the variable position to properly extract the type
+			$varIndex = strpos($content, '$');
+			if ($varIndex === false) {
+				continue;
+			}
+
+			$type = trim(substr($content, 0, $varIndex));
+			if (!$type) {
+				$phpcsFile->addError('Param type is empty', $classNameIndex, 'EmptyType');
+
+				continue;
+			}
+
+			if ($type !== 'null') {
 				continue;
 			}
 
