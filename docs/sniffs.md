@@ -88,7 +88,7 @@ PhpCollective (47 sniffs)
 - PhpCollective.PHP.SingleQuote
 - PhpCollective.Testing.AssertPrimitives
 - PhpCollective.Testing.Mock
-- PhpCollective.WhiteSpace.CommaSpacing
+- Universal.WhiteSpace.CommaSpacing
 - PhpCollective.WhiteSpace.ConcatenationSpacing
 - PhpCollective.WhiteSpace.ImplicitCastSpacing
 - PhpCollective.WhiteSpace.ObjectAttributeSpacing

@@ -157,7 +157,7 @@
 
 	<rule ref="PhpCollective.WhiteSpace.ConcatenationSpacing"/>
 	<rule ref="PhpCollective.WhiteSpace.ObjectAttributeSpacing"/>
-	<rule ref="PhpCollective.WhiteSpace.CommaSpacing"/>
+	<rule ref="Universal.WhiteSpace.CommaSpacing"/>
 	<rule ref="PhpCollective.WhiteSpace.ImplicitCastSpacing"/>
 
 
