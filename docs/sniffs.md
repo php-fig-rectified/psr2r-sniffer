@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 209 sniffs
+The PSR2R standard contains 231 sniffs
 
 Generic (24 sniffs)
 -------------------
@@ -163,14 +163,20 @@ PSR12 (7 sniffs)
 - PSR12.Namespaces.CompoundNamespaceDepth
 - PSR12.Operators.OperatorSpacing
 
-SlevomatCodingStandard (45 sniffs)
+SlevomatCodingStandard (54 sniffs)
 ----------------------------------
+- SlevomatCodingStandard.Arrays.ArrayAccess
 - SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation
 - SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement
 - SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace
 - SlevomatCodingStandard.Arrays.TrailingArrayComma
+- SlevomatCodingStandard.Attributes.AttributeAndTargetSpacing
+- SlevomatCodingStandard.Attributes.RequireAttributeAfterDocComment
+- SlevomatCodingStandard.Classes.BackedEnumTypeSpacing
 - SlevomatCodingStandard.Classes.ClassConstantVisibility
+- SlevomatCodingStandard.Classes.ClassMemberSpacing
 - SlevomatCodingStandard.Classes.ConstantSpacing
+- SlevomatCodingStandard.Classes.EnumCaseSpacing
 - SlevomatCodingStandard.Classes.ModernClassNameReference
 - SlevomatCodingStandard.Classes.PropertySpacing
 - SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration
@@ -180,6 +186,7 @@ SlevomatCodingStandard (45 sniffs)
 - SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch
 - SlevomatCodingStandard.ControlStructures.DisallowYodaComparison
 - SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing
+- SlevomatCodingStandard.ControlStructures.LanguageConstructWithParentheses
 - SlevomatCodingStandard.ControlStructures.NewWithParentheses
 - SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator
 - SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator
@@ -188,6 +195,7 @@ SlevomatCodingStandard (45 sniffs)
 - SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall
 - SlevomatCodingStandard.Functions.DisallowTrailingCommaInClosureUse
 - SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration
+- SlevomatCodingStandard.Functions.NamedArgumentSpacing
 - SlevomatCodingStandard.Functions.RequireTrailingCommaInCall
 - SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse
 - SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration
@@ -200,6 +208,7 @@ SlevomatCodingStandard (45 sniffs)
 - SlevomatCodingStandard.Namespaces.UselessAlias
 - SlevomatCodingStandard.Namespaces.UseSpacing
 - SlevomatCodingStandard.Operators.SpreadOperatorSpacing
+- SlevomatCodingStandard.PHP.ForbiddenClasses
 - SlevomatCodingStandard.PHP.ShortList
 - SlevomatCodingStandard.PHP.TypeCast
 - SlevomatCodingStandard.PHP.UselessSemicolon
@@ -211,7 +220,7 @@ SlevomatCodingStandard (45 sniffs)
 - SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable
 - SlevomatCodingStandard.Whitespaces.DuplicateSpaces
 
-Squiz (23 sniffs)
+Squiz (25 sniffs)
 -----------------
 - Squiz.Arrays.ArrayBracketSpacing
 - Squiz.Classes.LowercaseClassKeywords
@@ -224,12 +233,14 @@ Squiz (23 sniffs)
 - Squiz.Functions.FunctionDeclarationArgumentSpacing
 - Squiz.Functions.LowercaseFunctionKeywords
 - Squiz.Operators.ValidLogicalOperators
+- Squiz.PHP.DisallowSizeFunctionsInLoops
 - Squiz.PHP.Eval
 - Squiz.PHP.NonExecutableCode
 - Squiz.Scope.MemberVarScope
 - Squiz.Scope.MethodScope
 - Squiz.Scope.StaticThisUsage
 - Squiz.WhiteSpace.CastSpacing
+- Squiz.WhiteSpace.FunctionOpeningBraceSpace
 - Squiz.WhiteSpace.LogicalOperatorSpacing
 - Squiz.WhiteSpace.MemberVarSpacing
 - Squiz.WhiteSpace.ScopeClosingBrace
@@ -237,13 +248,24 @@ Squiz (23 sniffs)
 - Squiz.WhiteSpace.SemicolonSpacing
 - Squiz.WhiteSpace.SuperfluousWhitespace
 
-Universal (6 sniffs)
---------------------
+Universal (17 sniffs)
+---------------------
+- Universal.Attributes.BracketSpacing
+- Universal.Attributes.DisallowAttributeParentheses
+- Universal.Attributes.TrailingComma
+- Universal.CodeAnalysis.ConstructorDestructorReturn
+- Universal.CodeAnalysis.ForeachUniqueAssignment
+- Universal.CodeAnalysis.NoEchoSprintf
+- Universal.CodeAnalysis.StaticInFinalClass
 - Universal.Constants.LowercaseClassResolutionKeyword
 - Universal.Constants.UppercaseMagicConstants
+- Universal.ControlStructures.DisallowAlternativeSyntax
 - Universal.Operators.ConcatPosition
+- Universal.Operators.TypeSeparatorSpacing
 - Universal.UseStatements.NoUselessAliases
+- Universal.WhiteSpace.AnonClassKeywordSpacing
 - Universal.WhiteSpace.CommaSpacing
+- Universal.WhiteSpace.FirstClassCallableSpacing
 - Universal.WhiteSpace.PrecisionAlignment
 
 Zend (1 sniff)
