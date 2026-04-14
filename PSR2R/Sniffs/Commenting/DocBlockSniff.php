@@ -10,7 +10,8 @@ use PSR2R\Tools\Traits\SignatureTrait;
 
 /**
  * Methods always need doc blocks if they are using non-typed params/return.
- * Constructor and destructor may not have one if they do not have arguments.
+ * Constructor and destructor may not have one if they do not have arguments
+ * or if all arguments are fully typed.
  */
 class DocBlockSniff extends AbstractSniff {
 

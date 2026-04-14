@@ -18,7 +18,7 @@ This branch is for use with **PHP 8.1+** repos.
 The following sniffers are bundles together as `PSR2R` already, but you can
 also use them standalone/separately in any way you like.
 
-**Currently, PSR2R ships with over 190 sniffs.**
+**Currently, PSR2R ships with over 230 sniffs.**
 
 * [List of included sniffs](docs/sniffs.md)
 
