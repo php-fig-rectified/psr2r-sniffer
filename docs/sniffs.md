@@ -43,7 +43,7 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
-PhpCollective (47 sniffs)
+PhpCollective (46 sniffs)
 -------------------------
 - PhpCollective.Arrays.ArrayBracketSpacing
 - PhpCollective.Classes.ClassFileName
@@ -88,7 +88,6 @@ PhpCollective (47 sniffs)
 - PhpCollective.PHP.SingleQuote
 - PhpCollective.Testing.AssertPrimitives
 - PhpCollective.Testing.Mock
-- Universal.WhiteSpace.CommaSpacing
 - PhpCollective.WhiteSpace.ConcatenationSpacing
 - PhpCollective.WhiteSpace.ImplicitCastSpacing
 - PhpCollective.WhiteSpace.ObjectAttributeSpacing
@@ -238,12 +237,13 @@ Squiz (23 sniffs)
 - Squiz.WhiteSpace.SemicolonSpacing
 - Squiz.WhiteSpace.SuperfluousWhitespace
 
-Universal (5 sniffs)
+Universal (6 sniffs)
 --------------------
 - Universal.Constants.LowercaseClassResolutionKeyword
 - Universal.Constants.UppercaseMagicConstants
 - Universal.Operators.ConcatPosition
 - Universal.UseStatements.NoUselessAliases
+- Universal.WhiteSpace.CommaSpacing
 - Universal.WhiteSpace.PrecisionAlignment
 
 Zend (1 sniff)
