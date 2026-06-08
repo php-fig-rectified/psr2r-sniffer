@@ -39,4 +39,38 @@ class DocBlockIndentConflictTest extends TestCase {
 		$this->runFullFixer($pathBefore, $pathAfter, null, null, true);
 	}
 
+	/**
+	 * @return void
+	 */
+	public function testDocBlockAlignmentDoesNotLoopWithTabIndentFixer(): void {
+		$pathBefore = $this->testFilePath() . 'DocBlockAlignmentLoop/before.php';
+		$pathAfter = $this->testFilePath() . 'DocBlockAlignmentLoop/after.php';
+
+		$tmpFile = tempnam(sys_get_temp_dir(), 'psr2r-docblock-loop-');
+		$this->assertIsString($tmpFile);
+		unlink($tmpFile);
+		$tmpFile .= '.php';
+		$this->assertTrue(copy($pathBefore, $tmpFile));
+
+		$root = dirname(__DIR__, 4);
+		$command = PHP_BINARY . ' ' . escapeshellarg($root . '/vendor/bin/phpcbf') .
+			' --standard=' . escapeshellarg($root . '/PSR2R/ruleset.xml') .
+			' --sniffs=PSR2R.WhiteSpace.DocBlockAlignment,PSR2R.WhiteSpace.TabIndent' .
+			' ' . escapeshellarg($tmpFile);
+
+		try {
+			$output = [];
+			$exitCode = 0;
+			exec($command . ' 2>&1', $output, $exitCode);
+
+			$this->assertSame(0, $exitCode, implode(PHP_EOL, $output));
+			$this->assertStringNotContainsString('FAILED TO FIX', implode(PHP_EOL, $output));
+			$this->assertSame(file_get_contents($pathAfter), file_get_contents($tmpFile));
+		} finally {
+			if (file_exists($tmpFile)) {
+				unlink($tmpFile);
+			}
+		}
+	}
+
 }

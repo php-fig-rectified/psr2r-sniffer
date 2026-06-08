@@ -110,7 +110,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 
 			$phpcsFile->fixer->beginChangeset();
 
-			$this->outdent($phpcsFile, $prevIndex);
+			$this->outdentLeadingIndent($phpcsFile, $prevIndex);
 
 			for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
 				if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
@@ -118,7 +118,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 				) {
 					continue;
 				}
-				$this->outdent($phpcsFile, $i);
+				$this->outdentLeadingIndent($phpcsFile, $i);
 			}
 			$phpcsFile->fixer->endChangeset();
 
@@ -138,7 +138,7 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 		if ($diff < 0 && $tokens[$prevIndex]['line'] !== $tokens[$stackPtr]['line']) {
 			$phpcsFile->fixer->addContentBefore($stackPtr, str_repeat("\t", -$diff));
 		} else {
-			$this->outdent($phpcsFile, $prevIndex);
+			$this->outdentLeadingIndent($phpcsFile, $prevIndex);
 		}
 
 		for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
@@ -148,9 +148,9 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 				continue;
 			}
 			if ($diff < 0) {
-				$this->indent($phpcsFile, $i, -$diff);
+				$this->indentWithTabs($phpcsFile, $i, -$diff);
 			} else {
-				$this->outdent($phpcsFile, $i, $diff);
+				$this->outdentLeadingIndent($phpcsFile, $i, $diff);
 			}
 		}
 		$phpcsFile->fixer->endChangeset();
@@ -171,6 +171,37 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 		}
 
 		return $phpcsFile->findNext(T_WHITESPACE, $firstIndex, $index, true);
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $index
+	 * @param int $count
+	 *
+	 * @return void
+	 */
+	protected function indentWithTabs(File $phpcsFile, int $index, int $count = 1): void {
+		$tokens = $phpcsFile->getTokens();
+
+		$content = str_repeat("\t", $count) . $tokens[$index]['content'];
+		$phpcsFile->fixer->replaceToken($index, $content);
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $index
+	 * @param int $count
+	 *
+	 * @return void
+	 */
+	protected function outdentLeadingIndent(File $phpcsFile, int $index, int $count = 1): void {
+		$tokens = $phpcsFile->getTokens();
+
+		$content = $tokens[$index]['content'];
+		for ($i = 0; $i < $count; $i++) {
+			$content = preg_replace('/^(?:\t| {4})/', '', $content, 1) ?? $content;
+		}
+		$phpcsFile->fixer->replaceToken($index, $content);
 	}
 
 }
