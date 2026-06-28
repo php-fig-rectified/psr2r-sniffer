@@ -34,6 +34,9 @@ class PreferStaticOverSelfSniff extends AbstractSniff {
 		if ($tokens[$index]['level'] < 2) {
 			return;
 		}
+		if ($this->isInFinalClass($phpcsFile, $stackPtr)) {
+			return;
+		}
 
 		$fix = $phpcsFile->addFixableError('Please use static:: instead of self::', $stackPtr, 'StaticVsSelf');
 		if (!$fix) {
@@ -41,6 +44,23 @@ class PreferStaticOverSelfSniff extends AbstractSniff {
 		}
 
 		$phpcsFile->fixer->replaceToken($index, 'static');
+	}
+
+	/**
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile
+	 * @param int $stackPtr
+	 * @return bool
+	 */
+	protected function isInFinalClass(File $phpcsFile, int $stackPtr): bool {
+		$tokens = $phpcsFile->getTokens();
+		$classPtr = $phpcsFile->findPrevious(T_CLASS, $stackPtr - 1);
+		if ($classPtr === false || empty($tokens[$classPtr]['scope_closer']) || $tokens[$classPtr]['scope_closer'] < $stackPtr) {
+			return false;
+		}
+
+		$previous = $phpcsFile->findPrevious(Tokens::$emptyTokens, $classPtr - 1, null, true);
+
+		return $previous !== false && $tokens[$previous]['code'] === T_FINAL;
 	}
 
 }
