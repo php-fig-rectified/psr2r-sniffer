@@ -256,18 +256,31 @@
 
 	<rule ref="Squiz.Operators.ValidLogicalOperators"/>
 
-	<rule ref="Generic.PHP.DeprecatedFunctions">
+	<!--
+		Do not set the `forbiddenFunctions` property here. The sniff populates it in its
+		constructor from the Reflection API (every internal function marked deprecated for
+		the running PHP version). Setting the property replaces that list instead of adding
+		to it, which silently disables the sniff.
+	-->
+	<rule ref="Generic.PHP.DeprecatedFunctions"/>
+
+	<rule ref="Squiz.PHP.Eval"/>
+	<!--
+		Setting the property replaces the sniff's defaults, so `sizeof` and `delete` have to be
+		repeated here. `create_function` and `each` live here rather than on
+		Generic.PHP.DeprecatedFunctions because that sniff builds its list from the running
+		PHP version, where both are long gone.
+	-->
+	<rule ref="Generic.PHP.ForbiddenFunctions">
 		<properties>
 			<property name="forbiddenFunctions" type="array">
+				<element key="sizeof" value="count"/>
 				<element key="delete" value="unset"/>
 				<element key="create_function" value="null"/>
 				<element key="each" value="null"/>
 			</property>
 		</properties>
 	</rule>
-
-	<rule ref="Squiz.PHP.Eval"/>
-	<rule ref="Generic.PHP.ForbiddenFunctions"/>
 	<rule ref="Squiz.PHP.NonExecutableCode"/>
 	<rule ref="Generic.PHP.NoSilencedErrors"/>
 	<rule ref="Generic.PHP.LowerCaseConstant"/>
