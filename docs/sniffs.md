@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 228 sniffs
+The PSR2R standard contains 227 sniffs
 
 Generic (24 sniffs)
 -------------------
@@ -105,7 +105,7 @@ PSR2 (6 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (42 sniffs)
+PSR2R (41 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.InterfaceName
@@ -148,7 +148,6 @@ PSR2R (42 sniffs)
 - PSR2R.WhiteSpace.NamespaceSpacing
 - PSR2R.WhiteSpace.TabAndSpace
 - PSR2R.WhiteSpace.TabIndent
-- PSR2R.WhiteSpace.UnaryOperatorSpacing
 
 PSR12 (7 sniffs)
 ----------------

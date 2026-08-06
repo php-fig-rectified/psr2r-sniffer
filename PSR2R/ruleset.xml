@@ -173,7 +173,15 @@
 	<rule ref="PhpCollective.WhiteSpace.ConcatenationSpacing"/>
 	<rule ref="PhpCollective.WhiteSpace.ObjectAttributeSpacing"/>
 	<rule ref="Universal.WhiteSpace.CommaSpacing"/>
-	<rule ref="PhpCollective.WhiteSpace.ImplicitCastSpacing"/>
+	<!--
+		The incrementer half duplicates Generic.WhiteSpace.IncrementDecrementSpacing below, which
+		also handles targets like `$b[0] ++`. The rest of the sniff - spacing after `!`, `@`, unary
+		minus and the reference marker - replaces the former PSR2R.WhiteSpace.UnaryOperatorSpacing.
+	-->
+	<rule ref="PhpCollective.WhiteSpace.ImplicitCastSpacing">
+		<exclude name="PhpCollective.WhiteSpace.ImplicitCastSpacing.WhitespaceBeforeVariable"/>
+		<exclude name="PhpCollective.WhiteSpace.ImplicitCastSpacing.WhitespaceAfterVariable"/>
+	</rule>
 
 	<rule ref="PhpCollective.Testing.AssertPrimitives"/>
 	<rule ref="PhpCollective.Testing.Mock"/>
