@@ -86,13 +86,25 @@
 	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
-	<rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
+	<!--
+		Silenced in favour of PhpCollective.ControlStructures.NoInlineAssignment, which reports the
+		same conditions and additionally catches assignments in call arguments such as
+		`$this->foo($x = bar())`.
+	-->
+	<rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition">
+		<severity>0</severity>
+	</rule>
 
 	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
 
 	<rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>
 
+	<!--
+		PSR2R.PHP.DuplicateSemicolon only knows `;;`, while this also catches a stray `;` after a
+		block. Both reported the same double semicolon, so the narrower one is silenced.
+	-->
 	<rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
+
 	<rule ref="SlevomatCodingStandard.PHP.ShortList"/>
 	<rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>
 
@@ -109,11 +121,15 @@
 	<rule ref="SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration"/>
 
 	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
+	<!--
+		Kept alongside PSR2R.ControlStructures.ConditionalExpressionOrder on purpose. The two
+		overlap only on the simplest form: this one also catches `self::CONST === $x`, the other
+		also catches relational operators and array literals.
+	-->
 	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
 
 	<rule ref="PhpCollective.Classes.Psr4"/>
-	<rule ref="PhpCollective.Classes.MethodDeclaration"/>
 	<rule ref="PhpCollective.Classes.MethodArgumentDefaultValue"/>
 	<rule ref="PhpCollective.Classes.MethodTypeHint"/>
 	<rule ref="PhpCollective.Classes.PropertyDefaultValue"/>
@@ -141,9 +157,8 @@
 	<rule ref="PhpCollective.Commenting.DocBlockParamTypeMismatch"/>
 	<rule ref="PhpCollective.Commenting.FullyQualifiedClassNameInDocBlock"/>
 
-	<rule ref="PhpCollective.ControlStructures.NoInlineAssignment"/>
-	<rule ref="PhpCollective.ControlStructures.ConditionalExpressionOrder"/>
 	<rule ref="PhpCollective.ControlStructures.ControlStructureEmptyStatement"/>
+	<rule ref="PhpCollective.ControlStructures.NoInlineAssignment"/>
 
 	<rule ref="PhpCollective.Arrays.ArrayBracketSpacing"/>
 	<rule ref="PhpCollective.Formatting.ArrayDeclaration"/>
@@ -159,7 +174,6 @@
 	<rule ref="PhpCollective.WhiteSpace.ObjectAttributeSpacing"/>
 	<rule ref="Universal.WhiteSpace.CommaSpacing"/>
 	<rule ref="PhpCollective.WhiteSpace.ImplicitCastSpacing"/>
-
 
 	<rule ref="PhpCollective.Testing.AssertPrimitives"/>
 	<rule ref="PhpCollective.Testing.Mock"/>
