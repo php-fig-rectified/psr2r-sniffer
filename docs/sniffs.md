@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 231 sniffs
+The PSR2R standard contains 228 sniffs
 
 Generic (24 sniffs)
 -------------------
@@ -43,13 +43,12 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
-PhpCollective (46 sniffs)
+PhpCollective (44 sniffs)
 -------------------------
 - PhpCollective.Arrays.ArrayBracketSpacing
 - PhpCollective.Classes.ClassFileName
 - PhpCollective.Classes.EnumCaseCasing
 - PhpCollective.Classes.MethodArgumentDefaultValue
-- PhpCollective.Classes.MethodDeclaration
 - PhpCollective.Classes.MethodTypeHint
 - PhpCollective.Classes.PropertyDefaultValue
 - PhpCollective.Classes.Psr4
@@ -74,7 +73,6 @@ PhpCollective (46 sniffs)
 - PhpCollective.Commenting.FullyQualifiedClassNameInDocBlock
 - PhpCollective.Commenting.InlineDocBlock
 - PhpCollective.Commenting.TypeHint
-- PhpCollective.ControlStructures.ConditionalExpressionOrder
 - PhpCollective.ControlStructures.ControlStructureEmptyStatement
 - PhpCollective.ControlStructures.NoInlineAssignment
 - PhpCollective.Formatting.ArrayDeclaration
@@ -107,7 +105,7 @@ PSR2 (6 sniffs)
 - PSR2.Namespaces.NamespaceDeclaration
 - PSR2.Namespaces.UseDeclaration
 
-PSR2R (43 sniffs)
+PSR2R (42 sniffs)
 -----------------
 - PSR2R.Classes.BraceOnSameLine
 - PSR2R.Classes.InterfaceName
@@ -137,7 +135,6 @@ PSR2R (43 sniffs)
 - PSR2R.Methods.MethodDeclaration
 - PSR2R.Methods.MethodMultilineArguments
 - PSR2R.Namespaces.NoInlineFullyQualifiedClassName
-- PSR2R.PHP.DuplicateSemicolon
 - PSR2R.PHP.ListComma
 - PSR2R.PHP.NoShortOpenTag
 - PSR2R.PHP.PreferStaticOverSelf
