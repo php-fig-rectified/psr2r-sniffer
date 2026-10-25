@@ -1,6 +1,6 @@
 # PSR2R Code Sniffer
 
-The PSR2R standard contains 227 sniffs
+The PSR2R standard contains 229 sniffs
 
 Generic (24 sniffs)
 -------------------
@@ -43,7 +43,7 @@ PEAR (3 sniffs)
 - PEAR.Functions.ValidDefaultValue
 - PEAR.NamingConventions.ValidClassName
 
-PhpCollective (44 sniffs)
+PhpCollective (47 sniffs)
 -------------------------
 - PhpCollective.Arrays.ArrayBracketSpacing
 - PhpCollective.Classes.ClassFileName
@@ -76,6 +76,8 @@ PhpCollective (44 sniffs)
 - PhpCollective.ControlStructures.ControlStructureEmptyStatement
 - PhpCollective.ControlStructures.NoInlineAssignment
 - PhpCollective.Formatting.ArrayDeclaration
+- PhpCollective.Operators.OperatorPosition
+- PhpCollective.Operators.OperatorSpacing
 - PhpCollective.PHP.DisallowTrailingCommaInSingleLine
 - PhpCollective.PHP.NoIsNull
 - PhpCollective.PHP.NotEqual
@@ -86,6 +88,7 @@ PhpCollective (44 sniffs)
 - PhpCollective.PHP.SingleQuote
 - PhpCollective.Testing.AssertPrimitives
 - PhpCollective.Testing.Mock
+- PhpCollective.WhiteSpace.CatchTypeSeparatorSpacing
 - PhpCollective.WhiteSpace.ConcatenationSpacing
 - PhpCollective.WhiteSpace.ImplicitCastSpacing
 - PhpCollective.WhiteSpace.ObjectAttributeSpacing
@@ -149,7 +152,7 @@ PSR2R (41 sniffs)
 - PSR2R.WhiteSpace.TabAndSpace
 - PSR2R.WhiteSpace.TabIndent
 
-PSR12 (7 sniffs)
+PSR12 (6 sniffs)
 ----------------
 - PSR12.Classes.ClassInstantiation
 - PSR12.Files.ImportStatement
@@ -157,7 +160,6 @@ PSR12 (7 sniffs)
 - PSR12.Functions.ReturnTypeDeclaration
 - PSR12.Keywords.ShortFormTypeKeywords
 - PSR12.Namespaces.CompoundNamespaceDepth
-- PSR12.Operators.OperatorSpacing
 
 SlevomatCodingStandard (54 sniffs)
 ----------------------------------

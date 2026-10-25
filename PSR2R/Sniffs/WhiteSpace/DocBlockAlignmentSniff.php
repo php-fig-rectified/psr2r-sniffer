@@ -87,9 +87,9 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 		$isNotWalled = (in_array($tokens[$nextIndex]['code'], $leftWall, false) && $tokens[$stackPtr]['column'] !== 1);
 		$isNotIndented = false;
 		if ($isNotFlatFile) {
-			$isNotIndented = (in_array($tokens[$nextIndex]['code'], $oneIndentation, false) &&
-				$tokens[$stackPtr]['column'] !== $expectedColumn &&
-				$tokens[$stackPtr]['column'] !== $expectedColumnAdjusted);
+			$isNotIndented = (in_array($tokens[$nextIndex]['code'], $oneIndentation, false)
+				&& $tokens[$stackPtr]['column'] !== $expectedColumn
+				&& $tokens[$stackPtr]['column'] !== $expectedColumnAdjusted);
 		}
 		if (!$isNotWalled && !$isNotIndented) {
 			return;
@@ -113,8 +113,8 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 			$this->outdentLeadingIndent($phpcsFile, $prevIndex);
 
 			for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
-				if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
-					$tokens[$i]['column'] !== 1
+				if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i])
+					|| $tokens[$i]['column'] !== 1
 				) {
 					continue;
 				}
@@ -142,8 +142,8 @@ class DocBlockAlignmentSniff extends AbstractSniff {
 		}
 
 		for ($i = $stackPtr; $i <= $docBlockEndIndex; $i++) {
-			if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i]) ||
-				$tokens[$i]['column'] !== 1
+			if (!$this->isGivenKind(T_DOC_COMMENT_WHITESPACE, $tokens[$i])
+				|| $tokens[$i]['column'] !== 1
 			) {
 				continue;
 			}

@@ -80,8 +80,8 @@ class ConditionalExpressionOrderSniff extends AbstractSniff {
 		} else {
 			$previousParenthesisOpenerIndex = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, $prevIndex - 1);
 			$limit = null;
-			if ($previousParenthesisOpenerIndex &&
-				$tokens[$previousParenthesisOpenerIndex]['parenthesis_closer'] > $rightIndexStart
+			if ($previousParenthesisOpenerIndex
+				&& $tokens[$previousParenthesisOpenerIndex]['parenthesis_closer'] > $rightIndexStart
 			) {
 				$limit = $tokens[$previousParenthesisOpenerIndex]['parenthesis_closer'];
 			}
