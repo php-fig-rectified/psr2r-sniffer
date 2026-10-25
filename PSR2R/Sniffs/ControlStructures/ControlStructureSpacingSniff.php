@@ -89,8 +89,8 @@ class ControlStructureSpacingSniff implements Sniff {
 
 		$phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $spaceAfterOpen);
 
-		if (($spaceAfterOpen !== $this->requiredSpacesAfterOpen) &&
-			($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line'])
+		if (($spaceAfterOpen !== $this->requiredSpacesAfterOpen)
+			&& ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line'])
 		) {
 			$error = 'Expected %s spaces after opening bracket; %s found';
 			$data = [

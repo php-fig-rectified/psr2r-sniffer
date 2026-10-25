@@ -260,7 +260,9 @@
 	<rule ref="PSR12.Classes.ClassInstantiation"/>
 	<rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
 	<rule ref="PSR12.Namespaces.CompoundNamespaceDepth"/>
-	<rule ref="PSR12.Operators.OperatorSpacing"/>
+	<!-- PSR12 operator spacing, except the `|` in a catch type list, which follows the type separator rule. -->
+	<rule ref="PhpCollective.Operators.OperatorSpacing"/>
+	<rule ref="PhpCollective.WhiteSpace.CatchTypeSeparatorSpacing"/>
 	<rule ref="PSR12.Functions.NullableTypeDeclaration"/>
 	<rule ref="PSR12.Functions.ReturnTypeDeclaration"/>
 
@@ -340,6 +342,7 @@
 	</rule>
 	<rule ref="Universal.WhiteSpace.FirstClassCallableSpacing"/>
 	<rule ref="Universal.Operators.ConcatPosition"/>
+	<rule ref="PhpCollective.Operators.OperatorPosition"/>
 	<rule ref="Universal.Operators.TypeSeparatorSpacing"/>
 	<rule ref="Universal.UseStatements.NoUselessAliases"/>
 	<rule ref="Universal.Attributes.BracketSpacing"/>
@@ -358,7 +361,11 @@
 	</rule>
 
 	<rule ref="SlevomatCodingStandard.Arrays.ArrayAccess"/>
-	<rule ref="SlevomatCodingStandard.Attributes.AttributeAndTargetSpacing"/>
+	<rule ref="SlevomatCodingStandard.Attributes.AttributeAndTargetSpacing">
+		<properties>
+			<property name="allowOnSameLine" value="true"/>
+		</properties>
+	</rule>
 	<rule ref="SlevomatCodingStandard.Attributes.RequireAttributeAfterDocComment"/>
 	<rule ref="SlevomatCodingStandard.Classes.BackedEnumTypeSpacing"/>
 	<rule ref="SlevomatCodingStandard.Classes.EnumCaseSpacing"/>

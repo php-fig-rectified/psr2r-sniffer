@@ -13,7 +13,7 @@
 	],
 	"require": {
 		"php": ">=8.1",
-		"php-collective/code-sniffer": "^0.6.8",
+		"php-collective/code-sniffer": "^0.6.10",
 		"squizlabs/php_codesniffer": "^4.0.2"
 	},
 	"require-dev": {
